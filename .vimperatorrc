@@ -1,1 +1,308 @@
-/Users/mashiro/Dropbox/dotfiles/.vimperatorrc
+" mashiro .vimperatorrc
+" 2.2a1pre_2009-07-11
+
+" Options {{{1
+" ======================================================================
+set runtimepath=~/.vimperator
+set titlestring=Firefox
+set guioptions=rbN
+set wildoptions=auto
+set complete=sl
+set history=500
+set newtab=all
+set showtabline=2
+set popups=2
+set laststatus=2
+set focuscontent
+set hlsearch
+set ignorecase
+set smartcase
+set incsearch
+set visualbell
+highlight Bell display: none; 
+set! ui.key.generalAccessKey=0
+set! browser.tabs.closeButtons=2
+set! browser.urlbar.filter.javascript=false
+set! browser.urlbar.maxRichResults=20
+set! browser.sessionstore.max_tabs_undo=20
+set! dom.popup_maximum=999
+
+
+" Mappings {{{1
+" ======================================================================
+" leader
+let mapleader = ","
+
+" clear
+mapclear
+cmapclear
+imapclear
+
+" depth
+noremap <BS> gu
+noremap <C-BS> gU
+
+" scrolling
+noremap j 5j
+noremap k 5k
+noremap J <C-d>
+noremap K <C-u>
+noremap <A-j> 5j
+noremap <A-k> 5k
+noremap <A-h> 5h
+noremap <A-l> 5l
+
+" tabs
+noremap l gt
+noremap h gT
+noremap <C-l> :tabmove! +1<CR>
+noremap <C-h> :tabmove! -1<CR>
+
+" others
+"noremap <C-a> a
+"noremap <C-A> A
+noremap y Y
+noremap Y y
+noremap zi zI
+noremap zI zi
+noremap zm zM
+noremap zM zm
+noremap zo zO
+noremap zO zo
+noremap zr zR
+noremap zR zr
+noremap zz zZ
+noremap zZ zz
+
+noremap <C-r> :restart<CR>
+noremap <Leader>h :history! -max=1 
+noremap <Leader>s :source ~/.vimperatorrc<CR>
+noremap U :undo 
+
+noremap eu :set encoding=UTF-8<CR>
+noremap es :set encoding=Shift_JIS<CR>
+noremap ee :set encoding=EUC-JP<CR>
+
+" ex
+cnoremap <C-j> <Nop>
+cnoremap <C-b> <Left>
+cnoremap <C-f> <Right>
+cnoremap <C-n> <Tab>
+cnoremap <C-p> <S-Tab>
+
+" input
+inoremap <C-f> <Right>
+inoremap <C-b> <Left>
+inoremap <C-p> <Up>
+inoremap <C-n> <Down>
+
+" copy/paste
+javascript <<EOM
+if (liberator.has("Win32")) {
+    liberator.execute("cnoremap <C-a> <C-v><C-a>");
+    liberator.execute("cnoremap <C-z> <C-v><C-z>");
+    liberator.execute("cnoremap <C-x> <C-v><C-x>");
+    liberator.execute("cnoremap <C-c> <C-v><C-c>");
+    liberator.execute("cnoremap <C-v> <C-v><C-v>");
+    liberator.execute("inoremap <C-a> <C-v><C-a>");
+    liberator.execute("inoremap <C-z> <C-v><C-z>");
+    liberator.execute("inoremap <C-x> <C-v><C-x>");
+    liberator.execute("inoremap <C-c> <C-v><C-c>");
+    liberator.execute("inoremap <C-v> <C-v><C-v>");
+}
+else if (liberator.has("MacUnix")) {
+    liberator.execute("cnoremap <M-a> <C-v><M-a>");
+    liberator.execute("cnoremap <M-z> <C-v><M-z>");
+    liberator.execute("cnoremap <M-x> <C-v><M-x>");
+    liberator.execute("cnoremap <M-c> <C-v><M-c>");
+    liberator.execute("cnoremap <M-v> <C-v><M-v>");
+    liberator.execute("inoremap <M-a> <C-v><M-a>");
+    liberator.execute("inoremap <M-z> <C-v><M-z>");
+    liberator.execute("inoremap <M-x> <C-v><M-x>");
+    liberator.execute("inoremap <M-c> <C-v><M-c>");
+    liberator.execute("inoremap <M-v> <C-v><M-v>");
+}
+else {
+}
+EOM
+
+
+
+" QMarks {{{1
+" ======================================================================
+qmark f http://fastladder.com/reader/
+qmark t http://www.tumblr.com/dashboard/
+qmark g https://mail.google.com/mail/
+qmark m http://moepic.moe-ren.net/gazo/
+qmark p http://www.pixiv.net/mypage.php
+qmark h http://translate.google.co.jp/translate_t?hl=ja&sl=en&tl=ja#
+qmark T http://twitter.com/home/
+qmark F http://favotter.matope.com/user.php?user=YurineMashiro
+
+" Users {{{1
+" ======================================================================
+" http://vimperator.g.hatena.ne.jp/snaka72/20090203/1233674801
+command! -nargs=* feedkeys js events.feedkeys("<args>")
+
+
+
+" Plugins {{{1
+" ======================================================================
+" ime_controller.js {{{2
+let g :ex_ime_mode = "inactive"
+let g :textarea_ime_mode = "inactive"
+
+
+" migemo_hint.js {{{2
+"set hintmatching=custom
+
+
+" appendAnchor.js {{{2
+let g:auto_append_anchor = "true"
+
+
+" copy.js {{{2
+noremap <Leader>c :copy 
+javascript <<EOM
+liberator.globalVariables.copy_templates = [
+  { label: 'titleAndURL',    value: '%TITLE% %URL%' },
+  { label: 'title',          value: '%TITLE%' },
+  { label: 'url',            value: '%URL%' },
+  { label: 'markdown',       value: '[%TITLE%](%URL% "%TITLE%")' },
+  { label: 'markdownsel',    value: '[%SEL%](%URL% "%TITLE%")' },
+  { label: 'htmlblockquote', value: '<blockquote cite="%URL%" title="%TITLE%">%HTMLSEL%</blockquote>' },
+  { label: 'ASIN',           value: 'copy ASIN code from Amazon', custom: function(){return content.document.getElementById('ASIN').value;} },
+  { label: 'Amazon',         value: 'copy ASIN code and URL from Amazon', custom: function(){return 'http://amazon.co.jp/o/ASIN/' + content.document.getElementById('ASIN').value;} }
+];
+EOM
+
+
+" ldrize_cooperation.js {{{2
+noremap <Leader>q :toggleldrc<CR>
+let g:ldrc_enable = "true"
+let g:ldrc_captureMappings = "['j','k','p','o','?']" 
+let g:ldrc_intelligence_bind = "true"
+let g:ldrc_hints = "true"
+let g:ldrc_skip = "0.1"
+
+
+" feedSomeKey_2.js {{{2
+autocmd LocationChange .* :fmapc
+
+"   LDR / fastladder / OpenFL
+autocmd LocationChange http://(reader\\.livedoor\\.com|fastladder\\.com|0\\.0\\.0\\.0\\:3000)/reader/ :fmap j k s a p o v r w W J K <Space> <S-Space> c z > < 
+autocmd LocationChange http://(reader\\.livedoor\\.com|fastladder\\.com|0\\.0\\.0\\.0\\:3000)/reader/ :fmap p,pj
+autocmd LocationChange http://(reader\\.livedoor\\.com|fastladder\\.com|0\\.0\\.0\\.0\\:3000)/reader/ :fmap J,<Space>
+autocmd LocationChange http://(reader\\.livedoor\\.com|fastladder\\.com|0\\.0\\.0\\.0\\:3000)/reader/ :fmap K,<S-Space>
+autocmd LocationChange http://(reader\\.livedoor\\.com|fastladder\\.com|0\\.0\\.0\\.0\\:3000)/reader/ :fmap i,tj
+autocmd LocationChange http://(reader\\.livedoor\\.com|fastladder\\.com|0\\.0\\.0\\.0\\:3000)/reader/ :fmap e,tj
+
+"   Gmail
+autocmd LocationChange mail\\.google\\.com/mail :fmap -depth 4 c / j k n p o u e x s r a # [ ] z ?
+
+"   Tumblr
+autocmd LocationChange http://.*\\.tumblr\\.com/ :fmap j k
+autocmd LocationChange http://.*\\.tumblr\\.com/ :fmap i,tj
+autocmd LocationChange http://.*\\.tumblr\\.com/ :fmap e,tj
+
+
+" direct_bookmark.js {{{2
+let g:direct_sbm_use_services_by_tag = "h"
+let g:direct_sbm_use_services_by_post = "h"   
+noremap a :sbm 
+noremap A :sbm<CR>
+noremap ,a :btags<CR>
+
+
+" sbmcommentsviewer.js {{{2
+let g:def_sbm_format = "timestamp,id,tagsAndComment"
+let g:def_sbms = "h"
+map <Leader>bc :viewSBMComments<CR>
+
+
+" uaSwitchLite.js {{{2
+javascript <<EOM
+liberator.globalVariables.useragent_list = [{
+  description: 'Internet Explorer 7 (Windows Vista)',
+  useragent: 'Mozilla/4.0 (compatible; MSIE 7.0; Windows NT 6.0)',
+  appname: 'Microsoft Internet Explorer',
+  appversion: '4.0 (compatible; MSIE 7.0; Windows NT 6.0)',
+  platform: 'Win32',
+},{
+  description: 'iPhone',
+  useragent: 'Mozilla/5.0 (iPhone; U; CPU iPhone OS 2_0 like Mac OS X; ja-jp) AppleWebKit/525.18.1 (KHTML, like Gecko) Version/3.1.1 Mobile/5A345 Safari/525.20',
+  appname: 'Safari',
+  platform: 'OS X iPhone'
+}];
+EOM
+
+
+
+" refcontrol.js {{{2
+let g:refcontrol_enabled = "true"
+javascript <<EOM
+liberator.globalVariables.refcontrol={
+  '@DEFAULT'          : '@NORMAL',
+  'fc2.com'           : '@FORGE',
+  'blogs.yahoo.co.jp' : '@FORGE',
+};
+EOM
+
+
+" localkeymode.js {{{2
+let g:localkeymode_enable = "false"
+js <<EOM
+liberator.globalVariables.localKeyMappings=[
+    [/www\.nicovideo\.jp\/watch/, [
+        ['p s sh sl sH sL S v m r c f F'],
+        ['p',   ':stplay'],
+        ['sh',  ':stseek! -10'],
+        ['sl',  ':stseek! +10'],
+        ['sH',  ':stseek! -60'],
+        ['sL',  ':stseek! +60'],
+        ['S',   ':stseek '], 
+        ['v',   ':stvolume '],
+        ['m',   ':stmute'],
+        ['r',   ':strepeat'],
+        ['c',   ':stcomment'],
+        ['f',   ':stlarge'],
+        ['F',   ':stfullscreen']
+    ]],
+];
+EOM
+
+
+" browser_object.js {{{2
+let g:browser_object_prefix = ',' 
+
+
+" Javascript {{{1
+" ======================================================================
+" ステータスバーにfeedボタンを表示 {{{2
+" http://d.hatena.ne.jp/teramako/20071205/p1
+javascript <<EOM
+(function(){
+    var feedPanel = document.createElement('statusbarpanel');
+    var feedButton = document.getElementById('feed-button');
+    feedPanel.setAttribute('id','feed-panel-clone');
+    feedPanel.appendChild(feedButton.cloneNode(true));
+    feedButton.parentNode.removeChild(feedButton);
+    document.getElementById('status-bar').insertBefore(feedPanel,document.getElementById('security-button'));
+})();
+EOM
+
+
+" はてなブックマーク拡張 {{{2
+javascript if (typeof hBookmark != 'undefined') liberator.loadScript('chrome://hatenabookmark/content/vimperator/plugin/hatenabookmark.js', {__proto__: this});
+
+
+" Colors {{{1
+" ======================================================================
+colorscheme sweets
+
+
+" End {{{1
+source! ~/.vimperatorrc.local
+cd
+
+" vim: set ft=vimperator:

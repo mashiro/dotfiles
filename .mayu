@@ -1,0 +1,31 @@
+include "109.mayu"
+
+# 英数をControlに
+if (KBD109)
+    mod control += 英数
+    key *英数 = *LControl
+endif
+
+# モディファイヤ
+mod mod0 += !!無変換
+mod mod0 += !!変換
+
+key M0-H     = Left
+key M0-J     = Down
+key M0-K     = Up
+key M0-L     = Right
+key M0-C-F   = Next
+key M0-C-B   = Prior
+key M0-C-A   = Home
+key M0-C-E   = End
+
+key M0-S-H   = S-Left
+key M0-S-J   = S-Down
+key M0-S-K   = S-Up
+key M0-S-L   = S-Right
+key M0-S-C-F = S-Next
+key M0-S-C-B = S-Prior
+key M0-S-C-A = S-Home
+key M0-S-C-E = S-End
+
+key M0-C-H = BackSpace

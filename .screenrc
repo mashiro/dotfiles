@@ -1,1 +1,78 @@
-/Users/mashiro/Dropbox/dotfiles/.screenrc
+# .screenrc
+
+# Option {{{1
+escape ^Tt
+
+term xterm-256color
+termcapinfo xterm-256color hs@:is=\E[r\E[m\E[2J\E[H\E[?7h\E[?1;4;6l
+defbce on
+defutf8 on
+defkanji utf-8
+defencoding utf-8
+defscrollback 10000
+encoding utf-8 utf-8
+shell -$SHELL
+
+hardcopydir "$HOME/.screen/"
+nethack on
+startup_message off
+vbell off
+bell_msg "Bell in window %^G"
+
+caption always "%{= wk} %-w%{=bu dr}%n %t%{-}%+w %= %{=b wb}%y/%m/%d(%D) %{=b wb}%c"
+autodetach on
+
+logfile "$HOME/.screen/log/screen-%Y%m%d-%n.log"
+log on
+deflog on
+
+
+# Bind {{{1
+
+# Default {{{2
+bind n screen
+bind ^N screen
+bind c kill
+bind ^C kill
+bind l next
+bind ^L next
+bind h prev
+bind ^H prev
+
+# Widnow {{{2
+bind ^W eval 'echo "window"' 'command -c window'
+#bind -c window n split -h
+#bind -c window ^N split -h
+#bind -c window v split -v
+#bind -c window ^V split -v
+bind -c window ^] command
+bind -c window n split -h
+bind -c window ^N eval 'split -h' 'focus down' 'other'
+bind -c window v split -v
+bind -c window ^V eval 'split -v' 'focus down' 'other'
+bind -c window c remove
+bind -c window ^C remove
+bind -c window q remove
+bind -c window ^Q remove
+bind -c window o only
+bind -c window ^O only
+bind -c window j focus down
+bind -c window ^J eval 'focus down' 'command -c window'
+bind -c window k focus up
+bind -c window ^K eval 'focus up' 'command -c window'
+bind -c window t focus top
+bind -c window ^T eval 'focus top' 'command -c window'
+bind -c window b focus bottom
+bind -c window ^B eval 'focus bottom' 'command -c window'
+
+# Region {{{2
+bind ^R eval 'echo "region"' 'command -c region' 
+bind -c region ^] command
+bind -c region j eval 'resize +1' 'command -c region'
+bind -c region k eval 'resize -1' 'command -c region'
+bind -c region J eval 'resize max' 'command -c region'
+bind -c region K eval 'resize min' 'command -c region'
+bind -c region + eval 'resize +1' 'command -c region'
+bind -c region - eval 'resize -1' 'command -c region'
+bind -c region = eval 'resize =' 'command -c region'
+
