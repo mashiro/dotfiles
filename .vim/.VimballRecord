@@ -1,1 +1,0 @@
-vimperator.vba: call delete('C:\home\mashiro\.vim/syntax/vimperator.vim')|call delete('C:\home\mashiro\.vim/ftdetect/vimperator.vim')

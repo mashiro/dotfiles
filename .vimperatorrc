@@ -1,11 +1,11 @@
 " mashiro .vimperatorrc
-" 2.2a1pre_2009-07-11
+" 2.2a1pre_2009-08-26
 
 " Options {{{1
 " ======================================================================
 set runtimepath=~/.vimperator
 set titlestring=Firefox
-set guioptions=rbN
+set guioptions=rb
 set wildoptions=auto
 set complete=sl
 set history=500
@@ -130,14 +130,18 @@ EOM
 
 " QMarks {{{1
 " ======================================================================
+qmark c http://www.google.com/calendar/render?hl=ja
 qmark f http://fastladder.com/reader/
-qmark t http://www.tumblr.com/dashboard/
-qmark g https://mail.google.com/mail/
-qmark m http://moepic.moe-ren.net/gazo/
-qmark p http://www.pixiv.net/mypage.php
-qmark h http://translate.google.co.jp/translate_t?hl=ja&sl=en&tl=ja#
-qmark T http://twitter.com/home/
 qmark F http://favotter.matope.com/user.php?user=YurineMashiro
+qmark g https://github.com/
+qmark G http://gist.github.com/
+qmark h http://translate.google.co.jp/translate_t?hl=ja&sl=en&tl=ja#
+qmark m https://mail.google.com/mail/
+qmark M http://mixi.jp/home.pl
+qmark t http://www.tumblr.com/dashboard/
+qmark T http://twitter.com/home/
+qmark p http://www.pixiv.net/mypage.php
+qmark w http://www.wolframalpha.com/
 
 " Users {{{1
 " ======================================================================
@@ -198,7 +202,7 @@ autocmd LocationChange http://(reader\\.livedoor\\.com|fastladder\\.com|0\\.0\\.
 autocmd LocationChange http://(reader\\.livedoor\\.com|fastladder\\.com|0\\.0\\.0\\.0\\:3000)/reader/ :fmap e,tj
 
 "   Gmail
-autocmd LocationChange mail\\.google\\.com/mail :fmap -depth 4 c / j k n p o u e x s r a # [ ] z ?
+autocmd LocationChange mail\\.google\\.com/mail :fmap -depth 4 c / k j n p o u e x s r a # [ ] z ?
 
 "   Tumblr
 autocmd LocationChange http://.*\\.tumblr\\.com/ :fmap j k
@@ -209,9 +213,9 @@ autocmd LocationChange http://.*\\.tumblr\\.com/ :fmap e,tj
 " direct_bookmark.js {{{2
 let g:direct_sbm_use_services_by_tag = "h"
 let g:direct_sbm_use_services_by_post = "h"   
-noremap a :sbm 
-noremap A :sbm<CR>
-noremap ,a :btags<CR>
+"noremap a :sbm 
+"noremap A :sbm<CR>
+"noremap ,a :btags<CR>
 
 
 " sbmcommentsviewer.js {{{2
@@ -245,6 +249,7 @@ liberator.globalVariables.refcontrol={
   '@DEFAULT'          : '@NORMAL',
   'fc2.com'           : '@FORGE',
   'blogs.yahoo.co.jp' : '@FORGE',
+  'ameblo.jp'         : '@FORGE',
 };
 EOM
 
@@ -298,7 +303,7 @@ javascript if (typeof hBookmark != 'undefined') liberator.loadScript('chrome://h
 
 " Colors {{{1
 " ======================================================================
-colorscheme sweets
+colorscheme indigo
 
 
 " End {{{1

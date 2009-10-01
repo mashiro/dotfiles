@@ -40,7 +40,7 @@ set tags+=./tags;,./**/tags
 set tabstop=4
 set shiftwidth=4
 set softtabstop=4
-set expandtab
+set noexpandtab
 set smarttab
 
 " backup
@@ -103,8 +103,8 @@ endif
 
 "Map {{{1
 " save, quit
-nnoremap <silent> <Space>w :<C-u>up<CR>
-nnoremap <silent> <Space>q :<C-u>quit<CR>
+"nnoremap <silent> <Space>w :<C-u>up<CR>
+"nnoremap <silent> <Space>q :<C-u>quit<CR>
 
 " fold
 nnoremap <expr> h col('.') == 1 && foldlevel(line('.')) > 0 ? 'zc' : 'h'
@@ -166,14 +166,11 @@ let g:AutoComplPop_BehaviorKeywordLength = 2
 let g:AutoComplPop_BehaviorFileLength = 0
 
 " FuzzyFinder.vim
-nnoremap <silent> <C-n> :FuzzyFinderBuffer<CR>
-nnoremap <silent> <C-p> :FuzzyFinderDir<CR>
-nnoremap <silent> ,fb :FuzzyFinderBuffer<CR>
-nnoremap <silent> ,ff :FuzzyFinderFile<CR>
-nnoremap <silent> ,fd :FuzzyFinderDir<CR>
-nnoremap <silent> ,fm :FuzzyFinderMruFile<CR>
-nnoremap <silent> ,fh :FuzzyFinderMruCmd<CR>
-nnoremap <silent> ,ft :FuzzyFinderTag<CR>
+nnoremap <silent> <C-n> :FufBuffer!<CR>
+nnoremap <silent> <C-p> :FufDir!<CR>
+nnoremap <silent> ,fb :FufBuffer!<CR>
+nnoremap <silent> ,ff :FufFile!<CR>
+nnoremap <silent> ,fd :FufDir!<CR>
 
 
 "Color {{{1

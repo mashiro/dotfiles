@@ -66,12 +66,6 @@ syn keyword fxType		int1x2 int1x3 int1x4
 syn keyword fxType		int2x2 int2x3 int2x4
 syn keyword fxType		int3x2 int3x3 int3x4
 syn keyword fxType		int4x2 int4x3 int4x4
-" likewise 'uint'
-syn keyword fxType		uint2 uint3 uint4
-syn keyword fxType		uint1x2 uint1x3 uint1x4
-syn keyword fxType		uint2x2 uint2x3 uint2x4
-syn keyword fxType		uint3x2 uint3x3 uint3x4
-syn keyword fxType		uint4x2 uint4x3 uint4x4
 " texture types
 syn keyword fxType		sampler1D sampler2D sampler3D samplerCUBE
 " syn keyword fxType		samplerRECT

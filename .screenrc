@@ -9,8 +9,8 @@ defbce on
 defutf8 on
 defkanji utf-8
 defencoding utf-8
-defscrollback 10000
 encoding utf-8 utf-8
+defscrollback 10000
 shell -$SHELL
 
 hardcopydir "$HOME/.screen/"
@@ -19,7 +19,8 @@ startup_message off
 vbell off
 bell_msg "Bell in window %^G"
 
-caption always "%{= wk} %-w%{=bu dr}%n %t%{-}%+w %= %{=b wb}%y/%m/%d(%D) %{=b wb}%c"
+#caption always "%{= wk} %-w%{=bu dr}%n %t%{-}%+w %= %{=b wb}%y/%m/%d(%D) %{=b wb}%c"
+caption always "%{= wk} %-w%{=bu dr}%n %t%{-}%+w %= %{= wb}%y/%m/%d %{= wb}%c"
 autodetach on
 
 logfile "$HOME/.screen/log/screen-%Y%m%d-%n.log"
@@ -75,4 +76,15 @@ bind -c region K eval 'resize min' 'command -c region'
 bind -c region + eval 'resize +1' 'command -c region'
 bind -c region - eval 'resize -1' 'command -c region'
 bind -c region = eval 'resize =' 'command -c region'
+
+# Encoding {{{2
+bind ^E eval 'echo "encoding"' 'command -c enc'
+bind -c enc ^] command
+bind -c enc u encoding utf8 utf8
+bind -c enc ^U encoding utf8 utf8
+bind -c enc e encoding eucjp utf8
+bind -c enc ^E encoding eucjp utf8
+bind -c enc s encoding sjis utf8
+bind -c enc ^S encoding sjis utf8
+
 
