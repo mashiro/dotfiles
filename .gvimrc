@@ -10,10 +10,8 @@ set guioptions=ai
 set columns=120
 set lines=45
 
-
 " Color {{{1
 colorscheme xoria256
-
 
 " End {{{1
 if filereadable($HOME . '/.gvimrc.local')
