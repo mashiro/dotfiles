@@ -1,6 +1,7 @@
 " ==VimperatorColorSchema==
-" name: mashiro
+" name: indigo
 " ==/VimperatorColorSchema==
+
 hi Hint font-family: monospace; font-size: 14px; font-weight: normal; color: #dddddd; background-color: #1c1c1c; border-color: #1c1c1c; border-width: 0px; border-style: solid; padding: 0px 5px 0px 5px; 
 hi HintElem     background-color: #d0d0f0; color: #1c1c1c;
 hi HintActive   background-color: #5566bb; color: #dddded;
@@ -15,7 +16,8 @@ hi InfoMsg      color: #d0d0d0; background: #1c1c1c; font-size: 9pt;
 hi ModeMsg      color: #d0d0d0; background: #1c1c1c; font-size: 9pt;
 hi MoreMsg      color: #d0ffd0; background: #1c1c1c; font-size: 9pt;
 hi LineNr       color: #ffd0d0; background: #1c1c1c; font-size: 9pt;
-hi Question     color: #9090a0; background: #1c1c1c; font-size: 9pt;
+"hi Question     color: #9090a0; background: #1c1c1c; font-size: 9pt;
+hi Question     color: #a0a0f0; background: #1c1c1c; font-size: 9pt;
 hi WarningMsg   color: #ff0000; background: #1c1c1c; font-size: 9pt;
 hi ErrorMsg     color: #ffffff; background: #ff0000; font-size: 9pt;
 hi NonText      background: #1c1c1c;

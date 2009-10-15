@@ -1,10 +1,12 @@
 " mashiro .vimperatorrc
-" 2.2a1pre_2009-08-26
+" 3930:e6c3774f80b0
+" Tue Oct 13 17:35:47 2009 +1100
 
 " Options {{{1
 " ======================================================================
 set runtimepath=~/.vimperator
 set titlestring=Firefox
+set defsearch=google
 set guioptions=rb
 set wildoptions=auto
 set complete=sl
@@ -26,6 +28,17 @@ set! browser.urlbar.filter.javascript=false
 set! browser.urlbar.maxRichResults=20
 set! browser.sessionstore.max_tabs_undo=20
 set! dom.popup_maximum=999
+
+
+" Bmarks {{{1
+" ======================================================================
+bmark -title="Google US Search" -tags=keyword -keyword=g http://www.google.com/search?q=%s
+bmark -title="Twitter" -tags=keyword -keyword=tw http://twitter.com/%s
+bmark -title="Twitter Search" -tags=keyword -keyword=ts http://search.twitter.com/search?q=%s
+bmark -title="ふぁぼったー" -tags=keyword -keyword=fav http://favotter.matope.com/user.php?user=%s
+bmark -title="Ustream" -tags=keyword -keyword=ust http://www.ustream.tv/channel/%s
+bmark -title="はてなダイアリー" -tags=keyword -keyword=hd http://d.hatena.ne.jp/%s
+bmark -title="ニコニコ動画" -tags=keyword -keyword=nico http://www.nicovideo.jp/watch/%s
 
 
 " Mappings {{{1
@@ -142,6 +155,7 @@ qmark t http://www.tumblr.com/dashboard/
 qmark T http://twitter.com/home/
 qmark p http://www.pixiv.net/mypage.php
 qmark w http://www.wolframalpha.com/
+qmark y http://search.yahoo.com/
 
 " Users {{{1
 " ======================================================================
@@ -249,6 +263,7 @@ liberator.globalVariables.refcontrol={
   '@DEFAULT'          : '@NORMAL',
   'fc2.com'           : '@FORGE',
   'blogs.yahoo.co.jp' : '@FORGE',
+  'blog.goo.ne.jp'    : '@FORGE',
   'ameblo.jp'         : '@FORGE',
 };
 EOM
@@ -257,7 +272,7 @@ EOM
 " localkeymode.js {{{2
 let g:localkeymode_enable = "false"
 js <<EOM
-liberator.globalVariables.localKeyMappings=[
+liberator.globalVariables.localKeyMappings = [
     [/www\.nicovideo\.jp\/watch/, [
         ['p s sh sl sH sL S v m r c f F'],
         ['p',   ':stplay'],
@@ -279,6 +294,16 @@ EOM
 
 " browser_object.js {{{2
 let g:browser_object_prefix = ',' 
+
+
+" hateDAopener.js {{{2
+js <<EOM
+liberator.globalVariables.hateDAopener_accounts = [
+	['y_mashiro', 'd'],
+	['y_mashiro', 'vimperator.g'],
+	['y_mashiro', 'twitterircgateway.g']
+];
+EOM
 
 
 " Javascript {{{1

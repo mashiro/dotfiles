@@ -131,6 +131,9 @@ alias srr='screen -U -D -RR'
 alias cpan-uninstall='perl -MConfig -MExtUtils::Install -e '"'"'($FULLEXT=shift)=~s{-}{/}g;uninstall "$Config{sitear    chexp}/auto/$FULLEXT/.packlist",1'"'"
 alias cpan-update="perl -MCPAN -e 'CPAN::Shell->install(CPAN::Shell->r)'"
 
+# sudo
+alias sudo="sudo "
+
 # exit
 alias :q=exit
 
