@@ -1,9 +1,7 @@
 # users generic .zshrc file for zsh(1)
 
+
 ## Default shell configuration
-#
-# set prompt
-#
 autoload colors
 colors
 case ${UID} in
@@ -23,40 +21,17 @@ case ${UID} in
     ;;
 esac
 
-# auto change directory
-#
 setopt auto_cd
-
-# auto directory pushd that you can get dirs list by cd -[tab]
-#
 setopt auto_pushd
-
-# command correct edition before each completion attempt
-#
 setopt correct
-
-# compacked complete list display
-#
 setopt list_packed
-
-# no remove postfix slash of command line
-#
 setopt noautoremoveslash
-
-# no beep sound when complete list displayed
-#
 setopt nolistbeep
+setopt nocheckjobs
 
 
 ## Keybind configuration
-#
-# emacs like keybind (e.x. Ctrl-a goes to head of a line and Ctrl-e goes 
-#   to end of it)
-#
 bindkey -e
-
-# historical backward/forward search with linehead string binded to ^P/^N
-#
 autoload history-search-end
 zle -N history-beginning-search-backward-end history-search-end
 zle -N history-beginning-search-forward-end history-search-end
@@ -67,7 +42,6 @@ bindkey "\\en" history-beginning-search-forward-end
 
 
 ## Command history configuration
-#
 HISTFILE=~/.zsh_history
 HISTSIZE=10000
 SAVEHIST=10000
@@ -78,27 +52,20 @@ setopt hist_save_no_dups
 
 
 ## Completion configuration
-#
 fpath=(~/.zsh/functions/Completion ${fpath})
 autoload -U compinit
 compinit
 
 
 ## zsh editor
-#
 autoload zed
 
 
 ## Prediction configuration
-#
 autoload predict-on
-#predict-on
 
 
 ## Alias configuration
-#
-# expand aliases before completing
-#
 setopt complete_aliases     # aliased ls needs if file/dir completions work
 
 alias where="command -v"
@@ -140,8 +107,8 @@ alias :q=exit
 
 case "${OSTYPE}" in
 darwin*)
-    alias updateports="sudo port selfupdate; sudo port outdated"
-    alias portupgrade="sudo port upgrade installed"
+    alias portupdate="sudo port selfupdate; sudo port outdated"
+    alias portupgrade="sudo port upgrade --enforce-variants installed"
     ;;
 freebsd*)
     case ${UID} in
@@ -165,16 +132,13 @@ freebsd*)
 esac
 
 
-#
 ## terminal configuration
-#
 export LSCOLORS=ExFxCxdxBxegedabagacad
 export LS_COLORS='di=01;35:ln=01;35:so=01;32:ex=01;31:bd=46;34:cd=43;34:su=41;30:sg=46;30:tw=42;30:ow=43;30'
 zstyle ':completion:*' list-colors 'di=;34;1' 'ln=;35;1' 'so=;32;1' 'ex=31;1' 'bd=46;34' 'cd=43;34'
 
 
 # set terminal title including current directory
-#
 case "${TERM}" in
 kterm*|xterm*)
     precmd() {
@@ -185,6 +149,5 @@ esac
 
 
 ## load user .zshrc configuration file
-#
 [ -f ~/.zshrc.mine ] && source ~/.zshrc.mine
 
