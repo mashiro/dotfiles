@@ -1,0 +1,19 @@
+# vim
+- .vim/.*
+- .vim/tags/
++ .vim/***
++ .vimrc
++ .gvimrc
+
+# vimperator
+- .vimperator/info/
++ .vimperator/***
++ .vimperatorrc
+
+# others
++ .zshrc
++ .screenrc
+
+# all exclude
+- *
+
