@@ -1,7 +1,6 @@
-# users generic .zshrc file for zsh(1)
+# mashiro .zshrc
 
-
-## Default shell configuration
+# Default shell {{{1
 autoload colors
 colors
 case ${UID} in
@@ -30,7 +29,7 @@ setopt nolistbeep
 setopt nocheckjobs
 
 
-## Keybind configuration
+# Keybind {{{1
 bindkey -e
 autoload history-search-end
 zle -N history-beginning-search-backward-end history-search-end
@@ -41,7 +40,7 @@ bindkey "\\ep" history-beginning-search-backward-end
 bindkey "\\en" history-beginning-search-forward-end
 
 
-## Command history configuration
+# Command history {{{1
 HISTFILE=~/.zsh_history
 HISTSIZE=10000
 SAVEHIST=10000
@@ -51,26 +50,16 @@ setopt hist_ignore_dups         # ignore duplication command history list
 setopt hist_save_no_dups
 
 
-## Completion configuration
+# Completion {{{1
 fpath=(~/.zsh/functions/Completion ${fpath})
 autoload -U compinit
 compinit
 
 
-## zsh editor
-autoload zed
-
-
-## Prediction configuration
-autoload predict-on
-
-
-## Alias configuration
+# Alias {{{1
 setopt complete_aliases     # aliased ls needs if file/dir completions work
 
-alias where="command -v"
-alias j="jobs -l"
-
+# ls {{{2
 case "${OSTYPE}" in
 darwin*)
     alias ls="ls -G -w"
@@ -84,27 +73,26 @@ alias la="ls -a"
 alias lf="ls -F"
 alias ll="ls -l"
 
-alias du="du -h"
-alias df="df -h"
-
-alias su="su -l"
-
-# screen
+# screen {{{2
 alias s='screen -U'
 alias sr='screen -U -D -R'
 alias srr='screen -U -D -RR'
 
-# cpan
+# cpan {{{2
 alias cpan-uninstall='perl -MConfig -MExtUtils::Install -e '"'"'($FULLEXT=shift)=~s{-}{/}g;uninstall "$Config{sitear    chexp}/auto/$FULLEXT/.packlist",1'"'"
 alias cpan-update="perl -MCPAN -e 'CPAN::Shell->install(CPAN::Shell->r)'"
 
-# sudo
+# others {{{2
+alias where="command -v"
+alias j="jobs -l"
+alias du="du -h"
+alias df="df -h"
+alias su="su -l"
 alias sudo="sudo "
-
-# exit
 alias :q=exit
 
 
+# ostype {{{2
 case "${OSTYPE}" in
 darwin*)
     alias portupdate="sudo port selfupdate; sudo port outdated"
@@ -132,13 +120,11 @@ freebsd*)
 esac
 
 
-## terminal configuration
+# Terminal {{{1
 export LSCOLORS=ExFxCxdxBxegedabagacad
 export LS_COLORS='di=01;34:ln=01;35:so=01;32:ex=01;31:bd=46;34:cd=43;34:su=41;30:sg=46;30:tw=42;30:ow=43;30'
 zstyle ':completion:*' list-colors 'di=;34;1' 'ln=;35;1' 'so=;32;1' 'ex=31;1' 'bd=46;34' 'cd=43;34'
 
-
-# set terminal title including current directory
 case "${TERM}" in
 kterm*|xterm*)
     precmd() {
@@ -148,6 +134,10 @@ kterm*|xterm*)
 esac
 
 
-## load user .zshrc configuration file
+# Export {{{1
+export LESS="-R"
+
+
+# End {{{1
 [ -f ~/.zshrc.mine ] && source ~/.zshrc.mine
 
