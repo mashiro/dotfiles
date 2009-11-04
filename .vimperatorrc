@@ -1,6 +1,5 @@
 " mashiro .vimperatorrc
-" 3930:e6c3774f80b0
-" Tue Oct 13 17:35:47 2009 +1100
+" vimperator 2.2
 
 " Options {{{1
 " ======================================================================
@@ -13,8 +12,8 @@ set complete=sl
 set history=500
 set newtab=all
 set showtabline=2
-set popups=2
 set laststatus=2
+set popups=resized
 set focuscontent
 set hlsearch
 set ignorecase
