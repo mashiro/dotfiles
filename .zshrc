@@ -1,8 +1,28 @@
 # mashiro .zshrc
 
-# Default shell {{{1
-autoload colors
-colors
+# Default {{{1
+setopt auto_cd
+setopt auto_pushd
+setopt pushd_ignore_dups
+setopt pushd_to_home
+setopt pushd_silent
+setopt auto_param_slash
+setopt auto_param_keys
+setopt auto_list
+setopt auto_menu
+setopt auto_resume
+setopt auto_name_dirs
+setopt correct
+setopt complete_in_word
+setopt extended_glob
+setopt list_packed
+setopt noautoremoveslash
+setopt nolistbeep
+setopt nocheckjobs
+
+
+# Terminal {{{1
+autoload -U colors; colors
 case ${UID} in
 0)
     PROMPT="%B%{${fg[red]}%}%/#%{${reset_color}%}%b "
@@ -20,13 +40,17 @@ case ${UID} in
     ;;
 esac
 
-setopt auto_cd
-setopt auto_pushd
-setopt correct
-setopt list_packed
-setopt noautoremoveslash
-setopt nolistbeep
-setopt nocheckjobs
+export LSCOLORS=ExFxCxdxBxegedabagacad
+export LS_COLORS='di=01;34:ln=01;35:so=01;32:ex=01;31:bd=46;34:cd=43;34:su=41;30:sg=46;30:tw=42;30:ow=43;30'
+zstyle ':completion:*:default' list-colors ${(s.:.)LS_COLORS}
+
+case "${TERM}" in
+kterm*|xterm*)
+    precmd() {
+        echo -ne "\033]0;${USER}@${HOST%%.*}:${PWD}\007"
+    }
+    ;;
+esac
 
 
 # Keybind {{{1
@@ -40,49 +64,58 @@ bindkey "\\ep" history-beginning-search-backward-end
 bindkey "\\en" history-beginning-search-forward-end
 
 
-# Command history {{{1
+# History {{{1
 HISTFILE=~/.zsh_history
-HISTSIZE=10000
-SAVEHIST=10000
-setopt share_history            # share command history data
+HISTSIZE=100000
+SAVEHIST=100000
+setopt extended_history
+setopt append_history
+setopt inc_append_history
+setopt share_history
 setopt hist_ignore_all_dups
-setopt hist_ignore_dups         # ignore duplication command history list
+setopt hist_ignore_dups
+setopt hist_ignore_space
+setopt hist_reduce_blanks
 setopt hist_save_no_dups
+setopt hist_no_store
+setopt hist_expand
 
 
 # Completion {{{1
 fpath=(~/.zsh/functions/Completion ${fpath})
-autoload -U compinit
-compinit
-
+autoload -U compinit; compinit
+zstyle ':completion:*:default' menu select=1
 
 # Alias {{{1
 setopt complete_aliases     # aliased ls needs if file/dir completions work
 
-# ls {{{2
 case "${OSTYPE}" in
 darwin*)
-    alias ls="ls -G -w"
+    alias ls="ls -G"
     ;;
 freebsd*|linux*)
-    alias ls="ls --color"
+    alias ls="ls --color=auto"
     ;;
 esac
 
+alias l='ls -alrt'
 alias la="ls -a"
 alias lf="ls -F"
 alias ll="ls -l"
 
-# screen {{{2
+alias -g L='| less'
+alias -g H='| head'
+alias -g T='| tail'
+alias -g G='| grep'
+alias -g V='| vim -R -'
+
 alias s='screen -U'
 alias sr='screen -U -D -R'
 alias srr='screen -U -D -RR'
 
-# cpan {{{2
 alias cpan-uninstall='perl -MConfig -MExtUtils::Install -e '"'"'($FULLEXT=shift)=~s{-}{/}g;uninstall "$Config{sitear    chexp}/auto/$FULLEXT/.packlist",1'"'"
 alias cpan-update="perl -MCPAN -e 'CPAN::Shell->install(CPAN::Shell->r)'"
 
-# others {{{2
 alias where="command -v"
 alias j="jobs -l"
 alias du="du -h"
@@ -91,8 +124,6 @@ alias su="su -l"
 alias sudo="sudo "
 alias :q=exit
 
-
-# ostype {{{2
 case "${OSTYPE}" in
 darwin*)
     alias portupdate="sudo port selfupdate; sudo port outdated"
@@ -120,22 +151,11 @@ freebsd*)
 esac
 
 
-# Terminal {{{1
-export LSCOLORS=ExFxCxdxBxegedabagacad
-export LS_COLORS='di=01;34:ln=01;35:so=01;32:ex=01;31:bd=46;34:cd=43;34:su=41;30:sg=46;30:tw=42;30:ow=43;30'
-zstyle ':completion:*' list-colors 'di=;34;1' 'ln=;35;1' 'so=;32;1' 'ex=31;1' 'bd=46;34' 'cd=43;34'
-
-case "${TERM}" in
-kterm*|xterm*)
-    precmd() {
-        echo -ne "\033]0;${USER}@${HOST%%.*}:${PWD}\007"
-    }
-    ;;
-esac
-
-
 # Export {{{1
-export LESS="-R"
+export LANG=ja_JP.UTF-8
+export EDITOR=vim
+export PAGER=less
+export LESS="--LONG-PROMPT --ignore-case"
 
 
 # End {{{1
