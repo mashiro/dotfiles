@@ -134,10 +134,15 @@ kterm*|xterm*)
 esac
 
 
+<<<<<<< HEAD
 # Export {{{1
 export LESS="-R"
 
 
 # End {{{1
 [ -f ~/.zshrc.mine ] && source ~/.zshrc.mine
+=======
+## load user .zshrc configuration file
+[ -f ~/.zshrc.local ] && source ~/.zshrc.local
+>>>>>>> cb403044383a028f47190368a152ee13202e6808
 
