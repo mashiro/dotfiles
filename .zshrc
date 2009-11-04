@@ -149,5 +149,5 @@ esac
 
 
 ## load user .zshrc configuration file
-[ -f ~/.zshrc.mine ] && source ~/.zshrc.mine
+[ -f ~/.zshrc.local ] && source ~/.zshrc.local
 
