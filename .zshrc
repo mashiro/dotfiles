@@ -100,8 +100,8 @@ esac
 
 alias l='ls -alrt'
 alias la="ls -a"
-alias lf="ls -F"
 alias ll="ls -l"
+alias lal="ls -al"
 
 alias -g L='| less'
 alias -g H='| head'
