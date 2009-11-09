@@ -1,10 +1,12 @@
 " mashiro .vimperatorrc
-" vimperator 2.2
+" vimperator-20091106
 
 " Options {{{1
 " ======================================================================
 set runtimepath=~/.vimperator
 set titlestring=Firefox
+"set messages=1000
+"set verbose=15
 set defsearch=google
 set guioptions=rb
 set wildoptions=auto
@@ -27,17 +29,6 @@ set! browser.urlbar.filter.javascript=false
 set! browser.urlbar.maxRichResults=20
 set! browser.sessionstore.max_tabs_undo=20
 set! dom.popup_maximum=999
-
-
-" Bmarks {{{1
-" ======================================================================
-bmark -title="Google US Search" -tags=keyword -keyword=g http://www.google.com/search?q=%s
-bmark -title="Twitter" -tags=keyword -keyword=tw http://twitter.com/%s
-bmark -title="Twitter Search" -tags=keyword -keyword=ts http://search.twitter.com/search?q=%s
-bmark -title="ふぁぼったー" -tags=keyword -keyword=fav http://favotter.matope.com/user.php?user=%s
-bmark -title="Ustream" -tags=keyword -keyword=ust http://www.ustream.tv/channel/%s
-bmark -title="はてなダイアリー" -tags=keyword -keyword=hd http://d.hatena.ne.jp/%s
-bmark -title="ニコニコ動画" -tags=keyword -keyword=nico http://www.nicovideo.jp/watch/%s
 
 
 " Mappings {{{1
@@ -142,19 +133,30 @@ EOM
 
 " QMarks {{{1
 " ======================================================================
-qmark c http://www.google.com/calendar/render?hl=ja
-qmark f http://fastladder.com/reader/
-qmark F http://favotter.matope.com/user.php?user=YurineMashiro
-qmark g https://github.com/
-qmark G http://gist.github.com/
-qmark h http://translate.google.co.jp/translate_t?hl=ja&sl=en&tl=ja#
-qmark m https://mail.google.com/mail/
-qmark M http://mixi.jp/home.pl
-qmark t http://www.tumblr.com/dashboard/
-qmark T http://twitter.com/home/
-qmark p http://www.pixiv.net/mypage.php
-qmark w http://www.wolframalpha.com/
-qmark y http://search.yahoo.com/
+silent qmark c http://www.google.com/calendar/render?hl=ja
+silent qmark f http://fastladder.com/reader/
+silent qmark F http://favotter.matope.com/user.php?user=YurineMashiro
+silent qmark g https://github.com/
+silent qmark G http://gist.github.com/
+silent qmark h http://translate.google.co.jp/translate_t?hl=ja&sl=en&tl=ja#
+silent qmark m https://mail.google.com/mail/
+silent qmark M http://mixi.jp/home.pl
+silent qmark t http://www.tumblr.com/dashboard/
+silent qmark T http://twitter.com/home/
+silent qmark p http://www.pixiv.net/mypage.php
+silent qmark w http://www.wolframalpha.com/
+silent qmark y http://search.yahoo.com/
+
+" Bmarks {{{1
+" ======================================================================
+silent bmark -title="Google US Search" -tags=keyword -keyword=g http://www.google.com/search?q=%s
+silent bmark -title="Twitter" -tags=keyword -keyword=tw http://twitter.com/%s
+silent bmark -title="Twitter Search" -tags=keyword -keyword=ts http://search.twitter.com/search?q=%s
+silent bmark -title="ふぁぼったー" -tags=keyword -keyword=fav http://favotter.matope.com/user.php?user=%s
+silent bmark -title="Ustream" -tags=keyword -keyword=ust http://www.ustream.tv/channel/%s
+silent bmark -title="はてなダイアリー" -tags=keyword -keyword=hd http://d.hatena.ne.jp/%s
+silent bmark -title="ニコニコ動画" -tags=keyword -keyword=nico http://www.nicovideo.jp/watch/%s
+
 
 " Users {{{1
 " ======================================================================
