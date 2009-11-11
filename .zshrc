@@ -107,6 +107,7 @@ alias -g L='| less'
 alias -g H='| head'
 alias -g T='| tail'
 alias -g G='| grep'
+alias -g XG='| xargs grep'
 alias -g V='| vim -R -'
 
 alias s='screen -U'

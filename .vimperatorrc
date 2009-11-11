@@ -217,8 +217,8 @@ autocmd LocationChange http://(reader\\.livedoor\\.com|fastladder\\.com|0\\.0\\.
 autocmd LocationChange http://(reader\\.livedoor\\.com|fastladder\\.com|0\\.0\\.0\\.0\\:3000)/reader/ :fmap e,tj
 
 "   Gmail
-autocmd LocationChange mail\\.google\\.com/mail :fmap -depth 4 gi gs gt gd ga gc *a *n *r *u *s *t u k j o p n c / q ? x s y e m ! # r a f N ] [ z . I U S E
-autocmd LocationChange mail\\.google\\.com/mail :fmap -depth 4 E,Ie
+autocmd LocationChange mail\\.google\\.com/mail :fmap gi gs gt gd ga gc *a *n *r *u *s *t u k j o p n c / q ? x s y e m ! # r a f N ] [ z . I U S E
+autocmd LocationChange mail\\.google\\.com/mail :fmap E,Ie
 
 "   Tumblr
 autocmd LocationChange http://.*\\.tumblr\\.com/ :fmap j k
