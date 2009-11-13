@@ -1,5 +1,5 @@
 " Run commands quickly.
-" Version: 0.3.0
+" Version: 0.2.0
 " Author : thinca <thinca+vim@gmail.com>
 " License: Creative Commons Attribution 2.1 Japan License
 "          <http://creativecommons.org/licenses/by/2.1/jp/deed.en>
@@ -203,7 +203,7 @@ function! s:Runner.execute(cmd) " {{{2
   endif
 
   let cmd = a:cmd
-  if get(self, 'output') == '!'
+  if get(self, 'output') is '!'
     let in = get(self, 'input', '')
     if in != ''
       let inputfile = tempname()
@@ -426,21 +426,6 @@ endfunction
 function! s:quickrun(args) " {{{2
   try
     let runner = s:Runner.new(a:args)
-
-    let out = get(runner, 'output', '')
-    let append = get(runner, 'append', 0)
-    let running_mark = get(runner, 'running_mark', '')
-
-    if running_mark != '' && out == ''
-      call runner.open_result_window()
-      if !append
-        silent % delete _
-      endif
-      silent $-1 put =running_mark
-      normal! zt
-      redraw!
-    endif
-
     " let g:runner = runner " for debug
     let result = runner.run()
     let runner.result = result
@@ -449,26 +434,23 @@ function! s:quickrun(args) " {{{2
     return
   endtry
 
-  if out == ''
+  let out = get(runner, 'output')
+  let append = get(runner, 'append')
+  if out is ''
     " Output to the exclusive window.
     call runner.open_result_window()
-    if running_mark != ''
-      silent undo
-    endif
     if !append
       silent % delete _
     endif
 
     let cursor = getpos('$')
-    silent $-1 put =result
+    call append(line('$') - 1, split(result, "\n", 1))
     call setpos('.', cursor)
-    silent normal! zt
+    normal! zt
     wincmd p
-
-  elseif out == '!'
+  elseif out is '!'
     " Do nothing.
-
-  elseif out == ':'
+  elseif out is ':'
     if append
       for i in split(result, "\n")
         echomsg i
@@ -476,7 +458,6 @@ function! s:quickrun(args) " {{{2
     else
       echo result
     endif
-
   elseif out[0] == '='
     let out = out[1:]
     if out =~ '^\w[^:]'
@@ -487,7 +468,6 @@ function! s:quickrun(args) " {{{2
     else
       execute 'let' out '= result'
     endif
-
   else
     let size = strlen(result)
     if append && filereadable(out)
@@ -517,9 +497,9 @@ function! s:quickrun_complete(lead, cmd, pos) " {{{2
       return []
     end
   elseif head =~ '^-'
-    let options = map(['type', 'src', 'input', 'output', 'append', 'command',
-      \ 'exec', 'args', 'tempfile', 'shebang', 'eval', 'mode', 'split',
-      \ 'output_encode', 'shellcmd', 'running_mark', 'eval_template'],
+    let options = map(['type', 'src', 'input', 'output', 'append',
+      \ 'command', 'exec', 'args', 'tempfile', 'shebang', 'eval',
+      \ 'mode', 'split', 'output_encode', 'shellcmd', 'eval_template'],
       \ '"-".v:val')
     return filter(options, 'v:val =~ "^".head')
   end
@@ -543,7 +523,6 @@ function! s:init()
         \   'eval': 0,
         \   'eval_template': '%s',
         \   'shellcmd': s:is_win() ? 'silent !"%s" & pause' : '!%s',
-        \   'running_mark': ':-)',
         \ },
         \ 'awk': {
         \   'exec': '%c -f %s %a',
@@ -595,6 +574,11 @@ function! s:init()
         \   'tempfile': '{tempname()}.js',
         \ },
         \ 'lua': {},
+        \ 'mkd': {
+        \   'command': 'pandoc',
+        \   'exec': ['%c -f markdown -t html -o %s.html %s', 'open %s.html'],
+        \   'tempfile': '{tempname()}.md'
+        \ },
         \ 'dosbatch': {
         \   'command': '',
         \   'exec': 'call %s %a',
@@ -612,7 +596,9 @@ function! s:init()
         \   'command': 'R',
         \   'exec': '%c --no-save --slave %a < %s',
         \ },
-        \ 'ruby': {'eval_template': " p proc {\n%s\n}.call"},
+        \ 'ruby': {
+        \   'exec': '%c %s %a',
+        \ },
         \ 'scala': {},
         \ 'scheme': {
         \   'command': 'gosh',

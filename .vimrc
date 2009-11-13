@@ -175,14 +175,6 @@ nnoremap <silent> ,fb :FufBuffer!<CR>
 nnoremap <silent> ,ff :FufFile!<CR>
 nnoremap <silent> ,fd :FufDir!<CR>
 
-" quickrun.vim
-let g:quickrun_config = {
-\  'go': {
-\    'command': '6g',
-\    'exec': ['6g %s', '6l -o %s:p:r %s:p:r.6', '%s:p:r %a', 'rm -f %s:p:r']
-\  }
-\}
-
 
 "Color {{{1
 " colors

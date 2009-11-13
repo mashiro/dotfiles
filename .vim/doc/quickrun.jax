@@ -46,6 +46,7 @@ TODO				|quickrun-TODO|
 		let g:quickrun_config = {}
 		let g:quickrun_config.haskell = {'command' : 'runhugs'}
 	endif
+	let g:QuickRunConfig.haskell = {'command' : 'runhugs'}
 
 	" ショートカットキーを設定する
 	for [key, com] in items({
@@ -232,10 +233,6 @@ eval_template				*quickrun-option-eval_template*
 			eval が指定された際に使用されるテンプレート文字列で
 			す。テンプレート内の %s が src に置き変えられます。
 
-running_mark				*quickrun-option-running_mark*
-			この値が空文字列でない場合、実行中にこの文字列が出力先
-			に表示されます。表示は実行完了後に削除されます。
-
 
 ------------------------------------------------------------------------------
 オプション値の展開				*quickrun-expand-option*
@@ -339,10 +336,6 @@ TODO						*quickrun-TODO*
 
 ==============================================================================
 更新履歴					*quickrun-changelog*
-
-0.3.0	2009-11-01
-	- 実行中にバッファに一時的な文字列を表示する機能
-	  (|quickrun-option-running_mark|) を追加。
 
 0.2.0	2009-11-01
 	- バッファローカルな設定を行う機能 (|b:quickrun_config|) を追加。
