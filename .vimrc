@@ -102,6 +102,9 @@ endif
 
 
 "Map {{{1
+" leader
+let mapleader = ","
+
 " save, quit
 "nnoremap <silent> <Space>w :<C-u>up<CR>
 "nnoremap <silent> <Space>q :<C-u>quit<CR>
