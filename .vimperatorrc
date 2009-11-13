@@ -11,7 +11,7 @@ set defsearch=google
 set guioptions=rb
 set wildoptions=auto
 set complete=sl
-set history=500
+set history=1000
 set newtab=all
 set showtabline=2
 set laststatus=2
@@ -29,6 +29,8 @@ set! browser.urlbar.filter.javascript=false
 set! browser.urlbar.maxRichResults=20
 set! browser.sessionstore.max_tabs_undo=20
 set! dom.popup_maximum=999
+set! mousewheel.withnokey.numlines=6
+set! mousewheel.withnokey.sysnumlines=false
 
 
 " Mappings {{{1
@@ -46,14 +48,14 @@ noremap <BS> gu
 noremap <C-BS> gU
 
 " scrolling
-noremap j 5j
-noremap k 5k
+noremap j 6j
+noremap k 6k
 noremap J <C-d>
 noremap K <C-u>
-noremap <A-j> 5j
-noremap <A-k> 5k
-noremap <A-h> 5h
-noremap <A-l> 5l
+noremap <A-j> 6j
+noremap <A-k> 6k
+noremap <A-h> 6h
+noremap <A-l> 6l
 
 " tabs
 noremap l gt
