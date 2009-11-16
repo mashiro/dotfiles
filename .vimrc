@@ -1,6 +1,6 @@
 " Options {{{1
 set nocompatible
-set runtimepath^=~/.vim
+set runtimepath^=~/.vim,~/.vim_local
 syntax on
 filetype on
 filetype indent on

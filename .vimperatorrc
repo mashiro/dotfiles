@@ -315,6 +315,10 @@ liberator.globalVariables.hateDAopener_accounts = [
 EOM
 
 
+" no_reading.js {{{2
+let g:no_reading_do_echo = 1
+
+
 " Javascript {{{1
 " ======================================================================
 " ステータスバーにfeedボタンを表示 {{{2
