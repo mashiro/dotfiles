@@ -147,6 +147,7 @@ silent qmark t http://www.tumblr.com/dashboard/
 silent qmark T http://twitter.com/home/
 silent qmark p http://www.pixiv.net/mypage.php
 silent qmark w http://www.wolframalpha.com/
+silent qmark W https://wave.google.com/wave/
 silent qmark y http://search.yahoo.com/
 
 " Bmarks {{{1

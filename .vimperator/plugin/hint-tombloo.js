@@ -44,7 +44,10 @@ hints.addMode(
         }
 
         var extractors = tomblooService.check(context);
+		if (extractors.length > 0)
+			tomblooService.share(context, extractors[0], false);
 
+		/*
         liberator.modules.commandline.input(
             'Extractor: ',
             function (string) {
@@ -68,6 +71,7 @@ hints.addMode(
                 }
             }
         );
+		*/
     },
     function () hintXPath
 );
