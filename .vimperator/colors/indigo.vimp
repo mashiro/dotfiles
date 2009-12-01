@@ -2,46 +2,45 @@
 " name: indigo
 " ==/VimperatorColorSchema==
 
-hi Hint font-family: monospace; font-size: 14px; font-weight: normal; color: #dddddd; background-color: #1c1c1c; border-color: #1c1c1c; border-width: 0px; border-style: solid; padding: 0px 5px 0px 5px; 
-hi HintElem     background-color: #d0d0f0; color: #1c1c1c;
-hi HintActive   background-color: #5566bb; color: #dddded;
+hi Hint                 font-family: monospace; font-size: 14px; font-weight: normal; color: #dddddd; background-color: #1c1c1c; border-color: #1c1c1c; border-width: 0px; border-style: solid; padding: 0px 5px 0px 5px; 
+hi HintElem             background-color: #d0d0f0; color: #1c1c1c;
+hi HintActive           background-color: #5566bb; color: #dddded;
 
-hi StatusLine           color: #7090d0; background: #0c0c0c; font-weight: normal; font-size: 9pt;
-hi StatusLineBroken     color: #000000; background: #ffa0a0; font-weight: normal; font-size: 9pt;
-hi StatusLineExtended   color: #000000; background: #a0ffa0; font-weight: normal; font-size: 9pt;
-hi StatusLineSecure     color: #000000; background: #a0a0ff; font-weight: normal; font-size: 9pt;
+hi StatusLine           color: #7090d0; background: #0c0c0c; font-weight: normal; font-size: 12px;
+hi StatusLineBroken     color: #000000; background: #ffa0a0; font-weight: normal; font-size: 12px;
+hi StatusLineExtended   color: #000000; background: #a0ffa0; font-weight: normal; font-size: 12px;
+hi StatusLineSecure     color: #000000; background: #a0a0ff; font-weight: normal; font-size: 12px;
 
-hi Normal       color: #d0d0d0; background: #1c1c1c; font-size: 9pt;
-hi InfoMsg      color: #d0d0d0; background: #1c1c1c; font-size: 9pt;
-hi ModeMsg      color: #d0d0d0; background: #1c1c1c; font-size: 9pt;
-hi MoreMsg      color: #d0ffd0; background: #1c1c1c; font-size: 9pt;
-hi LineNr       color: #ffd0d0; background: #1c1c1c; font-size: 9pt;
-"hi Question     color: #9090a0; background: #1c1c1c; font-size: 9pt;
-hi Question     color: #a0a0f0; background: #1c1c1c; font-size: 9pt;
-hi WarningMsg   color: #ff0000; background: #1c1c1c; font-size: 9pt;
-hi ErrorMsg     color: #ffffff; background: #ff0000; font-size: 9pt;
-hi NonText      background: #1c1c1c;
-hi Null         color: CornflowerBlue;
-hi Tag          color: CornflowerBlue;
+hi Normal               color: #d0d0d0; background: #1c1c1c; font-size: 12px;
+hi InfoMsg              color: #d0d0d0; background: #1c1c1c; font-size: 12px;
+hi ModeMsg              color: #d0d0d0; background: #1c1c1c; font-size: 12px;
+hi MoreMsg              color: #d0ffd0; background: #1c1c1c; font-size: 12px;
+hi LineNr               color: #ffd0d0; background: #1c1c1c; font-size: 12px;
+hi Question             color: #a0a0f0; background: #1c1c1c; font-size: 12px;
+hi WarningMsg           color: #ff0000; background: #1c1c1c; font-size: 12px;
+hi ErrorMsg             color: #ffffff; background: #ff0000; font-size: 12px;
+hi NonText              background: #1c1c1c;
+hi Null                 color: CornflowerBlue;
+hi Tag                  color: CornflowerBlue;
 
-hi CompTitle            color: #808090; background: #1c1c1c; font-weight: bold;
-hi CompItem[selected]   color: #dddddd; background: #444448; font-weight: bold;
-hi CompDesc             color: #808090;
+hi CompTitle            color: #808090; background: #1c1c1c; font-weight: bold; font-size: 12px;
+hi CompItem[selected]   color: #dddddd; background: #444448;
+hi CompDesc             color: #808090; width: 50%;
 hi GradientLeft         background-color: #a0a0a0;
 hi GradientRight        background-color: #1c1c1c;
 
-hi Title        color: white;
-hi Indicator    color: DodgerBlue;
-hi String       color: Orchid;
-hi Number       color: Orchid;
-hi Object       color: Khaki;
-hi Function     color: SkyBlue;
-hi URL          color: LightGreen;
+hi FrameIndicator       background-color: #5566bb; opacity: 0.5; z-index: 999; position: fixed; top: 0; bottom: 0; left: 0; right: 0; 
 
-hi TabNumber    color: white; font-weight: bold; font-size:9pt;
+hi Title                color: #808090;
+hi Indicator            color: DodgerBlue;
+hi String               color: Orchid;
+hi Number               color: Orchid;
+hi Object               color: Khaki;
+hi Function             color: SkyBlue;
+hi URL                  color: LightGreen;
 
-style -name statusbar chrome://* <<EOM
-#status-bar statusbarpanel { padding: 0 1px !important; }
-statusbarpanel > * { margin: 0 !important; padding: 0 !important; }
-EOM
+hi TabNumber            font-weight: bold; color: white; text-align: center; text-shadow: #002244 -2px 0 2px, #002244 0 2px 2px, #002244 2px 0 2px, #002244 0 -2px 2px;
+hi TabIconNumber        font-weight: bold; color: white; text-align: center; text-shadow: #002244 -2px 0 2px, #002244 0 2px 2px, #002244 2px 0 2px, #002244 0 -2px 2px;
+
+hi CmdLine              font-family: monospace; padding: 1px; font-size: 14px;
 

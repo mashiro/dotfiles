@@ -1,0 +1,12 @@
+@namespace url(http://www.w3.org/1999/xhtml);
+
+@-moz-document domain("danbooru.donmai.us"),
+               domain("safebooru.donmai.us"),
+               domain("nekobooru.net"),
+               domain("moe.imouto.org"),
+               domain("konachan.com"),
+               domain("chan.sankakucomplex.com")
+{
+  span.blacklisted{display:block !important}
+  li.javascript-hide{display:block !important}
+}

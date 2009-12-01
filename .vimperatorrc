@@ -1,5 +1,5 @@
 " mashiro .vimperatorrc
-" vimperator-20091106
+" vimperator-20091130
 
 " Options {{{1
 " ======================================================================
@@ -220,7 +220,7 @@ autocmd LocationChange http://(reader\\.livedoor\\.com|fastladder\\.com|0\\.0\\.
 autocmd LocationChange http://(reader\\.livedoor\\.com|fastladder\\.com|0\\.0\\.0\\.0\\:3000)/reader/ :fmap e,tj
 
 "   Gmail
-autocmd LocationChange mail\\.google\\.com/mail :fmap gi gs gt gd ga gc *a *n *r *u *s *t u k j o p n c / q ? x s y e m ! # r a f N ] [ z . I U S E
+autocmd LocationChange mail\\.google\\.com/mail :fmap gi gs gt gd ga gc *a *n *r *u *s *t u k j o p n c / q ? x s y e m ! # r a f N ] [ z . I U S E GL
 autocmd LocationChange mail\\.google\\.com/mail :fmap E,Ie
 
 "   Tumblr
@@ -338,6 +338,23 @@ EOM
 
 " はてなブックマーク拡張 {{{2
 javascript if (typeof hBookmark != 'undefined') liberator.loadScript('chrome://hatenabookmark/content/vimperator/plugin/hatenabookmark.js', {__proto__: this});
+
+
+" ユーザースタイルシートを読み込む {{{2
+javascript <<EOM
+(function(){
+	let filter = new RegExp('^.*\.css$');
+	let dir = io.File('~/.vimperator/styles')
+	if (dir.exists() && dir.isDirectory() && dir.isReadable()) {
+		let files = dir.readDirectory(true);
+		files.forEach(function (file) {
+			if (filter.test(file.path)) {
+				io.source(file.path, false);
+			}
+		});
+	}
+})();
+EOM
 
 
 " Colors {{{1
