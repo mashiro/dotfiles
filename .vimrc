@@ -49,7 +49,7 @@ set directory=~/.vim_backup/swap
 set clipboard=unnamed
 
 
-"Encoding {{{1
+" Encoding {{{1
 if &encoding !=# 'utf-8'
   set encoding=japan
   set fileencoding=japan
@@ -101,7 +101,7 @@ endif
 
 
 
-"Map {{{1
+" Map {{{1
 " leader
 let mapleader = ","
 
@@ -122,12 +122,13 @@ nnoremap <C-t>l :tabnext<Cr>
 nnoremap <C-t>h :tabprev<Cr>
 
 
-"Command {{{1
+" Command {{{1
 " ctags
-command! CtagsR !ctags -R --C++-kinds=+p --fields=+iaS --extra=+q .<CR>
+command! -nargs=? CtagsR !ctags -R --C++-kinds=+p --fields=+iaS --extra=+q . <args>
 
 
-"Function {{{1
+" Function {{{1
+" include_guard {{{2
 function! s:include_guard()
     let fl = getline(1)
     if fl =~ "^#if"
@@ -141,17 +142,23 @@ function! s:include_guard()
     4
 endfunction
 
+" python_header {{{2
+function! s:python_header()
+	normal! gg
+	execute "normal! i#!/usr/bin/python"
+	execute "normal! o# -*- encoding: utf-8 -*-\<CR>"
+endfunction
 
 
-"AutoCmd {{{1
+" AutoCmd {{{1
 " Adjust highlight settings according to the current colorscheme.
 autocmd ColorScheme *
 \   highlight Pmenu         guifg=#d0d0d0 guibg=#222233
 \ | highlight PmenuSel      guifg=#eeeeee guibg=#4f4f87 gui=bold
 \ | highlight PmenuSbar                   guibg=#333344
 
-" MSBuild
-"autocmd Filetype c,cpp,cs,vb compiler msbuild
+" useful when changing directories when buffers are changed
+autocmd BufEnter * execute ":lcd " . expand("%:p:h")
 
 " changelog
 autocmd BufNewFile,BufRead *.changelog set filetype=changelog
@@ -161,8 +168,11 @@ let g:changelog_username = "mashiro <y.mashiro@gmail.com>"
 " include guard
 autocmd BufNewFile *.h,*.hh,*.hpp call s:include_guard()
 
+" python header
+autocmd BufNewFile *.py call s:python_header()
 
-"Plugin {{{1
+
+" Plugin {{{1
 " autocomplpop.vim
 let g:AutoComplPop_IgnoreCaseOption = 1
 let g:AutoComplPop_BehaviorKeywordLength = 2
@@ -176,7 +186,7 @@ nnoremap <silent> ,ff :FufFile!<CR>
 nnoremap <silent> ,fd :FufDir!<CR>
 
 
-"Color {{{1
+" Color {{{1
 " colors
 if &t_Co >= 256 || has("gui_running")
     colorscheme xoria256
