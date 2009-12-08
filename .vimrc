@@ -6,6 +6,8 @@ augroup END
 
 
 " Encoding {{{2
+set encoding&
+set fileencoding&
 if &encoding !=# 'utf-8'
 	set encoding=japan
 	set fileencoding=japan
@@ -69,16 +71,16 @@ endif
 " Optioins {{{2
 filetype plugin indent on
 set nocompatible
-set runtimepath^=~/.vim
-set backupdir=.,~/tmp
-set directory=.,~/tmp
+set runtimepath& runtimepath^=~/.vim
+set backupdir=~/tmp,.,~/
+set directory=~/tmp,.,~/
 set clipboard=unnamed
 
 " view
 set antialias
 set number
 set ruler
-set cursorline
+"set cursorline
 set foldmethod=marker
 set laststatus=2 
 set showcmd
@@ -99,10 +101,10 @@ set smartindent
 set backspace=indent,eol,start
 set showmatch
 set wildmenu
-set formatoptions+=mM
+set formatoptions& formatoptions+=mM
 set iminsert=0
 set imsearch=-1
-set tags+=./tags;,./**/tags
+set tags& tags+=./tags;,./**/tags
 
 " tab
 set tabstop=4
@@ -110,6 +112,18 @@ set shiftwidth=4
 set softtabstop=4
 set noexpandtab
 set smarttab
+
+" mouse support
+"set mouse=a
+"if &term =~ '^screen'
+"	autocmd MyAutoCmd VimLeave * :set mouse=
+"	set ttymouse=xterm2
+"endif
+"if has('gui_running')
+"	set mousemodel=popup
+"	set nomousefocus
+"	set mousehide
+"endif
 
 
 " Utilities {{{1
@@ -120,6 +134,11 @@ command! -nargs=? -complete=dir -bang CD  call s:change_current_dir('<args>', '<
 " CTagsR {{{2
 command! -nargs=? CtagsR !ctags -R --C++-kinds=+p --fields=+iaS --extra=+q . <args>
 
+
+" Enc {{{2
+command! -bang -nargs=? Utf8 edit<bang> ++enc=utf-8 <args>
+command! -bang -nargs=? EucJp edit<bang> ++enc=euc-jp <args>
+command! -bang -nargs=? Cp932 edit<bang> ++enc=cp932 <args>
 
 function! s:change_current_dir(directory, bang) " {{{2
 	if a:directory == ''
@@ -167,26 +186,55 @@ nnoremap <silent> <Space>eg :<C-u>edit ~/.gvimrc<CR>
 
 " load .vimrc
 nnoremap <silent> <Space>rv :<C-u>source ~/.vimrc \| if has('gui_running') \| source ~/.gvimrc \| endif<CR>
-nnoremap <silent> <Space>rg :<C-u>source source ~/.gvimrc<CR>
+nnoremap <silent> <Space>rg :<C-u>source ~/.gvimrc<CR>
 
 " save, quit
 nnoremap <silent> <Space>w :<C-u>up<CR>
 nnoremap <silent> <Space>q :<C-u>quit<CR>
 
+" add new line
+nnoremap O :<C-u>call append(expand('.'), '')<Cr>j
+
+" toggle option
+nnoremap <Space>ow :<C-u>setlocal wrap! \| setlocal wrap?<CR>
+nnoremap <Space>on :<C-u>setlocal number! \| setlocal number?<CR>
+
 " fold
-nnoremap <expr> h col('.') == 1 && foldlevel(line('.')) > 0 ? 'zc' : 'h'
-nnoremap <expr> l foldclosed(line('.')) != -1 ? 'zo0' : 'l'
-vnoremap <expr> h col('.') == 1 && foldlevel(line('.')) > 0 ? 'zcgv' : 'h'
-vnoremap <expr> l foldclosed(line('.')) != -1 ? 'zogv0' : 'l'
+"nnoremap <expr> h col('.') == 1 && foldlevel(line('.')) > 0 ? 'zc' : 'h'
+"nnoremap <expr> l foldclosed(line('.')) != -1 ? 'zo0' : 'l'
+"vnoremap <expr> h col('.') == 1 && foldlevel(line('.')) > 0 ? 'zcgv' : 'h'
+"vnoremap <expr> l foldclosed(line('.')) != -1 ? 'zogv0' : 'l'
+
+" window
+"nnoremap <C-w>h <C-w>h:call <SID>window_min_resize()<CR>
+"nnoremap <C-w>l <C-w>l:call <SID>window_min_resize()<CR>
+"nnoremap <C-w>j <C-w>j:call <SID>window_min_resize()<CR>
+"nnoremap <C-w>k <C-w>k:call <SID>window_min_resize()<CR>
+"nnoremap <C-w>H <C-w>H:call <SID>window_min_resize()<CR>
+"nnoremap <C-w>L <C-w>L:call <SID>window_min_resize()<CR>
+"nnoremap <C-w>J <C-w>J:call <SID>window_min_resize()<CR>
+"nnoremap <C-w>K <C-w>K:call <SID>window_min_resize()<CR>
+"function! s:window_min_resize()
+"	if winwidth(0) < 84
+"		vertical resize 84
+"	endif
+"	if winheight(0) < 30
+"		resize 30
+"	endif
+"endfunction
 
 " tab
-nnoremap <C-t>n :tabnew<Cr>
-nnoremap <C-t>c :tabclose<Cr>
-nnoremap <C-t>l :tabnext<Cr>
-nnoremap <C-t>h :tabprev<Cr>
+nnoremap <C-t> <Nop>
+nnoremap <C-t>n :<C-u>tabnew<Cr>
+nnoremap <C-t>c :<C-u>tabclose<Cr>
+nnoremap <C-t>o :<C-u>tabonly<Cr>
+nnoremap <C-t>l gt
+nnoremap <C-t>h gT
+nnoremap <C-t>j gt
+nnoremap <C-t>k gT
 
 " change current directury
-nnoremap <silent> <Leader>cd :<C-u>CD<CR>
+nnoremap <silent> <Space>cd :<C-u>CD<CR>
 
 
 " AutoCmds {{{1
