@@ -151,7 +151,7 @@ endfunction
 
 
 " AutoCmd {{{1
-" Adjust highlight settings according to the current colorscheme.
+" adjust highlight settings according to the current colorscheme.
 autocmd ColorScheme *
 \   highlight Pmenu         guifg=#d0d0d0 guibg=#222233
 \ | highlight PmenuSel      guifg=#eeeeee guibg=#4f4f87 gui=bold
