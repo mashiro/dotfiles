@@ -1,10 +1,78 @@
-" Options {{{1
+" Basic {{{1
+" Initialize {{{2
+augroup MyAutoCmd
+	autocmd!
+augroup END
+
+
+" Encoding {{{2
+if &encoding !=# 'utf-8'
+	set encoding=japan
+	set fileencoding=japan
+endif
+if has('iconv')
+	let s:enc_euc = 'euc-jp'
+	let s:enc_jis = 'iso-2022-jp'
+	if iconv("\x87\x64\x87\x6a", 'cp932', 'eucjp-ms') ==# "\xad\xc5\xad\xcb"
+		let s:enc_euc = 'eucjp-ms'
+		let s:enc_jis = 'iso-2022-jp-3'
+	elseif iconv("\x87\x64\x87\x6a", 'cp932', 'euc-jisx0213') ==# "\xad\xc5\xad\xcb"
+		let s:enc_euc = 'euc-jisx0213'
+		let s:enc_jis = 'iso-2022-jp-3'
+	endif
+	if &encoding ==# 'utf-8'
+		let s:fileencodings_default = &fileencodings
+		let &fileencodings = s:enc_jis .','. s:enc_euc .',cp932'
+		let &fileencodings = &fileencodings .','. s:fileencodings_default
+		unlet s:fileencodings_default
+	else
+		let &fileencodings = &fileencodings .','. s:enc_jis
+		set fileencodings+=utf-8,ucs-2le,ucs-2
+		if &encoding =~# '^\(euc-jp\|euc-jisx0213\|eucjp-ms\)$'
+			set fileencodings+=cp932
+			set fileencodings-=euc-jp
+			set fileencodings-=euc-jisx0213
+			set fileencodings-=eucjp-ms
+			let &encoding = s:enc_euc
+			let &fileencoding = s:enc_euc
+		else
+			let &fileencodings = &fileencodings .','. s:enc_euc
+		endif
+	endif
+	unlet s:enc_euc
+	unlet s:enc_jis
+endif
+if has('autocmd')
+	function! AU_ReCheck_FENC()
+		if &fileencoding =~# 'iso-2022-jp' && search("[^\x01-\x7e]", 'n') == 0
+			let &fileencoding=&encoding
+		endif
+	endfunction
+	autocmd MyAutoCmd BufReadPost * call AU_ReCheck_FENC()
+endif
+set fileformats=unix,dos,mac
+if exists('&ambiwidth')
+	set ambiwidth=double
+endif
+
+
+" Color {{{2
+if (1 < &t_Co || has('gui')) && has('syntax')
+	syntax on
+	set background=dark
+	if (256 <= &t_Co)
+		colorscheme xoria256
+	endif
+endif
+
+
+" Optioins {{{2
+filetype plugin indent on
 set nocompatible
-set runtimepath^=~/.vim,~/.vim_local
-syntax on
-filetype on
-filetype indent on
-filetype plugin on
+set runtimepath^=~/.vim
+set backupdir=.,~/tmp
+set directory=.,~/tmp
+set clipboard=unnamed
 
 " view
 set antialias
@@ -43,71 +111,67 @@ set softtabstop=4
 set noexpandtab
 set smarttab
 
-" backup
-set backupdir=~/.vim_backup/backup
-set directory=~/.vim_backup/swap
-set clipboard=unnamed
+
+" Utilities {{{1
+" CD {{{2
+command! -nargs=? -complete=dir -bang CD  call s:change_current_dir('<args>', '<bang>')
 
 
-" Encoding {{{1
-if &encoding !=# 'utf-8'
-  set encoding=japan
-  set fileencoding=japan
-endif
-if has('iconv')
-  let s:enc_euc = 'euc-jp'
-  let s:enc_jis = 'iso-2022-jp'
-  if iconv("\x87\x64\x87\x6a", 'cp932', 'eucjp-ms') ==# "\xad\xc5\xad\xcb"
-    let s:enc_euc = 'eucjp-ms'
-    let s:enc_jis = 'iso-2022-jp-3'
-  elseif iconv("\x87\x64\x87\x6a", 'cp932', 'euc-jisx0213') ==# "\xad\xc5\xad\xcb"
-    let s:enc_euc = 'euc-jisx0213'
-    let s:enc_jis = 'iso-2022-jp-3'
-  endif
-  if &encoding ==# 'utf-8'
-    let s:fileencodings_default = &fileencodings
-    let &fileencodings = s:enc_jis .','. s:enc_euc .',cp932'
-    let &fileencodings = &fileencodings .','. s:fileencodings_default
-    unlet s:fileencodings_default
-  else
-    let &fileencodings = &fileencodings .','. s:enc_jis
-    set fileencodings+=utf-8,ucs-2le,ucs-2
-    if &encoding =~# '^\(euc-jp\|euc-jisx0213\|eucjp-ms\)$'
-      set fileencodings+=cp932
-      set fileencodings-=euc-jp
-      set fileencodings-=euc-jisx0213
-      set fileencodings-=eucjp-ms
-      let &encoding = s:enc_euc
-      let &fileencoding = s:enc_euc
-    else
-      let &fileencodings = &fileencodings .','. s:enc_euc
-    endif
-  endif
-  unlet s:enc_euc
-  unlet s:enc_jis
-endif
-if has('autocmd')
-  function! AU_ReCheck_FENC()
-    if &fileencoding =~# 'iso-2022-jp' && search("[^\x01-\x7e]", 'n') == 0
-      let &fileencoding=&encoding
-    endif
-  endfunction
-  autocmd BufReadPost * call AU_ReCheck_FENC()
-endif
-set fileformats=unix,dos,mac
-if exists('&ambiwidth')
-  set ambiwidth=double
-endif
+" CTagsR {{{2
+command! -nargs=? CtagsR !ctags -R --C++-kinds=+p --fields=+iaS --extra=+q . <args>
 
 
+function! s:change_current_dir(directory, bang) " {{{2
+	if a:directory == ''
+		lcd %:p:h
+	else
+		execute 'lcd' . a:directory
+	endif
+	if a:bang == ''
+		pwd
+	endif
+endfunction
 
-" Map {{{1
+function! s:include_guard() " {{{2
+	let fl = getline(1)
+	if fl =~ "^#if"
+		return
+	endif
+	let gatename = substitute(toupper(expand("%:t")), "\\.", "_", "g")
+	normal! gg
+	execute "normal! i#ifndef " . gatename . "_INCLUDED"
+	execute "normal! o#define " . gatename . "_INCLUDED\<CR>\<CR>\<CR>"
+	execute "normal! Go#endif /* " . gatename . "_INCLUDED */"
+	4
+endfunction
+
+
+function! s:python_header() " {{{2
+	let fl = getline(1)
+	if fl =~ "^#!"
+		return
+	endif
+	normal! gg
+	execute "normal! i#!/usr/bin/python"
+	execute "normal! o# -*- encoding: utf-8 -*-\<CR>"
+endfunction
+
+
+" Mappings {{{1
 " leader
 let mapleader = ","
 
+" edit .vimrc
+nnoremap <silent> <Space>ev :<C-u>edit ~/.vimrc<CR>
+nnoremap <silent> <Space>eg :<C-u>edit ~/.gvimrc<CR>
+
+" load .vimrc
+nnoremap <silent> <Space>rv :<C-u>source ~/.vimrc \| if has('gui_running') \| source ~/.gvimrc \| endif<CR>
+nnoremap <silent> <Space>rg :<C-u>source source ~/.gvimrc<CR>
+
 " save, quit
-"nnoremap <silent> <Space>w :<C-u>up<CR>
-"nnoremap <silent> <Space>q :<C-u>quit<CR>
+nnoremap <silent> <Space>w :<C-u>up<CR>
+nnoremap <silent> <Space>q :<C-u>quit<CR>
 
 " fold
 nnoremap <expr> h col('.') == 1 && foldlevel(line('.')) > 0 ? 'zc' : 'h'
@@ -121,80 +185,62 @@ nnoremap <C-t>c :tabclose<Cr>
 nnoremap <C-t>l :tabnext<Cr>
 nnoremap <C-t>h :tabprev<Cr>
 
-
-" Command {{{1
-" ctags
-command! -nargs=? CtagsR !ctags -R --C++-kinds=+p --fields=+iaS --extra=+q . <args>
+" change current directury
+nnoremap <silent> <Leader>cd :<C-u>CD<CR>
 
 
-" Function {{{1
-" include_guard {{{2
-function! s:include_guard()
-    let fl = getline(1)
-    if fl =~ "^#if"
-        return
-    endif
-    let gatename = substitute(toupper(expand("%:t")), "\\.", "_", "g")
-    normal! gg
-    execute "normal! i#ifndef " . gatename . "_INCLUDED"
-    execute "normal! o#define " . gatename . "_INCLUDED\<CR>\<CR>\<CR>"
-    execute "normal! Go#endif /* " . gatename . "_INCLUDED */"
-    4
-endfunction
-
-" python_header {{{2
-function! s:python_header()
-	normal! gg
-	execute "normal! i#!/usr/bin/python"
-	execute "normal! o# -*- encoding: utf-8 -*-\<CR>"
-endfunction
-
-
-" AutoCmd {{{1
+" AutoCmds {{{1
 " adjust highlight settings according to the current colorscheme.
-autocmd ColorScheme *
+autocmd MyAutoCmd ColorScheme *
 \   highlight Pmenu         guifg=#d0d0d0 guibg=#222233
 \ | highlight PmenuSel      guifg=#eeeeee guibg=#4f4f87 gui=bold
 \ | highlight PmenuSbar                   guibg=#333344
 
+" omni-completion
+if has("autocmd") && exists("+omnifunc")
+	autocmd MyAutoCmd Filetype *
+	\   if &omnifunc == ""
+	\ |     setlocal omnifunc=syntaxcomplete#Complete
+	\ | endif
+endif
+
+" auto ime off (gvim only)
+autocmd MyAutoCmd InsertLeave * set iminsert=0 imsearch=0
+
 " useful when changing directories when buffers are changed
-autocmd BufEnter * execute ":lcd " . expand("%:p:h")
+autocmd MyAutoCmd BufEnter * execute ":lcd " . expand("%:p:h")
 
 " changelog
-autocmd BufNewFile,BufRead *.changelog set filetype=changelog
+autocmd MyAutoCmd BufNewFile,BufRead *.changelog set filetype=changelog
 let g:changelog_timeformat = "%Y-%m-%d"
 let g:changelog_username = "mashiro <y.mashiro@gmail.com>"
 
 " include guard
-autocmd BufNewFile *.h,*.hh,*.hpp call s:include_guard()
+autocmd MyAutoCmd BufNewFile *.h,*.hh,*.hpp call s:include_guard()
 
 " python header
-autocmd BufNewFile *.py call s:python_header()
+autocmd MyAutoCmd BufNewFile *.py call s:python_header()
 
 
-" Plugin {{{1
-" autocomplpop.vim
+" Plugins {{{1
+" autocomplpop.vim {{{2
 let g:AutoComplPop_IgnoreCaseOption = 1
 let g:AutoComplPop_BehaviorKeywordLength = 2
 let g:AutoComplPop_BehaviorFileLength = 0
 
-" FuzzyFinder.vim
+" FuzzyFinder.vim {{{2
 nnoremap <silent> <C-n> :FufBuffer!<CR>
 nnoremap <silent> <C-p> :FufDir!<CR>
 nnoremap <silent> ,fb :FufBuffer!<CR>
 nnoremap <silent> ,ff :FufFile!<CR>
 nnoremap <silent> ,fd :FufDir!<CR>
 
-
-" Color {{{1
-" colors
-if &t_Co >= 256 || has("gui_running")
-    colorscheme xoria256
-else
-    set background=dark
-endif
+" Align.vim {{{2
+let g:Align_xstrlen=3
 
 
 " End {{{1
-cd ~
+if filereadable($HOME . '/.vimrc.local')
+	source $HOME/.vimrc.local
+endif
 
