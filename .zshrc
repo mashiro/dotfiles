@@ -127,8 +127,8 @@ alias :q=exit
 
 case "${OSTYPE}" in
 darwin*)
-    alias portupdate="sudo port selfupdate; sudo port outdated"
-    alias portupgrade="sudo port upgrade --enforce-variants installed"
+    alias port-update="sudo port selfupdate; sudo port outdated"
+    alias port-upgrade="sudo port upgrade --enforce-variants installed"
     ;;
 freebsd*)
     case ${UID} in

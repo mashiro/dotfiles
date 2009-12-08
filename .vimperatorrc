@@ -5,24 +5,25 @@
 " ======================================================================
 set runtimepath=~/.vimperator
 set titlestring=Firefox
-"set messages=1000
-"set verbose=15
+set messages=100
+set verbose=1
 set defsearch=google
 set guioptions=rb
 set wildoptions=auto
 set complete=sl
-set history=1000
+set history=10000
 set newtab=all
 set showtabline=2
 set laststatus=2
 set popups=tab
-set focuscontent
 set hlsearch
 set ignorecase
-set smartcase
 set incsearch
+set smartcase
+
 set visualbell
 highlight Bell display: none; 
+
 set! ui.key.generalAccessKey=0
 set! browser.tabs.closeButtons=2
 set! browser.urlbar.filter.javascript=false
@@ -87,6 +88,7 @@ noremap U :undo
 noremap eu :set encoding=UTF-8<CR>
 noremap es :set encoding=Shift_JIS<CR>
 noremap ee :set encoding=EUC-JP<CR>
+noremap ej :set encoding=ISO-2022-JP<CR>
 
 " ex
 cnoremap <C-j> <Nop>
@@ -230,17 +232,19 @@ autocmd LocationChange http://.*\\.tumblr\\.com/ :fmap e,tj
 
 
 " direct_bookmark.js {{{2
-let g:direct_sbm_use_services_by_tag = "h"
-let g:direct_sbm_use_services_by_post = "h"   
-"noremap a :sbm 
-"noremap A :sbm<CR>
-"noremap ,a :btags<CR>
+let g:direct_sbm_use_services_by_tag = "hd"
+let g:direct_sbm_use_services_by_post = "hd"   
+noremap <Leader>ba :sbm 
+noremap <Leader>bA :sbm<CR>
+noremap <Leader>be :bentry<CR>
+noremap <Leader>bt :btags<CR>
+noremap <Leader>bi :bicon<CR>
 
 
 " sbmcommentsviewer.js {{{2
 let g:def_sbm_format = "timestamp,id,tagsAndComment"
-let g:def_sbms = "h"
-map <Leader>bc :viewSBMComments<CR>
+let g:def_sbms = "hd"
+noremap <Leader>bc :viewSBMComments<CR>
 
 
 " uaSwitchLite.js {{{2
@@ -304,16 +308,6 @@ EOM
 
 " browser_object.js {{{2
 let g:browser_object_prefix = ',' 
-
-
-" hateDAopener.js {{{2
-js <<EOM
-liberator.globalVariables.hateDAopener_accounts = [
-	['y_mashiro', 'd'],
-	['y_mashiro', 'vimperator.g'],
-	['y_mashiro', 'twitterircgateway.g']
-];
-EOM
 
 
 " no_reading.js {{{2
