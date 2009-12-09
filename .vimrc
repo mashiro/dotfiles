@@ -189,11 +189,17 @@ nnoremap <silent> <Space>rv :<C-u>source ~/.vimrc \| if has('gui_running') \| so
 nnoremap <silent> <Space>rg :<C-u>source ~/.gvimrc<CR>
 
 " save, quit
-nnoremap <silent> <Space>w :<C-u>up<CR>
+nnoremap <silent> <Space>w :<C-u>update<CR>
 nnoremap <silent> <Space>q :<C-u>quit<CR>
 
+" emacs like move [begin|end] line
+noremap <C-a> <Home>
+noremap <C-e> <End>
+noremap! <C-a> <Home>
+noremap! <C-e> <End>
+
 " add new line
-nnoremap O :<C-u>call append(expand('.'), '')<Cr>j
+"nnoremap <Space>O :<C-u>call append(expand('.'), '')<Cr>j
 
 " toggle option
 nnoremap <Space>ow :<C-u>setlocal wrap! \| setlocal wrap?<CR>
@@ -204,6 +210,8 @@ nnoremap <Space>on :<C-u>setlocal number! \| setlocal number?<CR>
 "nnoremap <expr> l foldclosed(line('.')) != -1 ? 'zo0' : 'l'
 "vnoremap <expr> h col('.') == 1 && foldlevel(line('.')) > 0 ? 'zcgv' : 'h'
 "vnoremap <expr> l foldclosed(line('.')) != -1 ? 'zogv0' : 'l'
+nnoremap <Space>zo zO
+nnoremap <Space>zc zC
 
 " window
 "nnoremap <C-w>h <C-w>h:call <SID>window_min_resize()<CR>
