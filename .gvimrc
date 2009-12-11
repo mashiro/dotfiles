@@ -1,9 +1,9 @@
 " Options {{{1
 if has('win32')
-    set guifont=M+2VM+IPAG_circle:h10:cSHIFTJIS
+    set guifont=M+1VM+IPAG_circle:h10:cSHIFTJIS
 elseif has('gui_macvim')
     set guifont=AndaleMono:h12
-    set transparency=20
+    set transparency=15
 endif
 
 set guioptions=ai
