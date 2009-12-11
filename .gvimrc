@@ -16,7 +16,6 @@ colorscheme xoria256
 
 
 " End {{{1
-if filereadable($HOME . '/.gvimrc.local')
-    source $HOME/.gvimrc.local
+if filereadable(expand('~/.gvimrc.local'))
+    source ~/.gvimrc.local
 endif
-

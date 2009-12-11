@@ -1,16 +1,33 @@
-" Vim syntax file
-" Language:	Squirrel
+" Vim syn file
+" Language:		Squirrel
 " Maintainer:	mashiro <y.mashiro@gmail.com>
-" Last Change:	$Date: 2009/07/14 $
-" File Types:	.nut
+" Last Change:	2009/12/11
 
-" Load the javaScript sytanx for now.
+" Quit when a syntax file was already loaded
+if exists("b:current_syntax")
+	finish
+endif
+
+" Read the javascript syntax to start with
 runtime! syntax/javascript.vim
+unlet b:current_syntax
 
-syn keyword squirrelStatement local
+" Keyword definitions
+syn keyword sqRepeat			foreach
+syn keyword sqStorageClass		local
+syn keyword sqStorageClass		static
+syn keyword sqStatement			clone
+syn keyword sqStatement			delegate
+syn keyword sqStatement			resume
+syn keyword sqStatement			this
+syn keyword sqStatement			parent
+syn keyword sqStatement			yield
+syn keyword sqFunction			constructor
 
-hi def link squirrelStatement Statement
+" Define the default highlighting
+hi def link sqRepeat			Repeat
+hi def link sqStorageClass		StorageClass
+hi def link sqStatement			Statement
+hi def link sqFunction			Function
 
 let b:current_syntax = "squirrel"
-
-" vim: ts=8

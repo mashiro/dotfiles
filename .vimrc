@@ -72,8 +72,8 @@ endif
 filetype plugin indent on
 set nocompatible
 set runtimepath& runtimepath^=~/.vim
-set backupdir=~/tmp,.,~/
-set directory=~/tmp,.,~/
+set backupdir=~/tmp,~/,./
+set directory=~/tmp,~/,./
 set clipboard=unnamed
 
 " view
@@ -296,7 +296,7 @@ let g:Align_xstrlen=3
 
 
 " End {{{1
-if filereadable($HOME . '/.vimrc.local')
-	source $HOME/.vimrc.local
+if filereadable(expand('~/.vimrc.local'))
+	source ~/.vimrc.local
 endif
 
