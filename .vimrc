@@ -192,6 +192,10 @@ nnoremap <silent> <Space>rg :<C-u>source ~/.gvimrc<CR>
 nnoremap <silent> <Space>w :<C-u>update<CR>
 nnoremap <silent> <Space>q :<C-u>quit<CR>
 
+" escape
+noremap <Nul> <Esc>
+noremap! <Nul> <Esc>
+
 " emacs like move [begin|end] line
 noremap <C-a> <Home>
 noremap <C-e> <End>
