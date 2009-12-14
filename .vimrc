@@ -193,6 +193,8 @@ nnoremap <silent> <Space>w :<C-u>update<CR>
 nnoremap <silent> <Space>q :<C-u>quit<CR>
 
 " escape (jis)
+map <Nul> <C-@>
+map! <Nul> <C-@>
 noremap <C-@> <Esc>
 noremap! <C-@> <Esc>
 
