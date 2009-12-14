@@ -44,6 +44,11 @@ mapclear
 cmapclear
 imapclear
 
+" escape
+noremap <C-@> <Esc>
+cnoremap <C-@> <Esc>
+inoremap <C-@> <Esc>
+
 " depth
 noremap <BS> gu
 noremap <C-BS> gU
