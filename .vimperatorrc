@@ -1,6 +1,12 @@
 " mashiro .vimperatorrc
 " vimperator-20091130
 
+" Initialize {{{1
+mapclear
+cmapclear
+imapclear
+
+
 " Options {{{1
 " ======================================================================
 set runtimepath=~/.vimperator
@@ -24,6 +30,8 @@ set smartcase
 set visualbell
 highlight Bell display: none; 
 
+colorscheme indigo
+
 set! ui.key.generalAccessKey=0
 set! browser.tabs.closeButtons=2
 set! browser.urlbar.filter.javascript=false
@@ -32,112 +40,6 @@ set! browser.sessionstore.max_tabs_undo=20
 set! dom.popup_maximum=999
 set! mousewheel.withnokey.numlines=6
 set! mousewheel.withnokey.sysnumlines=false
-
-
-" Mappings {{{1
-" ======================================================================
-" leader
-let mapleader = ","
-
-" clear
-mapclear
-cmapclear
-imapclear
-
-" escape
-noremap <C-@> <Esc>
-cnoremap <C-@> <Esc>
-inoremap <C-@> <Esc>
-
-" depth
-noremap <BS> gu
-noremap <C-BS> gU
-
-" scrolling
-noremap j 6j
-noremap k 6k
-noremap J <C-d>
-noremap K <C-u>
-noremap <A-j> 6j
-noremap <A-k> 6k
-noremap <A-h> 6h
-noremap <A-l> 6l
-
-" tabs
-noremap l gt
-noremap h gT
-noremap <C-l> :tabmove! +1<CR>
-noremap <C-h> :tabmove! -1<CR>
-
-" others
-"noremap <C-a> a
-"noremap <C-A> A
-noremap y Y
-noremap Y y
-noremap zi zI
-noremap zI zi
-noremap zm zM
-noremap zM zm
-noremap zo zO
-noremap zO zo
-noremap zr zR
-noremap zR zr
-noremap zz zZ
-noremap zZ zz
-
-noremap <C-r> :restart<CR>
-noremap <Leader>h :history! -max=1 
-noremap <Leader>s :source ~/.vimperatorrc<CR>
-noremap U :undo 
-
-noremap eu :set encoding=UTF-8<CR>
-noremap es :set encoding=Shift_JIS<CR>
-noremap ee :set encoding=EUC-JP<CR>
-noremap ej :set encoding=ISO-2022-JP<CR>
-
-" ex
-cnoremap <C-j> <Nop>
-cnoremap <C-b> <Left>
-cnoremap <C-f> <Right>
-cnoremap <C-n> <Tab>
-cnoremap <C-p> <S-Tab>
-
-" input
-inoremap <C-f> <Right>
-inoremap <C-b> <Left>
-inoremap <C-p> <Up>
-inoremap <C-n> <Down>
-
-" copy/paste
-javascript <<EOM
-if (liberator.has("Win32")) {
-    liberator.execute("cnoremap <C-a> <C-v><C-a>");
-    liberator.execute("cnoremap <C-z> <C-v><C-z>");
-    liberator.execute("cnoremap <C-x> <C-v><C-x>");
-    liberator.execute("cnoremap <C-c> <C-v><C-c>");
-    liberator.execute("cnoremap <C-v> <C-v><C-v>");
-    liberator.execute("inoremap <C-a> <C-v><C-a>");
-    liberator.execute("inoremap <C-z> <C-v><C-z>");
-    liberator.execute("inoremap <C-x> <C-v><C-x>");
-    liberator.execute("inoremap <C-c> <C-v><C-c>");
-    liberator.execute("inoremap <C-v> <C-v><C-v>");
-}
-else if (liberator.has("MacUnix")) {
-    liberator.execute("cnoremap <M-a> <C-v><M-a>");
-    liberator.execute("cnoremap <M-z> <C-v><M-z>");
-    liberator.execute("cnoremap <M-x> <C-v><M-x>");
-    liberator.execute("cnoremap <M-c> <C-v><M-c>");
-    liberator.execute("cnoremap <M-v> <C-v><M-v>");
-    liberator.execute("inoremap <M-a> <C-v><M-a>");
-    liberator.execute("inoremap <M-z> <C-v><M-z>");
-    liberator.execute("inoremap <M-x> <C-v><M-x>");
-    liberator.execute("inoremap <M-c> <C-v><M-c>");
-    liberator.execute("inoremap <M-v> <C-v><M-v>");
-}
-else {
-}
-EOM
-
 
 
 " QMarks {{{1
@@ -157,6 +59,7 @@ silent qmark w http://www.wolframalpha.com/
 silent qmark W https://wave.google.com/wave/
 silent qmark y http://search.yahoo.com/
 
+
 " Bmarks {{{1
 " ======================================================================
 silent bmark -title="Google US Search" -tags=keyword -keyword=g http://www.google.com/search?q=%s
@@ -168,11 +71,10 @@ silent bmark -title="はてなダイアリー" -tags=keyword -keyword=hd http://
 silent bmark -title="ニコニコ動画" -tags=keyword -keyword=nico http://www.nicovideo.jp/watch/%s
 
 
-" Users {{{1
+" Commands {{{1
 " ======================================================================
 " http://vimperator.g.hatena.ne.jp/snaka72/20090203/1233674801
 command! -nargs=* feedkeys js events.feedkeys("<args>")
-
 
 
 " Plugins {{{1
@@ -301,6 +203,7 @@ liberator.globalVariables.refcontrol={
   'blogs.yahoo.co.jp' : '@FORGE',
   'blog.goo.ne.jp'    : '@FORGE',
   'ameblo.jp'         : '@FORGE',
+  'nekobooru.net'     : '@FORGE',
 };
 EOM
 
@@ -336,19 +239,19 @@ let g:browser_object_prefix = ','
 let g:no_reading_do_echo = 1
 
 
-" Javascript {{{1
+" Javascripts {{{1
 " ======================================================================
 " ステータスバーにfeedボタンを表示 {{{2
 " http://d.hatena.ne.jp/teramako/20071205/p1
 javascript <<EOM
 (function(){
-    var feedPanel = document.createElement('statusbarpanel');
-    var feedButton = document.getElementById('feed-button');
-    feedPanel.setAttribute('id','feed-panel-clone');
-    feedPanel.appendChild(feedButton.cloneNode(true));
-    feedButton.parentNode.removeChild(feedButton);
-    document.getElementById('status-bar').insertBefore(feedPanel,document.getElementById('security-button'));
-})();
+ var feedPanel = document.createElement('statusbarpanel');
+ var feedButton = document.getElementById('feed-button');
+ feedPanel.setAttribute('id','feed-panel-clone');
+ feedPanel.appendChild(feedButton.cloneNode(true));
+ feedButton.parentNode.removeChild(feedButton);
+ document.getElementById('status-bar').insertBefore(feedPanel,document.getElementById('security-button'));
+ })();
 EOM
 
 
@@ -373,13 +276,128 @@ javascript <<EOM
 EOM
 
 
-" Colors {{{1
+" Toggle Autopagerize {{{2
+javascript <<EOM
+	let (evaluateXPath = util.evaluateXPath || buffer.evaluateXPath) {
+		commands.addUserCommand(
+			['autopagerize'],
+			'Toggle AutoPagerize',
+			function (args) {
+				buffer.followLink(
+					evaluateXPath('id("autopagerize_help")/div/a[@class="autopagerize_link"]').snapshotItem(0)
+				);
+			},
+			{},
+			true
+		);
+	}
+EOM
+
+
+" Mappings {{{1
 " ======================================================================
-colorscheme indigo
+" leader
+let mapleader = ","
+
+" escape
+noremap <C-@> <Esc>
+cnoremap <C-@> <Esc>
+inoremap <C-@> <Esc>
+
+" depth
+noremap <BS> gu
+noremap <C-BS> gU
+
+" scrolling
+noremap j 6j
+noremap k 6k
+noremap J <C-d>
+noremap K <C-u>
+noremap <A-j> 6j
+noremap <A-k> 6k
+noremap <A-h> 6h
+noremap <A-l> 6l
+
+" tabs
+noremap l gt
+noremap h gT
+noremap <C-l> :tabmove! +1<CR>
+noremap <C-h> :tabmove! -1<CR>
+
+" others
+"noremap <C-a> a
+"noremap <C-A> A
+noremap y Y
+noremap Y y
+noremap zi zI
+noremap zI zi
+noremap zm zM
+noremap zM zm
+noremap zo zO
+noremap zO zo
+noremap zr zR
+noremap zR zr
+noremap zz zZ
+noremap zZ zz
+
+noremap <C-r> :restart<CR>
+noremap <Leader>h :history! -max=1 
+noremap <Leader>s :source ~/.vimperatorrc<CR>
+noremap U :undo 
+
+noremap eu :set encoding=UTF-8<CR>
+noremap es :set encoding=Shift_JIS<CR>
+noremap ee :set encoding=EUC-JP<CR>
+noremap ej :set encoding=ISO-2022-JP<CR>
+
+" ex
+cnoremap <C-j> <Nop>
+cnoremap <C-b> <Left>
+cnoremap <C-f> <Right>
+cnoremap <C-n> <Tab>
+cnoremap <C-p> <S-Tab>
+
+" input
+inoremap <C-f> <Right>
+inoremap <C-b> <Left>
+inoremap <C-p> <Up>
+inoremap <C-n> <Down>
+
+" copy/paste
+javascript <<EOM
+if (liberator.has("Win32")) {
+    liberator.execute("cnoremap <C-a> <C-v><C-a>");
+    liberator.execute("cnoremap <C-z> <C-v><C-z>");
+    liberator.execute("cnoremap <C-x> <C-v><C-x>");
+    liberator.execute("cnoremap <C-c> <C-v><C-c>");
+    liberator.execute("cnoremap <C-v> <C-v><C-v>");
+    liberator.execute("inoremap <C-a> <C-v><C-a>");
+    liberator.execute("inoremap <C-z> <C-v><C-z>");
+    liberator.execute("inoremap <C-x> <C-v><C-x>");
+    liberator.execute("inoremap <C-c> <C-v><C-c>");
+    liberator.execute("inoremap <C-v> <C-v><C-v>");
+}
+else if (liberator.has("MacUnix")) {
+    liberator.execute("cnoremap <M-a> <C-v><M-a>");
+    liberator.execute("cnoremap <M-z> <C-v><M-z>");
+    liberator.execute("cnoremap <M-x> <C-v><M-x>");
+    liberator.execute("cnoremap <M-c> <C-v><M-c>");
+    liberator.execute("cnoremap <M-v> <C-v><M-v>");
+    liberator.execute("inoremap <M-a> <C-v><M-a>");
+    liberator.execute("inoremap <M-z> <C-v><M-z>");
+    liberator.execute("inoremap <M-x> <C-v><M-x>");
+    liberator.execute("inoremap <M-c> <C-v><M-c>");
+    liberator.execute("inoremap <M-v> <C-v><M-v>");
+}
+else {
+}
+EOM
+
+" toggle autopagerize
+noremap <silent> <Leader>a :autopagerize<CR>
 
 
 " End {{{1
 source! ~/.vimperatorrc.local
-cd
 
-" vim: set ft=vimperator:
+" vim: ts=2

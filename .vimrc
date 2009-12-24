@@ -71,7 +71,7 @@ endif
 " Optioins {{{2
 filetype plugin indent on
 set nocompatible
-set runtimepath& runtimepath^=~/.vim
+set runtimepath& runtimepath+=~/.vim,~/.vim/after
 set backupdir=~/tmp,~/,./
 set directory=~/tmp,~/,./
 set clipboard=unnamed
@@ -198,11 +198,13 @@ map! <Nul> <C-@>
 noremap <C-@> <Esc>
 noremap! <C-@> <Esc>
 
-" emacs like move [begin|end] line
+" emacs like
 noremap <C-a> <Home>
-noremap <C-e> <End>
 noremap! <C-a> <Home>
+noremap <C-e> <End>
 noremap! <C-e> <End>
+nnoremap <C-k> D
+inoremap <C-k> <C-o>D
 
 " add new line
 "nnoremap <Space>O :<C-u>call append(expand('.'), '')<Cr>j
@@ -285,20 +287,44 @@ autocmd MyAutoCmd BufNewFile *.py call s:python_header()
 
 
 " Plugins {{{1
-" autocomplpop.vim {{{2
-let g:AutoComplPop_IgnoreCaseOption = 1
-let g:AutoComplPop_BehaviorKeywordLength = 2
-let g:AutoComplPop_BehaviorFileLength = 0
+" runtimepath enable {{{2
+set runtimepath+=~/.vim/plugins/align
+"set runtimepath+=~/.vim/plugins/autocomplpop
+set runtimepath+=~/.vim/plugins/neocomplcache
+set runtimepath+=~/.vim/plugins/fuzzyfinder
+set runtimepath+=~/.vim/plugins/gist
+set runtimepath+=~/.vim/plugins/quickrun
+set runtimepath+=~/.vim/plugins/surround
+set runtimepath+=~/.vim/plugins/vimirc
+set runtimepath+=~/.vim/plugins/yankring
 
-" FuzzyFinder.vim {{{2
-nnoremap <silent> <C-n> :FufBuffer!<CR>
-nnoremap <silent> <C-p> :FufDir!<CR>
-nnoremap <silent> ,fb :FufBuffer!<CR>
-nnoremap <silent> ,ff :FufFile!<CR>
-nnoremap <silent> ,fd :FufDir!<CR>
+
+" fuf.vim {{{2
+let g:fuf_splitPathMatching = ' '
+let g:fuf_patternSeparator = ' '
+let g:fuf_modesDisable = ['mrucmd']
+let g:fuf_file_exclude = '\v\~$|\.(o|exe|bak|swp|gif|jpg|png)$|(^|[/\\])\.(hg|git|bzr)($|[/\\])'
+let g:fuf_mrufile_exclude = '\v\~$|\.bak$|\.swp|\.howm$|\.(gif|jpg|png)$'
+let g:fuf_mrufile_maxItem = 10000
+let g:fuf_enumeratingLimit = 20
+nnoremap <silent> bg :FufBuffer<CR>
+nnoremap <silent> bG :FufFile <C-r>=expand('%:~:.')[:-1-len(expand('%:~:.:t'))]<CR><CR>
+nnoremap <silent> gb :FufFile **/<CR>
+nnoremap <silent> br :FufMruFile<CR>
+nnoremap <silent> bq :FufQuickfix<CR>
+nnoremap <silent> bl :FufLine<CR>
+
 
 " Align.vim {{{2
 let g:Align_xstrlen=3
+
+
+" neocomplcache.vim {{{2
+let g:NeoComplCache_EnableAtStartup = 1
+let g:NeoComplCache_SmartCase = 1
+let g:NeoComplCache_EnableCamelCaseCompletion = 1
+let g:NeoComplCache_EnableUnderbarCompletion = 1
+let g:NeoComplCache_MinSyntaxLength = 3
 
 
 " End {{{1
