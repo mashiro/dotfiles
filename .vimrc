@@ -307,12 +307,12 @@ let g:fuf_file_exclude = '\v\~$|\.(o|exe|bak|swp|gif|jpg|png)$|(^|[/\\])\.(hg|gi
 let g:fuf_mrufile_exclude = '\v\~$|\.bak$|\.swp|\.howm$|\.(gif|jpg|png)$'
 let g:fuf_mrufile_maxItem = 10000
 let g:fuf_enumeratingLimit = 20
-nnoremap <silent> bg :FufBuffer<CR>
-nnoremap <silent> bG :FufFile <C-r>=expand('%:~:.')[:-1-len(expand('%:~:.:t'))]<CR><CR>
-nnoremap <silent> gb :FufFile **/<CR>
-nnoremap <silent> br :FufMruFile<CR>
-nnoremap <silent> bq :FufQuickfix<CR>
-nnoremap <silent> bl :FufLine<CR>
+nnoremap <silent> <Space>fb :FufBuffer<CR>
+nnoremap <silent> <Space>ff :FufFile <C-r>=expand('%:~:.')[:-1-len(expand('%:~:.:t'))]<CR><CR>
+nnoremap <silent> <Space>fr :FufMruFile<CR>
+nnoremap <silent> <Space>fq :FufQuickfix<CR>
+nnoremap <silent> <Space>fb :FufLine<CR>
+nnoremap <silent> <Leader>fb :FufFile **/<CR>
 
 
 " Align.vim {{{2

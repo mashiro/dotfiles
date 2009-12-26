@@ -30,8 +30,6 @@ set smartcase
 set visualbell
 highlight Bell display: none; 
 
-colorscheme indigo
-
 set! ui.key.generalAccessKey=0
 set! browser.tabs.closeButtons=2
 set! browser.urlbar.filter.javascript=false
@@ -40,6 +38,9 @@ set! browser.sessionstore.max_tabs_undo=20
 set! dom.popup_maximum=999
 set! mousewheel.withnokey.numlines=6
 set! mousewheel.withnokey.sysnumlines=false
+
+colorscheme indigo
+let mapleader = ","
 
 
 " QMarks {{{1
@@ -296,8 +297,6 @@ EOM
 
 " Mappings {{{1
 " ======================================================================
-" leader
-let mapleader = ","
 
 " escape
 noremap <C-@> <Esc>
