@@ -152,7 +152,7 @@ noremap <Leader>bi :bicon<CR>
 
 " sbmcommentsviewer.js {{{2
 let g:def_sbm_format = "timestamp,id,tagsAndComment"
-let g:def_sbms = "hd"
+let g:def_sbms = "h"
 noremap <Leader>bc :viewSBMComments<CR>
 
 
@@ -399,4 +399,4 @@ noremap <silent> <Leader>a :autopagerize<CR>
 " End {{{1
 source! ~/.vimperatorrc.local
 
-" vim: ts=2
+" vim: ts=2 ft=vimperator
