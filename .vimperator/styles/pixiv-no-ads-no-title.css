@@ -1,0 +1,32 @@
+@charset "utf-8";
+@namespace url(http://www.w3.org/1999/xhtml);
+/******************************
+Name      : pixiv no-ads,no-title
+Target    : http://www.pixiv.net/
+ChangeLog :
+2009-09-30 Milly(http://d.hatena.ne.jp/MillyC/)
+  * Pixiv デザイン変更に対応
+2009-09-16 Milly(http://d.hatena.ne.jp/MillyC/)
+  * 初版
+******************************/
+
+@-moz-document domain("www.pixiv.net") {
+
+/* Title */
+#header_top + div,
+/* Ads */
+.ads_area,
+.floleft[style="font-weight: bold;"],
+.floleft[style="font-weight: bold;"]+div,
+.floleft[style="font-weight: bold;"]+div+div,
+#content3 > style + div[style="width: 100%;"],
+iframe[src^="http://ads"],
+iframe[name="maad"]
+  { display: none !important; }
+
+#header_top
+  { margin-bottom: 0 !important; }
+
+#navi
+  { margin-top: 3px !important; }
+}
