@@ -9,13 +9,14 @@ if exists("b:current_syntax")
 endif
 
 syn match	tiarralogLine			"^.*$" contains=tiarralogTime
-syn match	tiarralogTime			contained "\d\{2}:\d\{2\}:\d\{2\}" skipwhite nextgroup=tiarralogSelf,tiarralogOthers,tiarralogNotice,tiarralogJoin,tiarralogLeave,tiarralogMode,tiarralogNick
+syn match	tiarralogTime			contained "\d\{2}:\d\{2\}:\d\{2\}" skipwhite nextgroup=tiarralogSelf,tiarralogOthers,tiarralogNotice,tiarralogJoin,tiarralogLeave,tiarralogTopic,tiarralogMode,tiarralogNick
 syn region	tiarralogSelf			contained start=+>+ end=+<+ contains=tiarralogChannel nextgroup=tiarralogSelfText keepend
 syn region	tiarralogOthers			contained start=+<+ end=+>+ nextgroup=tiarralogOthersText keepend
 syn region	tiarralogNotice			contained start=+(+ end=+)+ nextgroup=tiarralogNoticeText keepend
 syn region	tiarralogJoin			contained start="+" end="$" keepend
-syn region	tiarralogLeave			contained start="!" end="$" keepend
+syn region	tiarralogLeave			contained start="[-!]" end="$" keepend
 syn region	tiarralogMode			contained start="Mode" end="$" keepend
+syn region	tiarralogTopic			contained start="Topic" end="$" keepend
 syn match	tiarralogNick			contained "[^ ><(].\+ -> .\+"
 syn match	tiarralogSelfText		contained ".*" contains=tiarralogUrl
 syn match	tiarralogOthersText		contained ".*" contains=tiarralogUrl
@@ -27,8 +28,9 @@ hi def link tiarralogLine			Normal
 hi def link tiarralogTime			Number
 hi def link tiarralogJoin			Include
 hi def link tiarralogLeave			Include
-hi def link tiarralogMode			Include
-hi def link tiarralogNick			Include
+hi def link tiarralogTopic			Identifier
+hi def link tiarralogMode			Statement
+hi def link tiarralogNick			Statement
 hi def link tiarralogSelf			Special
 hi def link tiarralogSelfText		Normal
 hi def link tiarralogOthers			Type
