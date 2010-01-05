@@ -16,7 +16,7 @@ syn region	tiarralogNotice			contained start=+(+ end=+)+ nextgroup=tiarralogNoti
 syn region	tiarralogJoin			contained start="+" end="$" keepend
 syn region	tiarralogLeave			contained start="!" end="$" keepend
 syn region	tiarralogMode			contained start="Mode" end="$" keepend
-syn match	tiarralogNick			contained ".\+ -> .\+"
+syn match	tiarralogNick			contained "[^ ><(].\+ -> .\+"
 syn match	tiarralogSelfText		contained ".*" contains=tiarralogUrl
 syn match	tiarralogOthersText		contained ".*" contains=tiarralogUrl
 syn match	tiarralogNoticeText		contained ".*"
