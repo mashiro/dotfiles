@@ -1,0 +1,8 @@
+@charset "utf-8";
+@namespace url("http://www.mozilla.org/keymaster/gatekeeper/there.is.only.xul");
+ 
+/* 新しいタブを開くボタンを非表示 */
+.tabs-newtab-button {
+	display: none !important;
+}
+
