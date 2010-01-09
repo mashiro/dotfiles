@@ -297,6 +297,7 @@ set runtimepath+=~/.vim/plugins/quickrun
 set runtimepath+=~/.vim/plugins/surround
 set runtimepath+=~/.vim/plugins/vimirc
 set runtimepath+=~/.vim/plugins/yankring
+set runtimepath+=~/.vim/plugins/skk
 
 
 " fuf.vim {{{2
@@ -325,6 +326,12 @@ let g:NeoComplCache_SmartCase = 1
 let g:NeoComplCache_EnableCamelCaseCompletion = 1
 let g:NeoComplCache_EnableUnderbarCompletion = 1
 let g:NeoComplCache_MinSyntaxLength = 3
+
+
+" skk.vim {{{2
+let skk_jisyo = '~/.skk-jisyo'
+let skk_large_jisyo = '~/.vim/plugins/skk/dict/SKK-JISYO.L'
+let skk_show_annotation = 1
 
 
 " End {{{1
