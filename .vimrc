@@ -312,7 +312,7 @@ nnoremap <silent> <Space>fb :FufBuffer<CR>
 nnoremap <silent> <Space>ff :FufFile <C-r>=expand('%:~:.')[:-1-len(expand('%:~:.:t'))]<CR><CR>
 nnoremap <silent> <Space>fr :FufMruFile<CR>
 nnoremap <silent> <Space>fq :FufQuickfix<CR>
-nnoremap <silent> <Space>fb :FufLine<CR>
+nnoremap <silent> <Space>fl :FufLine<CR>
 nnoremap <silent> <Leader>fb :FufFile **/<CR>
 
 
