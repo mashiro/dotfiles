@@ -77,6 +77,7 @@ set directory=~/tmp,~/,./
 set clipboard=unnamed
 
 " view
+set visualbell
 set antialias
 set number
 set ruler
@@ -140,6 +141,7 @@ command! -bang -nargs=? Utf8 edit<bang> ++enc=utf-8 <args>
 command! -bang -nargs=? EucJp edit<bang> ++enc=euc-jp <args>
 command! -bang -nargs=? Cp932 edit<bang> ++enc=cp932 <args>
 
+
 function! s:change_current_dir(directory, bang) " {{{2
 	if a:directory == ''
 		lcd %:p:h
@@ -150,6 +152,7 @@ function! s:change_current_dir(directory, bang) " {{{2
 		pwd
 	endif
 endfunction
+
 
 function! s:include_guard() " {{{2
 	let fl = getline(1)
@@ -287,20 +290,21 @@ autocmd MyAutoCmd BufNewFile *.py call s:python_header()
 
 
 " Plugins {{{1
-" runtimepath enable {{{2
-set runtimepath+=~/.vim/plugins/align
+" autocomplpop.vim {{{2
 "set runtimepath+=~/.vim/plugins/autocomplpop
+
+
+" neocomplcache.vim {{{2
 set runtimepath+=~/.vim/plugins/neocomplcache
-set runtimepath+=~/.vim/plugins/fuzzyfinder
-set runtimepath+=~/.vim/plugins/gist
-set runtimepath+=~/.vim/plugins/quickrun
-set runtimepath+=~/.vim/plugins/surround
-set runtimepath+=~/.vim/plugins/vimirc
-set runtimepath+=~/.vim/plugins/yankring
-set runtimepath+=~/.vim/plugins/skk
+let g:NeoComplCache_EnableAtStartup = 1
+let g:NeoComplCache_SmartCase = 1
+let g:NeoComplCache_EnableCamelCaseCompletion = 1
+let g:NeoComplCache_EnableUnderbarCompletion = 1
+let g:NeoComplCache_MinSyntaxLength = 3
 
 
 " fuf.vim {{{2
+set runtimepath+=~/.vim/plugins/fuzzyfinder
 let g:fuf_splitPathMatching = ' '
 let g:fuf_patternSeparator = ' '
 let g:fuf_modesDisable = ['mrucmd']
@@ -317,22 +321,37 @@ nnoremap <silent> <Leader>fb :FufFile **/<CR>
 
 
 " Align.vim {{{2
-let g:Align_xstrlen=3
+set runtimepath+=~/.vim/plugins/align
+let g:Align_xstrlen = 3
 
 
-" neocomplcache.vim {{{2
-let g:NeoComplCache_EnableAtStartup = 1
-let g:NeoComplCache_SmartCase = 1
-let g:NeoComplCache_EnableCamelCaseCompletion = 1
-let g:NeoComplCache_EnableUnderbarCompletion = 1
-let g:NeoComplCache_MinSyntaxLength = 3
+" yankring.vim {{{2
+set runtimepath+=~/.vim/plugins/yankring
+let g:yankring_history_dir = '$HOME'
+let g:yankring_history_file = '.yankring_history'
+
+
+" gist.vim {{{2
+set runtimepath+=~/.vim/plugins/gist
+
+
+" quickrun.vim {{{2
+set runtimepath+=~/.vim/plugins/quickrun
+
+
+" surround.vim {{{2
+set runtimepath+=~/.vim/plugins/surround
+
+
+" vimirc.vim {{{2
+set runtimepath+=~/.vim/plugins/vimirc
 
 
 " skk.vim {{{2
+set runtimepath+=~/.vim/plugins/skk
 let skk_jisyo = '~/.skk-jisyo'
 let skk_large_jisyo = '~/.vim/plugins/skk/dict/SKK-JISYO.L'
 let skk_show_annotation = 1
-
 
 " End {{{1
 if filereadable(expand('~/.vimrc.local'))

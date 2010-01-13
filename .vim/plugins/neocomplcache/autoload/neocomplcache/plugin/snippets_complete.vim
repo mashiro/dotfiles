@@ -1,8 +1,7 @@
 "=============================================================================
 " FILE: snippets_complete.vim
 " AUTHOR:  Shougo Matsushita <Shougo.Matsu@gmail.com>
-" Last Modified: 17 Dec 2009
-" Usage: Just source this file.
+" Last Modified: 11 Jun 2010
 " License: MIT license  {{{
 "     Permission is hereby granted, free of charge, to any person obtaining
 "     a copy of this software and associated documentation files (the
@@ -23,9 +22,14 @@
 "     TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE
 "     SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 " }}}
-" Version: 1.35, for Vim 7.0
+" Version: 1.36, for Vim 7.0
 "-----------------------------------------------------------------------------
 " ChangeLog: "{{{
+"   1.36:
+"    - Improved snippet alias.
+"    - Improved command completion.
+"    - Improved for same filetype.
+"
 "   1.35:
 "    - Changed display interface.
 "    - Improved compatiblity with snipMate.
@@ -193,13 +197,6 @@
 "   1.00:
 "    - Initial version.
 " }}}
-"-----------------------------------------------------------------------------
-" TODO: "{{{
-"     - Nothing.
-""}}}
-" Bugs"{{{
-"     - Nothing.
-""}}}
 "=============================================================================
 
 let s:begin_snippet = 0
@@ -245,9 +242,9 @@ function! neocomplcache#plugin#snippets_complete#initialize()"{{{
                     \'\${\d\+\%(:.\{-}\)\?\\\@<!}\|\$<\d\+\%(:.\{-}\)\?\\\@<!>\|\$\d\+'
     augroup END"}}}
 
-    command! -nargs=? -complete=customlist,s:filetype_complete NeoComplCacheEditSnippets call s:edit_snippets(<q-args>, 0)
-    command! -nargs=? -complete=customlist,s:filetype_complete NeoComplCacheEditRuntimeSnippets call s:edit_snippets(<q-args>, 1)
-    command! -nargs=? -complete=customlist,s:filetype_complete NeoComplCachePrintSnippets call s:print_snippets(<q-args>)
+    command! -nargs=? -complete=customlist,neocomplcache#filetype_complete NeoComplCacheEditSnippets call s:edit_snippets(<q-args>, 0)
+    command! -nargs=? -complete=customlist,neocomplcache#filetype_complete NeoComplCacheEditRuntimeSnippets call s:edit_snippets(<q-args>, 1)
+    command! -nargs=? -complete=customlist,neocomplcache#filetype_complete NeoComplCachePrintSnippets call s:print_snippets(<q-args>)
 
     hi def link NeoComplCacheExpandSnippets Special
 
@@ -279,28 +276,11 @@ function! neocomplcache#plugin#snippets_complete#finalize()"{{{
 endfunction"}}}
 
 function! neocomplcache#plugin#snippets_complete#get_keyword_list(cur_keyword_str)"{{{
-    " Set buffer filetype.
-    if &filetype == ''
-        let l:ft = 'nothing'
-    else
-        let l:ft = &filetype
-    endif
-
     let l:snippets = values(s:snippets['_'])
-    for l:t in split(l:ft, '\.')
-        if has_key(s:snippets, l:t)
-            let l:snippets += values(s:snippets[l:t])
-        endif
+    
+    for l:source in neocomplcache#get_sources_list(s:snippets, &filetype)
+        let l:snippets += values(l:source)
     endfor
-
-    " Set same filetype.
-    if has_key(g:NeoComplCache_SameFileTypeLists, l:ft)
-        for l:same_ft in split(g:NeoComplCache_SameFileTypeLists[l:ft], ',')
-            if has_key(s:snippets, l:same_ft)
-                let l:snippets += values(s:snippets[l:same_ft])
-            endif
-        endfor
-    endif
 
     return s:keyword_filter(l:snippets, a:cur_keyword_str)
 endfunction"}}}
@@ -377,25 +357,11 @@ function! neocomplcache#plugin#snippets_complete#get_cur_text()"{{{
 endfunction"}}}
 
 function! s:caching()"{{{
-    " Set buffer filetype.
-    if &filetype == ''
-        let l:ft = 'nothing'
-    else
-        let l:ft = &filetype
-    endif
-
-    if !has_key(s:snippets, l:ft)
-        call s:caching_snippets(l:ft)
-    endif
-
-    " Same filetype.
-    if has_key(g:NeoComplCache_SameFileTypeLists, l:ft)
-        for l:same_ft in split(g:NeoComplCache_SameFileTypeLists[l:ft], ',')
-            if !has_key(s:snippets, l:same_ft)
-                call s:caching_snippets(l:same_ft)
-            endif
-        endfor
-    endif
+    for l:filetype in keys(neocomplcache#get_source_filetypes(&filetype))
+        if !has_key(s:snippets, l:filetype)
+            call s:caching_snippets(l:filetype)
+        endif
+    endfor
 endfunction"}}}
 
 function! s:set_snippet_pattern(dict)"{{{
@@ -431,13 +397,6 @@ function! s:set_snippet_pattern(dict)"{{{
     return l:dict
 endfunction"}}}
 
-function! s:filetype_complete(arglead, cmdline, cursorpos)"{{{
-    if len(split(a:cmdline)) > 1
-        return []
-    endif
-
-    return filter(keys(s:snippets), printf('v:val =~ "^%s"', a:arglead))
-endfunction"}}}
 function! s:edit_snippets(filetype, isruntime)"{{{
     if a:filetype == ''
         if &filetype == ''
@@ -517,6 +476,8 @@ endfunction"}}}
 function! s:load_snippets(snippets_file, filetype)"{{{
     let l:snippet = {}
     let l:snippet_pattern = { 'word' : '' }
+    let l:abbr_pattern = printf('%%.%ds..%%s', g:NeoComplCache_MaxKeywordWidth-10)
+    
     for line in readfile(a:snippets_file)
         if line =~ '^include'
             " Include snippets.
@@ -530,9 +491,14 @@ function! s:load_snippets(snippets_file, filetype)"{{{
                 let l:pattern = s:set_snippet_pattern(l:snippet_pattern)
                 let l:snippet[l:snippet_pattern.name] = l:pattern
                 if has_key(l:snippet_pattern, 'alias')
-                    for alias in l:snippet_pattern.alias
+                    for l:alias in l:snippet_pattern.alias
                         let l:alias_pattern = copy(l:pattern)
-                        let l:alias_pattern.word = alias
+                        let l:alias_pattern.word = l:alias
+                        
+                        let l:abbr = (len(l:alias) > g:NeoComplCache_MaxKeywordWidth)? 
+                                    \ printf(l:abbr_pattern, l:alias, l:alias[-8:]) : l:alias
+                        let l:alias_pattern.abbr = l:abbr
+                        
                         let l:snippet[alias] = l:alias_pattern
                     endfor
                 endif
@@ -576,9 +542,14 @@ function! s:load_snippets(snippets_file, filetype)"{{{
         let l:pattern = s:set_snippet_pattern(l:snippet_pattern)
         let l:snippet[l:snippet_pattern.name] = l:pattern
         if has_key(l:snippet_pattern, 'alias')
-            for alias in l:snippet_pattern.alias
+            for l:alias in l:snippet_pattern.alias
                 let l:alias_pattern = copy(l:pattern)
-                let l:alias_pattern.word = alias
+                let l:alias_pattern.word = l:alias
+
+                let l:abbr = (len(l:alias) > g:NeoComplCache_MaxKeywordWidth)? 
+                            \ printf(l:abbr_pattern, l:alias, l:alias[-8:]) : l:alias
+                let l:alias_pattern.abbr = l:abbr
+
                 let l:snippet[alias] = l:alias_pattern
             endfor
         endif

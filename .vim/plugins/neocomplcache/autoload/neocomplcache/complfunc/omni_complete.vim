@@ -1,7 +1,7 @@
 "=============================================================================
 " FILE: omni_complete.vim
 " AUTHOR:  Shougo Matsushita <Shougo.Matsu@gmail.com>
-" Last Modified: 24 Dec 2009
+" Last Modified: 11 Jun 2010
 " Usage: Just source this file.
 " License: MIT license  {{{
 "     Permission is hereby granted, free of charge, to any person obtaining
@@ -23,12 +23,16 @@
 "     TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE
 "     SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 " }}}
-" Version: 1.10, for Vim 7.0
+" Version: 1.12, for Vim 7.0
 "-----------------------------------------------------------------------------
 " ChangeLog: "{{{
+"   1.12:
+"    - Added vimshell omni completion support.
+"
 "   1.11:
 "    - Supported mark down filetype.
 "    - Deleted C/C++ omni completion support.
+"    - Don't fnamemodify.
 "
 "   1.09:
 "    - Fixed manual completion error.
@@ -122,6 +126,8 @@ function! neocomplcache#complfunc#omni_complete#initialize()"{{{
                 \'\h\w\+\|\%(\h\w*\|)\)\%(\.\|->\)\h\w*')
     call neocomplcache#set_variable_pattern('g:NeoComplCache_OmniPatterns', 'cpp',
                 \'\%(\h\w*\|)\)\%(\.\|->\)\h\w*\|\h\w*::')
+    call neocomplcache#set_variable_pattern('g:NeoComplCache_OmniPatterns', 'vimshell',
+                \'\%(\\[^[:alnum:].-]\|[[:alnum:]@/.-_+,#$%~=*]\)\{2,}')
     "}}}
 
     let s:keyword_cache = {}
@@ -285,7 +291,7 @@ function! s:get_omni_list(list)"{{{
 
     for l:omni in filter(a:list, 'type(v:val) != '.type(''))
         let l:dict = {
-                    \'word' : l:omni.word, 'menu' : '[O] ', 'icase' : 1
+                    \'word' : l:omni.word, 'menu' : '[O]', 'icase' : 1
                     \}
 
         let l:abbr = has_key(l:omni, 'abbr')? l:omni.abbr : l:omni.word
@@ -299,7 +305,7 @@ function! s:get_omni_list(list)"{{{
         endif
 
         if has_key(l:omni, 'menu')
-            let l:dict.menu .= printf(' %.' . g:NeoComplCache_MaxFilenameWidth . 's', fnamemodify(l:omni.menu, ':t'))
+            let l:dict.menu .= ' ' . l:omni.menu
         endif
 
         call add(l:omni_list, l:dict)
