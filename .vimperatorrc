@@ -36,6 +36,7 @@ set! browser.urlbar.filter.javascript=false
 set! browser.urlbar.maxRichResults=20
 set! browser.sessionstore.max_tabs_undo=20
 set! dom.popup_maximum=999
+set! general.autoScroll=false
 set! mousewheel.withnokey.numlines=6
 set! mousewheel.withnokey.sysnumlines=false
 
