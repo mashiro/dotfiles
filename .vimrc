@@ -291,16 +291,17 @@ autocmd MyAutoCmd BufNewFile *.py call s:python_header()
 
 " Plugins {{{1
 " autocomplpop.vim {{{2
-"set runtimepath+=~/.vim/plugins/autocomplpop
+set runtimepath+=~/.vim/plugins/autocomplpop
 
 
 " neocomplcache.vim {{{2
-set runtimepath+=~/.vim/plugins/neocomplcache
+"set runtimepath+=~/.vim/plugins/neocomplcache
 let g:NeoComplCache_EnableAtStartup = 1
+let g:NeoComplCache_DisableAutoComplete = 1
 let g:NeoComplCache_SmartCase = 1
-let g:NeoComplCache_EnableCamelCaseCompletion = 1
-let g:NeoComplCache_EnableUnderbarCompletion = 1
-let g:NeoComplCache_MinSyntaxLength = 3
+"let g:NeoComplCache_EnableCamelCaseCompletion = 1
+"let g:NeoComplCache_EnableUnderbarCompletion = 1
+"let g:NeoComplCache_MinSyntaxLength = 4
 
 
 " fuf.vim {{{2

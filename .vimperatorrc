@@ -114,6 +114,13 @@ liberator.globalVariables.copy_templates = [
 EOM
 
 
+" multi_requester.js {{{2
+noremap <Leader>mt :mr<Space>twitter-search-pcod-no-jp<Space>
+noremap <Leader>mT :mr<Space>twitter-search-pcod-no-jp<Space>YurineMashiro<CR>
+noremap <Leader>mf :mr<Space>favotter-new<Space>
+noremap <Leader>mF :mr<Space>favotter-new<Space>YurineMashiro<CR>
+
+
 " ldrize_cooperation.js {{{2
 noremap <Leader>q :toggleldrc<CR>
 let g:ldrc_enable = "true"
