@@ -248,7 +248,6 @@ let g:no_reading_do_echo = 1
 
 
 " Javascripts {{{1
-" ======================================================================
 " ステータスバーにfeedボタンを表示 {{{2
 " http://d.hatena.ne.jp/teramako/20071205/p1
 javascript <<EOM
@@ -342,8 +341,6 @@ EOM
 
 
 " Mappings {{{1
-" ======================================================================
-
 " escape
 noremap <C-@> <Esc>
 cnoremap <C-@> <Esc>
@@ -353,7 +350,7 @@ inoremap <C-@> <Esc>
 noremap <BS> gu
 noremap <C-BS> gU
 
-" scrolling
+" scroll
 noremap j 6j
 noremap k 6k
 noremap J <C-d>
@@ -363,15 +360,12 @@ noremap <A-k> 6k
 noremap <A-h> 6h
 noremap <A-l> 6l
 
-" tabs
+" tab
 noremap l gt
 noremap h gT
 noremap <C-l> :tabmove! +1<CR>
 noremap <C-h> :tabmove! -1<CR>
 
-" others
-"noremap <C-a> a
-"noremap <C-A> A
 noremap y Y
 noremap Y y
 noremap zi zI
@@ -393,16 +387,13 @@ noremap U :undo
 noremap eu :set encoding=UTF-8<CR>
 noremap es :set encoding=Shift_JIS<CR>
 noremap ee :set encoding=EUC-JP<CR>
-noremap ej :set encoding=ISO-2022-JP<CR>
+noremap ei :set encoding=ISO-2022-JP<CR>
 
-" ex
 cnoremap <C-j> <Nop>
 cnoremap <C-b> <Left>
 cnoremap <C-f> <Right>
 cnoremap <C-n> <Tab>
 cnoremap <C-p> <S-Tab>
-
-" input
 inoremap <C-f> <Right>
 inoremap <C-b> <Left>
 inoremap <C-p> <Up>
