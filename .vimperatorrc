@@ -175,32 +175,31 @@ liberator.globalVariables.useragent_list = [{
 		vendor: '',
 		vendorSub: ''
 	}, {
-    description: 'Netscape 4.8 (Windows Vista)',
-    useragent: 'Mozilla/4.8 [en] (Windows NT 6.0; U)',
-    appname: 'Netscape',
-    appversion: '4.8 [en] (Windows NT 6.0; U)',
-    platform: 'Win32',
-    vendor: '',
-    vendorSub: ''
-  }, {
+		description: 'Netscape 4.8 (Windows Vista)',
+		useragent: 'Mozilla/4.8 [en] (Windows NT 6.0; U)',
+		appname: 'Netscape',
+		appversion: '4.8 [en] (Windows NT 6.0; U)',
+		platform: 'Win32',
+		vendor: '',
+		vendorSub: ''
+	}, {
 		description: 'Opera 9.25 (Windows Vista)',
 		useragent: 'Opera/9.25 (Windows NT 6.0; U; en)',
 		appname: 'Opera',
 		appversion: '9.25 (Windows NT 6.0; U; en)',
 		platform: 'Win32',
-  }, {
+	}, {
 		description: 'iPhone',
 		useragent: 'Mozilla/5.0 (iPhone; U; CPU iPhone OS 2_0 like Mac OS X; ja-jp) AppleWebKit/525.18.1 (KHTML, like Gecko) Version/3.1.1 Mobile/5A345 Safari/525.20',
 		appname: 'Safari',
 		platform: 'OS X iPhone'
-  },{
+	},{
 		description: 'DoCoMo',
 		useragent: 'DoCoMo/2.0 P900i(c100;TB;W20H09)',
 		appname: 'P900i',
 		platform: 'iMode'
 }];
 EOM
-
 
 
 " refcontrol.js {{{2
