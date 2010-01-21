@@ -78,6 +78,7 @@ set clipboard=unnamed
 
 " view
 set visualbell
+set t_vb=
 set antialias
 set number
 set ruler
@@ -291,11 +292,11 @@ autocmd MyAutoCmd BufNewFile *.py call s:python_header()
 
 " Plugins {{{1
 " autocomplpop.vim {{{2
-"set runtimepath+=~/.vim/plugins/autocomplpop
+set runtimepath+=~/.vim/plugins/autocomplpop
 
 
 " neocomplcache.vim {{{2
-set runtimepath+=~/.vim/plugins/neocomplcache
+"set runtimepath+=~/.vim/plugins/neocomplcache
 let g:NeoComplCache_EnableAtStartup = 1
 let g:NeoComplCache_EnableQuickMatch = 0
 let g:NeoComplCache_SmartCase = 1
