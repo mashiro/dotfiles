@@ -1,0 +1,7 @@
+noremap p :stplay<CR>
+noremap m :stmute<CR>
+noremap v :stcomment<CR>
+noremap s :stseek! +10<CR>
+noremap S :stseek! -10<CR>
+noremap z :stlarge<CR
+" vim: ts=2 sw=2 sts=2 ft=vimperator

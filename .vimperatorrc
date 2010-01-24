@@ -25,6 +25,7 @@ set hlsearch
 set ignorecase
 set incsearch
 set smartcase
+set focuscontent
 
 set visualbell
 highlight Bell display: none; 
@@ -127,25 +128,25 @@ let g:ldrc_skip = "0.1"
 
 
 " feedSomeKey_2.js {{{2
-autocmd LocationChange .* :fmapc
+autocmd! LocationChange .* :fmapc
 
 " LDR / fastladder / OpenFL
-autocmd LocationChange http://(reader\\.livedoor\\.com|fastladder\\.com|0\\.0\\.0\\.0\\:3000)/reader/ :fmap j k s a p o v r w W J K <Space> <S-Space> c z > <
-autocmd LocationChange http://(reader\\.livedoor\\.com|fastladder\\.com|0\\.0\\.0\\.0\\:3000)/reader/ :fmap p,pj
-autocmd LocationChange http://(reader\\.livedoor\\.com|fastladder\\.com|0\\.0\\.0\\.0\\:3000)/reader/ :fmap J,<Space>
-autocmd LocationChange http://(reader\\.livedoor\\.com|fastladder\\.com|0\\.0\\.0\\.0\\:3000)/reader/ :fmap K,<S-Space>
-autocmd LocationChange http://(reader\\.livedoor\\.com|fastladder\\.com|0\\.0\\.0\\.0\\:3000)/reader/ :fmap i,tj
-autocmd LocationChange http://(reader\\.livedoor\\.com|fastladder\\.com|0\\.0\\.0\\.0\\:3000)/reader/ :fmap e,tj
+autocmd! LocationChange http://(reader\\.livedoor\\.com|fastladder\\.com|0\\.0\\.0\\.0\\:3000)/reader/ :fmap j k s a p o v r w W J K <Space> <S-Space> c z > <
+autocmd! LocationChange http://(reader\\.livedoor\\.com|fastladder\\.com|0\\.0\\.0\\.0\\:3000)/reader/ :fmap p,pj
+autocmd! LocationChange http://(reader\\.livedoor\\.com|fastladder\\.com|0\\.0\\.0\\.0\\:3000)/reader/ :fmap J,<Space>
+autocmd! LocationChange http://(reader\\.livedoor\\.com|fastladder\\.com|0\\.0\\.0\\.0\\:3000)/reader/ :fmap K,<S-Space>
+autocmd! LocationChange http://(reader\\.livedoor\\.com|fastladder\\.com|0\\.0\\.0\\.0\\:3000)/reader/ :fmap i,tj
+autocmd! LocationChange http://(reader\\.livedoor\\.com|fastladder\\.com|0\\.0\\.0\\.0\\:3000)/reader/ :fmap e,tj
 
 " Gmail
 "autocmd LocationChange mail\\.google\\.com/mail :fmap gi gs gt gd ga gc *a *n *r *u *s *t u k j o p n c / q ? x s y e m ! # r a f N ] [ z . I U S E GL
-autocmd LocationChange mail\\.google\\.com/mail :fmap gi gs gt gd ga gc *a *n *r *u *s *t u k j o p n c / q ? x s e m ! # r a N ] [ z . I U S E GL
-autocmd LocationChange mail\\.google\\.com/mail :fmap E,Ie
+autocmd! LocationChange mail\\.google\\.com/mail :fmap gi gs gt gd ga gc *a *n *r *u *s *t u k j o p n c / q ? x s e m ! # r a N ] [ z . I U S E GL
+autocmd! LocationChange mail\\.google\\.com/mail :fmap E,Ie
 
 " Tumblr
-autocmd LocationChange http://.*\\.tumblr\\.com/ :fmap j k
-autocmd LocationChange http://.*\\.tumblr\\.com/ :fmap i,tj
-autocmd LocationChange http://.*\\.tumblr\\.com/ :fmap e,tj
+autocmd! LocationChange http://.*\\.tumblr\\.com/ :fmap j k
+autocmd! LocationChange http://.*\\.tumblr\\.com/ :fmap i,tj
+autocmd! LocationChange http://.*\\.tumblr\\.com/ :fmap e,tj
 
 
 " direct_bookmark.js {{{2
@@ -217,23 +218,21 @@ EOM
 
 
 " localkeymode.js {{{2
-let g:localkeymode_enable = "false"
+let g:localkeymode_enable = "true"
 js <<EOM
 liberator.globalVariables.localKeyMappings = [
-	[/www\.nicovideo\.jp\/watch/, [
-		['p s sh sl sH sL S v m r c f F'],
-		['p',   ':stplay'],
-		['sh',  ':stseek! -10'],
-		['sl',  ':stseek! +10'],
-		['sH',  ':stseek! -60'],
-		['sL',  ':stseek! +60'],
-		['S',   ':stseek '], 
-		['v',   ':stvolume '],
-		['m',   ':stmute'],
-		['r',   ':strepeat'],
-		['c',   ':stcomment'],
-		['f',   ':stlarge'],
-		['F',   ':stfullscreen']
+	[/www\.(nicovideo\.jp|youtube\.com)\/watch/, [
+		['p s S v V m r c f F'],
+		['p',       ':stplay'],
+		['s',       ':stseek! +10'],
+		['S',       ':stseek! -10 '], 
+		['v',       ':stvolume! +10 '],
+		['V',       ':stvolume! -10 '],
+		['m',       ':stmute'],
+		['r',       ':strepeat'],
+		['c',       ':stcomment'],
+		['f',       ':stlarge'],
+		['F',       ':stfullscreen']
 	]],
 ];
 EOM
@@ -340,6 +339,11 @@ javascript <<EOM
 EOM
 
 
+" AutoCmd {{{1
+"autocmd! LocationChange .* source! ~/.vimperator/location/defaultmap.vimp
+"autocmd! LocationChange www\\.(nicovideo\\.jp|youtube\\.com)/watch source! ~/.vimperator/location/stellamap.vimp
+
+
 " Mappings {{{1
 " escape
 noremap <C-@> <Esc>
@@ -363,8 +367,8 @@ noremap <A-l> 6l
 " tab
 noremap l gt
 noremap h gT
-noremap <C-l> :tabmove! +1<CR>
-noremap <C-h> :tabmove! -1<CR>
+noremap <silent> <C-l> :tabmove! +1<CR>
+noremap <silent> <C-h> :tabmove! -1<CR>
 
 noremap y Y
 noremap Y y
@@ -379,15 +383,15 @@ noremap zR zr
 noremap zz zZ
 noremap zZ zz
 
-noremap <C-r> :restart<CR>
+noremap <silent> <C-r> :restart<CR>
 noremap <Leader>h :history! -max=1 
 noremap <Leader>s :source ~/.vimperatorrc<CR>
 noremap U :undo 
 
-noremap eu :set encoding=UTF-8<CR>
-noremap es :set encoding=Shift_JIS<CR>
-noremap ee :set encoding=EUC-JP<CR>
-noremap ei :set encoding=ISO-2022-JP<CR>
+noremap <silent> eu :set encoding=UTF-8<CR>
+noremap <silent> es :set encoding=Shift_JIS<CR>
+noremap <silent> ee :set encoding=EUC-JP<CR>
+noremap <silent> ei :set encoding=ISO-2022-JP<CR>
 
 cnoremap <C-j> <Nop>
 cnoremap <C-b> <Left>
@@ -402,28 +406,28 @@ inoremap <C-n> <Down>
 " copy/paste
 javascript <<EOM
 if (liberator.has("Win32")) {
-	liberator.execute("cnoremap <C-a> <C-v><C-a>");
-	liberator.execute("cnoremap <C-z> <C-v><C-z>");
-	liberator.execute("cnoremap <C-x> <C-v><C-x>");
-	liberator.execute("cnoremap <C-c> <C-v><C-c>");
-	liberator.execute("cnoremap <C-v> <C-v><C-v>");
-	liberator.execute("inoremap <C-a> <C-v><C-a>");
-	liberator.execute("inoremap <C-z> <C-v><C-z>");
-	liberator.execute("inoremap <C-x> <C-v><C-x>");
-	liberator.execute("inoremap <C-c> <C-v><C-c>");
-	liberator.execute("inoremap <C-v> <C-v><C-v>");
+	liberator.execute("cnoremap <silent> <C-a> <C-v><C-a>");
+	liberator.execute("cnoremap <silent> <C-z> <C-v><C-z>");
+	liberator.execute("cnoremap <silent> <C-x> <C-v><C-x>");
+	liberator.execute("cnoremap <silent> <C-c> <C-v><C-c>");
+	liberator.execute("cnoremap <silent> <C-v> <C-v><C-v>");
+	liberator.execute("inoremap <silent> <C-a> <C-v><C-a>");
+	liberator.execute("inoremap <silent> <C-z> <C-v><C-z>");
+	liberator.execute("inoremap <silent> <C-x> <C-v><C-x>");
+	liberator.execute("inoremap <silent> <C-c> <C-v><C-c>");
+	liberator.execute("inoremap <silent> <C-v> <C-v><C-v>");
 }
 else if (liberator.has("MacUnix")) {
-	liberator.execute("cnoremap <M-a> <C-v><M-a>");
-	liberator.execute("cnoremap <M-z> <C-v><M-z>");
-	liberator.execute("cnoremap <M-x> <C-v><M-x>");
-	liberator.execute("cnoremap <M-c> <C-v><M-c>");
-	liberator.execute("cnoremap <M-v> <C-v><M-v>");
-	liberator.execute("inoremap <M-a> <C-v><M-a>");
-	liberator.execute("inoremap <M-z> <C-v><M-z>");
-	liberator.execute("inoremap <M-x> <C-v><M-x>");
-	liberator.execute("inoremap <M-c> <C-v><M-c>");
-	liberator.execute("inoremap <M-v> <C-v><M-v>");
+	liberator.execute("cnoremap <silent> <M-a> <C-v><M-a>");
+	liberator.execute("cnoremap <silent> <M-z> <C-v><M-z>");
+	liberator.execute("cnoremap <silent> <M-x> <C-v><M-x>");
+	liberator.execute("cnoremap <silent> <M-c> <C-v><M-c>");
+	liberator.execute("cnoremap <silent> <M-v> <C-v><M-v>");
+	liberator.execute("inoremap <silent> <M-a> <C-v><M-a>");
+	liberator.execute("inoremap <silent> <M-z> <C-v><M-z>");
+	liberator.execute("inoremap <silent> <M-x> <C-v><M-x>");
+	liberator.execute("inoremap <silent> <M-c> <C-v><M-c>");
+	liberator.execute("inoremap <silent> <M-v> <C-v><M-v>");
 }
 else {
 }

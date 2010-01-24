@@ -1,0 +1,8 @@
+noremap p p
+noremap m m
+noremap v v
+noremap s :hbtab<Space>
+noremap S :hbtab<Space>
+noremap z z
+source! ~/.vimperator/plugin/ldrize_cooperation.js
+" vim: ts=2 sw=2 sts=2 ft=vimperator
