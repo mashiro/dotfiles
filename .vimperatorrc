@@ -137,6 +137,7 @@ autocmd! LocationChange http://(reader\\.livedoor\\.com|fastladder\\.com|0\\.0\\
 autocmd! LocationChange http://(reader\\.livedoor\\.com|fastladder\\.com|0\\.0\\.0\\.0\\:3000)/reader/ :fmap K,<S-Space>
 autocmd! LocationChange http://(reader\\.livedoor\\.com|fastladder\\.com|0\\.0\\.0\\.0\\:3000)/reader/ :fmap i,tj
 autocmd! LocationChange http://(reader\\.livedoor\\.com|fastladder\\.com|0\\.0\\.0\\.0\\:3000)/reader/ :fmap e,tj
+autocmd! LocationChange http://(reader\\.livedoor\\.com|fastladder\\.com|0\\.0\\.0\\.0\\:3000)/reader/ :fmap n,w
 
 " Gmail
 "autocmd LocationChange mail\\.google\\.com/mail :fmap gi gs gt gd ga gc *a *n *r *u *s *t u k j o p n c / q ? x s y e m ! # r a f N ] [ z . I U S E GL
@@ -244,6 +245,15 @@ let g:browser_object_prefix = ','
 
 " no_reading.js {{{2
 let g:no_reading_do_echo = 1
+
+
+" hint-tombloo-mod.js {{{2
+javascript <<EOM
+liberator.globalVariables.hint_tombloo_specified_list = [
+	['www\\.pixiv\\.net', 'Photo - Upload from Cache', false],
+	['.*', '.*', false]
+];
+EOM
 
 
 " Javascripts {{{1
