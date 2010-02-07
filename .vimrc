@@ -348,7 +348,7 @@ set runtimepath+=~/.vim/plugins/vimirc
 
 
 " skk.vim {{{2
-set runtimepath+=~/.vim/plugins/skk
+"set runtimepath+=~/.vim/plugins/skk
 let skk_jisyo = '~/.skk-jisyo'
 let skk_large_jisyo = '~/.vim/plugins/skk/dict/SKK-JISYO.L'
 let skk_show_annotation = 1
