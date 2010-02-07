@@ -47,6 +47,7 @@ set! mousewheel.withnokey.sysnumlines=false
 
 " QMarks {{{1
 silent qmark c http://www.google.com/calendar/render?hl=ja
+silent qmark e https://www.evernote.com/Home.action
 silent qmark f http://fastladder.com/reader/
 silent qmark F http://favotter.matope.com/user.php?user=YurineMashiro
 silent qmark g https://github.com/
@@ -88,7 +89,7 @@ let g :textarea_ime_mode = "inactive"
 
 
 " migemo_hint.js {{{2
-"set hintmatching=custom
+set hintmatching=custom
 
 
 " appendAnchor.js {{{2
@@ -128,26 +129,29 @@ let g:ldrc_skip = "0.1"
 
 
 " feedSomeKey_2.js {{{2
-autocmd! LocationChange .* :fmapc
+autocmd! LocationChange '.*' :fmapc
 
-" LDR / fastladder / OpenFL
-autocmd! LocationChange http://(reader\\.livedoor\\.com|fastladder\\.com|0\\.0\\.0\\.0\\:3000)/reader/ :fmap j k s a p o v r w W J K <Space> <S-Space> c z > <
-autocmd! LocationChange http://(reader\\.livedoor\\.com|fastladder\\.com|0\\.0\\.0\\.0\\:3000)/reader/ :fmap p,pj
-autocmd! LocationChange http://(reader\\.livedoor\\.com|fastladder\\.com|0\\.0\\.0\\.0\\:3000)/reader/ :fmap J,<Space>
-autocmd! LocationChange http://(reader\\.livedoor\\.com|fastladder\\.com|0\\.0\\.0\\.0\\:3000)/reader/ :fmap K,<S-Space>
-autocmd! LocationChange http://(reader\\.livedoor\\.com|fastladder\\.com|0\\.0\\.0\\.0\\:3000)/reader/ :fmap i,tj
-autocmd! LocationChange http://(reader\\.livedoor\\.com|fastladder\\.com|0\\.0\\.0\\.0\\:3000)/reader/ :fmap e,tj
-autocmd! LocationChange http://(reader\\.livedoor\\.com|fastladder\\.com|0\\.0\\.0\\.0\\:3000)/reader/ :fmap n,w
+" LDR / fastladder
+autocmd! LocationChange http://(reader\\.livedoor\\.com|fastladder\\.com)/reader :fmap j k s a p o v r w W J K <Space> <S-Space> c z > <
+autocmd! LocationChange http://(reader\\.livedoor\\.com|fastladder\\.com)/reader :fmap p,pj
+autocmd! LocationChange http://(reader\\.livedoor\\.com|fastladder\\.com)/reader :fmap J,<Space>
+autocmd! LocationChange http://(reader\\.livedoor\\.com|fastladder\\.com)/reader :fmap K,<S-Space>
+autocmd! LocationChange http://(reader\\.livedoor\\.com|fastladder\\.com)/reader :fmap i,tj
+autocmd! LocationChange http://(reader\\.livedoor\\.com|fastladder\\.com)/reader :fmap e,tj
+autocmd! LocationChange http://(reader\\.livedoor\\.com|fastladder\\.com)/reader :fmap n,w
+
+" Google Reader
+autocmd! LocationChange http://www\\.google\\.co\\.jp/reader :fmap -v j k J K <Space> <S-Space> n p N P X O s v gh ga gs gS gu gt gT gd gf gF gc ge gp r u 1 2 / a
 
 " Gmail
-"autocmd LocationChange mail\\.google\\.com/mail :fmap gi gs gt gd ga gc *a *n *r *u *s *t u k j o p n c / q ? x s y e m ! # r a f N ] [ z . I U S E GL
-autocmd! LocationChange mail\\.google\\.com/mail :fmap gi gs gt gd ga gc *a *n *r *u *s *t u k j o p n c / q ? x s e m ! # r a N ] [ z . I U S E GL
-autocmd! LocationChange mail\\.google\\.com/mail :fmap E,Ie
+"autocmd LocationChange https?://mail\\.google\\.com/mail :fmap gi gs gt gd ga gc *a *n *r *u *s *t u k j o p n c / q ? x s y e m ! # r a f N ] [ z . I U S E GL
+autocmd! LocationChange https?://mail\\.google\\.com/mail :fmap gi gs gt gd ga gc *a *n *r *u *s *t u k j o p n c / q ? x s e m ! # r a N ] [ z . I U S E GL
+autocmd! LocationChange https?://mail\\.google\\.com/mail :fmap E,Ie
 
 " Tumblr
-autocmd! LocationChange http://.*\\.tumblr\\.com/ :fmap j k
-autocmd! LocationChange http://.*\\.tumblr\\.com/ :fmap i,tj
-autocmd! LocationChange http://.*\\.tumblr\\.com/ :fmap e,tj
+autocmd! LocationChange http://.*\\.tumblr\\.com :fmap j k
+autocmd! LocationChange http://.*\\.tumblr\\.com :fmap i,tj
+autocmd! LocationChange http://.*\\.tumblr\\.com :fmap e,tj
 
 
 " direct_bookmark.js {{{2
@@ -277,15 +281,18 @@ if (typeof hBookmark != 'undefined') liberator.loadScript('chrome://hatenabookma
 
 // キーボードショートカットの指定
 // 空(null)を指定すれば hints や nnoremap を上書きしなくなる
+/*
 liberator.globalVariables.hBookmark_shortcuts = {
 	hintsAdd     : 'c',
 	hintsComment : 'C',
 	add          : ['c'],
 	comment      : ['C'],
 };
+*/
 
 // コマンドの設定
 // ここから下の設定は、はてなブックマーク拡張のバージョン 1.2.4a1 以降で有効です。
+/*
 liberator.globalVariables.hBookmark_commands = {
 	hbsearch             : 'hb[search]',
 	hbsearch_tab         : 'hbt[absearch]',
@@ -296,21 +303,22 @@ liberator.globalVariables.hBookmark_commands = {
 	hbsearch_title       : 'hbti[tle]',
 	hbsearch_title_tab   : 'hbtti[tle]',
 };
+*/
 
 // :hb! url 等の bang(!) 付きで開いた場合の挙動。
 // 標準ははてブエントリーページを開く entryPage が設定されている。
 // 他に新規タブで開く openNewTab がある。
 // また、文字列ではなく自分で定義した関数をセットすることもできる。
-liberator.globalVariables.hBookmark_bangFunction = 'entryPage';
+//liberator.globalVariables.hBookmark_bangFunction = 'entryPage';
 
 // 検索時の wait(ms)
-liberator.globalVariables.hBookmark_search_interval = 1000;
+//liberator.globalVariables.hBookmark_search_interval = 1000;
 
 // 一度に検索する limit
-liberator.globalVariables.hBookmark_search_limit = 20;
+//liberator.globalVariables.hBookmark_search_limit = 20;
 
 // 検索時の表示の最大件数。この件数に達するまで検索し続ける。
-liberator.globalVariables.hBookmark_search_max_limit = 100;
+//liberator.globalVariables.hBookmark_search_max_limit = 100;
 EOF
 
 

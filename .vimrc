@@ -175,7 +175,7 @@ function! s:python_header() " {{{2
 		return
 	endif
 	normal! gg
-	execute "normal! i#!/usr/bin/python"
+	execute "normal! i#!/usr/bin/env python"
 	execute "normal! o# -*- encoding: utf-8 -*-\<CR>"
 endfunction
 
