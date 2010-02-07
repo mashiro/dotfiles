@@ -216,6 +216,7 @@ inoremap <C-k> <C-o>D
 " toggle option
 nnoremap <Space>ow :<C-u>setlocal wrap! \| setlocal wrap?<CR>
 nnoremap <Space>on :<C-u>setlocal number! \| setlocal number?<CR>
+nnoremap <Space>ol :<C-u>setlocal list! \| setlocal list?<CR>
 
 " fold
 "nnoremap <expr> h col('.') == 1 && foldlevel(line('.')) > 0 ? 'zc' : 'h'
