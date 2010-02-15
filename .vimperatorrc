@@ -279,20 +279,18 @@ EOM
 javascript <<EOF
 if (typeof hBookmark != 'undefined') liberator.loadScript('chrome://hatenabookmark/content/vimperator/plugin/hatenabookmark.js', {__proto__: this});
 
+/*
 // キーボードショートカットの指定
 // 空(null)を指定すれば hints や nnoremap を上書きしなくなる
-/*
 liberator.globalVariables.hBookmark_shortcuts = {
 	hintsAdd     : 'c',
 	hintsComment : 'C',
 	add          : ['c'],
 	comment      : ['C'],
 };
-*/
 
 // コマンドの設定
 // ここから下の設定は、はてなブックマーク拡張のバージョン 1.2.4a1 以降で有効です。
-/*
 liberator.globalVariables.hBookmark_commands = {
 	hbsearch             : 'hb[search]',
 	hbsearch_tab         : 'hbt[absearch]',
@@ -303,22 +301,22 @@ liberator.globalVariables.hBookmark_commands = {
 	hbsearch_title       : 'hbti[tle]',
 	hbsearch_title_tab   : 'hbtti[tle]',
 };
-*/
 
 // :hb! url 等の bang(!) 付きで開いた場合の挙動。
 // 標準ははてブエントリーページを開く entryPage が設定されている。
 // 他に新規タブで開く openNewTab がある。
 // また、文字列ではなく自分で定義した関数をセットすることもできる。
-//liberator.globalVariables.hBookmark_bangFunction = 'entryPage';
+liberator.globalVariables.hBookmark_bangFunction = 'entryPage';
 
 // 検索時の wait(ms)
-//liberator.globalVariables.hBookmark_search_interval = 1000;
+liberator.globalVariables.hBookmark_search_interval = 1000;
 
 // 一度に検索する limit
-//liberator.globalVariables.hBookmark_search_limit = 20;
+liberator.globalVariables.hBookmark_search_limit = 20;
 
 // 検索時の表示の最大件数。この件数に達するまで検索し続ける。
-//liberator.globalVariables.hBookmark_search_max_limit = 100;
+liberator.globalVariables.hBookmark_search_max_limit = 100;
+*/
 EOF
 
 
