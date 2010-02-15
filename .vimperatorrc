@@ -83,18 +83,14 @@ command! addhatenaantena -nargs=0 -description="Add to Hatena Antena" js liberat
 
 
 " Plugins {{{1
-" ime_controller.js {{{2
-let g :ex_ime_mode = "inactive"
-let g :textarea_ime_mode = "inactive"
-
-
-" migemo_hint.js {{{2
-set hintmatching=custom
-
-
 " appendAnchor.js {{{2
 let g:auto_append_anchor = "true"
 
+" auto_detect_link.js {{{2
+autocmd! VimperatorEnter .* js liberator.globalVariables.autoDetectLink.force = true
+
+" browser_object.js {{{2
+let g:browser_object_prefix = ',' 
 
 " copy.js {{{2
 noremap <Leader>c :copy 
@@ -111,25 +107,17 @@ liberator.globalVariables.copy_templates = [
 ];
 EOM
 
-
-" multi_requester.js {{{2
-noremap <Leader>mt :mr<Space>twitter-search-pcod-no-jp<Space>
-noremap <Leader>mT :mr<Space>twitter-search-pcod-no-jp<Space>YurineMashiro<CR>
-noremap <Leader>mf :mr<Space>favotter-new<Space>
-noremap <Leader>mF :mr<Space>favotter-new<Space>YurineMashiro<CR>
-
-
-" ldrize_cooperation.js {{{2
-noremap <Leader>q :toggleldrc<CR>
-let g:ldrc_enable = "true"
-let g:ldrc_captureMappings = "['j','k','p','o','?']" 
-let g:ldrc_intelligence_bind = "true"
-let g:ldrc_hints = "true"
-let g:ldrc_skip = "0.1"
-
+" direct_bookmark.js {{{2
+let g:direct_sbm_use_services_by_tag = "h"
+let g:direct_sbm_use_services_by_post = "h"   
+noremap <Leader>ba :sbm 
+noremap <Leader>bA :sbm<CR>
+noremap <Leader>be :bentry<CR>
+noremap <Leader>bt :btags<CR>
+noremap <Leader>bi :bicon<CR>
 
 " feedSomeKey_2.js {{{2
-autocmd! LocationChange '.*' :fmapc
+autocmd! LocationChange .* :fmapc
 
 " LDR / fastladder
 autocmd! LocationChange http://(reader\\.livedoor\\.com|fastladder\\.com)/reader :fmap j k s a p o v r w W J K <Space> <S-Space> c z > <
@@ -153,16 +141,70 @@ autocmd! LocationChange http://.*\\.tumblr\\.com :fmap j k
 autocmd! LocationChange http://.*\\.tumblr\\.com :fmap i,tj
 autocmd! LocationChange http://.*\\.tumblr\\.com :fmap e,tj
 
+" hint-tombloo-mod.js {{{2
+javascript <<EOM
+liberator.globalVariables.hint_tombloo_specified_list = [
+	['www\\.pixiv\\.net', 'Photo - Upload from Cache', false],
+	['.*', '.*', false]
+];
+EOM
 
-" direct_bookmark.js {{{2
-let g:direct_sbm_use_services_by_tag = "h"
-let g:direct_sbm_use_services_by_post = "h"   
-noremap <Leader>ba :sbm 
-noremap <Leader>bA :sbm<CR>
-noremap <Leader>be :bentry<CR>
-noremap <Leader>bt :btags<CR>
-noremap <Leader>bi :bicon<CR>
+" ime_controller.js {{{2
+let g :ex_ime_mode = "inactive"
+let g :textarea_ime_mode = "inactive"
 
+" ldrize_cooperation.js {{{2
+noremap <Leader>q :toggleldrc<CR>
+let g:ldrc_enable = "true"
+let g:ldrc_captureMappings = "['j','k','p','o','?']" 
+let g:ldrc_intelligence_bind = "true"
+let g:ldrc_hints = "true"
+let g:ldrc_skip = "0.1"
+
+" localkeymode.js {{{2
+let g:localkeymode_enable = "true"
+js <<EOM
+liberator.globalVariables.localKeyMappings = [
+	[/www\.(nicovideo\.jp|youtube\.com)\/watch/, [
+		['p s S v V m r c f F'],
+		['p',       ':stplay'],
+		['s',       ':stseek! +10'],
+		['S',       ':stseek! -10 '], 
+		['v',       ':stvolume! +10 '],
+		['V',       ':stvolume! -10 '],
+		['m',       ':stmute'],
+		['r',       ':strepeat'],
+		['c',       ':stcomment'],
+		['f',       ':stlarge'],
+		['F',       ':stfullscreen']
+	]],
+];
+EOM
+
+" migemo_hint.js {{{2
+set hintmatching=custom
+
+" multi_requester.js {{{2
+noremap <Leader>mt :mr<Space>twitter-search-pcod-no-jp<Space>
+noremap <Leader>mT :mr<Space>twitter-search-pcod-no-jp<Space>YurineMashiro<CR>
+noremap <Leader>mf :mr<Space>favotter-new<Space>
+noremap <Leader>mF :mr<Space>favotter-new<Space>YurineMashiro<CR>
+
+" no_reading.js {{{2
+let g:no_reading_do_echo = 1
+
+" refcontrol.js {{{2
+let g:refcontrol_enabled = "true"
+javascript <<EOM
+liberator.globalVariables.refcontrol = {
+	'@DEFAULT'          : '@NORMAL',
+	'fc2.com'           : '@FORGE',
+	'blogs.yahoo.co.jp' : '@FORGE',
+	'blog.goo.ne.jp'    : '@FORGE',
+	'ameblo.jp'         : '@FORGE',
+	'nekobooru.net'     : '@FORGE',
+};
+EOM
 
 " sbmcommentsviewer.js {{{2
 let g:def_sbm_format = "timestamp,id,tagsAndComment"
@@ -205,58 +247,6 @@ liberator.globalVariables.useragent_list = [{
 		appname: 'P900i',
 		platform: 'iMode'
 }];
-EOM
-
-
-" refcontrol.js {{{2
-let g:refcontrol_enabled = "true"
-javascript <<EOM
-liberator.globalVariables.refcontrol = {
-	'@DEFAULT'          : '@NORMAL',
-	'fc2.com'           : '@FORGE',
-	'blogs.yahoo.co.jp' : '@FORGE',
-	'blog.goo.ne.jp'    : '@FORGE',
-	'ameblo.jp'         : '@FORGE',
-	'nekobooru.net'     : '@FORGE',
-};
-EOM
-
-
-" localkeymode.js {{{2
-let g:localkeymode_enable = "true"
-js <<EOM
-liberator.globalVariables.localKeyMappings = [
-	[/www\.(nicovideo\.jp|youtube\.com)\/watch/, [
-		['p s S v V m r c f F'],
-		['p',       ':stplay'],
-		['s',       ':stseek! +10'],
-		['S',       ':stseek! -10 '], 
-		['v',       ':stvolume! +10 '],
-		['V',       ':stvolume! -10 '],
-		['m',       ':stmute'],
-		['r',       ':strepeat'],
-		['c',       ':stcomment'],
-		['f',       ':stlarge'],
-		['F',       ':stfullscreen']
-	]],
-];
-EOM
-
-
-" browser_object.js {{{2
-let g:browser_object_prefix = ',' 
-
-
-" no_reading.js {{{2
-let g:no_reading_do_echo = 1
-
-
-" hint-tombloo-mod.js {{{2
-javascript <<EOM
-liberator.globalVariables.hint_tombloo_specified_list = [
-	['www\\.pixiv\\.net', 'Photo - Upload from Cache', false],
-	['.*', '.*', false]
-];
 EOM
 
 
