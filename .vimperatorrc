@@ -63,7 +63,7 @@ silent qmark W https://wave.google.com/wave/
 silent qmark y http://search.yahoo.com/
 
 
-" Bmarks {{{1
+" BMarks {{{1
 silent bmark -title="Google US Search" -tags=keyword -keyword=g http://www.google.com/search?q=%s
 silent bmark -title="Twitter" -tags=keyword -keyword=tw http://twitter.com/%s
 silent bmark -title="Twitter Search" -tags=keyword -keyword=ts http://search.twitter.com/search?q=%s
@@ -345,7 +345,7 @@ javascript <<EOM
 EOM
 
 
-" AutoCmd {{{1
+" AutoCmds {{{1
 "autocmd! LocationChange .* source! ~/.vimperator/location/defaultmap.vimp
 "autocmd! LocationChange www\\.(nicovideo\\.jp|youtube\\.com)/watch source! ~/.vimperator/location/stellamap.vimp
 
@@ -446,4 +446,4 @@ noremap <silent> <Leader>a :autopagerize<CR>
 " End {{{1
 source! ~/.vimperatorrc.local
 
-" vim: ts=2 sw=2 sts=2 ft=vimperator
+" vim: ts=2 sw=2 sts=2 fdm=marker ft=vimperator
