@@ -96,8 +96,12 @@ darwin*)
     alias ls="ls -G"
     ;;
 freebsd*|linux*)
-    alias ls="ls --color=auto"
+    #alias ls="ls --color=auto"
+	alias ls="ls --color"
     ;;
+cygwin*)
+	alias ls="ls --color=auto"
+	;;
 esac
 
 alias l='ls -alrt'
@@ -158,7 +162,7 @@ esac
 export LANG=ja_JP.UTF-8
 export EDITOR=vim
 export PAGER=less
-export LESS="--LONG-PROMPT --ignore-case"
+export LESS="-i -M -R"
 
 
 # End {{{1
