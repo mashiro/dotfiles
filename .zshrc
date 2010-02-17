@@ -96,8 +96,7 @@ darwin*)
     alias ls="ls -G"
     ;;
 freebsd*|linux*)
-    #alias ls="ls --color=auto"
-	alias ls="ls --color"
+    alias ls="ls --color=auto"
     ;;
 cygwin*)
 	alias ls="ls --color=auto"
