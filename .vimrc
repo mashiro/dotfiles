@@ -63,7 +63,7 @@ if (1 < &t_Co || has('gui')) && has('syntax')
 	syntax on
 	set background=dark
 	if (256 <= &t_Co)
-		colorscheme xoria256
+		colorscheme xoria256-mod
 	endif
 endif
 
