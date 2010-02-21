@@ -25,19 +25,17 @@ setopt nocheckjobs
 autoload -U colors; colors
 case ${UID} in
 0)
-    PROMPT="%B%{${fg[red]}%}%/#%{${reset_color}%}%b "
-    PROMPT2="%B%{${fg[red]}%}%_#%{${reset_color}%}%b "
-    SPROMPT="%B%{${fg[red]}%}%r is correct? [n,y,a,e]:%{${reset_color}%}%b "
-    [ -n "${REMOTEHOST}${SSH_CONNECTION}" ] && 
-        PROMPT="%{${fg[cyan]}%}$(echo ${HOST%%.*} | tr '[a-z]' '[A-Z]') ${PROMPT}"
-    ;;
+	PROMPT="%{${fg[cyan]}%}$(echo ${HOST%%.*} | tr '[a-z]' '[A-Z]') %{${fg[red]}%}%/#%{${reset_color}%}%b "
+	PROMPT2="%{${fg[red]}%}%_#%{${reset_color}%}%b "
+	SPROMPT="%{${fg[red]}%}%r is correct? [n,y,a,e]:%{${reset_color}%}%b "
+	;;
 *)
-    PROMPT="%{${fg_bold[red]}%}%/%%%{${reset_color}%} "
-    PROMPT2="%{${fg_bold[red]}%}%_%%%{${reset_color}%} "
-    SPROMPT="%{${fg_bold[red]}%}%r is correct? [n,y,a,e]:%{${reset_color}%} "
-    [ -n "${REMOTEHOST}${SSH_CONNECTION}" ] && 
-        PROMPT="%{${fg[cyan]}%}$(echo ${HOST%%.*} | tr '[a-z]' '[A-Z]') ${PROMPT}"
-    ;;
+	PROMPT="%B%{${fg[red]}%}%/%%%{${reset_color}%} "
+	PROMPT2="%B%{${fg[red]}%}%_%%%{${reset_color}%} "
+	SPROMPT="%B%{${fg[red]}%}%r is correct? [n,y,a,e]:%{${reset_color}%} "
+	[ -n "${REMOTEHOST}${SSH_CONNECTION}" ] && 
+		PROMPT="%{${fg[cyan]}%}$(echo ${HOST%%.*} | tr '[a-z]' '[A-Z]') ${PROMPT}"
+	;;
 esac
 
 export LSCOLORS=ExFxCxdxBxegedabagacad
@@ -46,10 +44,10 @@ zstyle ':completion:*:default' list-colors ${(s.:.)LS_COLORS}
 
 case "${TERM}" in
 kterm*|xterm*)
-    precmd() {
-        echo -ne "\033]0;${USER}@${HOST%%.*}:${PWD}\007"
-    }
-    ;;
+	precmd() {
+		echo -ne "\033]0;${USER}@${HOST%%.*}:${PWD}\007"
+	}
+	;;
 esac
 
 
@@ -93,11 +91,11 @@ setopt complete_aliases     # aliased ls needs if file/dir completions work
 
 case "${OSTYPE}" in
 darwin*)
-    alias ls="ls -G"
-    ;;
+	alias ls="ls -G"
+	;;
 freebsd*|linux*)
-    alias ls="ls --color=auto"
-    ;;
+	alias ls="ls --color=auto"
+	;;
 cygwin*)
 	alias ls="ls --color=auto"
 	;;
@@ -132,28 +130,28 @@ alias :q=exit
 
 case "${OSTYPE}" in
 darwin*)
-    alias port-update="sudo port selfupdate; sudo port outdated"
-    alias port-upgrade="sudo port upgrade --enforce-variants installed"
-    ;;
+	alias port-update="sudo port selfupdate; sudo port outdated"
+	alias port-upgrade="sudo port upgrade --enforce-variants installed"
+	;;
 freebsd*)
-    case ${UID} in
-    0)
-        updateports() 
-        {
-            if [ -f /usr/ports/.portsnap.INDEX ]
-            then
-                portsnap fetch update
-            else
-                portsnap fetch extract update
-            fi
-            (cd /usr/ports/; make index)
+	case ${UID} in
+	0)
+		updateports() 
+		{
+			if [ -f /usr/ports/.portsnap.INDEX ]
+			then
+				portsnap fetch update
+			else
+				portsnap fetch extract update
+			fi
+			(cd /usr/ports/; make index)
 
-            portversion -v -l \<
-        }
-        alias appsupgrade='pkgdb -F && BATCH=YES NO_CHECKSUM=YES portupgrade -a'
-        ;;
-    esac
-    ;;
+			portversion -v -l \<
+		}
+		alias appsupgrade='pkgdb -F && BATCH=YES NO_CHECKSUM=YES portupgrade -a'
+		;;
+	esac
+	;;
 esac
 
 
