@@ -90,4 +90,3 @@ bind -c enc ^E encoding eucjp utf8
 bind -c enc s encoding sjis utf8
 bind -c enc ^S encoding sjis utf8
 
-
