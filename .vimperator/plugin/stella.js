@@ -39,7 +39,7 @@ let PLUGIN_INFO =
   <name lang="ja">すてら</name>
   <description>For Niconico/YouTube/Vimeo, Add control commands and information display(on status line).</description>
   <description lang="ja">ニコニコ動画/YouTube/Vimeo 用。操作コマンドと情報表示(ステータスライン上に)追加します。</description>
-  <version>0.24.3</version>
+  <version>0.25.0</version>
   <author mail="anekos@snca.net" homepage="http://d.hatena.ne.jp/nokturnalmortum/">anekos</author>
   <license>new BSD License (Please read the source code comments of this plugin)</license>
   <license lang="ja">修正BSDライセンス (ソースコードのコメントを参照してください)</license>
@@ -76,6 +76,60 @@ let PLUGIN_INFO =
         turn on/off fullscreen.
       :stqu[ality]:
         Set video quality.
+
+    == Local Mappings Sample ==
+    >||
+function addLocalMappings(buffer, maps) {
+  maps.forEach(
+    function (map) {
+      let [cmd, action, extra] = map;
+      let actionFunc = action;
+      extra || (extra = {});
+
+      if (typeof action == "string") {
+        if (action.charAt(0) == ':')
+          actionFunc = extra.open ? function () commandline.open("", action, modes.EX)
+                                  : function () liberator.execute(action);
+        else
+          actionFunc = function () events.feedkeys(action, extra.noremap, true);
+      }
+      extra.matchingUrls = buffer;
+      mappings.addUserMap(
+        [modes.NORMAL],
+        [cmd],
+        "Local mapping for " + buffer,
+        actionFunc,
+        extra
+      );
+    }
+  );
+}
+
+addLocalMappings(
+  /^(http:\/\/(es|www).nicovideo.jp\/watch|http:\/\/(jp|www)\.youtube\.com\/watch|http:\/\/(www\.)?vimeo\.com\/(channels\/(hd)?#)?\d+)/,
+  [
+    ['<C-g>', ':pageinfo S',      ],
+    ['p',     ':stplay',          ],
+    ['m',     ':stmute',          ],
+    ['c',     ':stcomment',       ],
+    ['zz',    ':stlarge',         ],
+    ['r',     ':strepeat',        ],
+    ['+',     ':stvolume! 10',    ],
+    ['-',     ':stvolume! -10',   ],
+    ['h',     ':stseek! -10',     ],
+    ['l',     ':stseek! 10',      ],
+    ['k',     ':stvolume! 10',    ],
+    ['j',     ':stvolume! -10',   ],
+    ['s',     ':stseek ',         {open: true}],
+    ['S',     ':stseek! ',        {open: true}],
+    ['v',     ':stvolume ',       {open: true}],
+    ['V',     ':stvolume! ',      {open: true}],
+    ['o',     ':strelations ',    {open: true}],
+    ['O',     ':strelations! ',   {open: true}],
+  ]
+);
+||<
+
   ]]></detail>
   <detail lang="ja"><![CDATA[
     == Commands ==
@@ -131,6 +185,58 @@ let PLUGIN_INFO =
             ミュート(消音)
           R:
             リピート
+    == Local Mappings Sample ==
+    >||
+function addLocalMappings(buffer, maps) {
+  maps.forEach(
+    function (map) {
+      let [cmd, action, extra] = map;
+      let actionFunc = action;
+      extra || (extra = {});
+
+      if (typeof action == "string") {
+        if (action.charAt(0) == ':')
+          actionFunc = extra.open ? function () commandline.open("", action, modes.EX)
+                                  : function () liberator.execute(action);
+        else
+          actionFunc = function () events.feedkeys(action, extra.noremap, true);
+      }
+      extra.matchingUrls = buffer;
+      mappings.addUserMap(
+        [modes.NORMAL],
+        [cmd],
+        "Local mapping for " + buffer,
+        actionFunc,
+        extra
+      );
+    }
+  );
+}
+
+addLocalMappings(
+  /^(http:\/\/(es|www).nicovideo.jp\/watch|http:\/\/(jp|www)\.youtube\.com\/watch|http:\/\/(www\.)?vimeo\.com\/(channels\/(hd)?#)?\d+)/,
+  [
+    ['<C-g>', ':pageinfo S',      ],
+    ['p',     ':stplay',          ],
+    ['m',     ':stmute',          ],
+    ['c',     ':stcomment',       ],
+    ['zz',    ':stlarge',         ],
+    ['r',     ':strepeat',        ],
+    ['+',     ':stvolume! 10',    ],
+    ['-',     ':stvolume! -10',   ],
+    ['h',     ':stseek! -10',     ],
+    ['l',     ':stseek! 10',      ],
+    ['k',     ':stvolume! 10',    ],
+    ['j',     ':stvolume! -10',   ],
+    ['s',     ':stseek ',         {open: true}],
+    ['S',     ':stseek! ',        {open: true}],
+    ['v',     ':stvolume ',       {open: true}],
+    ['V',     ':stvolume! ',      {open: true}],
+    ['o',     ':strelations ',    {open: true}],
+    ['O',     ':strelations! ',   {open: true}],
+  ]
+);
+||<
     == Link ==
       http://d.hatena.ne.jp/nokturnalmortum/20081213/1229168832
   ]]></detail>
@@ -151,9 +257,6 @@ TODO
    ・パネルなどの要素にクラス名をつける
    ・上書き保存
    ・Fx の pref と liberator.globalVariables の両方で設定をできるようにする (Setting)
-
-FIXME
-    ・this.last.fullscreen = value;
 
 MEMO
    ・prototype での定義順: 単純な値 initialize finalize (get|set)ter メソッド
@@ -380,10 +483,44 @@ Thanks:
   * Setting                                                                      {{{
   *********************************************************************************/
 
-  function Setting () {
-    this.niconico = {
-      autoFullscreenDelay: 4000
+  function Setting (isVimp) {
+    function ul (s)
+      s.replace(/[a-z][A-Z]/g, function (s) (s[0] + '_' + s[1].toLowerCase()));
+
+    function readFrom (obj, reader) {
+      function _readFrom (obj, parents) {
+        for (let [name, value] in Iterator(obj)) {
+          let _parents = parents.concat([name]);
+          if (typeof value === 'object') {
+            _readFrom(value, _parents);
+          } else {
+            let newValue = reader(ul(_parents.join('_')));
+            if (typeof newValue !== 'undefined')
+              obj[name] = newValue;
+          }
+        }
+      }
+      return _readFrom([]);
+    }
+
+    function vimpReader (name)
+      liberator.globalVariables['stella_' + name];
+
+    function firefoxReader (name)
+      undefined;
+
+    let setting = {
+      common: {
+        autoFullscreenDelay: 200
+      },
+      nico: {
+        useComment: false
+      }
     };
+
+    readFrom(setting, isVimp ? vimpReader : firefoxReader);
+
+    return setting;
   }
 
   // }}}
@@ -400,7 +537,7 @@ Thanks:
     this.stella = stella;
 
     this.last = {
-      fullscreen: false
+      screenMode: null
     };
 
     function setf (name, value)
@@ -414,7 +551,6 @@ Thanks:
     setf('turnUpDownVolume', this.has('volume', 'rw') && 'x');
     setf('maxVolume', this.has('volume', 'rw') && 'r');
     setf('fetch', this.has('fileURL', 'r') && 'x');
-    setf('relations', [name for each (name in Player.RELATIONS) if (this.has(name, 'r'))].length && 'r');
     if (!this.functions.large)
       this.functions.large = this.functions.fullscreen;
   }
@@ -428,11 +564,6 @@ Thanks:
   Player.URL_SEARCH = 'search';
   Player.URL_TAG    = 'tag';
   Player.URL_URL    = 'url';
-
-  Player.RELATIONS = {
-    URL_TAG: 'relatedTags',
-    URL_ID: 'relatedIDs'
-  };
 
   // rwxt で機能の有無を表す
   // r = read
@@ -453,8 +584,7 @@ Thanks:
       pause: '',
       play: '',
       playEx: '',
-      relatedIDs: '',
-      relatedTags: '',
+      relations: '',
       repeating: '',
       say: '',
       tags: '',
@@ -508,18 +638,7 @@ Thanks:
 
     get ready () undefined,
 
-    get relatedIDs () undefined,
-
-    get relations () {
-      if (!this.has('relations', 'r'))
-        return [];
-      let result = [];
-      for (let [type, name] in Iterator(Player.RELATIONS)) {
-        if (this.has(name, 'r'))
-          result = result.concat(this[name]);
-      }
-      return result;
-    },
+    get relations () undefined,
 
     get repeating () undefined,
     set repeating (value) value,
@@ -691,7 +810,7 @@ Thanks:
       play: 'x',
       playEx: 'x',
       playOrPause: 'x',
-      relatedIDs: 'r',
+      relations: 'r',
       repeating: '',
       title: 'r',
       totalTime: 'r',
@@ -733,7 +852,7 @@ Thanks:
         );
       }
 
-      this.last.fullscreen = value;
+      this.last.screenMode = value ? 'fullscreen' : null;
       this.storage.fullscreen = value;
 
       // changeOuterNodes(value);
@@ -777,7 +896,7 @@ Thanks:
 
     get ready () !!this.player,
 
-    get relatedIDs () {
+    get relatedtions () {
       let result = [];
       let doc = content.document;
       let r = doc.evaluate("//div[@class='video-mini-title']/a", doc, null, 7, null);
@@ -880,8 +999,7 @@ Thanks:
       play: 'x',
       playEx: 'x',
       playOrPause: 'x',
-      relatedIDs: 'r',
-      relatedTags: 'r',
+      relations: 'r',
       repeating: 'rwt',
       say: 'x',
       tags: 'r',
@@ -936,80 +1054,102 @@ Thanks:
     get muted () this.player.ext_isMute(),
     set muted (value) (this.player.ext_setMute(value), value),
 
-    get pageinfo () [
-      ['comment', U.xpathGet(this.xpath.comment).innerHTML.replace(/<br>/g, '<br/>')]
-    ],
+    get pageinfo () {
+      let v = content.wrappedJSObject.Video;
+      return [
+        ['thumbnail', <img src={v.thumbnail} />],
+        ['comment', v.description],
+        [
+          'tag',
+          [
+            <span><a href={this.makeURL(t, Player.URL_TAG)}>{t}</a></span>
+            for each (t in Array.slice(v.tags))
+          ].join()
+        ]
+      ];
+    },
 
     get player () U.getElementByIdEx('flvplayer'),
 
     get playerContainer () U.getElementByIdEx('flvplayer_container'),
 
-    get ready () !!(this.player && this.player.ext_getVideoSize),
-
-    get relatedIDs () {
-      if (this.__rid_last_url == U.currentURL())
-        return this.__rid_cache || [];
-
-      let videos = [];
-      let failed = false;
-
-      // API で取得
+    get ready () {
       try {
-        let uri = 'http://www.nicovideo.jp/api/getrelation?sort=p&order=d&video=' + this.id;
-        let xhr = new XMLHttpRequest();
-        xhr.open('GET', uri, false);
-        xhr.send(null);
-        let xml = xhr.responseXML;
-        let v, vs = xml.evaluate('//video', xml, null, XPathResult.ORDERED_NODE_ITERATOR_TYPE, null);
-        while (v = vs.iterateNext()) {
-          let [cs, video] = [v.childNodes, {}];
-          for each (let c in cs)
-            if (c.nodeName != '#text')
-              video[c.nodeName] = c.textContent;
-          videos.push(
-            new RelatedID(
-              video.url.replace(/^.+?\/watch\//, ''),
-              video.title,
-              video.thumbnail
-            )
-          );
-        }
+        if (!this.player)
+          return false;
+        return this.player.ext_getLoadedRatio() > 0.0
       } catch (e) {
-        liberator.log('stella: ' + e)
-        failed = true;
+        return false;
       }
-
-      // コメント欄からそれっぽいのを取得する
-      // コメント欄のリンクの前のテキストをタイトルと見なす
-      // textContent を使うと改行が理解できなくなるので、innerHTML で頑張ったけれど頑張りたくない
-      try {
-        let xpath = this.xpath.comment;
-        let comment = U.xpathGet(xpath).innerHTML;
-        let links = U.xpathGets(xpath + '//a')
-                     .filter(function (it) /watch\//.test(it.href))
-                     .map(function(v) v.textContent);
-        links.forEach(function (link) {
-          let re = RegExp('(?:^|[\u3000\\s\\>])([^\u3000\\s\\>]+)\\s*<a href="http:\\/\\/www\\.nicovideo\\.\\w+\\/watch\\/' + link + '" class="(watch|video)">');
-          let r = re.exec(comment);
-          if (r)
-            videos.push(new RelatedID(link, r[1].slice(-20)));
-        });
-      } catch (e) {
-        liberator.log('stella: ' + e)
-        //failed = true;
-      }
-
-      if (!failed) {
-        this.__rid_last_url = U.currentURL();
-        this.__rid_cache = videos;
-      }
-
-      return videos;
     },
 
-    get relatedTags() {
-      let nodes = content.document.getElementsByClassName('nicopedia');
-      return [new RelatedTag(it.textContent) for each (it in nodes) if (it.rel == 'tag')];
+    get relations () {
+      let self = this;
+
+      function IDsFromAPI () {
+        if (self.__rid_last_url == U.currentURL())
+          return self.__rid_cache || [];
+
+        let failed = false, videos = [];
+
+        try {
+          let uri = 'http://www.nicovideo.jp/api/getrelation?sort=p&order=d&video=' + self.id;
+          let xhr = new XMLHttpRequest();
+          xhr.open('GET', uri, false);
+          xhr.send(null);
+          let xml = xhr.responseXML;
+          let v, vs = xml.evaluate('//video', xml, null, XPathResult.ORDERED_NODE_ITERATOR_TYPE, null);
+          while (v = vs.iterateNext()) {
+            let [cs, video] = [v.childNodes, {}];
+            for each (let c in cs)
+              if (c.nodeName != '#text')
+                video[c.nodeName] = c.textContent;
+            videos.push(
+              new RelatedID(
+                video.url.replace(/^.+?\/watch\//, ''),
+                video.title,
+                video.thumbnail
+              )
+            );
+          }
+
+          self.__rid_last_url = U.currentURL();
+          self.__rid_cache = videos;
+        } catch (e) {
+          liberator.log('stella: ' + e)
+        }
+
+        return videos;
+      }
+
+      function IDsFromComment () {
+        let videos = [];
+        // コメント欄のリンクの前のテキストをタイトルと見なす
+        // textContent を使うと改行が理解できなくなるので、innerHTML で頑張ったけれど頑張りたくない
+        try {
+          let xpath = self.xpath.comment;
+          let comment = U.xpathGet(xpath).innerHTML;
+          let links = U.xpathGets(xpath + '//a')
+                       .filter(function (it) /watch\//.test(it.href))
+                       .map(function(v) v.textContent);
+          links.forEach(function (link) {
+            let re = RegExp('(?:^|[\u3000\\s\\>])([^\u3000\\s\\>]+)\\s*<a href="http:\\/\\/www\\.nicovideo\\.\\w+\\/watch\\/' + link + '" class="(watch|video)">');
+            let r = re.exec(comment);
+            if (r)
+              videos.push(new RelatedID(link, r[1].slice(-20)));
+          });
+        } catch (e) {
+          liberator.log('stella: ' + e)
+        }
+        return videos;
+      }
+
+      function tagsFromPage () {
+        let nodes = content.document.getElementsByClassName('nicopedia');
+        return [new RelatedTag(it.textContent) for each (it in nodes) if (it.rel == 'tag')];
+      }
+
+      return [].concat(IDsFromComment(), IDsFromAPI(), tagsFromPage());
     },
 
     get repeating () this.player.ext_isRepeat(),
@@ -1027,6 +1167,8 @@ Thanks:
         let pos = this.storage.scrollPositionBeforeLarge;
         if (!value && typeof pos != "undefined")
             setTimeout(function () buffer.scrollTo(pos.x, pos.y), 0);
+
+        this.last.screenMode = this.large ? 'large' : null;
 
         return this.large;
     },
@@ -1201,19 +1343,13 @@ Thanks:
 
     functions: {
       currentTime: 'w',
-      fileURL: '',
-      fullscreen: '',
       makeURL: 'x',
       muted: 'w',
       pause: 'x',
       play: 'x',
       playEx: 'x',
       playOrPause: 'x',
-      relatedIDs: '',
-      repeating: '',
-      title: 'r',
-      totalTime: '',
-      volume: ''
+      title: 'r'
     },
 
     __initializePlayer: function (player) {
@@ -1471,7 +1607,7 @@ Thanks:
       add('fe[tch]', 'fetch');
       add('la[rge]', 'large');
       add('fu[llscreen]', 'fullscreen');
-      if (U.s2b(liberator.globalVariables.stella_use_nico_comment, false))
+      if (U.s2b(liberator.globalVariables.stella_nico_use_comment, false))
         add('sa[y]', 'say');
 
       commands.addUserCommand(
@@ -1753,7 +1889,7 @@ Thanks:
     onPlayClick: function () this.player.play(),
 
     onReady: function () {
-      if (this.player.last.fullscreen && !this.storage.alreadyAutoFullscreen
+      if (this.player.last.screenMode && !this.storage.alreadyAutoFullscreen
       && !this.__autoFullscreenTimer) {
         this.__autoFullscreenTimer = setInterval(
           U.bindr(this, function () {
@@ -1761,8 +1897,8 @@ Thanks:
               return;
             clearInterval(this.__autoFullscreenTimer)
             setTimeout(
-              U.bindr(this, function () (this.player.fullscreen = true)),
-              this.setting.niconico.autoFullscreenDelay
+              U.bindr(this, function () (this.player[this.player.last.screenMode] = true)),
+              this.setting.common.autoFullscreenDelay
             );
             delete this.__autoFullscreenTimer;
           }),
