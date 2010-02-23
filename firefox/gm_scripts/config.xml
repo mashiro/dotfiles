@@ -7,10 +7,6 @@
 		<Include>https://*</Include>
 		<Include>file:///*</Include>
 	</Script>
-	<Script filename="youtube_hd_suite.user.js" name="YouTube HD Suite" namespace="http://creazy.net/" description="Perfect package to enjoy HD videos in YouTube. Always watching or downloading the highest quality format ( HD 1080p / HD 720p / HQ FLV / MP4 iPod ). Add download icons in video list page." enabled="true" basedir="youtube_hd_suite">
-		<Include>http://*.youtube.com/*</Include>
-		<Include>http://youtube.com/*</Include>
-	</Script>
 	<Script filename="reblogcommand.user.js" name="ReblogCommand" namespace="http://white.s151.xrea.com/" description="" enabled="true" basedir="reblogcommand">
 		<Include>http://*</Include>
 		<Include>https://*</Include>
