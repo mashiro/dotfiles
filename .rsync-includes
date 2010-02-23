@@ -1,3 +1,7 @@
+- ***/.svn
+- ***/.git
+- ***/.hg
+
 # vim
 - .vim/.*
 - .vim/tags/
