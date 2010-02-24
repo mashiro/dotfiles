@@ -179,6 +179,13 @@ function! s:python_header() " {{{2
 	execute "normal! o# -*- encoding: utf-8 -*-\<CR>"
 endfunction
 
+function! s:set_package_runtimepath(name, ...) " {{{2
+	let name = a:name
+	let path = a:0 > 0 ? a:1 : "~/.vim/package"
+	execute "set runtimepath^=" . path . "/" . name
+	execute "set runtimepath+=" . path . "/" . name . "/after"
+endfunction
+
 
 " Mappings {{{1
 " leader
@@ -293,18 +300,18 @@ autocmd MyAutoCmd BufNewFile *.py call s:python_header()
 
 " Plugins {{{1
 " autocomplpop.vim {{{2
-"set runtimepath+=~/.vim/plugins/autocomplpop
+call s:set_package_runtimepath("autocomplpop")
 
 
 " neocomplcache.vim {{{2
-set runtimepath+=~/.vim/plugins/neocomplcache
+call s:set_package_runtimepath("neocomplcache")
 let g:NeoComplCache_EnableAtStartup = 1
 let g:NeoComplCache_EnableQuickMatch = 0
 let g:NeoComplCache_SmartCase = 1
 
 
 " fuf.vim {{{2
-set runtimepath+=~/.vim/plugins/fuzzyfinder
+call s:set_package_runtimepath("fuzzyfinder")
 let g:fuf_splitPathMatching = ' '
 let g:fuf_patternSeparator = ' '
 let g:fuf_modesDisable = ['mrucmd']
@@ -321,34 +328,34 @@ nnoremap <silent> <Leader>fb :FufFile **/<CR>
 
 
 " Align.vim {{{2
-set runtimepath+=~/.vim/plugins/align
+call s:set_package_runtimepath("align")
 let g:Align_xstrlen = 3
 
 
 " yankring.vim {{{2
-set runtimepath+=~/.vim/plugins/yankring
+call s:set_package_runtimepath("yankring")
 let g:yankring_history_dir = '$HOME'
 let g:yankring_history_file = '.yankring_history'
 
 
 " gist.vim {{{2
-set runtimepath+=~/.vim/plugins/gist
+call s:set_package_runtimepath("gist")
 
 
 " quickrun.vim {{{2
-set runtimepath+=~/.vim/plugins/quickrun
+call s:set_package_runtimepath("quickrun")
 
 
 " surround.vim {{{2
-set runtimepath+=~/.vim/plugins/surround
+call s:set_package_runtimepath("surround")
 
 
 " vimirc.vim {{{2
-set runtimepath+=~/.vim/plugins/vimirc
+call s:set_package_runtimepath("vimirc")
 
 
 " skk.vim {{{2
-"set runtimepath+=~/.vim/plugins/skk
+"call s:set_package_runtimepath("skk")
 let skk_jisyo = '~/.skk-jisyo'
 let skk_large_jisyo = '~/.vim/plugins/skk/dict/SKK-JISYO.L'
 let skk_show_annotation = 1
