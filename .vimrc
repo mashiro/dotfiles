@@ -273,18 +273,15 @@ autocmd MyAutoCmd ColorScheme *
 \ | highlight PmenuSbar                   guibg=#333344
 
 " omni-completion
-"if has("autocmd") && exists("+omnifunc")
-"	autocmd MyAutoCmd Filetype *
-"	\   if &omnifunc == ""
-"	\ |     setlocal omnifunc=syntaxcomplete#Complete
-"	\ | endif
-"endif
+if has("autocmd") && exists("+omnifunc")
+	autocmd MyAutoCmd Filetype *
+	\   if &omnifunc == ""
+	\ |     setlocal omnifunc=syntaxcomplete#Complete
+	\ | endif
+endif
 
 " auto ime off (gvim only)
 autocmd MyAutoCmd InsertLeave * set iminsert=0 imsearch=0
-
-" useful when changing directories when buffers are changed
-"autocmd MyAutoCmd BufEnter * execute ":lcd " . expand("%:p:h")
 
 " changelog
 autocmd MyAutoCmd BufNewFile,BufRead *.changelog set filetype=changelog
@@ -300,7 +297,7 @@ autocmd MyAutoCmd BufNewFile *.py call s:python_header()
 
 " Plugins {{{1
 " autocomplpop.vim {{{2
-call s:set_package_runtimepath("autocomplpop")
+"call s:set_package_runtimepath("autocomplpop")
 
 
 " neocomplcache.vim {{{2
