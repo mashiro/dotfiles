@@ -4,10 +4,6 @@
 escape ^Tt
 
 defbce on
-defutf8 on
-defkanji utf-8
-defencoding utf-8
-encoding utf-8 utf-8
 defscrollback 10000
 shell -$SHELL
 
@@ -45,10 +41,6 @@ bind ^H prev
 
 # Widnow {{{2
 bind ^W eval 'echo "window"' 'command -c window'
-#bind -c window n split -h
-#bind -c window ^N split -h
-#bind -c window v split -v
-#bind -c window ^V split -v
 bind -c window ^] command
 bind -c window n split -h
 bind -c window ^N eval 'split -h' 'focus down' 'other'
@@ -83,10 +75,10 @@ bind -c region = eval 'resize =' 'command -c region'
 # Encoding {{{2
 bind ^E eval 'echo "encoding"' 'command -c enc'
 bind -c enc ^] command
-bind -c enc u encoding utf8 utf8
-bind -c enc ^U encoding utf8 utf8
-bind -c enc e encoding eucjp utf8
-bind -c enc ^E encoding eucjp utf8
-bind -c enc s encoding sjis utf8
-bind -c enc ^S encoding sjis utf8
+bind -c enc u encoding utf8
+bind -c enc ^U encoding utf8
+bind -c enc e encoding eucjp
+bind -c enc ^E encoding eucjp
+bind -c enc s encoding sjis
+bind -c enc ^S encoding sjis
 

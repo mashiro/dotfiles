@@ -113,9 +113,9 @@ alias -g G='| grep'
 alias -g XG='| xargs grep'
 alias -g V='| vim -R -'
 
-alias s='screen -U'
-alias sr='screen -U -D -R'
-alias srr='screen -U -D -RR'
+alias s='screen'
+alias sr='screen -D -R'
+alias srr='screen -D -RR'
 
 alias cpan-uninstall='perl -MConfig -MExtUtils::Install -e '"'"'($FULLEXT=shift)=~s{-}{/}g;uninstall "$Config{sitear    chexp}/auto/$FULLEXT/.packlist",1'"'"
 alias cpan-update="perl -MCPAN -e 'CPAN::Shell->install(CPAN::Shell->r)'"
