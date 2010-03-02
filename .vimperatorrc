@@ -49,7 +49,7 @@ set! mousewheel.withnokey.sysnumlines=false
 silent qmark c http://www.google.com/calendar/render?hl=ja
 silent qmark e https://www.evernote.com/Home.action
 silent qmark f http://fastladder.com/reader/
-silent qmark F http://favotter.matope.com/user.php?user=YurineMashiro
+silent qmark F http://favotter.net/user.php?user=YurineMashiro
 silent qmark g https://github.com/
 silent qmark G http://gist.github.com/
 silent qmark h http://translate.google.co.jp/translate_t?hl=ja&sl=en&tl=ja#
@@ -67,7 +67,7 @@ silent qmark y http://search.yahoo.com/
 silent bmark -title="Google US Search" -tags=keyword -keyword=g http://www.google.com/search?q=%s
 silent bmark -title="Twitter" -tags=keyword -keyword=tw http://twitter.com/%s
 silent bmark -title="Twitter Search" -tags=keyword -keyword=ts http://search.twitter.com/search?q=%s
-silent bmark -title="ふぁぼったー" -tags=keyword -keyword=fav http://favotter.matope.com/user.php?user=%s
+silent bmark -title="ふぁぼったー" -tags=keyword -keyword=fav http://favotter.net/user.php?user=%s
 silent bmark -title="Ustream" -tags=keyword -keyword=ust http://www.ustream.tv/channel/%s
 silent bmark -title="はてなダイアリー" -tags=keyword -keyword=hd http://d.hatena.ne.jp/%s
 silent bmark -title="はてなブックマーク" -tags=keyword -keyword=hb http://b.hatena.ne.jp/%s
