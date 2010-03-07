@@ -3,8 +3,6 @@
 
 " Initialize {{{1
 mapclear
-cmapclear
-imapclear
 
 
 " Options {{{1
@@ -76,11 +74,10 @@ silent bmark -title="Yahoo! Search" -tags=keyword -keyword=y http://search.yahoo
 
 
 " Commands {{{1
-" http://vimperator.g.hatena.ne.jp/snaka72/20090203/1233674801
-command! feedkeys -nargs=* js events.feedkeys("<args>")
-command! lazy -nargs=+ autocmd VimperatorEnter .* <args>
-command! copybufferurl -nargs=0 js util.copyToClipboard(buffer.URL)
-command! addhatenaantena -nargs=0 -description="Add to Hatena Antena" js liberator.open("http://a.hatena.ne.jp/append?"+buffer.URL, liberator.NEW_TAB)
+command! -nargs=* feedkeys js events.feedkeys("<args>")
+command! -nargs=+ lazy autocmd VimperatorEnter .* <args>
+command! -nargs=0 copybufferurl js util.copyToClipboard(buffer.URL)
+command! -nargs=0 -description="Add to Hatena Antena" addhatenaantena js liberator.open("http://a.hatena.ne.jp/append?"+buffer.URL, liberator.NEW_TAB)
 
 
 " Plugins {{{1
@@ -117,7 +114,7 @@ noremap <Leader>be :bentry<CR>
 noremap <Leader>bt :btags<CR>
 noremap <Leader>bi :bicon<CR>
 
-" feedSomeKey_2.js {{{2
+" feedSomeKeys_2.js {{{2
 "autocmd! LocationChange .* :fmapc
 
 " LDR / fastladder
@@ -143,9 +140,9 @@ noremap <Leader>bi :bicon<CR>
 "autocmd! LocationChange http://.*\\.tumblr\\.com :fmap e,tj
 
 
-" feedSomeKey_3.js {{{2
+" feedSomeKeys_3.js {{{2
 " LDR / fastladder
-command! lazyfmapsldr -nargs=+ lazy fmaps -u 'http://(reader\.livedoor\.com|fastladder\.com)/reader' <args>
+command! -nargs=+ lazyfmapsldr lazy fmaps -u 'http://(reader\.livedoor\.com|fastladder\.com)/reader' <args>
 lazyfmapsldr j k s a p o v r w W J K <Space> <S-Space> c z > <
 lazyfmapsldr p,pj
 lazyfmapsldr J,<Space>
@@ -155,18 +152,17 @@ lazyfmapsldr e,tj
 lazyfmapsldr n,w
 
 " Google Reader
-command! lazyfmapsgooglereader -nargs=+ lazy fmaps -u 'http://www\.google\.co\.jp/reader' <args>
+command! -nargs=+ lazyfmapsgooglereader lazy fmaps -u 'http://www\.google\.co\.jp/reader' <args>
 lazyfmapsgooglereader -v j k J K <Space> <S-Space> n p N P X O s v gh ga gs gS gu gt gT gd gf gF gc ge gp r u 1 2 / a
 
 " Gmail
-command! lazyfmapsgmail -nargs=+ lazy fmaps -u 'https?://mail\.google\.com/mail' <args>
-"lazyfmapsgmail gi gs gt gd ga gc *a *n *r *u *s *t u k j o p n c / q ? x s y e m ! # r a f N ] [ z . I U S E GL
+command! -nargs=+ lazyfmapsgmail lazy fmaps -u 'https?://mail\.google\.com/mail' <args>
 lazyfmapsgmail gi gs gt gd ga gc *a *n *r *u *s *t u k j o p n c / q ? x s e m ! # r a N ] [ z . I U S E GL
 lazyfmapsgmail [,] ],[ 
 lazyfmapsgmail E,Ie
 
 " Tumblr
-command! lazyfmapstumblr -nargs=+ lazy fmaps -u 'http://.*\.tumblr\.com' <args>
+command! -nargs=+ lazyfmapstumblr lazy fmaps -u 'http://.*\.tumblr\.com' <args>
 lazyfmapstumblr j k
 lazyfmapstumblr i,tj
 lazyfmapstumblr e,tj
@@ -383,29 +379,30 @@ EOM
 
 " Mappings {{{1
 " escape
-noremap <C-@> <Esc>
+nnoremap <C-@> <Esc>
+vnoremap <C-@> <Esc>
 cnoremap <C-@> <Esc>
 inoremap <C-@> <Esc>
 
 " depth
-noremap <BS> gu
-noremap <C-BS> gU
+nnoremap <BS> gu
+nnoremap <C-BS> gU
 
 " scroll
-noremap j 6j
-noremap k 6k
-noremap J <C-d>
-noremap K <C-u>
-noremap <A-j> 6j
-noremap <A-k> 6k
-noremap <A-h> 6h
-noremap <A-l> 6l
+nnoremap j 6j
+nnoremap k 6k
+nnoremap J <C-d>
+nnoremap K <C-u>
+nnoremap <A-j> 6j
+nnoremap <A-k> 6k
+nnoremap <A-h> 6h
+nnoremap <A-l> 6l
 
 " tab
-noremap l gt
-noremap h gT
-noremap <silent> <C-l> :tabmove! +1<CR>
-noremap <silent> <C-h> :tabmove! -1<CR>
+nnoremap l gt
+nnoremap h gT
+nnoremap <silent> <C-l> :tabmove! +1<CR>
+nnoremap <silent> <C-h> :tabmove! -1<CR>
 
 noremap y Y
 noremap Y y
@@ -442,29 +439,32 @@ inoremap <C-n> <Down>
 
 " copy/paste
 javascript <<EOM
+execute_silent = function(str, modifiers) {
+	liberator.execute(str, modifiers, true);
+}
 if (liberator.has("Win32")) {
-	liberator.execute("cnoremap <silent> <C-a> <C-v><C-a>");
-	liberator.execute("cnoremap <silent> <C-z> <C-v><C-z>");
-	liberator.execute("cnoremap <silent> <C-x> <C-v><C-x>");
-	liberator.execute("cnoremap <silent> <C-c> <C-v><C-c>");
-	liberator.execute("cnoremap <silent> <C-v> <C-v><C-v>");
-	liberator.execute("inoremap <silent> <C-a> <C-v><C-a>");
-	liberator.execute("inoremap <silent> <C-z> <C-v><C-z>");
-	liberator.execute("inoremap <silent> <C-x> <C-v><C-x>");
-	liberator.execute("inoremap <silent> <C-c> <C-v><C-c>");
-	liberator.execute("inoremap <silent> <C-v> <C-v><C-v>");
+	execute_silent("cnoremap <C-a> <C-v><C-a>");
+	execute_silent("cnoremap <C-z> <C-v><C-z>");
+	execute_silent("cnoremap <C-x> <C-v><C-x>");
+	execute_silent("cnoremap <C-c> <C-v><C-c>");
+	execute_silent("cnoremap <C-v> <C-v><C-v>");
+	execute_silent("inoremap <C-a> <C-v><C-a>");
+	execute_silent("inoremap <C-z> <C-v><C-z>");
+	execute_silent("inoremap <C-x> <C-v><C-x>");
+	execute_silent("inoremap <C-c> <C-v><C-c>");
+	execute_silent("inoremap <C-v> <C-v><C-v>");
 }
 else if (liberator.has("MacUnix")) {
-	liberator.execute("cnoremap <silent> <M-a> <C-v><M-a>");
-	liberator.execute("cnoremap <silent> <M-z> <C-v><M-z>");
-	liberator.execute("cnoremap <silent> <M-x> <C-v><M-x>");
-	liberator.execute("cnoremap <silent> <M-c> <C-v><M-c>");
-	liberator.execute("cnoremap <silent> <M-v> <C-v><M-v>");
-	liberator.execute("inoremap <silent> <M-a> <C-v><M-a>");
-	liberator.execute("inoremap <silent> <M-z> <C-v><M-z>");
-	liberator.execute("inoremap <silent> <M-x> <C-v><M-x>");
-	liberator.execute("inoremap <silent> <M-c> <C-v><M-c>");
-	liberator.execute("inoremap <silent> <M-v> <C-v><M-v>");
+	execute_silent("cnoremap <M-a> <C-v><M-a>");
+	execute_silent("cnoremap <M-z> <C-v><M-z>");
+	execute_silent("cnoremap <M-x> <C-v><M-x>");
+	execute_silent("cnoremap <M-c> <C-v><M-c>");
+	execute_silent("cnoremap <M-v> <C-v><M-v>");
+	execute_silent("inoremap <M-a> <C-v><M-a>");
+	execute_silent("inoremap <M-z> <C-v><M-z>");
+	execute_silent("inoremap <M-x> <C-v><M-x>");
+	execute_silent("inoremap <M-c> <C-v><M-c>");
+	execute_silent("inoremap <M-v> <C-v><M-v>");
 }
 else {
 }
