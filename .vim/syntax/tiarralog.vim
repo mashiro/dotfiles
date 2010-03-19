@@ -9,7 +9,7 @@ if exists("b:current_syntax")
 endif
 
 syn match	tiarralogLine			"^.*$" contains=tiarralogTime
-syn match	tiarralogTime			contained "\d\{2}:\d\{2\}:\d\{2\}" skipwhite nextgroup=tiarralogSelf,tiarralogOthers,tiarralogNotice,tiarralogJoin,tiarralogLeave,tiarralogTopic,tiarralogMode,tiarralogNick
+syn match	tiarralogTime			contained "\(\d\{2\}:\)\{1,2\}\d\{2\}" skipwhite nextgroup=tiarralogSelf,tiarralogOthers,tiarralogNotice,tiarralogJoin,tiarralogLeave,tiarralogTopic,tiarralogMode,tiarralogNick
 syn region	tiarralogSelf			contained start=+>+ end=+<+ contains=tiarralogChannel nextgroup=tiarralogSelfText keepend
 syn region	tiarralogOthers			contained start=+<+ end=+>+ nextgroup=tiarralogOthersText keepend
 syn region	tiarralogNotice			contained start=+(+ end=+)+ nextgroup=tiarralogNoticeText keepend

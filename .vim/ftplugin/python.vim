@@ -3,4 +3,3 @@ setl smartindent cinwords=if,elif,else,for,while,with,try,except,finally,def,cla
 setl tabstop=2
 setl shiftwidth=2
 setl softtabstop=2
-
