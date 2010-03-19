@@ -2,7 +2,10 @@
 " firefox 3.6 + vimperator rev4230
 
 " Initialize {{{1
-mapclear
+"nmapc
+"vmapc
+"cmapc
+"imapc
 
 
 " Options {{{1
@@ -30,6 +33,7 @@ highlight Bell display: none;
 
 colorscheme indigo
 let mapleader = ","
+
 
 " about:config {{{2
 set! general.autoScroll=false
@@ -77,33 +81,45 @@ silent bmark -title="Yahoo! Search" -tags=keyword -keyword=y http://search.yahoo
 command! -nargs=* feedkeys js events.feedkeys("<args>")
 command! -nargs=+ lazy autocmd VimperatorEnter .* <args>
 command! -nargs=0 copybufferurl js util.copyToClipboard(buffer.URL)
-command! -nargs=0 -description="Add to Hatena Antena" addhatenaantena js liberator.open("http://a.hatena.ne.jp/append?"+buffer.URL, liberator.NEW_TAB)
+
+" bookmarklet
+command! -nargs=0 -description="Subscribe with Fastladder" subscribewithfastladder open javascript:location.href='http://fastladder.com/subscribe/'+location.href
+command! -nargs=0 -description="このページをアンテナに追加" addhatenaantena open javascript:location.href='http://a.hatena.ne.jp/append?'+location.href;
+command! -nargs=0 -description="ブックマークする" addhatenabookmark open javascript:(function(){var%20d=(new%20Date);var%20s=document.createElement('script');s.charset='UTF-8';s.src='http://b.hatena.ne.jp/js/Hatena/Bookmark/let.js?'+d.getFullYear()+d.getMonth()+d.getDate();(document.getElementsByTagName('head')[0]||document.body).appendChild(s);})();
+command! -nargs=0 -description="外部プレイヤー用URL取得" ustreamliveurl open javascript:(function(){alert('http://www.ustream.tv/flash/live/'+flashvars.cid)})();
 
 
 " Plugins {{{1
 " appendAnchor.js {{{2
 let g:auto_append_anchor = "true"
 
+
 " auto_detect_link.js {{{2
 autocmd! VimperatorEnter .* js liberator.globalVariables.autoDetectLink.force = true
 
+
 " browser_object.js {{{2
 let g:browser_object_prefix = ',' 
+
 
 " copy.js {{{2
 noremap <Leader>c :copy 
 javascript <<EOM
 liberator.globalVariables.copy_templates = [
-	{ label: 'titleAndURL',    value: '%TITLE% %URL%' },
-	{ label: 'title',          value: '%TITLE%' },
-	{ label: 'url',            value: '%URL%' },
-	{ label: 'markdown',       value: '[%TITLE%](%URL% "%TITLE%")' },
-	{ label: 'markdownsel',    value: '[%SEL%](%URL% "%TITLE%")' },
-	{ label: 'htmlblockquote', value: '<blockquote cite="%URL%" title="%TITLE%">%HTMLSEL%</blockquote>' },
-	{ label: 'ASIN',           value: 'copy ASIN code from Amazon', custom: function(){return content.document.getElementById('ASIN').value;} },
-	{ label: 'Amazon',         value: 'copy ASIN code and URL from Amazon', custom: function(){return 'http://amazon.co.jp/o/ASIN/' + content.document.getElementById('ASIN').value;} }
+	{ label: 'titleAndUrl',         value: '%TITLE% %URL%' },
+	{ label: 'title',               value: '%TITLE%' },
+	{ label: 'url',                 value: '%URL%' },
+	{ label: 'markdown',            value: '[%TITLE%](%URL% "%TITLE%")' },
+	{ label: 'markdownsel',         value: '[%SEL%](%URL% "%TITLE%")' },
+	{ label: 'htmlblockquote',      value: '<blockquote cite="%URL%" title="%TITLE%">%HTMLSEL%</blockquote>' },
+	{ label: 'titleAndshortenUrl',  value: 'title and goo.gl short url', custom: function(){return buffer.title + ' ' + JSON.parse(util.httpGet('http://ggl-shortener.appspot.com/?url='+encodeURIComponent(buffer.URL)).responseText).short_url;} },
+	{ label: 'shortenUrl',          value: 'goo.gl short url', custom: function(){return JSON.parse(util.httpGet('http://ggl-shortener.appspot.com/?url='+encodeURIComponent(buffer.URL)).responseText).short_url;} },
+	{ label: 'ASIN',                value: 'ASIN code from amazon', custom: function(){return content.document.getElementById('ASIN').value;} },
+	{ label: 'Amazon',              value: 'simple amazon url', custom: function(){return 'http://amazon.co.jp/o/ASIN/' + content.document.getElementById('ASIN').value;} },
+	{ label: 'AmazonAffiliate',     value: 'simple amazon url with affiliate', custom: function(){return 'http://amazon.co.jp/o/ASIN/' + content.document.getElementById('ASIN').value + '/mashiro00-22';} },
 ];
 EOM
+
 
 " direct_bookmark.js {{{2
 let g:direct_sbm_use_services_by_tag = "h"
@@ -113,6 +129,7 @@ noremap <Leader>bA :sbm<CR>
 noremap <Leader>be :bentry<CR>
 noremap <Leader>bt :btags<CR>
 noremap <Leader>bi :bicon<CR>
+
 
 " feedSomeKeys_2.js {{{2
 "autocmd! LocationChange .* :fmapc
@@ -151,15 +168,18 @@ lazyfmapsldr i,tj
 lazyfmapsldr e,tj
 lazyfmapsldr n,w
 
+
 " Google Reader
 command! -nargs=+ lazyfmapsgooglereader lazy fmaps -u 'http://www\.google\.co\.jp/reader' <args>
 lazyfmapsgooglereader -v j k J K <Space> <S-Space> n p N P X O s v gh ga gs gS gu gt gT gd gf gF gc ge gp r u 1 2 / a
 
+
 " Gmail
 command! -nargs=+ lazyfmapsgmail lazy fmaps -u 'https?://mail\.google\.com/mail' <args>
 lazyfmapsgmail gi gs gt gd ga gc *a *n *r *u *s *t u k j o p n c / q ? x s e m ! # r a N ] [ z . I U S E GL
-lazyfmapsgmail [,] ],[ 
 lazyfmapsgmail E,Ie
+lazyfmapsgmail [,] ],[ 
+
 
 " Tumblr
 command! -nargs=+ lazyfmapstumblr lazy fmaps -u 'http://.*\.tumblr\.com' <args>
@@ -176,9 +196,11 @@ liberator.globalVariables.hint_tombloo_specified_list = [
 ];
 EOM
 
+
 " ime_controller.js {{{2
 let g :ex_ime_mode = "inactive"
 let g :textarea_ime_mode = "inactive"
+
 
 " ldrize_cooperation.js {{{2
 noremap <Leader>q :toggleldrc<CR>
@@ -187,6 +209,7 @@ let g:ldrc_captureMappings = "['j','k','p','o','?']"
 let g:ldrc_intelligence_bind = "true"
 let g:ldrc_hints = "true"
 let g:ldrc_skip = "0.1"
+
 
 " localkeymode.js {{{2
 let g:localkeymode_enable = "true"
@@ -208,8 +231,14 @@ liberator.globalVariables.localKeyMappings = [
 ];
 EOM
 
+
+" maine_coon.js {{{2
+let g:maine_coon_style = "height: 1em; margin: 0; padding: 3px; border: none; text-align: left; color: #7090d0; font: 11px/1 sans-serif; background: #0c0c0c;"
+
+
 " migemo_hint.js {{{2
 set hintmatching=custom
+
 
 " multi_requester.js {{{2
 noremap <Leader>mt :mr<Space>twitter-search-pcod-no-jp<Space>
@@ -217,8 +246,10 @@ noremap <Leader>mT :mr<Space>twitter-search-pcod-no-jp<Space>YurineMashiro<CR>
 noremap <Leader>mf :mr<Space>favotter-new<Space>
 noremap <Leader>mF :mr<Space>favotter-new<Space>YurineMashiro<CR>
 
+
 " no_reading.js {{{2
 let g:no_reading_do_echo = 1
+
 
 " refcontrol.js {{{2
 let g:refcontrol_enabled = "true"
@@ -232,6 +263,7 @@ liberator.globalVariables.refcontrol = {
 	'nekobooru.net'     : '@FORGE',
 };
 EOM
+
 
 " sbmcommentsviewer.js {{{2
 let g:def_sbm_format = "timestamp,id,tagsAndComment"
@@ -296,16 +328,16 @@ EOM
 javascript <<EOF
 if (typeof hBookmark != 'undefined') liberator.loadScript('chrome://hatenabookmark/content/vimperator/plugin/hatenabookmark.js', {__proto__: this});
 
-/*
 // キーボードショートカットの指定
 // 空(null)を指定すれば hints や nnoremap を上書きしなくなる
 liberator.globalVariables.hBookmark_shortcuts = {
-	hintsAdd     : 'c',
-	hintsComment : 'C',
+	hintsAdd     : '',
+	hintsComment : '',
 	add          : ['c'],
 	comment      : ['C'],
 };
 
+/*
 // コマンドの設定
 // ここから下の設定は、はてなブックマーク拡張のバージョン 1.2.4a1 以降で有効です。
 liberator.globalVariables.hBookmark_commands = {
@@ -404,18 +436,18 @@ nnoremap h gT
 nnoremap <silent> <C-l> :tabmove! +1<CR>
 nnoremap <silent> <C-h> :tabmove! -1<CR>
 
-noremap y Y
-noremap Y y
-noremap zi zI
-noremap zI zi
-noremap zm zM
-noremap zM zm
-noremap zo zO
-noremap zO zo
-noremap zr zR
-noremap zR zr
-noremap zz zZ
-noremap zZ zz
+nnoremap y Y
+nnoremap Y y
+nnoremap zi zI
+nnoremap zI zi
+nnoremap zm zM
+nnoremap zM zm
+nnoremap zo zO
+nnoremap zO zo
+nnoremap zr zR
+nnoremap zR zr
+nnoremap zz zZ
+nnoremap zZ zz
 
 noremap <silent> <C-r> :restart<CR>
 noremap <Leader>h :history! -max=1 
