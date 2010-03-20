@@ -321,7 +321,7 @@ nnoremap <silent> <Space>ff :FufFile <C-r>=expand('%:~:.')[:-1-len(expand('%:~:.
 nnoremap <silent> <Space>fr :FufMruFile<CR>
 nnoremap <silent> <Space>fq :FufQuickfix<CR>
 nnoremap <silent> <Space>fl :FufLine<CR>
-nnoremap <silent> <Leader>fb :FufFile **/<CR>
+nnoremap <silent> <Leader>ff :FufFile **/<CR>
 
 
 " Align.vim {{{2
