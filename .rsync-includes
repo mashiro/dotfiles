@@ -1,6 +1,7 @@
-- *.svn*
-- *.git*
-- *.hg*
+- ***/.svn/
+- ***/.git/
+- ***/.hg/
+- ***/.hgtags
 
 # vim
 - .vim/.*
@@ -18,7 +19,7 @@
 + .zshrc
 + .screenrc
 + .gitconfig
-+ .gitignore
++ .gitignore.global
 
 # all exclude
 - *
