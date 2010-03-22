@@ -1,0 +1,12 @@
+[user]
+	name = mashiro
+	email = y.mashiro@gmail.com
+[color]
+	ui = true
+[core]
+	pager = less -r
+	excludesfile = ~/.gitignore
+[alias]
+	b = branch
+	co = checkout
+	ls = ls-files

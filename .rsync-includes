@@ -17,6 +17,8 @@
 # others
 + .zshrc
 + .screenrc
++ .gitconfig
++ .gitignore
 
 # all exclude
 - *
