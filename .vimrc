@@ -74,7 +74,6 @@ set nocompatible
 set runtimepath& runtimepath+=~/.vim,~/.vim/after
 set backupdir=~/tmp,~/,./
 set directory=~/tmp,~/,./
-set clipboard=unnamed
 
 " view
 set visualbell
@@ -116,16 +115,16 @@ set noexpandtab
 set smarttab
 
 " mouse support
-"set mouse=a
-"if &term =~ '^screen'
-"	autocmd MyAutoCmd VimLeave * :set mouse=
-"	set ttymouse=xterm2
-"endif
-"if has('gui_running')
-"	set mousemodel=popup
-"	set nomousefocus
-"	set mousehide
-"endif
+set mouse=a
+if &term =~ '^screen'
+	autocmd MyAutoCmd VimLeave * :set mouse=
+	set ttymouse=xterm2
+endif
+if has('gui_running')
+	set mousemodel=popup
+	set nomousefocus
+	set mousehide
+endif
 
 
 " Utilities {{{1
@@ -224,6 +223,7 @@ inoremap <C-k> <C-o>D
 nnoremap <Space>ow :<C-u>setlocal wrap! \| setlocal wrap?<CR>
 nnoremap <Space>on :<C-u>setlocal number! \| setlocal number?<CR>
 nnoremap <Space>ol :<C-u>setlocal list! \| setlocal list?<CR>
+nnoremap <Space>op :<C-u>setlocal paste! \| setlocal paste?<CR>
 
 " fold
 "nnoremap <expr> h col('.') == 1 && foldlevel(line('.')) > 0 ? 'zc' : 'h'
@@ -266,6 +266,15 @@ nnoremap <silent> <Space>cd :<C-u>CD<CR>
 
 
 " AutoCmds {{{1
+" Fix 'fileencoding' to use 'encoding'
+" if the buffer only contains 7-bit characters.
+" Note that if the buffer is not 'modifiable',
+" its 'fileencoding' cannot be changed, so that such buffers are skipped.
+autocmd MyAutoCmd BufReadPost *
+\ if &modifiable && !search('[^\x00-\x7F]', 'cnw')
+\ | setlocal fileencoding=
+\ | endif
+
 " adjust highlight settings according to the current colorscheme.
 autocmd MyAutoCmd ColorScheme *
 \   highlight Pmenu         guifg=#d0d0d0 guibg=#222233
@@ -357,8 +366,12 @@ let skk_jisyo = '~/.skk-jisyo'
 let skk_large_jisyo = '~/.vim/plugins/skk/dict/SKK-JISYO.L'
 let skk_show_annotation = 1
 
+
+" fakeclip.vim {{{2
+call s:set_package_runtimepath("fakeclip")
+
+
 " End {{{1
 if filereadable(expand('~/.vimrc.local'))
 	source ~/.vimrc.local
 endif
-
