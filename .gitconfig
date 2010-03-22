@@ -4,9 +4,10 @@
 [color]
 	ui = true
 [core]
-	pager = less -r
-	excludesfile = ~/.gitignore
+	pager = iconv -f UTF-8 | less -r
+	excludesfile = ~/.gitignore.global
 [alias]
 	b = branch
 	co = checkout
 	ls = ls-files
+	st = status
