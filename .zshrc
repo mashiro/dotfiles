@@ -97,7 +97,7 @@ freebsd*|linux*)
 	alias ls="ls --color=auto"
 	;;
 cygwin*)
-	alias ls="ls --color=auto"
+	alias ls="ls --color=auto --show-control-chars"
 	;;
 esac
 
@@ -157,4 +157,3 @@ esac
 
 # End {{{1
 [ -f ~/.zshrc.local ] && source ~/.zshrc.local
-
