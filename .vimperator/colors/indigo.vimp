@@ -53,6 +53,17 @@ hi Hint                 font-family: monospace; font-size: 14px; font-weight: no
 hi HintElem             background-color: #d0d0f0; color: #1c1c1c;
 hi HintActive           background-color: #5566bb; color: #dddded;
 
+" style だと相対パスが使えないぽい
+"style -name indigo chrome://* <<EOM
+"#liberator-completions-content,
+"#liberator-multiline-output-content,
+"#liberator-multiline-input {
+"	background: #1c1c1c url("./indigo/background.png") !important;
+"	background-position: right bottom !important;
+"	background-attachment: fixed !important;
+"	background-repeat: no-repeat !important;
+"}
+"EOM
 
 source ~/.vimperator/colors/indigo/completions.css
 
