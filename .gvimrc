@@ -6,7 +6,7 @@ elseif has('gui_macvim')
     set transparency=15
 endif
 
-set guioptions=ai
+set guioptions=egrL
 set columns=120
 set lines=45
 
