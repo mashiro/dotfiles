@@ -190,11 +190,9 @@ endfunction
 " leader
 let mapleader = ","
 
-" edit .vimrc
+" edit/reload .vimrc
 nnoremap <silent> <Space>ev :<C-u>edit ~/.vimrc<CR>
 nnoremap <silent> <Space>eg :<C-u>edit ~/.gvimrc<CR>
-
-" load .vimrc
 nnoremap <silent> <Space>rv :<C-u>source ~/.vimrc \| if has('gui_running') \| source ~/.gvimrc \| endif<CR>
 nnoremap <silent> <Space>rg :<C-u>source ~/.gvimrc<CR>
 
@@ -203,8 +201,8 @@ nnoremap <silent> <Space>w :<C-u>update<CR>
 nnoremap <silent> <Space>q :<C-u>quit<CR>
 
 " escape (jis)
-map <Nul> <C-@>
-map! <Nul> <C-@>
+noremap <Nul> <C-@>
+noremap! <Nul> <C-@>
 noremap <C-@> <Esc>
 noremap! <C-@> <Esc>
 
@@ -326,6 +324,7 @@ let g:fuf_mrufile_exclude = '\v\~$|\.bak$|\.swp|\.howm$|\.(gif|jpg|png)$'
 let g:fuf_mrufile_maxItem = 10000
 let g:fuf_enumeratingLimit = 20
 nnoremap <silent> <Space>fb :FufBuffer<CR>
+nnoremap <silent> <Space>b :FufBuffer<CR>
 nnoremap <silent> <Space>ff :FufFile <C-r>=expand('%:~:.')[:-1-len(expand('%:~:.:t'))]<CR><CR>
 nnoremap <silent> <Space>fr :FufMruFile<CR>
 nnoremap <silent> <Space>fq :FufQuickfix<CR>
