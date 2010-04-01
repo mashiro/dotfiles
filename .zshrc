@@ -155,5 +155,12 @@ freebsd*)
 esac
 
 
+# Export {{{1
+export EDITOR=vim
+export PAGER=less
+export LESS="-i -M -R"
+
+
 # End {{{1
 [ -f ~/.zshrc.local ] && source ~/.zshrc.local
+
