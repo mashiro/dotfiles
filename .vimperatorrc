@@ -34,8 +34,7 @@ highlight Bell display: none;
 colorscheme indigo
 let mapleader = ","
 
-
-" about:config {{{2
+" about:config
 set! general.autoScroll=false
 set! ui.key.generalAccessKey=0
 set! browser.tabs.closeButtons=2
@@ -66,15 +65,22 @@ silent qmark y http://search.yahoo.com/
 
 
 " BMarks {{{1
-silent bmark -title="Google US Search" -tags=keyword -keyword=g http://www.google.com/search?q=%s
-silent bmark -title="Twitter" -tags=keyword -keyword=tw http://twitter.com/%s
-silent bmark -title="Twitter Search" -tags=keyword -keyword=ts http://search.twitter.com/search?q=%s
-silent bmark -title="ふぁぼったー" -tags=keyword -keyword=fav http://favotter.net/user.php?user=%s
-silent bmark -title="Ustream" -tags=keyword -keyword=ust http://www.ustream.tv/channel/%s
-silent bmark -title="はてなダイアリー" -tags=keyword -keyword=hd http://d.hatena.ne.jp/%s
-silent bmark -title="はてなブックマーク" -tags=keyword -keyword=hb http://b.hatena.ne.jp/%s
-silent bmark -title="ニコニコ動画" -tags=keyword -keyword=nico http://www.nicovideo.jp/watch/%s
-silent bmark -title="Yahoo! Search" -tags=keyword -keyword=y http://search.yahoo.com/search;_ylt=?p=%s
+javascript <<EOM
+function bmark(title, url, keyword) {
+	if (!bookmarks.isBookmarked(url)) {
+		bookmarks.add(false, title, url, keyword, ['keyword'], false);
+	}
+}
+bmark('Google US Search'  , 'http://www.google.com/search?q=%s'        , 'g');
+bmark('Twitter'           , 'http://twitter.com/%s'                    , 'tw');
+bmark('Twitter Search'    , 'http://search.twitter.com/search?q=%s'    , 'ts');
+bmark('ふぁぼったー'      , 'http://favotter.net/user.php?user=%s'     , 'fav');
+bmark('Ustream'           , 'http://www.ustream.tv/channel/%s'         , 'ust');
+bmark('はてなダイアリー'  , 'http://d.hatena.ne.jp/%s'                 , 'hd');
+bmark('はてなブックマーク', 'http://b.hatena.ne.jp/%s'                 , 'hb');
+bmark('ニコニコ動画'      , 'http://www.nicovideo.jp/watch/%s'         , 'nico');
+bmark('Yahoo! Search'     , 'http://search.yahoo.com/search;_ylt=?p=%s', 't');
+EOM
 
 
 " Commands {{{1
@@ -95,7 +101,7 @@ let g:auto_append_anchor = "true"
 
 
 " auto_detect_link.js {{{2
-autocmd! VimperatorEnter .* js liberator.globalVariables.autoDetectLink.force = true
+lazy js liberator.globalVariables.autoDetectLink.force = true
 
 
 " browser_object.js {{{2
@@ -129,32 +135,6 @@ noremap <Leader>bA :sbm<CR>
 noremap <Leader>be :bentry<CR>
 noremap <Leader>bt :btags<CR>
 noremap <Leader>bi :bicon<CR>
-
-
-" feedSomeKeys_2.js {{{2
-"autocmd! LocationChange .* :fmapc
-
-" LDR / fastladder
-"autocmd! LocationChange http://(reader\\.livedoor\\.com|fastladder\\.com)/reader :fmap j k s a p o v r w W J K <Space> <S-Space> c z > <
-"autocmd! LocationChange http://(reader\\.livedoor\\.com|fastladder\\.com)/reader :fmap p,pj
-"autocmd! LocationChange http://(reader\\.livedoor\\.com|fastladder\\.com)/reader :fmap J,<Space>
-"autocmd! LocationChange http://(reader\\.livedoor\\.com|fastladder\\.com)/reader :fmap K,<S-Space>
-"autocmd! LocationChange http://(reader\\.livedoor\\.com|fastladder\\.com)/reader :fmap i,tj
-"autocmd! LocationChange http://(reader\\.livedoor\\.com|fastladder\\.com)/reader :fmap e,tj
-"autocmd! LocationChange http://(reader\\.livedoor\\.com|fastladder\\.com)/reader :fmap n,w
-
-" Google Reader
-"autocmd! LocationChange http://www\\.google\\.co\\.jp/reader :fmap -v j k J K <Space> <S-Space> n p N P X O s v gh ga gs gS gu gt gT gd gf gF gc ge gp r u 1 2 / a
-
-" Gmail
-"autocmd! LocationChange https?://mail\\.google\\.com/mail :fmap gi gs gt gd ga gc *a *n *r *u *s *t u k j o p n c / q ? x s y e m ! # r a f N ] [ z . I U S E GL
-"autocmd! LocationChange https?://mail\\.google\\.com/mail :fmap gi gs gt gd ga gc *a *n *r *u *s *t u k j o p n c / q ? x s e m ! # r a N ] [ z . I U S E GL
-"autocmd! LocationChange https?://mail\\.google\\.com/mail :fmap E,Ie
-
-" Tumblr
-"autocmd! LocationChange http://.*\\.tumblr\\.com :fmap j k
-"autocmd! LocationChange http://.*\\.tumblr\\.com :fmap i,tj
-"autocmd! LocationChange http://.*\\.tumblr\\.com :fmap e,tj
 
 
 " feedSomeKeys_3.js {{{2
