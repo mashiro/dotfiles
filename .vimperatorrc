@@ -1,5 +1,5 @@
 " mashiro .vimperatorrc
-" firefox 3.6 + vimperator rev4230
+" firefox 3.6 + vimperator rev4256
 
 " Initialize {{{1
 "nmapc
@@ -31,13 +31,14 @@ set focuscontent
 set visualbell
 highlight Bell display: none; 
 
-colorscheme indigo
+colorscheme indigo2
 let mapleader = ","
 
 " about:config
 set! general.autoScroll=false
 set! ui.key.generalAccessKey=0
 set! browser.tabs.closeButtons=2
+set! browser.tabs.loadDivertedInBackground=true
 set! browser.urlbar.filter.javascript=false
 set! browser.urlbar.maxRichResults=20
 set! browser.sessionstore.max_tabs_undo=20
