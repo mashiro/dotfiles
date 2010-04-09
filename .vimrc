@@ -89,7 +89,7 @@ set showmode
 set statusline=%<%f\ %m%r%h%w%{'['.(&fenc!=''?&fenc:&enc).']['.&ff.']'}%=%l,%c%V%8P
 
 " search
-set hlsearch
+set nohlsearch
 set incsearch
 set ignorecase
 set smartcase
