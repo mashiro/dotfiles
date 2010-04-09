@@ -8,8 +8,8 @@ elseif has('gui_macvim')
 endif
 
 set guioptions=eg
-set columns=160
-set lines=50
+set columns=120
+set lines=40
 
 
 " Color {{{1
