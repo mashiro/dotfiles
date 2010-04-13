@@ -20,6 +20,7 @@
 
 # others
 + .zshrc
++ .zshenv
 + .screenrc
 + .gitconfig
 + .gitignore.global
