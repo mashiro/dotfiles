@@ -3,19 +3,23 @@
 export PATH MANPATH INFOPATH
 if ! [ "$PATH_FIND_COMPLETED" ]; then
 	# for MacPorts
-	if [ -d /opt/local ]; then
-		for i in /opt/local/{bin,sbin}; do
-			if [ -d "$i" ]; then
-				#PATH="$i:$PATH"
-			fi
-		done
-		if [ -d "/opt/local/share/man" ]; then
-			MANPATH="/opt/local/share/man:$MANPATH"
-		fi
+	dir="/opt/local"
+	if [ -d "$dir" ]; then
+		if [ -d "$dir/bin" ]; then PATH="$dir/bin:$PATH"; fi
+		if [ -d "$dir/sbin" ]; then PATH="$dir/sbin:$PATH"; fi
+		if [ -d "$dir/man" ]; then MANPATH="$dir/man:$MANPATH"; fi
+		if [ -d "$dir/share/man" ]; then MANPATH="$dir/share/man:$MANPATH"; fi
+		if [ -d "$dir/info" ]; then INFOPATH="$dir/info:$INFOPATH"; fi
 	fi
 
 	# for manually build applications
-	if [ -d /usr/local ]; then
+	dir="/usr/local"
+	if [ -d "$dir" ]; then
+		if [ -d "$dir/bin" ]; then PATH="$dir/bin:$PATH"; fi
+		if [ -d "$dir/sbin" ]; then PATH="$dir/sbin:$PATH"; fi
+		if [ -d "$dir/man" ]; then MANPATH="$dir/man:$MANPATH"; fi
+		if [ -d "$dir/share/man" ]; then MANPATH="$dir/share/man:$MANPATH"; fi
+		if [ -d "$dir/info" ]; then INFOPATH="$dir/info:$INFOPATH"; fi
 		for i in /usr/local/*; do
 			if [ -d "$i/bin" ]; then PATH="$i/bin:$PATH"; fi
 			if [ -d "$i/man" ]; then MANPATH="$i/man:$MANPATH"; fi
@@ -25,11 +29,15 @@ if ! [ "$PATH_FIND_COMPLETED" ]; then
 	fi
 
 	# for my own tools
-	if [ -d "$HOME/bin" ]; then PATH="$HOME/bin:$PATH"; fi
-	if [ -d "$HOME/man" ]; then MANPATH="$HOME/man:$MANPATH"; fi
-	if [ -d "$HOME/share/man" ]; then MANPATH="$HOME/share/man:$MANPATH"; fi
-	if [ -d "$HOME/info" ]; then INFOPATH="$HOME/info:$INFOPATH"; fi
+	dir="$HOME"
+	if [ -d "$dir" ]; then
+		if [ -d "$dir/bin" ]; then PATH="$dir/bin:$PATH"; fi
+		if [ -d "$dir/man" ]; then MANPATH="$dir/man:$MANPATH"; fi
+		if [ -d "$dir/share/man" ]; then MANPATH="$dir/share/man:$MANPATH"; fi
+		if [ -d "$dir/info" ]; then INFOPATH="$dir/info:$INFOPATH"; fi
+	fi
 
+	# completed
 	export PATH_FIND_COMPLETED=1
 fi
 
