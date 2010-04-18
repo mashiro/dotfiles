@@ -173,8 +173,8 @@ lazyfmapstumblr e,tj
 " hint-tombloo-mod.js {{{2
 javascript <<EOM
 liberator.globalVariables.hint_tombloo_specified_list = [
-	['www\\.pixiv\\.net', 'Photo - Upload from Cache', false],
-	['drawr\\.net', 'Photo - Upload from Cache', false],
+	//['www\\.pixiv\\.net', 'Photo - Upload from Cache', false],
+	//['drawr\\.net', 'Photo - Upload from Cache', false],
 	['.*', '.*', false]
 ];
 EOM
