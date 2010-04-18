@@ -20,6 +20,9 @@ setopt noautoremoveslash
 setopt nolistbeep
 setopt nocheckjobs
 
+autoload zmv
+alias zmv='noglob zmv'
+
 
 # Terminal {{{1
 autoload -U colors; colors
@@ -85,6 +88,7 @@ setopt hist_expand
 fpath=(~/.zsh/functions/Completion ${fpath})
 autoload -U compinit; compinit
 zstyle ':completion:*:default' menu select=1
+
 
 # Alias {{{1
 setopt complete_aliases     # aliased ls needs if file/dir completions work
