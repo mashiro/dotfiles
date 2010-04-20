@@ -1,2 +1,0 @@
-#!/bin/sh
-rsync -avL --delete --include-from=.rsync-includes $@ ~/ ./

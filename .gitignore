@@ -1,2 +1,4 @@
-.rsync-includes
 .DS_Store
+.vim/tags
+.vimperator/info
+
