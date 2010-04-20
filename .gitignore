@@ -1,5 +1,7 @@
 .DS_Store
 .git/
+.hg/
+.hgtags
 .vim/tags/
 .vimperator/info/
 
