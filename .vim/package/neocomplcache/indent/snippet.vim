@@ -1,7 +1,7 @@
 "=============================================================================
-" FILE: spell_complete.vim
+" FILE: snippets.vim
 " AUTHOR:  Shougo Matsushita <Shougo.Matsu@gmail.com>
-" Last Modified: 15 Apr 2010
+" Last Modified: 26 Oct 2009
 " License: MIT license  {{{
 "     Permission is hereby granted, free of charge, to any person obtaining
 "     a copy of this software and associated documentation files (the
@@ -24,24 +24,35 @@
 " }}}
 "=============================================================================
 
-function! neocomplcache#plugin#spell_complete#initialize()"{{{
-  " Initialize.
+" Only load this indent file when no other was loaded.
+if exists("b:did_indent")
+  finish
+endif
+let b:did_indent = 1
+
+setlocal expandtab
+setlocal shiftwidth=4
+setlocal softtabstop=4
+if !exists('b:undo_indent')
+    let b:undo_indent = ''
+endif
+
+setlocal indentexpr=SnippetsIndent()
+
+function! SnippetsIndent()"{{{
+    let l:line = getline('.')
+    let l:prev_line = (line('.') == 1)? '' : getline(line('.')-1)
+
+    if l:prev_line =~ '^\s*$'
+        return 0
+    elseif l:prev_line =~ '^\%(include\|snippet\|abbr\|prev_word\|rank\|delete\|alias\|condition\)'
+                \&& l:line !~ '^\s*\%(include\|snippet\|abbr\|prev_word\|rank\|delete\|alias\|condition\)'
+        return &shiftwidth
+    else
+        return match(l:line, '\S')
+    endif
 endfunction"}}}
 
-function! neocomplcache#plugin#spell_complete#finalize()"{{{
-endfunction"}}}
-
-function! neocomplcache#plugin#spell_complete#get_keyword_list(cur_keyword_str)"{{{
-  if !&spell || len(a:cur_keyword_str) < 4
-    return []
-  endif
-
-  let l:list = []
-  for l:keyword in spellsuggest(a:cur_keyword_str)
-    call add(l:list, { 'word' : l:keyword, 'menu' : '[Spell]', 'icase' : 1 })
-  endfor
-
-  return l:list
-endfunction"}}}
-
-" vim: foldmethod=marker
+let b:undo_indent .= '
+    \ | setlocal expandtab< shiftwidth< softtabstop<
+    \'

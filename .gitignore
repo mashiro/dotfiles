@@ -1,4 +1,5 @@
 .DS_Store
-.vim/tags
-.vimperator/info
+.git/
+.vim/tags/
+.vimperator/info/
 
