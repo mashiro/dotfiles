@@ -31,7 +31,7 @@ set focuscontent
 set visualbell
 highlight Bell display: none; 
 
-colorscheme indigo2
+colorscheme indigo
 let mapleader = ","
 
 " about:config
