@@ -39,12 +39,12 @@ let PLUGIN_INFO =
   <name lang="ja">すてら</name>
   <description>For Niconico/YouTube/Vimeo, Add control commands and information display(on status line).</description>
   <description lang="ja">ニコニコ動画/YouTube/Vimeo 用。操作コマンドと情報表示(ステータスライン上に)追加します。</description>
-  <version>0.26.3</version>
+  <version>0.27.0</version>
   <author mail="anekos@snca.net" homepage="http://d.hatena.ne.jp/nokturnalmortum/">anekos</author>
   <license>new BSD License (Please read the source code comments of this plugin)</license>
   <license lang="ja">修正BSDライセンス (ソースコードのコメントを参照してください)</license>
   <minVersion>2.0</minVersion>
-  <maxVersion>2.3</maxVersion>
+  <maxVersion>2.4</maxVersion>
   <updateURL>http://svn.coderepos.org/share/lang/javascript/vimperator-plugins/trunk/stella.js</updateURL>
   <detail><![CDATA[
     == Commands ==
@@ -497,7 +497,7 @@ Thanks:
       }
 
       function replaceHTML (s)
-        s.replace(/<br>/g, '<br />').replace(/&nbsp;/g, ' ');
+        s.replace(/<br>/g, '<br />').replace(/&nbsp;/g, '<span style="margin-left: 0.5em"></span>');
 
       return replaceHTML(createHTMLDocument(html).documentElement.innerHTML);
     }
@@ -744,8 +744,9 @@ Thanks:
     get command () this._command,
     get description () this._description,
     get thumbnail () this._thumbnail,
-    get completionItem () ({
-      text: this.command,
+    get completionText () this.command,
+    completionItem: function (index) ({
+      text: [this.completionText, index + ': ' + this.description],
       description: this.description,
       thumbnail: this.thumbnail
     })
@@ -809,6 +810,7 @@ Thanks:
   }
 
   YouTubePlayer.getIDfromURL = function (url) let ([_, r] = url.match(/[?;&]v=([-\w]+)/)) r;
+  YouTubePlayer.isVideoURL = function (url) /^https?:\/\/(www\.)?youtube\.com\/watch\?.+/(url);
 
   YouTubePlayer.OUTER_NODES = [
     'old-masthead',
@@ -905,10 +907,19 @@ Thanks:
     get muted () this.player.isMuted(),
     set muted (value) ((value ? this.player.mute() : this.player.unMute()), value),
 
-    get pageinfo () [
-      ['comment', U.toXML(U.xpathGet(this.xpath.comment).innerHTML)],
-      ['tags', U.toXML(U.xpathGet(this.xpath.tags).innerHTML)]
-    ],
+    get pageinfo () {
+      let doc = content.document;
+      return [
+        [
+          'comment',
+          doc.querySelector('#watch-description > div > span > span > a').nextSibling.textContent.trim()
+        ],
+        [
+          'tags',
+          U.toXML(doc.querySelector('#watch-tags > div').innerHTML)
+        ]
+      ];
+    },
 
     get player ()
       U.getElementByIdEx('movie_player'),
@@ -920,13 +931,23 @@ Thanks:
 
     get ready () !!this.player,
 
-    get relatedtions () {
+    get relations () {
       let result = [];
       let doc = content.document;
-      let r = doc.evaluate("//div[@class='video-mini-title']/a", doc, null, 7, null);
-      for (let i = 0, l = r.snapshotLength; i < l; i++) {
-        let e = r.snapshotItem(i);
-        result.push(new RelatedID(YouTubePlayer.getIDfromURL(e.href), e.textContent));
+      for each (let item in Array.slice(doc.querySelectorAll('#watch-tags > div > a'))) {
+        result.push(new RelatedTag(item.textContent));
+      }
+      for each (let item in Array.slice(doc.querySelectorAll('.video-list-item'))) {
+        let url = item.querySelector('a').href;
+        if (!YouTubePlayer.isVideoURL(url))
+          continue;
+        result.push(
+          new RelatedID(
+            YouTubePlayer.getIDfromURL(url),
+            item.querySelector('span.title').textContent,
+            item.querySelector('img').src
+          )
+        );
       }
       return result;
     },
@@ -963,7 +984,9 @@ Thanks:
     makeURL: function (value, type) {
       switch (type) {
         case Player.URL_ID:
-          return 'http://www.youtube.com/watch?v=' + value + '&fmt=22'; //XXX さりげなく高画質に！
+          return 'http://www.youtube.com/watch?v=' + value;
+        case Player.URL_TAG:
+          return 'http://www.youtube.com/results?search=tag&search_query=' + encodeURIComponent(value);
         case Player.URL_SEARCH:
           return 'http://www.youtube.com/results?search_query=' + encodeURIComponent(value);
       }
@@ -984,23 +1007,6 @@ Thanks:
   function NicoPlayer () {
     Player.apply(this, arguments);
   }
-
-  // name, Normal, Fullscreen
-  // 任意の順で設定できるように配列で持つ
-  NicoPlayer.Variables = [
-    ['videowindow._xscale',                     100,   null],
-    ['videowindow._yscale',                     100,   null],
-    ['videowindow._x',                            6,      0],
-    ['videowindow._y',                           65,      0],
-    ['controller._x',                             6,  -1000],
-    ['inputArea._x',                              4,  -1000],
-    ['controller._visible',                       1,      1],
-    ['inputArea._visible',                        1,      1],
-    ['waku._visible',                             1,      0],
-    ['tabmenu._visible',                          1,      0],
-    ['videowindow.video_mc.video.smoothing',   null,      1],
-    ['videowindow.video_mc.video.deblocking',  null,      5]
-  ];
 
   NicoPlayer.SIZE_LARGE  = 'fit';
   NicoPlayer.SIZE_NORMAL = 'normal';
@@ -1657,40 +1663,48 @@ Thanks:
         true
       );
 
-      commands.addUserCommand(
-        ['strel[ations]'],
-        'relations - Stella',
-        function (args) {
-          if (!self.isValid)
-            return U.raiseNotSupportedPage();
-
-          let arg = args.string;
-          let url = self.player.has('makeURL', 'x') ? makeRelationURL(self.player, arg) : arg;
-          liberator.open(url, args.bang ? liberator.NEW_TAB : liberator.CURRENT_TAB);
-        },
-        {
-          argCount: '*',
-          bang: true,
-          completer: function (context, args) {
+      let (lastCompletions = []) {
+        commands.addUserCommand(
+          ['strel[ations]'],
+          'relations - Stella',
+          function (args) {
             if (!self.isValid)
-              U.raiseNotSupportedPage();
-            if (!self.player.has('relations', 'r'))
-              U.raiseNotSupportedFunction();
+              return U.raiseNotSupportedPage();
 
-            context.title = ['Tag/ID', 'Description'];
-            context.keys = {text: 'text', description: 'description', thumbnail: 'thumbnail'};
-            let process = Array.slice(context.process);
-            context.process = [
-              process[0],
-              function (item, text)
-                (item.thumbnail ? <><img src={item.thumbnail} style="margin-right: 0.5em; height: 3em;"/>{text}</>
-                                : process[1].apply(this, arguments))
-            ];
-            context.completions = self.player.relations.map(function (rel) rel.completionItem);
+            let arg = args.literalArg;
+            let index = (/^\d+:/)(arg) && parseInt(arg, 10);
+            if (index > 0)
+              arg = lastCompletions[index - 1].command;
+            let url = self.player.has('makeURL', 'x') ? makeRelationURL(self.player, arg) : arg;
+            liberator.open(url, args.bang ? liberator.NEW_TAB : liberator.CURRENT_TAB);
           },
-        },
-        true
-      );
+          {
+            literal: 0,
+            argCount: '*',
+            bang: true,
+            completer: function (context, args) {
+              if (!self.isValid)
+                U.raiseNotSupportedPage();
+              if (!self.player.has('relations', 'r'))
+                U.raiseNotSupportedFunction();
+
+              context.title = ['Tag/ID', 'Description'];
+              context.keys = {text: 'text', description: 'description', thumbnail: 'thumbnail'};
+              let process = Array.slice(context.process);
+              context.process = [
+                process[0],
+                function (item, text)
+                  (item.thumbnail ? <><img src={item.thumbnail} style="margin-right: 0.5em; height: 3em;"/>{text}</>
+                                  : process[1].apply(this, arguments))
+              ];
+              lastCompletions = self.player.relations;
+              context.completions =
+                lastCompletions.map(function (rel, index) rel.completionItem(index + 1));
+            },
+          },
+          true
+        );
+      }
     },
 
     addPageInfo: function () {
