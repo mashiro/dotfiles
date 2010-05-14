@@ -151,6 +151,7 @@ lazyfmapsldr K,<S-Space>
 lazyfmapsldr i,tj
 lazyfmapsldr e,tj
 lazyfmapsldr n,w
+lazyfmapsldr /,f
 
 
 " Google Reader
