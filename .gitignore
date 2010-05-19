@@ -2,6 +2,7 @@
 .git/
 .hg/
 .hgtags
+.netrwhist
 .vim/tags/
 .vimperator/info/
 
