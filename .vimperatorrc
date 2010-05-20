@@ -55,7 +55,8 @@ silent qmark f http://fastladder.com/reader/
 silent qmark F http://favotter.net/user.php?user=YurineMashiro
 silent qmark g https://github.com/
 silent qmark G http://gist.github.com/
-silent qmark h http://translate.google.co.jp/translate_t?hl=ja&sl=en&tl=ja#
+silent qmark h http://honyaku.yahoo.co.jp/
+silent qmark H http://translate.google.co.jp/translate_t?hl=ja&sl=en&tl=ja#
 silent qmark l http://reader.livedoor.com/reader/
 silent qmark m https://mail.google.com/mail/
 silent qmark r http://www.google.co.jp/reader/
