@@ -249,6 +249,7 @@ liberator.globalVariables.refcontrol = {
 	'blog.goo.ne.jp'    : '@FORGE',
 	'ameblo.jp'         : '@FORGE',
 	'nekobooru.net'     : '@FORGE',
+	'drawr.net'         : '@FORGE',
 };
 EOM
 
