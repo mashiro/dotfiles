@@ -27,7 +27,7 @@ set ignorecase
 set incsearch
 set smartcase
 set focuscontent
-set hintchars=HJKLASDF
+set hintchars=HJKLASDFGYUIOPQWERTNMZXCVB
 
 set visualbell
 highlight Bell display: none; 
