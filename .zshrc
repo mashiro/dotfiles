@@ -105,22 +105,22 @@ cygwin*)
 	;;
 esac
 
-alias l='ls -alrt'
+alias l="ls -alrt"
 alias la="ls -a"
 alias ll="ls -l"
 alias lal="ls -al"
 
-alias -g L='| less'
-alias -g H='| head'
-alias -g T='| tail'
-alias -g G='| grep'
-alias -g XG='| xargs grep'
-alias -g V='| vim -R -'
+alias -g L="| less"
+alias -g H="| head"
+alias -g T="| tail"
+alias -g G="| grep"
+alias -g XG="| xargs grep"
+alias -g V="| vim -R -"
 
-alias s='screen'
-alias sr='screen -D -R'
-alias srr='screen -D -RR'
-alias sls='screen -ls'
+alias s="screen"
+alias sr="screen -D -R"
+alias srr="screen -D -RR"
+alias sls="screen -ls"
 
 alias cpan-uninstall='perl -MConfig -MExtUtils::Install -e '"'"'($FULLEXT=shift)=~s{-}{/}g;uninstall "$Config{sitear    chexp}/auto/$FULLEXT/.packlist",1'"'"
 alias cpan-update="perl -MCPAN -e 'CPAN::Shell->install(CPAN::Shell->r)'"
@@ -131,7 +131,9 @@ alias du="du -h"
 alias df="df -h"
 alias su="su -l"
 alias sudo="sudo "
-alias :q=exit
+alias :q="exit"
+
+alias py="python"
 
 case "${OSTYPE}" in
 darwin*)
