@@ -6,6 +6,7 @@
 [core]
 	pager = iconv -f UTF-8 | less -r
 	excludesfile = ~/.gitignore.global
+	autocrlf = input
 [alias]
 	b = branch
 	co = checkout
