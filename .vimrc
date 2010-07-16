@@ -207,10 +207,10 @@ noremap <C-@> <Esc>
 noremap! <C-@> <Esc>
 
 " emacs like
-noremap <C-a> <Home>
-noremap! <C-a> <Home>
-noremap <C-e> <End>
-noremap! <C-e> <End>
+"noremap <C-a> <Home>
+"noremap! <C-a> <Home>
+"noremap <C-e> <End>
+"noremap! <C-e> <End>
 nnoremap <C-k> D
 inoremap <C-k> <C-o>D
 
