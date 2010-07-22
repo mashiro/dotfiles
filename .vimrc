@@ -309,9 +309,16 @@ autocmd MyAutoCmd BufNewFile *.py call s:python_header()
 
 " neocomplcache.vim {{{2
 call s:set_package_runtimepath("neocomplcache")
-let g:NeoComplCache_EnableAtStartup = 1
-let g:NeoComplCache_EnableQuickMatch = 0
-let g:NeoComplCache_SmartCase = 1
+let g:neocomplcache_enable_at_startup = 1
+let g:neocomplcache_enable_ignore_case = 1
+let g:neocomplcache_enable_esmart_case = 1
+let g:neocomplcache_enable_wildcard = 1
+let g:neocomplcache_enable_quick_match = 0
+let g:neocomplcache_enable_cursor_hold_i = 0
+let g:neocomplcache_enable_auto_select = 0
+let g:neocomplcache_enable_camel_case_completion = 0
+let g:neocomplcache_enable_underbar_completion = 0
+let g:neocomplcache_enable_display_parameter = 1
 
 
 " fuf.vim {{{2
@@ -361,9 +368,9 @@ call s:set_package_runtimepath("vimirc")
 
 " skk.vim {{{2
 "call s:set_package_runtimepath("skk")
-let skk_jisyo = '~/.skk-jisyo'
-let skk_large_jisyo = '~/.vim/plugins/skk/dict/SKK-JISYO.L'
-let skk_show_annotation = 1
+"let skk_jisyo = '~/.skk-jisyo'
+"let skk_large_jisyo = '~/.vim/plugins/skk/dict/SKK-JISYO.L'
+"let skk_show_annotation = 1
 
 
 " fakeclip.vim {{{2
