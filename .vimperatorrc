@@ -53,7 +53,7 @@ set! mousewheel.withnokey.sysnumlines=false
 silent qmark c http://www.google.com/calendar/render?hl=ja
 silent qmark e https://www.evernote.com/Home.action
 silent qmark f http://fastladder.com/reader/
-silent qmark F http://favotter.net/user.php?user=YurineMashiro
+silent qmark F http://favotter.net/user.php?user=mashiroli
 silent qmark g https://github.com/
 silent qmark G http://gist.github.com/
 silent qmark h http://honyaku.yahoo.co.jp/
@@ -231,9 +231,9 @@ set hintmatching=custom
 " multi_requester.js {{{2
 noremap <Leader>me :mr<Space>alc<Space>
 noremap <Leader>mt :mr<Space>twitter-search-pcod-no-jp<Space>
-noremap <Leader>mT :mr<Space>twitter-search-pcod-no-jp<Space>YurineMashiro<CR>
+noremap <Leader>mT :mr<Space>twitter-search-pcod-no-jp<Space>mashiroli<CR>
 noremap <Leader>mf :mr<Space>favotter-new<Space>
-noremap <Leader>mF :mr<Space>favotter-new<Space>YurineMashiro<CR>
+noremap <Leader>mF :mr<Space>favotter-new<Space>mashiroli<CR>
 
 
 " no_reading.js {{{2
