@@ -30,7 +30,7 @@ Ver.3.00より、ディレクトリ構造が大きく変化しました。
 昔のバージョンのファイルは削除してください。
 
 そして、.vimrcで
-`let g:NeoComplCache_EnableAtStartup = 1`
+`let g:neocomplcache_enable_at_startup = 1`
 と設定すると、Vimの起動時に自動的に有効になります。
 
 手動で有効にしたいときには、
@@ -79,8 +79,8 @@ fetch -q -o - http://github.com/Shougo/neocomplcache/tarball/master | tar -f - -
 ### プラグインによっては相性問題が発生する
 ### Vim 7.2以降にのみ対応
 
-一年ほど更新が途絶えていましたが、最近になって頻繁に更新されるようになってきました。
-ただし基本的にVim標準の補完を呼び出すので、大幅な機能追加は望めません。
+一時期更新が続いていましたが、現在はまた更新されなくなったようです。
+基本的にVim標準の補完を呼び出すので、大幅な機能追加は望めません。
 あまり設定をしなくても、それなりに動作します。
 
 ## auto-complete.elの良いところ
@@ -96,15 +96,12 @@ fetch -q -o - http://github.com/Shougo/neocomplcache/tarball/master | tar -f - -
 ### Emacsen専用なので、Vimmerには使えない
 ### 設定が面倒
 ### 補完候補のスクロールができない
-### 標準では候補の絞り込みができない（別途プラグインをインストールすれば可）
 ### 標準では部分マッチが使えない（別途プラグインをインストールすれば可）
 ### 補完位置の違う補完は統合できない
-### マニュアルがない
-### 仕様が頻繁に変更になる
 
 提供する機能はシンプルですが、カスタマイズしやすいのはよいですね。
 ただしプラグインを作成するためには、ソースコードを解析しないといけません。
-型情報を解析するオムニ補完を実装中のようですので、今後に期待です。
+開発が頻繁にされているので、今後に期待です。
 
 ## neocomplcacheの良いところ
 ### 候補の絞り込みができる
@@ -169,15 +166,11 @@ Linux GVim上のATOK X3でおかしくなる
 ### ワイルドカードによる検索結果の絞り込み
 ### 結果のキャッシュによる高速化
 ### ファイル名補完
-### カーソル後方のキーワードに応じた補完
 ### SmartCase
 ### 豊富なカスタマイズ項目
-### 文脈依存補完（2-gram completion）
 ### Omni補完
-### ローカルタグ補完
-### キーワード補完を試す
+### タグ補完
 ### Same filetype completion
-### preview windowに対応
 ### シンタックス補完
 ### プラグインで拡張可能
 ### スニペット補完
@@ -237,9 +230,6 @@ Visual Studioのように使えるので非常に便利です。是非とも使�
 バッファ全体を一定のキャッシュラインで分割し、キャッシュライン単位でキーワードの収集を行います。
 よって、編集し初めは補完候補の順番がおかしいです。ご了承ください。
 
-キャッシュラインを固定値にすると、一行が多いHTMLやTeXで重いため、
-キャッシュラインは`g:NeoComplCache_CacheLineCount`の値を元に、バッファの行数により決定します。
-
 neocomplcache Ver.4.00より、キャッシュルーチンを見直し、大幅な高速化が図られました。
 特にキャッシュからの読み込みがかなり速くなっています。
 
@@ -269,17 +259,9 @@ Ver.2.71より、短縮ファイル名補完に対応。
 Ver.3.11より、ファイル名補完は/を入力しなくても自動的に動作するようになりました。
 \*によるワイルドカードにも対応。
 
-## カーソル後方のキーワードに応じた補完
-
-|にカーソルがあるとします。
-|e
-ここでhogeを補完すると、hogのみが補完され、結果はhog|eとなります。
-初めはそこまで便利だとは思っていませんでしたが、使ってみるとソースの修正時に大活躍。
-この機能はViViにインスパイアされました。
-
 ## SmartCase
 
-これを設定すると、`g:NeoComplCache_IgnoreCase`のとき（デフォルト）、
+これを設定すると、`g:neocomplcache_enable_ignore_case`のとき（デフォルト）、
 `hoge -> hoge,Hoge`にマッチ。
 `Hoge -> Hoge`にマッチ。
 となります。
@@ -287,7 +269,7 @@ Ver.3.11より、ファイル名補完は/を入力しなくても自動的に�
 大文字小文字で意味が変わる、RubyやCのマクロを使うときには便利です。
 
 この機能を使用するには、
-`let g:NeoComplCache_SmartCase = 1`
+`let g:neocomplcache_enable_smart_case = 1`
 とする必要があります。
 
 ## 豊富なカスタマイズ項目
@@ -296,17 +278,6 @@ Ver.3.11より、ファイル名補完は/を入力しなくても自動的に�
 設定をカスタマイズすれば、Vim標準の補完機能をエミュレーションすることもできます。
 ただしその場合、neocomplcacheを使う意味は薄れます。
 設定項目は豊富にあるので、ヘルプを参照してください。
-
-## 文脈依存補完（2-gram completion）
-
-文脈を解析し、補完する機能が実装されました。
-例えば、バッファ内に
-`hoge piyo`
-と入力しているとすると、hogeの後にはpiyoが来やすいと認識、次の補完時にpiyoが上の方に来ます。
-
-追記：
-3-gram completionはメモリを食う割に効果がないので、
-Ver.4.00より廃止しました。
 
 ## Omni補完
 
@@ -318,10 +289,10 @@ Rubyで,や.を入力したり、HTMLでタグが補完できます。
 
 無効にしたい場合は.vimrcで
 `
-if !exists('g:NeoComplCache_OmniPatterns')
-    let g:NeoComplCache_OmniPatterns = {}
+if !exists('g:neocomplcache_omni_patterns')
+    let g:neocomplcache_omni_patterns = {}
 endif
-let g:NeoComplCache_OmniPatterns['無効にしたいファイルタイプ'] = ''
+let g:neocomplcache_omni_patterns['無効にしたいファイルタイプ'] = ''
 `
 とすると、無効にできます。
 
@@ -338,8 +309,8 @@ Omni補完でも補完のスキップが動作します。
 しかしこれでは困る場合もあったので（例：C/C++でやりとりするとき）、
 Same filetypeという概念を作り、
 `
-let g:NeoComplCache_SameFileTypeLists['c'] = 'cpp'
-let g:NeoComplCache_SameFileTypeLists['cpp'] = 'c'
+let g:neocomplcache_same_filetype_lists['c'] = 'cpp'
+let g:neocomplcache_same_filetype_lists['cpp'] = 'c'
 `
 というように設定すれば、C/C++間のバッファで補完できるようになります。
 一方だけ設定すれば、相互でない補完も可能です。
@@ -372,7 +343,7 @@ thincaさんの発案により実装。
 Eclipseではこの補完が実装されているようです。
 
 この機能を使用するには、
-`let g:NeoComplCache_EnableCamelCaseCompletion = 1`
+`let g:neocomplcache_enable_camel_case_completion = 1`
 とする必要があります。
 
 ## Underbar補完
@@ -382,7 +353,7 @@ Emacsのcompleter.elに似たような機能があるので実装。
 つまり、`_`を単語の区切りとして認識しています。C言語などの`_`を多用する言語で便利。
 
 この機能を使用するには、
-`let g:NeoComplCache_EnableUnderbarCompletion = 1`
+`let g:neocomplcache_enable_underbar_completion = 1`
 とする必要があります。
 
 ## プラグインで拡張可能
@@ -390,8 +361,8 @@ Emacsのcompleter.elに似たような機能があるので実装。
 Ver.2.10にて、複雑だったソースコードを分割し、ついに補完をプラグインで拡張できるようになりました。
 他のプラグインを読み込む部分も実装したので、夢が広がります。
 プラグインの作り方については、今後ドキュメントを用意する予定ですが、
-やる気があるならば`autoload/neocomplcache/plugin/syntax_complete.vim`などを読んでみてください。
-autoload/neocomplcache/pluginディレクトリにプラグインファイルをおいておけば、補完時に自動で読み込まれます。
+やる気があるならば`autoload/neocomplcache/sources/syntax_complete.vim`などを読んでみてください。
+autoload/neocomplcache/sourcesディレクトリにプラグインファイルをおいておけば、補完時に自動で読み込まれます。
 
 Ver.3.00より、プラグインを配置するディレクトリが変更されたので注意してください。
 
@@ -401,47 +372,13 @@ Ver.3.00より、プラグインを配置するディレクトリが変更され
 ## 補完関数
 
 Ver.3.00にて、オムニ補完とファイル名補完を分離し、補完関数として実装し直しました。
-やる気があるならば`autoload/neocomplcache/complfunc/filename_complete.vim`などを読んでみてください。
-autoload/neocomplcache/complfuncディレクトリにファイルをおいておけば、自動で読み込まれます。
+やる気があるならば`autoload/neocomplcache/sources/filename_complete.vim`などを読んでみてください。
+autoload/neocomplcache/sourcesディレクトリにファイルをおいておけば、自動で読み込まれます。
 
 プラグインと補完関数の違いは、プラグインはカーソル前のキーワードに反応しますが、
 補完関数は独自に補完位置を決められるということです。
 Vim標準の補完でいうと、プラグインによる補完はキーワード補完に対応し、
 補完関数による補完は、オムニ補完やユーザ定義補完に対応します。
-
-## ステータスラインにキャッシュ率を表示
-
-Ver.2.27より、`neocomplcache#caching_percent()`という関数が追加され、
-簡単にキャッシュ率を得ることが可能になりました。
-例えばステータスラインに表示すると、次のようになります。
-
-`
-let &statusline = '%=%m%y%{"[".(&fenc!=""?&fenc:&enc).",".&ff."]"}%{"[".neocomplcache#caching_percent("")."%]"} %3l,%3c %3p%%'
-`
-
-だんだん数字が増えていくのを楽しむのも、なかなか良いものですね。
-ちなみに、このキャッシュ率は詳細キャッシュ率を表しています。
-そのバッファが全くキャッシュされていない場合、'-'となります。
-neocomplcache Ver.2.50より、ファイルを開くときにすべてのキーワードをキャッシュするようになっているので、
-キャッシュ率が0%であっても、キーワード補完は動作するので注意してください。
-このキャッシュ率が上昇するにつれて、補完候補が表示される順番が変化します。
-
-Ver.3.00より、`neocomplcache#caching_percent()`で呼び出せるようになりました。
-以前の`neocomplcache#keyword_complete#caching_percent()`は動作しないので注意してください。
-
-## ポップアップメニューを閉じる
-
-Ver.2.45より実装。通常では二回`<C-y>`や`<C-e>`を押さなければポップアップが消えませんが、
-`neocomplcache#close_popup()`や`neocomplcache#cancel_popup()`をキーマッピングに使用することで、確実にポップアップを閉じることができます。
-`neocomplcache#close_popup()`の場合は使用することでキーワードのランクが上昇します。
-
-例：
-`
-" <C-y>: paste.
-inoremap <expr><C-y>  pumvisible() ? neocomplcache#close_popup() :  "\<C-r>0"
-" <C-e>: close popup.
-inoremap <expr><C-e>  pumvisible() ? neocomplcache#cancel_popup() : "\<End>"
-`
 
 ## 確定した補完候補をキャンセルする
 
@@ -457,9 +394,9 @@ inoremap <expr><C-g>     neocomplcache#undo_completion()
 自動キャッシュの制御
 
 Ver.2.64よりオプションが追加され、キャッシュの制御がやりやすくなりました。
-`g:NeoComplCache_CachingLimitFileSize`オプションではキャッシュする最大ファイルサイズを設定します。
+`g:neocomplcache_caching_limit_file_size`オプションではキャッシュする最大ファイルサイズを設定します。
 これより大きいファイルは自動でキャッシュされません。
-`g:NeoComplCache_CachingDisablePattern`オプションではキャッシュしないバッファ名パターンを設定します。
+`g:neocomplcache_disable_caching_buffer_name_pattern`オプションではキャッシュしないバッファ名パターンを設定します。
 正規表現で指定するので、\|で区切れば複数のパターンを指定できます。
 
 プラグインごとに補完開始文字数を設定
@@ -468,10 +405,10 @@ Ver.2.71より、プラグインごとに補完開始文字数を設定できる
 
 例：
 `
-let g:NeoComplCache_KeywordCompletionStartLength = 1
-if !exists('g:NeoComplCache_PluginCompletionLength')
+let g:neocomplcache_auto_completion_start_length = 1
+if !exists('g:neocomplcache_plugin_completion_length')
 endif
-let g:NeoComplCache_PluginCompletionLength = {
+let g:neocomplcache_plugin_completion_length = {
     \'snippets_complete' : 1, 
     \'buffer_complete' : 2, 
     \'syntax_complete' : 2, 
@@ -480,15 +417,15 @@ let g:NeoComplCache_PluginCompletionLength = {
 `
 
 この例ではsnippets\_completeのみ1文字で補完、tags\_completeは3文字、他は2文字で補完するようにしています。
-`g:NeoComplCache_KeywordCompletionStartLength`を変更しないと、
-入力文字数が`g:NeoComplCache_KeywordCompletionStartLength`を超えるまで自動補完が呼び出されないので注意してください。
+`g:neocomplcache_auto_completion_start_length`を変更しないと、
+入力文字数が`g:neocomplcache_auto_completion_start_length`を超えるまで自動補完が呼び出されないので注意してください。
 
 ## プラグインの無効化
 
 Ver.3.09より、プラグインや補完関数を無効化できるようになりました。
  
 `
-let g:NeoComplCache_DisablePluginList = {
+let g:neocomplcache_plugin_disable = {
     \'tags_complete' : 1, 
     \'omni_complete' : 1, 
 \}
@@ -505,11 +442,11 @@ Ver.3.08で一度削除されましたが、Ver.3.11で復活しました。
 Ver.3.15より、ファイルタイプごとにクイックマッチリストを表示する入力パターンを制御できるようになりました。
 defaultを指定すると、通常時の入力パターンを設定できます。
 `
-let g:NeoComplCache_QuickMatchPatterns['default'] = '\`'           
+let g:neocomplcache_quick_match_patterns['default'] = '\`'           
 `
 とすると、'\`'入力時にクイックマッチリストを表示します。
 `
-let g:NeoComplCache_QuickMatchPatterns['scheme'] = ';'           
+let g:neocomplcache_quick_match_patterns['scheme'] = ';'           
 `
 とすれば、filetypeがschemeの時のみ';'を入力パターンとします。
 初期値の'-'では入力時に不便な場合、変更してください。
@@ -519,77 +456,6 @@ let g:NeoComplCache_QuickMatchPatterns['scheme'] = ';'
 VimScriptを解析し、その場に応じた候補を出します。
 たとえば、行頭ならコマンド名、setの後はオプション名、などです。
 ローカル変数や関数の引数、endの対応関係も解析するので、かなり優れた補完候補です。
-
-## 私の設定
-
-参考までに、私が使用しているneocomplcacheの設定を紹介しておきます。
-neocomplcacheのオプションはdoc/neocomplcache.jaxに詳しい解説があるので、そこを参照してください。
-
-`
-" Use neocomplcache.
-let g:NeoComplCache_EnableAtStartup = 1
-" Use smartcase.
-let g:NeoComplCache_SmartCase = 1
-" Use camel case completion.
-let g:NeoComplCache_EnableCamelCaseCompletion = 1
-" Use underbar completion.
-let g:NeoComplCache_EnableUnderbarCompletion = 1
-" Set minimum syntax keyword length.
-let g:NeoComplCache_MinSyntaxLength = 3
-" Set manual completion length.
-let g:NeoComplCache_ManualCompletionStartLength = 0
-
-" Define dictionary.
-let g:NeoComplCache_DictionaryFileTypeLists = {
-            \ 'default' : '',
-            \ 'vimshell' : $HOME.'/.vimshell_hist',
-            \ 'scheme' : $HOME.'/.gosh_completions'
-            \ }
-
-" Define keyword.
-if !exists('g:NeoComplCache_KeywordPatterns')
-    let g:NeoComplCache_KeywordPatterns = {}
-endif
-let g:NeoComplCache_KeywordPatterns['default'] = '\h\w*'
-
-" Plugin key-mappings.
-imap <C-l>     <Plug>(neocomplcache_snippets_expand)
-smap <C-l>     <Plug>(neocomplcache_snippets_expand)
-inoremap <expr><C-h> pumvisible() ? "\<C-y>\<C-h>" : "\<C-h>"
-inoremap <expr><C-g>     neocomplcache#undo_completion()
-`
-
-neocomplcache自体が標準で自分好みの設定になっているので、あまり凝った設定はしていません。
-むしろ皆さんが使用するときは存分にカスタマイズすることを推奨します。
-使用頻度を計算しないようにすれば、かなり高速化します。
-vimshellの履歴ファイルを辞書として登録するのは便利なのでオススメです。
-日本語が候補に出てくると煩わしいため、私はデフォルトで日本語を除外しています。
-
-neocomplcacheを使用するに当たっては、Vimの補完関係の設定も重要なので、
-参考までに私の設定を載せておきます。
-`
-" <TAB> completion.
-inoremap <expr><TAB>  pumvisible() ? "\<C-n>" : "\<TAB>"
-" C-jでオムニ補完
-inoremap <expr> <C-j>  &filetype == 'vim' ? "\<C-x>\<C-v>\<C-p>" : "\<C-x>\<C-o>\<C-p>"
-" C-kを押すと行末まで削除
-inoremap <C-k>  <C-o>D
-" C-hで補完を続行しない
-inoremap <expr><C-h> pumvisible() ? "\<C-y>\<C-h>" : "\<C-h>"
-" C-nでneocomplcache補完
-inoremap <expr><C-n>  pumvisible() ? "\<C-n>" : "\<C-x>\<C-u>\<C-p>"
-" C-pでkeyword補完
-inoremap <expr><C-p>  pumvisible() ? "\<C-p>" : "\<C-p>\<C-n>"
-" 途中でEnterしたとき、ポップアップを消して改行し、
-" 改行を連続して入力してもインデント部を保持する
-inoremap <expr><CR> pumvisible() ? "\<C-y>\<CR>X\<BS>" : "\<CR>X\<BS>"
-`
-
-C-nでneocomplcacheの手動補完を呼び出します。
-デバッグや、重すぎて候補が表示されなかったときなどに使います。
-C-pはVim標準のキーワード補完。比較のため残してあります。
-C-jでオムニ補完を起動します。filetypeがVimの時には、Vim commands completionを起動します。
-C-hは一度ポップアップを消去し、ちらついたり、重くならないようにしてます。
 
 ## 知名度
 
@@ -637,27 +503,6 @@ snipMateの関数をneocomplcacheから呼び出し、補完します。
 構造が単純なので、プラグイン作りのサンプルとして便利。
 ただし若干古いです。
 
-## 使用上の注意
-
-neocomplcacheはキーワードをキャッシュするというその特性上、メモリをかなり消費します。
-Vimのメモリ使用量が多くなると、カーソル移動がかなり重くなります。
-開いているバッファの大きさにもよりますが、特にバッファが8つを超えてくると、不安定になります。
-もしそのような現象が生じたら、不要なバッファを削除したり、
-:NeoComplCacheCachingDisableコマンドを実行して、バッファをキャッシュしないようにしてください。
-
-Ver.2.50より、起動時に簡単なキャッシュを行うようになりました。
-これでVim標準のキーワード補完は完全に必要なくなります。
-ただし巨大なバッファを読み込むと、ある程度時間がかかるので注意。
-
-Ver.2.55より、キャッシュしたファイルを`g:NeoComplCache_TemporaryDir.'/keyword_cache'`ディレクトリに
-書き出すようになりました。同じファイルを開く場合は格段に高速化されます。
-ただし、キャッシュを書き出すのは500行以上のファイルのみです。
-
-Ver.2.64より、readonlyなファイルは自動的にキャッシュしません。
-どうしてもキャッシュしたい場合、:NeoComplCacheCachingBufferコマンドを使用してください。
-
-Ver.3.04より、neocomplcacheは自動的にcompleteoptをセットするようになりました。
-
 ## 良くある質問
 
 Q: 自動補完してEnterを入力すると、インデントがおかしくなる。
@@ -694,6 +539,7 @@ Twitterはneocomplcache開発日記と化しているので、こまめにチェ
 
 ## 更新履歴
 
+2010/06/22     古い項目を整理した。
 2010/03/05     snippet補完の項を分離。
 2009/12/27     MarkDown化。
 2009/12/15     ワンライナーを修正。

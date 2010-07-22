@@ -1,7 +1,7 @@
 "=============================================================================
 " FILE: filename_complete.vim
 " AUTHOR:  Shougo Matsushita <Shougo.Matsu@gmail.com>
-" Last Modified: 15 Apr 2010
+" Last Modified: 17 Jul 2010
 " License: MIT license  {{{
 "     Permission is hereby granted, free of charge, to any person obtaining
 "     a copy of this software and associated documentation files (the
@@ -24,14 +24,24 @@
 " }}}
 "=============================================================================
 
-function! neocomplcache#complfunc#filename_complete#initialize()"{{{
+let s:source = {
+      \ 'name' : 'filename_complete',
+      \ 'kind' : 'complfunc',
+      \}
+
+function! s:source.initialize()"{{{
+  " Initialize.
   let s:skip_dir = {}
+  let s:completion_length = neocomplcache#get_auto_completion_length('filename_complete')
+  
+  " Set rank.
+  call neocomplcache#set_variable_pattern('g:neocomplcache_plugin_rank', 'filename_complete', 2)
 endfunction"}}}
-function! neocomplcache#complfunc#filename_complete#finalize()"{{{
+function! s:source.finalize()"{{{
 endfunction"}}}
 
-function! neocomplcache#complfunc#filename_complete#get_keyword_pos(cur_text)"{{{
-  if &filetype == 'vimshell'
+function! s:source.get_keyword_pos(cur_text)"{{{
+  if &filetype ==# 'vimshell' || neocomplcache#within_comment()
     return -1
   endif
 
@@ -45,14 +55,8 @@ function! neocomplcache#complfunc#filename_complete#get_keyword_pos(cur_text)"{{
 
   " Filename pattern.
   let l:pattern = neocomplcache#get_keyword_pattern_end('filename')
-
-  let l:cur_keyword_pos = match(a:cur_text, l:pattern)
-  if g:NeoComplCache_EnableWildCard
-    " Check wildcard.
-    let l:cur_keyword_pos = neocomplcache#match_wildcard(a:cur_text, l:pattern, l:cur_keyword_pos)
-  endif
-  let l:cur_keyword_str = a:cur_text[l:cur_keyword_pos :]
-  if neocomplcache#is_auto_complete() && len(l:cur_keyword_str) < g:NeoComplCache_KeywordCompletionStartLength
+  let [l:cur_keyword_pos, l:cur_keyword_str] = neocomplcache#match_word(a:cur_text, l:pattern)
+  if neocomplcache#is_auto_complete() && len(l:cur_keyword_str) < s:completion_length
     return -1
   endif
 
@@ -72,11 +76,10 @@ function! neocomplcache#complfunc#filename_complete#get_keyword_pos(cur_text)"{{
   return l:cur_keyword_pos
 endfunction"}}}
 
-function! neocomplcache#complfunc#filename_complete#get_complete_words(cur_keyword_pos, cur_keyword_str)"{{{
+function! s:source.get_complete_words(cur_keyword_pos, cur_keyword_str)"{{{
   let l:cur_keyword_str = escape(a:cur_keyword_str, '[]')
 
   let l:is_win = has('win32') || has('win64')
-  let l:cur_keyword_str = substitute(l:cur_keyword_str, '\\ ', ' ', 'g')
 
   if a:cur_keyword_str =~ '^\$\h\w*'
     let l:env = matchstr(a:cur_keyword_str, '^\$\h\w*')
@@ -87,34 +90,54 @@ function! neocomplcache#complfunc#filename_complete#get_complete_words(cur_keywo
     let l:len_env = len(l:env_ev)
   else
     let l:len_env = 0
+    
+    if a:cur_keyword_str =~ '^\~\h\w*'
+      let l:cur_keyword_str = simplify($HOME . '/../' . l:cur_keyword_str[1:])
+    endif
   endif
+  
+  let l:cur_keyword_str = substitute(l:cur_keyword_str, '\\ ', ' ', 'g')
 
+  let l:path = (!neocomplcache#is_auto_complete() && a:cur_keyword_str !~ '^\.\.\?/')? &path : ','
   try
     let l:glob = (l:cur_keyword_str !~ '\*$')?  l:cur_keyword_str . '*' : l:cur_keyword_str
-    let l:files = split(substitute(glob(l:glob), '\\', '/', 'g'), '\n')
+    let l:files = split(substitute(globpath(l:path, l:glob), '\\', '/', 'g'), '\n')
     if empty(l:files)
       " Add '*' to a delimiter.
       let l:cur_keyword_str = substitute(l:cur_keyword_str, '\w\+\ze[/._-]', '\0*', 'g')
       let l:glob = (l:cur_keyword_str !~ '\*$')?  l:cur_keyword_str . '*' : l:cur_keyword_str
-      let l:files = split(substitute(glob(l:glob), '\\', '/', 'g'), '\n')
+      let l:files = split(substitute(globpath(l:path, l:glob), '\\', '/', 'g'), '\n')
     endif
-  catch /.*/
+  catch
+    call neocomplcache#print_error(v:exception)
     return []
   endtry
   if empty(l:files)
     return []
+  elseif len(l:files) > g:neocomplcache_max_list
+    " Trunk items.
+    let l:files = l:files[: g:neocomplcache_max_list - 1]
   endif
 
   let l:list = []
   let l:home_pattern = '^'.substitute($HOME, '\\', '/', 'g').'/'
+  let l:paths = map(split(&path, ','), 'substitute(v:val, "\\\\", "/", "g")')
   for word in l:files
-    let l:dict = {
-          \'word' : substitute(word, l:home_pattern, '\~/', ''), 'menu' : '[F]', 
-          \'icase' : 1, 'rank' : 6
-          \}
+    let l:dict = { 'word' : word, 'menu' : '[F]' , 'rank': 1 }
 
+    let l:cur_keyword_str = $HOME . '/../' . l:cur_keyword_str[1:]
     if l:len_env != 0 && l:dict.word[: l:len_env-1] == l:env_ev
       let l:dict.word = l:env . l:dict.word[l:len_env :]
+    elseif a:cur_keyword_str =~ '^\~/'
+      let l:dict.word = substitute(word, l:home_pattern, '\~/', '')
+    elseif !neocomplcache#is_auto_complete() && a:cur_keyword_str !~ '^\.\.\?/'
+      " Path search.
+      for path in l:paths
+        if path != '' && neocomplcache#head_match(word, path . '/')
+          let l:dict.word = l:dict.word[len(path)+1 : ]
+          break
+        endif
+      endfor
     endif
 
     call add(l:list, l:dict)
@@ -122,17 +145,12 @@ function! neocomplcache#complfunc#filename_complete#get_complete_words(cur_keywo
 
   call sort(l:list, 'neocomplcache#compare_rank')
   " Trunk many items.
-  let l:list = l:list[: g:NeoComplCache_MaxList-1]
+  let l:list = l:list[: g:neocomplcache_max_list-1]
 
   let l:exts = escape(substitute($PATHEXT, ';', '\\|', 'g'), '.')
   for keyword in l:list
     let l:abbr = keyword.word
-    if len(l:abbr) > g:NeoComplCache_MaxKeywordWidth
-      let l:over_len = len(l:abbr) - g:NeoComplCache_MaxKeywordWidth
-      let l:prefix_len = (l:over_len > 10) ?  10 : l:over_len
-      let l:abbr = printf('%s~%s', l:abbr[: l:prefix_len - 1], l:abbr[l:over_len+l:prefix_len :])
-    endif
-
+    
     if isdirectory(keyword.word)
       let l:abbr .= '/'
       let keyword.rank += 1
@@ -147,15 +165,19 @@ function! neocomplcache#complfunc#filename_complete#get_complete_words(cur_keywo
     let keyword.abbr = l:abbr
   endfor
 
-  " Escape word.
+  " Set rank.
+  let l:rank = g:neocomplcache_plugin_rank['filename_complete']
   for keyword in l:list
+    " Escape word.
     let keyword.word = escape(keyword.word, ' *?[]"={}')
+    let l:keyword.rank = l:rank
   endfor
 
   return l:list
 endfunction"}}}
 
-function! neocomplcache#complfunc#filename_complete#get_rank()"{{{
-  return 10
+function! neocomplcache#sources#filename_complete#define()"{{{
+  return s:source
 endfunction"}}}
+
 " vim: foldmethod=marker
