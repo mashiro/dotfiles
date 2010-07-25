@@ -1,7 +1,7 @@
 "=============================================================================
 " FILE: include_complete.vim
 " AUTHOR:  Shougo Matsushita <Shougo.Matsu@gmail.com>
-" Last Modified: 10 Jul 2010
+" Last Modified: 23 Jul 2010
 " License: MIT license  {{{
 "     Permission is hereby granted, free of charge, to any person obtaining
 "     a copy of this software and associated documentation files (the
@@ -39,7 +39,7 @@ function! s:source.initialize()"{{{
   let s:completion_length = neocomplcache#get_auto_completion_length('include_complete')
   
   " Set rank.
-  call neocomplcache#set_variable_pattern('g:neocomplcache_plugin_rank', 'include_complete', 7)
+  call neocomplcache#set_dictionary_helper(g:neocomplcache_plugin_rank, 'include_complete', 7)
 
   augroup neocomplcache
     " Caching events
@@ -47,16 +47,16 @@ function! s:source.initialize()"{{{
   augroup END
 
   " Initialize include pattern."{{{
-  call neocomplcache#set_variable_pattern('g:neocomplcache_include_patterns', 'java,haskell', '^import')
+  call neocomplcache#set_dictionary_helper(g:neocomplcache_include_patterns, 'java,haskell', '^import')
   "}}}
   " Initialize expr pattern."{{{
-  call neocomplcache#set_variable_pattern('g:neocomplcache_include_exprs', 'haskell',
+  call neocomplcache#set_dictionary_helper(g:neocomplcache_include_exprs, 'haskell',
         \'substitute(v:fname,''\\.'',''/'',''g'')')
   "}}}
   " Initialize path pattern."{{{
   "}}}
   " Initialize suffixes pattern."{{{
-  call neocomplcache#set_variable_pattern('g:neocomplcache_include_suffixes', 'haskell', '.hs')
+  call neocomplcache#set_dictionary_helper(g:neocomplcache_include_suffixes, 'haskell', '.hs')
   "}}}
 
   " Create cache directory.
@@ -156,13 +156,13 @@ function! s:get_buffer_include_files(bufnumber)"{{{
         \&& !has_key(g:neocomplcache_include_paths, 'python')
         \&& executable('python')
     " Initialize python path pattern.
-    call neocomplcache#set_variable_pattern('g:neocomplcache_include_paths', 'python',
+    call neocomplcache#set_dictionary_helper(g:neocomplcache_include_paths, 'python',
           \neocomplcache#system('python -', 'import sys;sys.stdout.write(",".join(sys.path))'))
   endif
 
   let l:pattern = has_key(g:neocomplcache_include_patterns, l:filetype) ? 
         \g:neocomplcache_include_patterns[l:filetype] : getbufvar(a:bufnumber, '&include')
-  if l:pattern == ''
+  if l:pattern == '' || (l:filetype !~# '^\%(c\|cpp\|objc\)$' && l:pattern ==# '^\s*#\s*include')
     return []
   endif
   let l:path = has_key(g:neocomplcache_include_paths, l:filetype) ? 

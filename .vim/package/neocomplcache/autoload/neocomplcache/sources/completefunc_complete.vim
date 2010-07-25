@@ -1,7 +1,7 @@
 "=============================================================================
 " FILE: completefunc_complete.vim
 " AUTHOR:  Shougo Matsushita <Shougo.Matsu@gmail.com>
-" Last Modified: 16 Jul 2010
+" Last Modified: 25 Jul 2010
 " License: MIT license  {{{
 "     Permission is hereby granted, free of charge, to any person obtaining
 "     a copy of this software and associated documentation files (the
@@ -31,7 +31,7 @@ let s:source = {
 
 function! s:source.initialize()"{{{
   " Set rank.
-  call neocomplcache#set_variable_pattern('g:neocomplcache_plugin_rank', 'completefunc_complete', 5)
+  call neocomplcache#set_dictionary_helper(g:neocomplcache_plugin_rank, 'completefunc_complete', 5)
 endfunction"}}}
 function! s:source.finalize()"{{{
 endfunction"}}}
@@ -76,12 +76,6 @@ function! neocomplcache#sources#completefunc_complete#call_completefunc(funcname
   endif
 
   let l:list = s:get_completefunc_list(l:list)
-
-  " Set rank.
-  let l:rank = g:neocomplcache_plugin_rank['completefunc_complete']
-  for l:keyword in l:list
-    let l:keyword.rank = l:rank
-  endfor
 
   " Start manual complete.
   return neocomplcache#start_manual_complete_list(l:cur_keyword_pos, l:cur_keyword_str, l:list)

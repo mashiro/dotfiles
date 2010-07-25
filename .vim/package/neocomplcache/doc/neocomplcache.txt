@@ -650,7 +650,7 @@ EXAMPLES						*neocomplcache-examples*
 	
 	" Recommended key-mappings.
 	" <CR>: close popup and save indent.
-	inoremap <expr><CR>  neocomplcache#smart_close_popup() . "\<C-f>\<CR>X\<BS>"
+	inoremap <expr><CR>  neocomplcache#smart_close_popup() . (&indentexpr != '' ? "\<C-f>\<CR>X\<BS>":"\<CR>")
 	" <TAB>: completion.
 	inoremap <expr><TAB>  pumvisible() ? "\<C-n>" : "\<TAB>"
 	" <C-h>, <BS>: close popup and delete backword char.
@@ -742,10 +742,36 @@ ability of neocomplcache will spread by creating plugin by yourself.
 ==============================================================================
 CHANGELOG						*neocomplcache-changelog*
 
+2010-07-25
+- Improved termtter keywords.
+- Improved filetype completion.
+- Implemented set rank helper.
+- Changed vim_complete marker.
+- Implemented syntax attr helper.
+- Improved startup.
+- Improved member filter.
+- Implemented filetype plugin.
+- Fixed neocomplcache#system().
+- Improved local variable analysis.
+- Implemented expand completion.
+- Refactoringed vim_complete.
+- Improved vim_complete.
+- Changed neocomplcache#set_dictionary_helper().
+- Fixed example.
+- Allow blank line in snippet.
+- Fixed snippet parse.
+- Fixed ftplugin bug.
+- Improved context filetype.
+
+2010-07-23
+- Fixed environments parse bug.
+- Improved include check.
+
 2010-07-22
 - Improved detect completefunc.
 - Improved interactive termtter pattern.
 - Improved caching.
+- Fixed analyzing function.
 
 2010-07-21
 - Improved autoload plugins.
