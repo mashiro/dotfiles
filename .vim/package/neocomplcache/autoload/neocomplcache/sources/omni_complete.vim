@@ -1,7 +1,7 @@
 "=============================================================================
 " FILE: omni_complete.vim
 " AUTHOR:  Shougo Matsushita <Shougo.Matsu@gmail.com>
-" Last Modified: 18 Jul 2010
+" Last Modified: 27 Jul 2010
 " License: MIT license  {{{
 "     Permission is hereby granted, free of charge, to any person obtaining
 "     a copy of this software and associated documentation files (the
@@ -118,7 +118,7 @@ function! s:source.get_keyword_pos(cur_text)"{{{
     let l:pattern = ''
   endif
 
-  if !neocomplcache#is_eskk_enabled() && neocomplcache#is_auto_complete() && l:pattern == ''
+  if !neocomplcache#is_eskk_enabled() && l:pattern == ''
     return -1
   endif
 
@@ -133,8 +133,8 @@ function! s:source.get_keyword_pos(cur_text)"{{{
     let l:cur_text = a:cur_text
   endif
 
-  if !neocomplcache#is_eskk_enabled() && neocomplcache#is_auto_complete() &&
-        \l:cur_text !~ '\%(' . l:pattern . '\m\)$'
+  if !neocomplcache#is_eskk_enabled()
+        \ && l:cur_text !~ '\%(' . l:pattern . '\m\)$'
     return -1
   endif
 
@@ -142,7 +142,7 @@ function! s:source.get_keyword_pos(cur_text)"{{{
   let l:pos = getpos('.')
   let l:line = getline('.')
 
-  if neocomplcache#is_auto_complete()
+  if neocomplcache#is_auto_complete() && l:is_wildcard
     call setline('.', l:cur_text)
   endif
 
@@ -154,15 +154,10 @@ function! s:source.get_keyword_pos(cur_text)"{{{
   endtry
 
   " Restore pos.
-  if neocomplcache#is_auto_complete()
+  if neocomplcache#is_auto_complete() && l:is_wildcard
     call setline('.', l:line)
   endif
   call setpos('.', l:pos)
-
-  if !neocomplcache#is_eskk_enabled() && neocomplcache#is_auto_complete() && col('.') - l:cur_keyword_pos < s:completion_length 
-    " Too short completion length.
-    return -1
-  endif
 
   return l:cur_keyword_pos
 endfunction"}}}
