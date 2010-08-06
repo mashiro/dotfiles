@@ -1,6 +1,6 @@
 *neocomplcache.txt*	究極の自動補完環境
 
-Version: 5.1
+Version: 5.2
 Author : Shougo <Shougo.Matsu@gmail.com>
 License: MIT license  {{{
     Permission is hereby granted, free of charge, to any person obtaining
@@ -443,7 +443,7 @@ g:neocomplcache_delimiter_patterns			*g:neocomplcache_delimiter_patterns*
 		if !exists('g:neocomplcache_delimiter_patterns')
 		let g:neocomplcache_delimiter_patterns= {}
 		endif
-		let g:neocomplcache_delimiter_patterns.vim = ['java']
+		let g:neocomplcache_delimiter_patterns.vim = ['#']
 		let g:neocomplcache_delimiter_patterns.cpp = ['::']
 <
 		初期値は複雑なので、autoload/neocomplcache.vimのneocomplcache#enable()を参照せよ。

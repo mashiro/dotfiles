@@ -1,6 +1,6 @@
 *neocomplcache.txt*	Ultimate auto completion system for Vim
 
-Version: 5.1
+Version: 5.2
 Author : Shougo <Shougo.Matsu@gmail.com>
 License: MIT license  {{{
     Permission is hereby granted, free of charge, to any person obtaining
@@ -92,6 +92,10 @@ COMMANDS 						*neocomplcache-commands*
 
 :NeoComplCacheCachingSyntax [filetype]			*:NeoComplCacheCachingSyntax*
 		Caching [filetype] syntax file.
+		Select current buffer filetype when [filetype] omitted.
+
+:NeoComplCacheCachingDictionary [filetype]		*:NeoComplCacheCachingDictionary*
+		Caching [filetype] dictionary file.
 		Select current buffer filetype when [filetype] omitted.
 
 :NeoComplCacheCachingDisable [bufname]			*:NeoComplCacheCachingDisable*
@@ -346,10 +350,6 @@ g:neocomplcache_omni_patterns				*g:neocomplcache_omni_patterns*
 		for the initial value.
 >
 		" Examples:
-		if !exists('g:neocomplcache_omni_patterns')
-		let g:neocomplcache_omni_patterns = {}
-		endif
-		let g:neocomplcache_omni_patterns.ruby = '[^. *\t]\.\w*\|\h\w*::'
 <
 g:neocomplcache_tags_filter_patterns			*g:neocomplcache_tags_filter_patterns*
 		This dictionary records  a pattern to filter a candidate in
@@ -470,7 +470,14 @@ g:neocomplcache_delimiter_patterns			*g:neocomplcache_delimiter_patterns*
 		This variable appoints a delimiter pattern to smart complete a
 		function.  This is appointed in regular expression's string
 		list every file type.
-		
+>
+		" Examples:
+		if !exists('g:neocomplcache_delimiter_patterns')
+		let g:neocomplcache_delimiter_patterns= {}
+		endif
+		let g:neocomplcache_delimiter_patterns.vim = ['#']
+		let g:neocomplcache_delimiter_patterns.cpp = ['::']
+<
 		Because it is complicated, refer to neocomplcache#enable() in
 		autoload/neocomplcache.vim for the initial value.
 
@@ -645,6 +652,9 @@ EXAMPLES						*neocomplcache-examples*
 	inoremap <expr><C-g>     neocomplcache#undo_completion()
 	inoremap <expr><C-l>     neocomplcache#complete_common_string()
 	
+	" SuperTab like snippets behavior.
+	"imap <expr><TAB> neocomplcache#sources#snippets_complete#expandable() ? "\<Plug>(neocomplcache_snippets_expand)" : pumvisible() ? "\<C-n>" : "\<TAB>"
+	
 	" Recommended key-mappings.
 	" <CR>: close popup and save indent.
 	inoremap <expr><CR>  neocomplcache#smart_close_popup() . (&indentexpr != '' ? "\<C-f>\<CR>X\<BS>":"\<CR>")
@@ -658,6 +668,20 @@ EXAMPLES						*neocomplcache-examples*
 	
 	" AutoComplPop like behavior.
 	"let g:neocomplcache_enable_auto_select = 1
+	
+	" Enable omni completion.
+	autocmd FileType css setlocal omnifunc=csscomplete#CompleteCSS
+	autocmd FileType html,markdown setlocal omnifunc=htmlcomplete#CompleteTags
+	autocmd FileType javascript setlocal omnifunc=javascriptcomplete#CompleteJS
+	autocmd FileType python setlocal omnifunc=pythoncomplete#Complete
+	autocmd FileType xml setlocal omnifunc=xmlcomplete#CompleteTags
+	
+	" Enable heavy omni completion.
+	if !exists('g:neocomplcache_omni_patterns')
+		let g:neocomplcache_omni_patterns = {}
+	endif
+	let g:neocomplcache_omni_patterns.ruby = '[^. *\t]\.\w*\|\h\w*::'
+	"autocmd FileType ruby setlocal omnifunc=rubycomplete#Complete
 <
 ==============================================================================
 PLUGINS							*neocomplcache-plugins*
@@ -738,6 +762,48 @@ ability of neocomplcache will spread by creating plugin by yourself.
 
 ==============================================================================
 CHANGELOG						*neocomplcache-changelog*
+
+2010-08-05
+- Improved ctags arguments.
+- Improved gas syntax.
+
+2010-08-04
+- Improved eskk support.
+- Improved vim_complete check.
+- Fixed vim_complete cur_keyword_str bug.
+
+2010-08-03
+- Fixed filename_complete error.
+
+2010-08-02
+- Ver.5.2 development started.
+- Fixed filename_complete.
+
+ChangeLog NeoComplCache 5.1: {{{
+2010-08-02
+- Released neocomplcache Ver.5.1
+- Fixed css snippet.
+
+2010-07-31
+- Supported coffee script.
+- Improved neocomplcache#filetype_complete().
+- Skip filename completion when too many candidates.
+- Added :NeoComplCacheCachingDictionary discription.
+
+2010-07-30
+- Fixed documentation.
+
+2010-07-29
+- Added omni completion examples.
+- Supported inline assembly language.
+- Fixed vim_complete commands.dict.
+- Added neocomplcache#set_completion_length().
+
+2010-07-28
+- Fixed eskk check.
+- Improved vim keyword pattern.
+- Improved examples.
+- Fixed vim_complete error.
 
 2010-07-27
 - Fixed autocompletion freeze.
@@ -864,7 +930,7 @@ CHANGELOG						*neocomplcache-changelog*
 - Implemented text mode.
 - Added g:neocomplcache_text_mode_filetypes option.
 - Added "nothing" in text mode filetype.
-
+}}}
 ChangeLog NeoComplCache 5.0: {{{
 2010-06-24
 - Improved eruby support.

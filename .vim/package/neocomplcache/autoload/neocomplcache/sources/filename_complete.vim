@@ -1,7 +1,7 @@
 "=============================================================================
 " FILE: filename_complete.vim
 " AUTHOR:  Shougo Matsushita <Shougo.Matsu@gmail.com>
-" Last Modified: 17 Jul 2010
+" Last Modified: 04 Aug 2010
 " License: MIT license  {{{
 "     Permission is hereby granted, free of charge, to any person obtaining
 "     a copy of this software and associated documentation files (the
@@ -112,16 +112,14 @@ function! s:source.get_complete_words(cur_keyword_pos, cur_keyword_str)"{{{
     call neocomplcache#print_error(v:exception)
     return []
   endtry
-  if empty(l:files)
+  if empty(l:files) || (neocomplcache#is_auto_complete() && len(l:files) > g:neocomplcache_max_list)
     return []
-  elseif len(l:files) > g:neocomplcache_max_list
-    " Trunk items.
-    let l:files = l:files[: g:neocomplcache_max_list - 1]
   endif
 
   let l:list = []
   let l:home_pattern = '^'.substitute($HOME, '\\', '/', 'g').'/'
   let l:paths = map(split(&path, ','), 'substitute(v:val, "\\\\", "/", "g")')
+  let l:exts = escape(substitute($PATHEXT, ';', '\\|', 'g'), '.')
   for word in l:files
     let l:dict = { 'word' : word, 'menu' : '[F]' , 'rank': 1 }
 
@@ -140,37 +138,26 @@ function! s:source.get_complete_words(cur_keyword_pos, cur_keyword_str)"{{{
       endfor
     endif
 
+    let l:abbr = l:dict.word
+    if isdirectory(l:word)
+      let l:abbr .= '/'
+      let l:dict.rank += 1
+    elseif l:is_win
+      if '.'.fnamemodify(l:word, ':e') =~ l:exts
+        let l:abbr .= '*'
+      endif
+    elseif executable(l:word)
+      let l:abbr .= '*'
+    endif
+    let l:dict.abbr = l:abbr
+
+    " Escape word.
+    let l:dict.word = escape(l:dict.word, ' *?[]"={}')
+
     call add(l:list, l:dict)
   endfor
 
-  call sort(l:list, 'neocomplcache#compare_rank')
-  " Trunk many items.
-  let l:list = l:list[: g:neocomplcache_max_list-1]
-
-  let l:exts = escape(substitute($PATHEXT, ';', '\\|', 'g'), '.')
-  for keyword in l:list
-    let l:abbr = keyword.word
-    
-    if isdirectory(keyword.word)
-      let l:abbr .= '/'
-      let keyword.rank += 1
-    elseif l:is_win
-      if '.'.fnamemodify(keyword.word, ':e') =~ l:exts
-        let l:abbr .= '*'
-      endif
-    elseif executable(keyword.word)
-      let l:abbr .= '*'
-    endif
-
-    let keyword.abbr = l:abbr
-  endfor
-
-  for keyword in l:list
-    " Escape word.
-    let keyword.word = escape(keyword.word, ' *?[]"={}')
-  endfor
-
-  return l:list
+  return sort(l:list, 'neocomplcache#compare_rank')
 endfunction"}}}
 
 function! neocomplcache#sources#filename_complete#define()"{{{
