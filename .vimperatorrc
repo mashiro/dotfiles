@@ -147,37 +147,36 @@ noremap <Leader>bi :bicon<CR>
 " LDR / fastladder
 command! -nargs=+ lazyfmapsldr lazy fmaps -urls='http://(reader\.livedoor\.com|fastladder\.com)/reader' <args>
 lazyfmapsldr j k s a p o v r w W J K <Space> <S-Space> c z > <
+lazyfmapsldr J,<Space> K,<S-Space>
 lazyfmapsldr p,pj
-lazyfmapsldr J,<Space>
-lazyfmapsldr K,<S-Space>
 lazyfmapsldr i,tj
-lazyfmapsldr e,tj
-lazyfmapsldr n,w
 lazyfmapsldr /,f
 
 
 " Google Reader
-command! -nargs=+ lazyfmapsgooglereader lazy fmaps -urls='www\.google\.co\.jp/reader' -events=vkeypress <args>
-"lazyfmapsgooglereader j k J K <Space> <S-Space> n p N P X O s v gh ga gs gS gu gt gT gd gf gF gc ge gp r u 1 2 / a
-lazyfmapsgooglereader j k <Space> <S-Space> n p N P X O
-lazyfmapsgooglereader s l t e S D v o <CR> c C m A T
+command! -nargs=+ lazyfmapgooglereader  lazy fmap  -urls='http://www\.google\.co\.jp/reader/view' -events=vkeypress <args>
+command! -nargs=+ lazyfmapsgooglereader lazy fmaps -urls='http://www\.google\.co\.jp/reader/view' -events=vkeypress <args>
+lazyfmapsgooglereader <Space> <S-Space> N P X O
+lazyfmapsgooglereader v <CR> m A
 lazyfmapsgooglereader gh ga gs gS gu gt gT gd gf gF gc ge gp
-lazyfmapsgooglereader r u 1 2 / a = -
-
+lazyfmapsgooglereader r u / a
+lazyfmapsgooglereader j,n k,p J,N K,P n,N p,P o,vn
+lazyfmapgooglereader  , X
+lazyfmapgooglereader  . O
+lazyfmapsgooglereader <C-1>,1 <C-2>,2
 
 
 " Gmail
 command! -nargs=+ lazyfmapsgmail lazy fmaps -urls='https?://mail\.google\.com/mail' <args>
 lazyfmapsgmail gi gs gt gd ga gc *a *n *r *u *s *t u k j o p n c / q ? x s e m ! # r a N ] [ z . I U S E GL
 lazyfmapsgmail E,Ie
-"lazyfmapsgmail [,] ],[ 
+lazyfmapsgmail [,] ],[ 
 
 
 " Tumblr
-command! -nargs=+ lazyfmapstumblr lazy fmaps -urls='http://.*\.tumblr\.com' <args>
+command! -nargs=+ lazyfmapstumblr lazy fmaps -urls='http://\w+\.tumblr\.com' <args>
 lazyfmapstumblr j k
 lazyfmapstumblr i,tj
-lazyfmapstumblr e,tj
 
 
 " hint-tombloo-mod.js {{{2
