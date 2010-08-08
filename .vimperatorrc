@@ -158,7 +158,12 @@ lazyfmapsldr /,f
 
 " Google Reader
 command! -nargs=+ lazyfmapsgooglereader lazy fmaps -urls='www\.google\.co\.jp/reader' -events=vkeypress <args>
-lazyfmapsgooglereader j k J K <Space> <S-Space> n p N P X O s v gh ga gs gS gu gt gT gd gf gF gc ge gp r u 1 2 / a
+"lazyfmapsgooglereader j k J K <Space> <S-Space> n p N P X O s v gh ga gs gS gu gt gT gd gf gF gc ge gp r u 1 2 / a
+lazyfmapsgooglereader j k <Space> <S-Space> n p N P X O
+lazyfmapsgooglereader s l t e S D v o <CR> c C m A T
+lazyfmapsgooglereader gh ga gs gS gu gt gT gd gf gF gc ge gp
+lazyfmapsgooglereader r u 1 2 / a = -
+
 
 
 " Gmail
