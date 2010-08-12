@@ -24,4 +24,9 @@
 	<Script filename="googlereader__tombloo.user.js" name="GoogleReader + Tombloo" namespace="http://d.hatena.ne.jp/Constellation/" description="instead of LDR + Tombloo for GoogleReader" enabled="true" basedir="googlereader__tombloo">
 		<Include>http://www.google.tld/reader/*</Include>
 	</Script>
+	<Script filename="google_reader_prefetch_m.user.js" name="Google Reader Prefetch More" namespace="http://userscripts.org/users/40991" description="" enabled="true" basedir="google_reader_prefetch_m">
+		<Include>http://www.google.co.jp/reader/*</Include>
+		<Include>https://www.google.co.jp/reader/*</Include>
+		<Unwrap/>
+	</Script>
 </UserScriptConfig>
