@@ -153,31 +153,6 @@ function! s:change_current_dir(directory, bang) " {{{2
 	endif
 endfunction
 
-
-function! s:include_guard() " {{{2
-	let fl = getline(1)
-	if fl =~ "^#if"
-		return
-	endif
-	let gatename = substitute(toupper(expand("%:t")), "\\.", "_", "g")
-	normal! gg
-	execute "normal! i#ifndef " . gatename . "_INCLUDED"
-	execute "normal! o#define " . gatename . "_INCLUDED\<CR>\<CR>\<CR>"
-	execute "normal! Go#endif /* " . gatename . "_INCLUDED */"
-	4
-endfunction
-
-
-function! s:python_header() " {{{2
-	let fl = getline(1)
-	if fl =~ "^#!"
-		return
-	endif
-	normal! gg
-	execute "normal! i#!/usr/bin/env python"
-	execute "normal! o# -*- encoding: utf-8 -*-\<CR>"
-endfunction
-
 function! s:set_package_runtimepath(name, ...) " {{{2
 	let name = a:name
 	let path = a:0 > 0 ? a:1 : "~/.vim/package"
@@ -295,14 +270,12 @@ autocmd MyAutoCmd BufNewFile,BufRead *.changelog set filetype=changelog
 let g:changelog_timeformat = "%Y-%m-%d"
 let g:changelog_username = "mashiro <y.mashiro@gmail.com>"
 
-" include guard
-autocmd MyAutoCmd BufNewFile *.h,*.hh,*.hpp call s:include_guard()
-
-" python header
-autocmd MyAutoCmd BufNewFile *.py call s:python_header()
-
 
 " Plugins {{{1
+" templatefile.vim {{{2
+let g:load_templates="yes"
+
+
 " autocomplpop.vim {{{2
 "call s:set_package_runtimepath("autocomplpop")
 
