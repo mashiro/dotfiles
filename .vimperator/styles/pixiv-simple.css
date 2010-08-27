@@ -17,17 +17,21 @@ a[href^="ads"] {
 }
 
 /* ニュース */
+/*
 .contents-main > div:nth-child(1),
 .contents-main > div:nth-child(2),
 .contents-main > div:nth-child(3) {
 	display: none !important;
 }
+*/
 
 /* pixivニュース */
+/*
 .contents-right > div:nth-child(3),
 .contents-right > div:nth-child(4) {
 	display: none !important;
 }
+*/
 
 .search_a2_right {
 	display: none !important;
