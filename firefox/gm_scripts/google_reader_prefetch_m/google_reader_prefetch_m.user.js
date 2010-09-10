@@ -7,7 +7,7 @@
 // ==/UserScript==
 
 var first = 20; // default is 5
-var next =  20; // default is 1
+var next =  50; // default is 1
 var list =  50; // default is 20
 
 var version = '0.2.4';
