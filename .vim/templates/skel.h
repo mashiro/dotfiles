@@ -1,0 +1,6 @@
+#ifndef @INCLUDE_GUARD@_INCLUDED
+#define @INCLUDE_GUARD@_INCLUDED
+
+
+
+#endif

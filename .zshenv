@@ -35,8 +35,8 @@ fi
 
 
 # Misc {{{2
-export EDITOR=vim
-export PAGER=less
+export EDITOR=$(which vim)
+export PAGER=$(which less)
 export SHELL=$(which zsh)
 export LESS="-i -M -R"
 export TZ=JST-9

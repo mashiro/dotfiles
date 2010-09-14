@@ -153,31 +153,6 @@ function! s:change_current_dir(directory, bang) " {{{2
 	endif
 endfunction
 
-
-function! s:include_guard() " {{{2
-	let fl = getline(1)
-	if fl =~ "^#if"
-		return
-	endif
-	let gatename = substitute(toupper(expand("%:t")), "\\.", "_", "g")
-	normal! gg
-	execute "normal! i#ifndef " . gatename . "_INCLUDED"
-	execute "normal! o#define " . gatename . "_INCLUDED\<CR>\<CR>\<CR>"
-	execute "normal! Go#endif /* " . gatename . "_INCLUDED */"
-	4
-endfunction
-
-
-function! s:python_header() " {{{2
-	let fl = getline(1)
-	if fl =~ "^#!"
-		return
-	endif
-	normal! gg
-	execute "normal! i#!/usr/bin/env python"
-	execute "normal! o# -*- encoding: utf-8 -*-\<CR>"
-endfunction
-
 function! s:set_package_runtimepath(name, ...) " {{{2
 	let name = a:name
 	let path = a:0 > 0 ? a:1 : "~/.vim/package"
@@ -207,10 +182,10 @@ noremap <C-@> <Esc>
 noremap! <C-@> <Esc>
 
 " emacs like
-noremap <C-a> <Home>
-noremap! <C-a> <Home>
-noremap <C-e> <End>
-noremap! <C-e> <End>
+"noremap <C-a> <Home>
+"noremap! <C-a> <Home>
+"noremap <C-e> <End>
+"noremap! <C-e> <End>
 nnoremap <C-k> D
 inoremap <C-k> <C-o>D
 
@@ -295,23 +270,28 @@ autocmd MyAutoCmd BufNewFile,BufRead *.changelog set filetype=changelog
 let g:changelog_timeformat = "%Y-%m-%d"
 let g:changelog_username = "mashiro <y.mashiro@gmail.com>"
 
-" include guard
-autocmd MyAutoCmd BufNewFile *.h,*.hh,*.hpp call s:include_guard()
-
-" python header
-autocmd MyAutoCmd BufNewFile *.py call s:python_header()
-
 
 " Plugins {{{1
+" templatefile.vim {{{2
+let g:load_templates="yes"
+
+
 " autocomplpop.vim {{{2
 "call s:set_package_runtimepath("autocomplpop")
 
 
 " neocomplcache.vim {{{2
 call s:set_package_runtimepath("neocomplcache")
-let g:NeoComplCache_EnableAtStartup = 1
-let g:NeoComplCache_EnableQuickMatch = 0
-let g:NeoComplCache_SmartCase = 1
+let g:neocomplcache_enable_at_startup = 1
+let g:neocomplcache_enable_ignore_case = 1
+let g:neocomplcache_enable_esmart_case = 1
+let g:neocomplcache_enable_wildcard = 1
+let g:neocomplcache_enable_quick_match = 0
+let g:neocomplcache_enable_cursor_hold_i = 0
+let g:neocomplcache_enable_auto_select = 0
+let g:neocomplcache_enable_camel_case_completion = 0
+let g:neocomplcache_enable_underbar_completion = 0
+let g:neocomplcache_enable_display_parameter = 1
 
 
 " fuf.vim {{{2
@@ -361,9 +341,9 @@ call s:set_package_runtimepath("vimirc")
 
 " skk.vim {{{2
 "call s:set_package_runtimepath("skk")
-let skk_jisyo = '~/.skk-jisyo'
-let skk_large_jisyo = '~/.vim/plugins/skk/dict/SKK-JISYO.L'
-let skk_show_annotation = 1
+"let skk_jisyo = '~/.skk-jisyo'
+"let skk_large_jisyo = '~/.vim/plugins/skk/dict/SKK-JISYO.L'
+"let skk_show_annotation = 1
 
 
 " fakeclip.vim {{{2

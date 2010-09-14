@@ -1,5 +1,5 @@
 " mashiro .vimperatorrc
-" firefox 3.6 + vimperator rev4279
+" firefox 3.6.8 + vimperator rev4339
 
 " Initialize {{{1
 "nmapc
@@ -53,7 +53,7 @@ set! mousewheel.withnokey.sysnumlines=false
 silent qmark c http://www.google.com/calendar/render?hl=ja
 silent qmark e https://www.evernote.com/Home.action
 silent qmark f http://fastladder.com/reader/
-silent qmark F http://favotter.net/user.php?user=YurineMashiro
+silent qmark F http://favotter.net/user.php?user=mashiroli
 silent qmark g https://github.com/
 silent qmark G http://gist.github.com/
 silent qmark h http://honyaku.yahoo.co.jp/
@@ -147,18 +147,27 @@ noremap <Leader>bi :bicon<CR>
 " LDR / fastladder
 command! -nargs=+ lazyfmapsldr lazy fmaps -urls='http://(reader\.livedoor\.com|fastladder\.com)/reader' <args>
 lazyfmapsldr j k s a p o v r w W J K <Space> <S-Space> c z > <
+lazyfmapsldr J,<Space> K,<S-Space>
 lazyfmapsldr p,pj
-lazyfmapsldr J,<Space>
-lazyfmapsldr K,<S-Space>
 lazyfmapsldr i,tj
-lazyfmapsldr e,tj
-lazyfmapsldr n,w
 lazyfmapsldr /,f
 
 
 " Google Reader
-command! -nargs=+ lazyfmapsgooglereader lazy fmaps -urls='www\.google\.co\.jp/reader' -events=vkeypress <args>
-lazyfmapsgooglereader j k J K <Space> <S-Space> n p N P X O s v gh ga gs gS gu gt gT gd gf gF gc ge gp r u 1 2 / a
+command! -nargs=+ lazyfmapgooglereader  lazy fmap  -urls='http://www\.google\.co\.jp/reader/view' <args>
+command! -nargs=+ lazyfmapsgooglereader lazy fmaps -urls='http://www\.google\.co\.jp/reader/view' <args>
+lazyfmapsgooglereader -events=vkeypress <Space> <S-Space> N P X O
+lazyfmapsgooglereader -events=vkeypress v m A
+lazyfmapsgooglereader -events=vkeypress gh ga gs gS gu gt gT gd gf gF gc ge gp
+lazyfmapsgooglereader -events=vkeypress r u / a
+lazyfmapsgooglereader -events=vkeypress j,n k,p J,N K,P n,N p,P o,vn w,NO
+lazyfmapgooglereader  -events=keypress  ; <CR>
+lazyfmapgooglereader  -events=vkeypress , X
+lazyfmapgooglereader  -events=vkeypress . O
+lazyfmapsgooglereader -events=vkeypress <C-1>,1 <C-2>,2
+" GoogleReader + Tombloo
+lazyfmapgooglereader -events=vkeyup <C-t> T
+map -urls='http://www\.google\.co\.jp/reader/view' i <C-t>j
 
 
 " Gmail
@@ -169,10 +178,9 @@ lazyfmapsgmail [,] ],[
 
 
 " Tumblr
-command! -nargs=+ lazyfmapstumblr lazy fmaps -urls='http://.*\.tumblr\.com' <args>
+command! -nargs=+ lazyfmapstumblr lazy fmaps -urls='http://\w+\.tumblr\.com' <args>
 lazyfmapstumblr j k
 lazyfmapstumblr i,tj
-lazyfmapstumblr e,tj
 
 
 " hint-tombloo-mod.js {{{2
@@ -231,9 +239,9 @@ set hintmatching=custom
 " multi_requester.js {{{2
 noremap <Leader>me :mr<Space>alc<Space>
 noremap <Leader>mt :mr<Space>twitter-search-pcod-no-jp<Space>
-noremap <Leader>mT :mr<Space>twitter-search-pcod-no-jp<Space>YurineMashiro<CR>
+noremap <Leader>mT :mr<Space>twitter-search-pcod-no-jp<Space>mashiroli<CR>
 noremap <Leader>mf :mr<Space>favotter-new<Space>
-noremap <Leader>mF :mr<Space>favotter-new<Space>YurineMashiro<CR>
+noremap <Leader>mF :mr<Space>favotter-new<Space>mashiroli<CR>
 
 
 " no_reading.js {{{2

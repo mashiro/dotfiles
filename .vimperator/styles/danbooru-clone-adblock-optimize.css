@@ -1,0 +1,28 @@
+@namespace url(http://www.w3.org/1999/xhtml);
+
+@-moz-document domain("danbooru.donmai.us"),
+               domain("moe.imouto.org"),
+               domain("safebooru.org"),
+               domain("gelbooru.com"),
+               domain("nekobooru.net"),
+               domain("konachan.com") {
+
+#content {
+	padding: 0 20px 30px !important;
+}
+
+#sticky {
+	width: 100% !important;
+}
+
+.sidebar {
+	width: 20% !important;
+	padding: 0 !important;
+	margin-right: 1em !important;
+}
+
+.content {
+	width: 77% !important;
+}
+
+}
