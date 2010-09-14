@@ -9,7 +9,7 @@ function find_paths {
 		if [ -d "$dir/man" ]; then MANPATH="$dir/man:$MANPATH"; fi
 		if [ -d "$dir/share/man" ]; then MANPATH="$dir/share/man:$MANPATH"; fi
 		if [ -d "$dir/info" ]; then INFOPATH="$dir/info:$INFOPATH"; fi
-		for i in "$dir/*"; do
+		for i in $dir/*; do
 			if [ -d "$i/bin" ]; then PATH="$i/bin:$PATH"; fi
 			if [ -d "$i/sbin" ]; then PATH="$i/sbin:$PATH"; fi
 			if [ -d "$i/man" ]; then MANPATH="$i/man:$MANPATH"; fi
