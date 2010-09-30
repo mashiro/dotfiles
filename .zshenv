@@ -42,6 +42,12 @@ export LESS="-i -M -R"
 export TZ=JST-9
 
 
+# Python {{{2
+export WORKON_HOME=$HOME/.virtualenvs
+export VIRTUALENVERAPPER_SH=$(which virtualenvwrapper.sh)
+[ -f $VIRTUALENVERAPPER_SH ] && source $VIRTUALENVERAPPER_SH
+
+
 # End {{{1
 [ -f ~/.zshenv.local ] && source ~/.zshenv.local
 
