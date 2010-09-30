@@ -63,8 +63,8 @@ bindkey "^p" history-beginning-search-backward-end
 bindkey "^n" history-beginning-search-forward-end
 bindkey "\\ep" history-beginning-search-backward-end
 bindkey "\\en" history-beginning-search-forward-end
-#bindkey "^[b" emacs-backward-ward
-#bindkey "^[f" emacs-forward-ward
+bindkey "^[b" emacs-backward-ward
+bindkey "^[f" emacs-forward-ward
 
 
 # History {{{1
