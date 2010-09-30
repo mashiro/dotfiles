@@ -105,10 +105,10 @@ cygwin*)
 	;;
 esac
 
-alias l="ls -alrt"
+alias l="ls -al"
 alias la="ls -a"
 alias ll="ls -l"
-alias lal="ls -al"
+alias lr="ls -alrt"
 
 alias -g L="| less"
 alias -g H="| head"
