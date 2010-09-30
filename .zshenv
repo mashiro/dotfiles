@@ -1,7 +1,7 @@
 # Export {{{1
 # Path {{{2
 export PATH MANPATH INFOPATH
-function find_paths {
+register_paths() {
 	dir="$1"
 	if [ -d "$dir" ]; then
 		if [ -d "$dir/bin" ]; then PATH="$dir/bin:$PATH"; fi
@@ -19,27 +19,29 @@ function find_paths {
 	fi
 }
 
-if ! [ "$PATH_FIND_COMPLETED" ]; then
+if ! [ "$REGISTER_PATHS_COMPLETED" ]; then
 	# for MacPorts
-	find_paths "/opt/local"
+	register_paths "/opt/local"
 
 	# for manually build applications
-	find_paths "/usr/local"
+	register_paths "/usr/local"
 
 	# for my own tools
-	find_paths "$HOME/local"
+	register_paths "$HOME/local"
 
 	# completed
-	export PATH_FIND_COMPLETED=1
+	export REGISTER_PATHS_COMPLETED=1
 fi
 
 
 # Misc {{{2
+export TZ=JST-9
 export EDITOR=$(which vim)
 export PAGER=$(which less)
 export SHELL=$(which zsh)
 export LESS="-i -M -R"
-export TZ=JST-9
+export GREP_COLOR='01;33'
+export GREP_OPTIONS='--color=auto'
 
 
 # Python {{{2
