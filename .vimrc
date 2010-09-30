@@ -63,7 +63,7 @@ if (1 < &t_Co || has('gui')) && has('syntax')
 	syntax on
 	set background=dark
 	if (256 <= &t_Co)
-		colorscheme xoria256-mod
+		colorscheme xoria256
 	endif
 endif
 
@@ -255,7 +255,7 @@ autocmd MyAutoCmd ColorScheme *
 \ | highlight PmenuSbar                   guibg=#333344
 
 " omni-completion
-if has("autocmd") && exists("+omnifunc")
+if exists("+omnifunc")
 	autocmd MyAutoCmd Filetype *
 	\   if &omnifunc == ""
 	\ |     setlocal omnifunc=syntaxcomplete#Complete
@@ -265,19 +265,10 @@ endif
 " auto ime off (gvim only)
 autocmd MyAutoCmd InsertLeave * set iminsert=0 imsearch=0
 
-" changelog
-autocmd MyAutoCmd BufNewFile,BufRead *.changelog set filetype=changelog
-let g:changelog_timeformat = "%Y-%m-%d"
-let g:changelog_username = "mashiro <y.mashiro@gmail.com>"
-
 
 " Plugins {{{1
 " templatefile.vim {{{2
 let g:load_templates="yes"
-
-
-" autocomplpop.vim {{{2
-"call s:set_package_runtimepath("autocomplpop")
 
 
 " neocomplcache.vim {{{2
@@ -339,15 +330,18 @@ call s:set_package_runtimepath("surround")
 call s:set_package_runtimepath("vimirc")
 
 
-" skk.vim {{{2
-"call s:set_package_runtimepath("skk")
-"let skk_jisyo = '~/.skk-jisyo'
-"let skk_large_jisyo = '~/.vim/plugins/skk/dict/SKK-JISYO.L'
-"let skk_show_annotation = 1
-
-
 " fakeclip.vim {{{2
 call s:set_package_runtimepath("fakeclip")
+
+
+" cocoa.vim {{{2
+call s:set_package_runtimepath("cocoa")
+
+" neocomplcache cooperation
+if !exists('g:neocomplcache_omni_patterns')
+	let g:neocomplcache_omni_patterns = {}
+endif
+let g:neocomplcache_omni_patterns.objc = '\h\w\+\|\%(\h\w*\|)\)\%(\.\|->\)\h\w*'
 
 
 " End {{{1
