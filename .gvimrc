@@ -4,7 +4,7 @@ if has('win32')
 elseif has('gui_macvim')
     set guifont=AndaleMono:h12
     "set guifont=M+1VM+IPAG_circle:h11
-    set transparency=20
+    set transparency=10
 endif
 
 set guioptions=egrL
