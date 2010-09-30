@@ -2,7 +2,7 @@
 
 mksymlink() {
   local dir=`pwd`
-  `ln -sf $dir/$1 $HOME/$1`
+  `ln -si $dir/$1 $HOME`
 }
 
 mksymlink .gitconfig
