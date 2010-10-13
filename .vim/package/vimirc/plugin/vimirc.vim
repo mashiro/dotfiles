@@ -880,7 +880,7 @@ endfunction
 
 function! s:GetBufNum(bufname)
   let bufnum = -1
-  let varname = 's:bufnum_'.a:bufname
+  let varname = s:StrEscape('s:bufnum_'.a:bufname)
   if exists('{varname}')
     if bufloaded({varname})
       let bufnum = {varname}
@@ -920,10 +920,11 @@ function! s:GetBufNum_Chat(nick, server)
 endfunction
 
 function! s:SetBufNum(bufname)
-  let s:bufnum_{a:bufname} = bufnr('%')
+  let escaped_bufname = s:StrEscape(a:bufname)
+  let s:bufnum_{escaped_bufname} = bufnr('%')
   " Need to set this buffer as `current' if it is channel/server
   call s:ChangeChanServ(0)
-  return s:bufnum_{a:bufname}
+  return s:bufnum_{escaped_bufname}
 endfunction
 
 function! s:DelBufNum(bufnum)
@@ -935,7 +936,8 @@ function! s:GenBufName_Info()
 endfunction
 
 function! s:GenBufName_Server(...)
-  return s:bufname_server.(a:0 ? a:1 : s:server)
+  "return s:bufname_server.(a:0 ? a:1 : s:server)
+  return s:StrEscape(s:bufname_server.(a:0 ? a:1 : s:server))
 endfunction
 
 function! s:GenBufName_List(...)
@@ -3968,8 +3970,17 @@ function! s:StrDivide(str, group)
 	\	    '\'.a:group)
 endfunction
 
+function! s:StrEscape(str)
+  let escaped = a:str
+  let escaped = substitute(escaped, '\.', '_dot_', 'g')
+  let escaped = substitute(escaped, '@', '_at_', 'g')
+  let escaped = substitute(escaped, '#', '_sharp_', 'g')
+  return escaped
+endfunction
+
 function! s:EscapeFName(str)
-  return escape(a:str, '%#')
+  "return escape(a:str, '%#')
+  return s:StrEscape(a:str)
 endfunction
 
 function! s:EscapeMagic(str)
@@ -4194,8 +4205,10 @@ endfunction
 
 function! s:SetHilite(name, fg, bg, ...)
   let mode= has('gui') ? 'gui' : 'cterm'
-  let fg  = strlen(a:fg) ? a:fg : 'NONE'
-  let bg  = strlen(a:bg) ? a:bg : 'NONE'
+  "let fg  = strlen(a:fg) ? a:fg : 'NONE'
+  "let bg  = strlen(a:bg) ? a:bg : 'NONE'
+  let fg  = strlen(a:fg) && a:fg != -1 ? a:fg : 'NONE'
+  let bg  = strlen(a:bg) && a:bg != -1 ? a:bg : 'NONE'
   let etc = (a:0 && strlen(a:1)) ? a:1 : 'NONE'
 
   execute 'highlight' (a:name) (mode.'='.etc) (mode.'fg='.fg) (mode.'bg='.bg)
