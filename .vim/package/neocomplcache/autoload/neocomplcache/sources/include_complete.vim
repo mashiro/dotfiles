@@ -1,7 +1,7 @@
 "=============================================================================
 " FILE: include_complete.vim
 " AUTHOR:  Shougo Matsushita <Shougo.Matsu@gmail.com>
-" Last Modified: 06 Sep 2010
+" Last Modified: 30 Sep 2010
 " License: MIT license  {{{
 "     Permission is hereby granted, free of charge, to any person obtaining
 "     a copy of this software and associated documentation files (the
@@ -44,6 +44,7 @@ function! s:source.initialize()"{{{
   augroup neocomplcache
     " Caching events
     autocmd FileType * call s:check_buffer_all()
+    autocmd BufWritePost * call s:check_buffer('')
   augroup END
 
   " Initialize include pattern."{{{
@@ -105,7 +106,7 @@ function! s:source.get_keyword_list(cur_keyword_str)"{{{
     endfor
   endif
 
-  return neocomplcache#member_filter(neocomplcache#dup_filter(l:keyword_list), a:cur_keyword_str)
+  return neocomplcache#keyword_filter(neocomplcache#dup_filter(l:keyword_list), a:cur_keyword_str)
 endfunction"}}}
 
 function! neocomplcache#sources#include_complete#define()"{{{
@@ -218,16 +219,21 @@ function! s:get_buffer_include_files(bufnumber)"{{{
   endif
 
   if l:filetype == 'python'
-        \&& !has_key(g:neocomplcache_include_paths, 'python')
-        \&& executable('python')
+        \ && !has_key(g:neocomplcache_include_paths, 'python')
+        \ && executable('python')
     " Initialize python path pattern.
     call neocomplcache#set_dictionary_helper(g:neocomplcache_include_paths, 'python',
-          \neocomplcache#system('python -', 'import sys;sys.stdout.write(",".join(sys.path))'))
+          \ neocomplcache#system('python -', 'import sys;sys.stdout.write(",".join(sys.path))'))
+  elseif l:filetype == 'cpp'
+        \ && !neocomplcache#is_win()
+    " Add cpp path.
+    call neocomplcache#set_dictionary_helper(g:neocomplcache_include_paths, 'cpp',
+          \ getbufvar(a:bufnumber, '&path') . ',/usr/include/c++/*')
   endif
 
   let l:pattern = has_key(g:neocomplcache_include_patterns, l:filetype) ? 
         \g:neocomplcache_include_patterns[l:filetype] : getbufvar(a:bufnumber, '&include')
-  if l:pattern == '' || (l:filetype !~# '^\%(c\|cpp\|objc\)$' && l:pattern ==# '^\s*#\s*include')
+  if l:pattern == ''
     return []
   endif
   let l:path = has_key(g:neocomplcache_include_paths, l:filetype) ? 

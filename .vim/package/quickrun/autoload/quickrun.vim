@@ -1,5 +1,5 @@
 " Run commands quickly.
-" Version: 0.4.1
+" Version: 0.4.2
 " Author : thinca <thinca+vim@gmail.com>
 " License: Creative Commons Attribution 2.1 Japan License
 "          <http://creativecommons.org/licenses/by/2.1/jp/deed.en>
@@ -316,6 +316,7 @@ function! s:Runner.run()  " {{{2
   let commands = type(exec) == type([]) ? copy(exec) : [exec]
   call map(commands, 'self.build_command(v:val)')
   call filter(commands, 'v:val =~ "\\S"')
+  let self.commands = commands  " for debug.
 
   let [runmode; args] = split(self.config.runmode, ':')
   if !has_key(self, 'run_' . runmode)
@@ -360,7 +361,7 @@ function! s:Runner.execute(cmd)  " {{{2
     if in != ''
       let inputfile = tempname()
       call writefile(split(in, "\n", 1), inputfile, 'b')
-      let cmd .= ' <' . s:shellescape(inputfile)
+      let cmd .= ' <' . self.shellescape(inputfile)
     endif
 
     execute s:iconv(printf(config.shellcmd, cmd), &encoding, &termencoding)
@@ -415,6 +416,7 @@ function! s:Runner.run_async_vimproc(commands, ...)  " {{{2
     execute 'autocmd! CursorHold,CursorHoldI * call'
     \       's:recieve_vimproc_result(' . string(key) . ')'
   augroup END
+  let self._autocmd_vimproc = 'vimproc'
   if a:0 && a:1 =~ '^\d\+$'
     let self._option_updatetime = &updatetime
     let &updatetime = a:1
@@ -439,8 +441,6 @@ function! s:recieve_vimproc_result(key)  " {{{2
     call feedkeys(mode() ==# 'i' ? "\<C-g>\<ESC>" : "g\<ESC>", 'n')
     return 0
   endif
-
-  autocmd! plugin-quickrun-vimproc
 
   call vimproc.stdout.close()
   call vimproc.stderr.close()
@@ -468,23 +468,23 @@ function! s:Runner.run_async_remote(commands, ...)  " {{{2
   let outfile = tempname()
   let self._temp_result = outfile
   let cmds = a:commands
-  let callback = s:make_command(
+  let callback = self.make_command(
   \        [selfvim, '--servername', v:servername, '--remote-expr', expr])
 
-  call map(cmds, 's:conv_vim2remote(selfvim, v:val)')
+  call map(cmds, 'self.conv_vim2remote(selfvim, v:val)')
 
   let in = self.config.input
   if in != ''
     let inputfile = tempname()
     let self._temp_input = inputfile
     call writefile(split(in, "\n", 1), inputfile, 'b')
-    let in = ' <' . s:shellescape(inputfile)
+    let in = ' <' . self.shellescape(inputfile)
   endif
 
   " Execute by script file to unify the environment.
   let script = tempname()
   let scriptbody = [
-  \   printf('(%s)%s >%s 2>&1', join(cmds, '&&'), in, s:shellescape(outfile)),
+  \   printf('(%s)%s >%s 2>&1', join(cmds, '&&'), in, self.shellescape(outfile)),
   \   callback,
   \ ]
   if s:is_win
@@ -519,10 +519,11 @@ python <<EOM
 import vim, threading, subprocess, re
 
 class QuickRun(threading.Thread):
-    def __init__(self, cmds, key, iswin):
+    def __init__(self, cmds, key, input, iswin):
         threading.Thread.__init__(self)
         self.cmds = cmds
         self.key = key
+        self.input = input
         self.iswin = iswin
 
     def run(self):
@@ -533,15 +534,19 @@ class QuickRun(threading.Thread):
         except:
             pass
         finally:
-            if self.iswin:
-                result = result.replace("\r\n", "\n")
             vim.eval("quickrun#_result(%s, %s)" %
               (self.key, self.vimstr(result)))
 
     def execute(self, cmd):
         if re.match('^\s*:', cmd):
             return vim.eval("quickrun#execute(%s)" % self.vimstr(cmd))
-        p = subprocess.Popen(cmd, stdout=subprocess.PIPE, shell=True)
+        p = subprocess.Popen(cmd,
+                             stdin=subprocess.PIPE,
+                             stdout=subprocess.PIPE,
+                             stderr=subprocess.STDOUT,
+                             shell=True)
+        p.stdin.write(self.input)
+        p.stdin.close()
         result = p.stdout.read()
         p.wait()
         return result
@@ -556,8 +561,10 @@ function! s:Runner.run_async_python(commands, ...)  " {{{2
     throw 'runmode = async:python needs +python feature.'
   endif
   let l:key = string(s:register(self))
+  let l:input = self.config.input
   python QuickRun(vim.eval('a:commands'),
   \               vim.eval('l:key'),
+  \               vim.eval('l:input'),
   \               int(vim.eval('s:is_win'))).start()
 endfunction
 
@@ -585,7 +592,7 @@ function! s:Runner.build_command(tmpl)  " {{{2
       let value = 'fnamemodify('.value.',submatch(1))'
       if key =~# '\U'
         let value = printf(config.command =~ '^\s*:' ? 'fnameescape(%s)'
-          \ : 's:shellescape(%s)', value)
+          \ : 'self.shellescape(%s)', value)
       endif
       let key .= '(%(\:[p8~.htre]|\:g?s(.).{-}\2.{-}\2)*)'
     endif
@@ -650,6 +657,12 @@ function! s:Runner.sweep()  " {{{2
       execute 'let'  '&' . optname '= self[opt]'
     endif
     call remove(self, opt)
+  endfor
+
+  " Delete autocmds.
+  for cmd in filter(keys(self), 'v:val =~# "^_autocmd_"')
+    execute 'autocmd!' 'plugin-quickrun-' . self[cmd]
+    call remove(self, cmd)
   endfor
 
   " Sweep the execution of vimproc.
@@ -864,6 +877,38 @@ endfunction
 
 
 
+function! s:Runner.conv_vim2remote(selfvim, cmd)  " {{{2
+  if a:cmd !~ '^\s*:'
+    return a:cmd
+  endif
+  return self.make_command([a:selfvim,
+  \       '--servername', v:servername, '--remote-expr',
+  \       printf('quickrun#execute(%s)', string(a:cmd))])
+endfunction
+
+
+
+function! s:Runner.make_command(args)  " {{{2
+  return join([shellescape(a:args[0])] +
+  \           map(a:args[1 :], 'self.shellescape(v:val)'), ' ')
+endfunction
+
+
+
+function! s:Runner.shellescape(str)  " {{{2
+  if self.config.runmode =~# '^async:vimproc\%(:\d\+\)\?$'
+    return "'" . substitute(a:str, '\\', '/', 'g') . "'"
+  elseif s:is_win
+    return '^"' . substitute(substitute(substitute(a:str,
+    \             '[&|<>()^"%]', '^\0', 'g'),
+    \             '\\\+\ze"', '\=repeat(submatch(0), 2)', 'g'),
+    \             '\ze\^"', '\', 'g') . '^"'
+  endif
+  return shellescape(a:str)
+endfunction
+
+
+
 " iconv() wrapper for safety.
 function! s:iconv(expr, from, to)  " {{{2
   if a:from ==# a:to
@@ -873,35 +918,6 @@ function! s:iconv(expr, from, to)  " {{{2
   return result != '' ? result : a:expr
 endfunction
 
-
-
-function! s:conv_vim2remote(selfvim, cmd)  " {{{2
-  if a:cmd !~ '^\s*:'
-    return a:cmd
-  endif
-  return s:make_command([a:selfvim,
-  \       '--servername', v:servername, '--remote-expr',
-  \       printf('quickrun#execute(%s)', string(a:cmd))])
-endfunction
-
-
-
-function! s:make_command(args)  " {{{2
-  return join([shellescape(a:args[0])] +
-  \           map(a:args[1 :], 's:shellescape(v:val)'), ' ')
-endfunction
-
-
-
-function! s:shellescape(str)  " {{{2
-  if s:is_win
-    let str = substitute(a:str, '[&|<>()^"%]', '^\0', 'g')
-    let str = substitute(str, '\\\+\ze"', '\=repeat(submatch(0), 2)', 'g')
-    let str = substitute(str, '\ze\^"', '\', 'g')
-    return '^"' . str . '^"'
-  endif
-  return shellescape(a:str)
-endfunction
 
 
 function! s:register(runner)  " {{{2
@@ -996,6 +1012,13 @@ function! quickrun#_result(key, ...)  " {{{2
     let result = filereadable(resfile) ? join(readfile(resfile, 'b'), "\n")
     \                                  : ''
   endif
+
+  if has('mac')
+    let result = substitute(result, '\r', '\n', 'g')
+  elseif s:is_win
+    let result = substitute(result, '\r\n', '\n', 'g')
+  endif
+
   call remove(s:runners, a:key)
   call runner.sweep()
   call runner.output(result)

@@ -1,7 +1,7 @@
 "=============================================================================
 " FILE: neocomplcache.vim
 " AUTHOR:  Shougo Matsushita <Shougo.Matsu@gmail.com>
-" Last Modified: 11 Aug 2010
+" Last Modified: 02 Oct 2010
 " License: MIT license  {{{
 "     Permission is hereby granted, free of charge, to any person obtaining
 "     a copy of this software and associated documentation files (the
@@ -22,7 +22,7 @@
 "     TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE
 "     SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 " }}}
-" Version: 5.2, for Vim 7.0
+" Version: 5.3, for Vim 7.0
 " GetLatestVimScripts: 2620 1 :AutoInstall: neocomplcache
 "=============================================================================
 
@@ -107,6 +107,9 @@ endif
 if !exists('g:neocomplcache_enable_auto_select')
   let g:neocomplcache_enable_auto_select = 0
 endif
+if !exists('g:neocomplcache_enable_auto_delimiter')
+  let g:neocomplcache_enable_auto_delimiter = 0
+endif
 if !exists('g:neocomplcache_caching_limit_file_size')
   let g:neocomplcache_caching_limit_file_size = 500000
 endif
@@ -115,6 +118,12 @@ if !exists('g:neocomplcache_disable_caching_buffer_name_pattern')
 endif
 if !exists('g:neocomplcache_lock_buffer_name_pattern')
   let g:neocomplcache_lock_buffer_name_pattern = ''
+endif
+if !exists('g:neocomplcache_force_caching_buffer_name_pattern')
+  let g:neocomplcache_force_caching_buffer_name_pattern = ''
+endif
+if !exists('g:neocomplcache_disable_auto_select_buffer_name_pattern')
+  let g:neocomplcache_disable_auto_select_buffer_name_pattern = ''
 endif
 if !exists('g:neocomplcache_ctags_program')
   let g:neocomplcache_ctags_program = 'ctags'

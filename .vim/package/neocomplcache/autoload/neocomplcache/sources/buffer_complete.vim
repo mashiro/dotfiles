@@ -1,7 +1,7 @@
 "=============================================================================
 " FILE: buffer_complete.vim
 " AUTHOR:  Shougo Matsushita <Shougo.Matsu@gmail.com>
-" Last Modified: 08 Sep 2010
+" Last Modified: 19 Oct 2010
 " License: MIT license  {{{
 "     Permission is hereby granted, free of charge, to any person obtaining
 "     a copy of this software and associated documentation files (the
@@ -520,18 +520,21 @@ function! s:check_source()"{{{
 
   " Check new buffer.
   while l:bufnumber <= bufnr('$')
-    if bufloaded(l:bufnumber)
+    if bufwinnr(l:bufnumber) >= 0
       let l:bufname = fnamemodify(bufname(l:bufnumber), ':p')
-      let l:buftype = getbufvar(l:bufnumber, '&buftype')
       if (!has_key(s:buffer_sources, l:bufnumber) || s:check_changed_buffer(l:bufnumber))
             \&& !has_key(s:disable_caching_list, l:bufnumber)
             \&& (g:neocomplcache_disable_caching_buffer_name_pattern == '' || l:bufname !~ g:neocomplcache_disable_caching_buffer_name_pattern)
-            \&& (g:neocomplcache_lock_buffer_name_pattern == '' || l:bufname !~ g:neocomplcache_lock_buffer_name_pattern)
-            \&& getfsize(l:bufname) < g:neocomplcache_caching_limit_file_size
-            \&& l:buftype !~# 'help'
-            \&& (l:buftype !~# 'nofile' || len(getbufline(l:bufnumber, 1, '$')) < 500)
-        " Caching.
-        call s:word_caching(l:bufnumber)
+            \&& !neocomplcache#is_locked(l:bufnumber)
+
+        let l:buftype = getbufvar(l:bufnumber, '&buftype')
+        if (g:neocomplcache_force_caching_buffer_name_pattern != '' && l:bufname =~ g:neocomplcache_force_caching_buffer_name_pattern)
+              \ || (getfsize(l:bufname) < g:neocomplcache_caching_limit_file_size
+              \     && (l:buftype == ''
+              \         || (getbufvar(l:bufnumber, '&modifiable') && !getbufvar(l:bufnumber, '&readonly') && l:buftype !~ 'help')))
+          " Caching.
+          call s:word_caching(l:bufnumber)
+        endif
       endif
     endif
 
@@ -578,9 +581,16 @@ function! s:save_cache(srcname)"{{{
   call neocomplcache#cache#save_cache('buffer_cache', l:srcname, neocomplcache#unpack_dictionary_dictionary(s:buffer_sources[a:srcname].keyword_cache))
 endfunction "}}}
 function! s:save_all_cache()"{{{
-  for l:key in keys(s:buffer_sources)
-    call s:save_cache(l:key)
-  endfor
+  try
+    for l:key in keys(s:buffer_sources)
+      call s:save_cache(l:key)
+    endfor
+  catch
+    call neocomplcache#print_error('Error occured while saving cache!')
+    let l:error_file = g:neocomplcache_temporary_dir . strftime('/error-%Y-%m-%d.log')
+    call writefile([v:exception . ' ' . v:throwpoint], l:error_file)
+    call neocomplcache#print_error('Please check error file: ' . l:error_file)
+  endtry
 endfunction"}}}
 
 " Command functions."{{{
