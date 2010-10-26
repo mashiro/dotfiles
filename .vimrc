@@ -1,4 +1,5 @@
 " Basic {{{1
+
 " Initialize {{{2
 augroup MyAutoCmd
 	autocmd!
@@ -72,10 +73,12 @@ endif
 filetype plugin indent on
 set nocompatible
 set runtimepath& runtimepath+=~/.vim,~/.vim/after
-set backupdir=~/tmp,~/,./
-set directory=~/tmp,~/,./
+set backupdir=./,~/tmp
+set directory=./,~/tmp
 
 " view
+set modeline
+set modelines=5
 set visualbell
 set t_vb=
 set antialias
@@ -111,7 +114,7 @@ set tags& tags+=./tags;,./**/tags
 set tabstop=4
 set shiftwidth=4
 set softtabstop=4
-set noexpandtab
+set expandtab
 set smarttab
 
 " mouse support
@@ -137,9 +140,10 @@ command! -nargs=? CtagsR !ctags -R --C++-kinds=+p --fields=+iaS --extra=+q . <ar
 
 
 " Enc {{{2
-command! -bang -nargs=? Utf8 edit<bang> ++enc=utf-8 <args>
-command! -bang -nargs=? EucJp edit<bang> ++enc=euc-jp <args>
-command! -bang -nargs=? Cp932 edit<bang> ++enc=cp932 <args>
+command! -bang -bar -complete=file -nargs=? Utf8 edit<bang> ++enc=utf-8 <args>
+command! -bang -bar -complete=file -nargs=? EucJp edit<bang> ++enc=euc-jp <args>
+command! -bang -bar -complete=file -nargs=? Cp932 edit<bang> ++enc=cp932 <args>
+command! -bang -bar -complete=file -nargs=? Iso2022jp edit<bang> ++enc=iso-2022-jp <args>
 
 
 function! s:change_current_dir(directory, bang) " {{{2
@@ -155,15 +159,20 @@ endfunction
 
 function! s:set_package_runtimepath(name, ...) " {{{2
 	let name = a:name
-	let path = a:0 > 0 ? a:1 : "~/.vim/package"
-	execute "set runtimepath^=" . path . "/" . name
-	execute "set runtimepath+=" . path . "/" . name . "/after"
+	let path = a:0 > 0 ? a:1 : '~/.vim/package'
+	execute 'set runtimepath^=' . path . '/' . name
+	execute 'set runtimepath+=' . path . '/' . name . '/after'
+endfunction
+
+function! s:toggle_option(option_name) " {{{2
+  execute 'setlocal' a:option_name.'!'
+  execute 'setlocal' a:option_name.'?'
 endfunction
 
 
 " Mappings {{{1
 " leader
-let mapleader = ","
+let mapleader = ','
 
 " edit/reload .vimrc
 nnoremap <silent> <Space>ev :<C-u>edit ~/.vimrc<CR>
@@ -193,18 +202,26 @@ inoremap <C-k> <C-o>D
 "nnoremap <Space>O :<C-u>call append(expand('.'), '')<Cr>j
 
 " toggle option
-nnoremap <Space>ow :<C-u>setlocal wrap! \| setlocal wrap?<CR>
-nnoremap <Space>on :<C-u>setlocal number! \| setlocal number?<CR>
-nnoremap <Space>ol :<C-u>setlocal list! \| setlocal list?<CR>
-nnoremap <Space>op :<C-u>setlocal paste! \| setlocal paste?<CR>
+nnoremap <Space>o <Nop>
+nnoremap <Space>ow :<C-u>call <SID>toggle_option('wrap')<CR>
+nnoremap <Space>on :<C-u>call <SID>toggle_option('number')<CR>
+nnoremap <Space>ol :<C-u>call <SID>toggle_option('list')<CR>
+nnoremap <Space>op :<C-u>call <SID>toggle_option('paste')<CR>
+
+" mark
+nnoremap <Space>m marks
 
 " fold
 "nnoremap <expr> h col('.') == 1 && foldlevel(line('.')) > 0 ? 'zc' : 'h'
 "nnoremap <expr> l foldclosed(line('.')) != -1 ? 'zo0' : 'l'
 "vnoremap <expr> h col('.') == 1 && foldlevel(line('.')) > 0 ? 'zcgv' : 'h'
 "vnoremap <expr> l foldclosed(line('.')) != -1 ? 'zogv0' : 'l'
+nnoremap <Space>h zc
+nnoremap <Space>l zo
 nnoremap <Space>zo zO
 nnoremap <Space>zc zC
+nnoremap <Space>zO zR
+nnoremap <Space>zC zM
 
 " window
 "nnoremap <C-w>h <C-w>h:call <SID>window_min_resize()<CR>
@@ -238,7 +255,7 @@ nnoremap <C-t>k gT
 nnoremap <silent> <Space>cd :<C-u>CD<CR>
 
 
-" AutoCmds {{{1
+
 " Fix 'fileencoding' to use 'encoding'
 " if the buffer only contains 7-bit characters.
 " Note that if the buffer is not 'modifiable',
@@ -345,18 +362,12 @@ call s:set_package_runtimepath("vimirc")
 " fakeclip.vim {{{2
 call s:set_package_runtimepath("fakeclip")
 
-
-" cocoa.vim {{{2
-call s:set_package_runtimepath("cocoa")
-
-" neocomplcache cooperation
-if !exists('g:neocomplcache_omni_patterns')
-	let g:neocomplcache_omni_patterns = {}
-endif
-let g:neocomplcache_omni_patterns.objc = '\h\w\+\|\%(\h\w*\|)\)\%(\.\|->\)\h\w*'
-
-
 " End {{{1
 if filereadable(expand('~/.vimrc.local'))
 	source ~/.vimrc.local
 endif
+
+set secure " must be written at the last. see :help 'secure'.
+
+" vim: expandtab softtabstop=2 shiftwidth=2
+" vim: foldmethod=marker
