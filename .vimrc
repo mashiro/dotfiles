@@ -267,6 +267,10 @@ autocmd MyAutoCmd InsertLeave * set iminsert=0 imsearch=0
 
 
 " Plugins {{{1
+" webapi.vim {{{2
+call s:set_package_runtimepath("webapi")
+
+
 " templatefile.vim {{{2
 let g:load_templates="yes"
 
@@ -316,6 +320,10 @@ let g:yankring_history_file = '.yankring_history'
 
 " gist.vim {{{2
 call s:set_package_runtimepath("gist")
+
+
+" ideone.vim {{{2
+call s:set_package_runtimepath("ideone")
 
 
 " quickrun.vim {{{2
