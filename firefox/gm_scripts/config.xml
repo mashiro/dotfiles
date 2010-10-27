@@ -1,5 +1,5 @@
 <UserScriptConfig>
-	<Script filename="autopagerize.user.js" name="AutoPagerize" namespace="http://swdyh.yu.to/" description="loading next page and inserting into current page." enabled="true" basedir="autopagerize">
+	<Script filename="autopagerize.user.js" name="AutoPagerize" namespace="http://swdyh.yu.to/" description="loading next page and inserting into current page." enabled="false" basedir="autopagerize">
 		<Include>http://*</Include>
 		<Include>https://*</Include>
 		<Exclude>https://mail.google.com/*</Exclude>
