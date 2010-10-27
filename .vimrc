@@ -271,6 +271,10 @@ autocmd MyAutoCmd InsertLeave * set iminsert=0 imsearch=0
 call s:set_package_runtimepath("webapi")
 
 
+" l9.vim {{{2
+call s:set_package_runtimepath("l9")
+
+
 " templatefile.vim {{{2
 let g:load_templates="yes"
 
