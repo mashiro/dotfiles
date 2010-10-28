@@ -2,7 +2,6 @@
 // @name           AutoPagerize
 // @namespace      http://swdyh.yu.to/
 // @description    loading next page and inserting into current page.
-// @require        https://relucks-org.appspot.com/files/html-sanitizer-minified.js
 // @include        http://*
 // @include        https://*
 // @exclude        https://mail.google.com/*
@@ -12,7 +11,7 @@
 // ==/UserScript==
 //
 // auther:  swdyh http://d.hatena.ne.jp/swdyh/
-// version: 0.0.56 2010-10-22T05:26:39+09:00
+// version: 0.0.58 2010-10-25T15:20:34+09:00
 //
 // this script based on
 // GoogleAutoPager(http://la.ma.la/blog/diary_200506231749.htm) and
@@ -35,11 +34,11 @@ else {
 }
 
 var URL = 'http://autopagerize.net/'
-var VERSION = '0.0.56'
+var VERSION = '0.0.57'
 var DEBUG = false
 var AUTO_START = true
 var CACHE_EXPIRE = 24 * 60 * 60 * 1000
-var BASE_REMAIN_HEIGHT = 800
+var BASE_REMAIN_HEIGHT = 400
 var FORCE_TARGET_WINDOW = getPref('force_target_window', true)
 var XHR_TIMEOUT = 30 * 1000
 var SITEINFO_IMPORT_URLS = [
@@ -164,8 +163,8 @@ var AutoPager = function(info) {
         (Math.round(scrollHeight * 0.8))
 
     var baseRemainHeight = BASE_REMAIN_HEIGHT
-	if (url.match("tumblr\\.com"))
-        baseRemainHeight = 8000
+    if (url.match('tumblr\\.com'))
+        baseRemainHeight *= 10
 
     this.remainHeight = scrollHeight - bottom + baseRemainHeight
     this.onScroll()
@@ -323,7 +322,12 @@ AutoPager.prototype.request = function() {
             self.error()
         },
         onload: function(res) {
-            self.requestLoad.apply(self, [res])
+            if (res.finalUrl && location.host == res.finalUrl.split('/')[2]) {
+                self.requestLoad.apply(self, [res])
+            }
+            else {
+                self.error()
+            }
         }
     }
     AutoPager.requestFilters.forEach(function(i) { i(opt) }, this)
@@ -332,20 +336,7 @@ AutoPager.prototype.request = function() {
     }
     else {
         this.showLoading(true)
-        var req = new XMLHttpRequest()
-        req.open('GET', opt.url, true)
-        req.overrideMimeType(opt.overrideMimeType)
-        req.onreadystatechange = function (aEvt) {
-            if (req.readyState == 4) {
-                if (req.status == 200 && req.getAllResponseHeaders()) {
-                    opt.onload(req)
-                }
-                else {
-                    opt.onerror()
-                }
-            }
-        }
-        req.send(null)
+        GM_xmlhttpRequest(opt)
     }
 }
 
@@ -368,9 +359,7 @@ AutoPager.prototype.requestLoad = function(res) {
     AutoPager.responseFilters.forEach(function(i) {
         i(res, this.requestURL)
     }, this)
-    var f = function(a) { return a }
-    var t = html_sanitize(res.responseText, f, f)
-    var htmlDoc = createHTMLDocumentByString(t)
+    var htmlDoc = createHTMLDocumentByString(res.responseText)
     AutoPager.documentFilters.forEach(function(i) {
         i(htmlDoc, this.requestURL, this.info)
     }, this)

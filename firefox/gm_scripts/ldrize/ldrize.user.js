@@ -7,7 +7,7 @@
 // @include        file:///*
 // ==/UserScript==
 
-const SCRIPT_VERSION = "2009.12.05"
+const SCRIPT_VERSION = "2010.10.27"
 const SCRIPT_URL     = "http://userscripts.org/scripts/show/11562"
 
 // ------------------------------------------------------------------
@@ -19,7 +19,6 @@ const SCRIPT_URL     = "http://userscripts.org/scripts/show/11562"
      paragraph : XPath
      link      : XPath
      focus     : XPath
-     stripe    : true
      height    : Number
      disable   : true
 
@@ -27,7 +26,6 @@ const SCRIPT_URL     = "http://userscripts.org/scripts/show/11562"
         domain:    '',
         paragraph: '',
         link:      '',
-        stripe:    true
     },
 */
 const SITEINFO = [
@@ -87,8 +85,6 @@ const IMAGE_DOWN      = 'data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAwAAAAJC
 // ------------------------------------------------------------------
 // CSS
 // ------------------------------------------------------------------
-const CSS_STRIPE_ODD       = false
-const CSS_STRIPE_EVEN      = 'background-color:#eeeeff !important;'
 const CSS_HIGHLIGHT_LINK   = false
 const CSS_HIGHLIGHT_PINNED = 'outline: 2px solid #CC6060 !important;outline-offset: 1px !important;outline-radius: 3px !important;'
 
@@ -104,7 +100,6 @@ Object.extend = function(self, other){
 }
 var LDRize = new Class();
 LDRize.prototype = {
-  GLOBAL_STRIPE: false, // enable stripe always
   scrollHeight: 10,
   indicatorMargin: 15,
 
@@ -151,19 +146,13 @@ LDRize.prototype = {
 	  this.initMinibuffer();
 	  this.initShortcutkey();
 
-	  var addFilterHandler = function(){
-		  window.AutoPagerize.addFilter(function(pages){
-			  self.removeSpace();
-			  setTimeout(function(){
-				  self.initParagraph(pages);
-			  }, 0);
-		  });
+	  var addFilterHandler = function(evt){
+		       self.removeSpace();
+		       setTimeout(function(){
+		     	  self.initParagraph([evt.target]);
+		       }, 0);
 	  }
-	  if(window.AutoPagerize){
-		addFilterHandler();
-	  }else{
-		window.addEventListener('GM_AutoPagerizeLoaded', addFilterHandler, false);
-	  }
+	  window.addEventListener('AutoPagerize_DOMNodeInserted', addFilterHandler, false);
 
 	  var css = '';
 	  css += [this.initHTML(),
@@ -284,7 +273,6 @@ LDRize.prototype = {
 		  this.paragraphes[xpath].setContext(pages).collect();
 	  }else if(!this.paragraphes[xpath]){
 		  var p = new Paragraphes(xpath);
-		  if(this.useStripe()) p.enableStripe();
 		  p.collect();
 		  this.paragraphes[xpath] = p;
 	  }
@@ -354,10 +342,6 @@ LDRize.prototype = {
   },
   initCSS: function(){
 	  var css = '';
-	  css += (CSS_STRIPE_ODD ?
-			  ".gm_ldrize_odd {"+ CSS_STRIPE_ODD +"}":"") +
-		(CSS_STRIPE_EVEN ?
-		 ".gm_ldrize_even {"+ CSS_STRIPE_EVEN +"}":"");
 	  if(CSS_HIGHLIGHT_LINK) css += "\n.gm_ldrize_link {" + CSS_HIGHLIGHT_LINK + "}";
 	  if(CSS_HIGHLIGHT_PINNED) css += "\n.gm_ldrize_pinned {" + CSS_HIGHLIGHT_PINNED + "}";
 	  css += ".gm_ldrize_iframe { min-height:200px; position:fixed; bottom:0px; left:0px; right:0px; }";
@@ -424,6 +408,7 @@ LDRize.prototype = {
 	  }
   },
 
+  // 一番下までスクロールしたときにもj/kで選んだ要素が上の方に表示されるように。
   appendSpace: function(){
 	  if(!document.getElementById('gm_ldrize_space')){
 		  this.html.space.style.top = Math.max(document.documentElement.scrollHeight,
@@ -463,7 +448,6 @@ LDRize.prototype = {
 	  var h = this.getSiteinfo()['height'];
 	  return DEFAULT_HEIGHT + ((typeof h != 'undefined') ? Number(h) : this.scrollHeight);
   },
-  useStripe: function(){return this.siteinfo_current['stripe'] || this.GLOBAL_STRIPE},
   useSmoothScroll: function(){return eval(GM_getValue('smooth', 'true'))},
   scrollTo: function(x, y){
 	  (this.useSmoothScroll() ? SmoothScroll: window).scrollTo(x, y);
@@ -809,7 +793,6 @@ Paragraphes.prototype = {
 	  this.list = new Array();
 	  this.xpath = arguments[0];
 	  this.context = [];
-	  this.stripe = false;
 	  this.current = {
 		paragraph: null,
 		position:  null,
@@ -836,25 +819,11 @@ Paragraphes.prototype = {
 			  var idx = list.bsearch_upper_boundary(function(e){return e.compare(para)});
 			  list = list.slice(0, idx).concat(para, list.slice(idx));
 		  }
-		  // for striped design
-		  if(self.stripe) self.attachClassForStripe(node);
 	  });
-	  this.list = list;
 	  this.context = [];
   },
   setContext: function(arg){this.context = arg; return this},
-  enableStripe: function(){this.stripe = true;  return this},
 
-  attachClassForStripe: function(node){
-	  var odd = this.list.length % 2 == 1;
-	  var _class = node.getAttribute('class');
-	  if(!_class || _class.indexOf("gm_ldrize_") == -1){
-		  node.setAttribute(
-			  'class',
-			  (_class || "") + " " +
-			  (odd ? "gm_ldrize_odd": "gm_ldrize_even"));
-	  }
-  },
   select: function(arg){this.selectNth(this.position(arg))},
   selectNth: function(n){
 	  if(n == -1){
@@ -1011,7 +980,7 @@ Paragraph.prototype = {
 var Siteinfo = new Class();
 Siteinfo.prototype = {
   initialize: function(){
-	  // ['name', 'domain', 'paragraph', 'link', 'view', 'stripe', 'height', 'focus', 'disable']
+	  // ['name', 'domain', 'paragraph', 'link', 'view', 'height', 'focus', 'disable']
 	  Object.extend(this, arguments[0]);
   },
   isAvailable: function(){
