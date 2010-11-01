@@ -78,6 +78,7 @@ function bmark(title, url, keyword) {
 	}
 }
 bmark('Google US Search'  , 'http://www.google.com/search?q=%s'        , 'g');
+bmark('Yahoo! Search'     , 'http://search.yahoo.com/search;_ylt=?p=%s', 'y');
 bmark('Twitter'           , 'http://twitter.com/%s'                    , 'tw');
 bmark('Twitter Search'    , 'http://search.twitter.com/search?q=%s'    , 'ts');
 bmark('ふぁぼったー'      , 'http://favotter.net/user.php?user=%s'     , 'fav');
@@ -85,7 +86,6 @@ bmark('Ustream'           , 'http://www.ustream.tv/channel/%s'         , 'ust');
 bmark('はてなダイアリー'  , 'http://d.hatena.ne.jp/%s'                 , 'hd');
 bmark('はてなブックマーク', 'http://b.hatena.ne.jp/%s'                 , 'hb');
 bmark('ニコニコ動画'      , 'http://www.nicovideo.jp/watch/%s'         , 'nico');
-bmark('Yahoo! Search'     , 'http://search.yahoo.com/search;_ylt=?p=%s', 't');
 EOM
 
 
@@ -93,6 +93,10 @@ EOM
 command! -nargs=* feedkeys js events.feedkeys("<args>")
 command! -nargs=+ lazy autocmd VimperatorEnter .* <args>
 command! -nargs=0 copybufferurl js util.copyToClipboard(buffer.URL)
+
+" tabs
+command! -complete=history -nargs=+ -description="Open history in the current tab" hopen open <args>
+command! -complete=history -nargs=+ -description="Open history in a new tab" htabopen tabopen <args>
 
 " bookmarklet
 command! -nargs=0 -description="Subscribe with Fastladder" subscribewithfastladder open javascript:location.href='http://fastladder.com/subscribe/'+location.href
@@ -405,6 +409,8 @@ EOM
 " AutoCmds {{{1
 "autocmd! LocationChange .* source! ~/.vimperator/location/defaultmap.vimp
 "autocmd! LocationChange www\\.(nicovideo\\.jp|youtube\\.com)/watch source! ~/.vimperator/location/stellamap.vimp
+"lazy set! greasemonkey.scriptvals.http://white.s151.xrea.com//LDRize.smooth=false
+lazy minibuffer LDRize::toggle-smooth-scroll
 
 
 " Mappings {{{1
@@ -448,9 +454,10 @@ nnoremap zz zZ
 nnoremap zZ zz
 
 noremap <silent> <C-r> :restart<CR>
-noremap <Leader>h :history! -max=1 
-noremap <Leader>s :source ~/.vimperatorrc<CR>
-noremap U :undo 
+noremap <silent> <Leader>h :htabopen<Space>
+noremap <silent> <Leader>s :source ~/.vimperatorrc<CR>:echo<Space>"source completed."<CR>
+noremap <silent> <Leader>a :autopagerize<CR>
+noremap U :undo<Space>
 
 noremap <silent> eu :set encoding=UTF-8<CR>
 noremap <silent> es :set encoding=Shift_JIS<CR>
@@ -470,38 +477,35 @@ inoremap <C-n> <Down>
 " copy/paste
 javascript <<EOM
 execute_silent = function(str, modifiers) {
-	liberator.execute(str, modifiers, true);
+  liberator.execute(str, modifiers, true);
 }
 if (liberator.has("Win32")) {
-	execute_silent("cnoremap <C-a> <C-v><C-a>");
-	execute_silent("cnoremap <C-z> <C-v><C-z>");
-	execute_silent("cnoremap <C-x> <C-v><C-x>");
-	execute_silent("cnoremap <C-c> <C-v><C-c>");
-	execute_silent("cnoremap <C-v> <C-v><C-v>");
-	execute_silent("inoremap <C-a> <C-v><C-a>");
-	execute_silent("inoremap <C-z> <C-v><C-z>");
-	execute_silent("inoremap <C-x> <C-v><C-x>");
-	execute_silent("inoremap <C-c> <C-v><C-c>");
-	execute_silent("inoremap <C-v> <C-v><C-v>");
+  execute_silent("cnoremap <C-a> <C-v><C-a>");
+  execute_silent("cnoremap <C-z> <C-v><C-z>");
+  execute_silent("cnoremap <C-x> <C-v><C-x>");
+  execute_silent("cnoremap <C-c> <C-v><C-c>");
+  execute_silent("cnoremap <C-v> <C-v><C-v>");
+  execute_silent("inoremap <C-a> <C-v><C-a>");
+  execute_silent("inoremap <C-z> <C-v><C-z>");
+  execute_silent("inoremap <C-x> <C-v><C-x>");
+  execute_silent("inoremap <C-c> <C-v><C-c>");
+  execute_silent("inoremap <C-v> <C-v><C-v>");
 }
 else if (liberator.has("MacUnix")) {
-	execute_silent("cnoremap <M-a> <C-v><M-a>");
-	execute_silent("cnoremap <M-z> <C-v><M-z>");
-	execute_silent("cnoremap <M-x> <C-v><M-x>");
-	execute_silent("cnoremap <M-c> <C-v><M-c>");
-	execute_silent("cnoremap <M-v> <C-v><M-v>");
-	execute_silent("inoremap <M-a> <C-v><M-a>");
-	execute_silent("inoremap <M-z> <C-v><M-z>");
-	execute_silent("inoremap <M-x> <C-v><M-x>");
-	execute_silent("inoremap <M-c> <C-v><M-c>");
-	execute_silent("inoremap <M-v> <C-v><M-v>");
+  execute_silent("cnoremap <M-a> <C-v><M-a>");
+  execute_silent("cnoremap <M-z> <C-v><M-z>");
+  execute_silent("cnoremap <M-x> <C-v><M-x>");
+  execute_silent("cnoremap <M-c> <C-v><M-c>");
+  execute_silent("cnoremap <M-v> <C-v><M-v>");
+  execute_silent("inoremap <M-a> <C-v><M-a>");
+  execute_silent("inoremap <M-z> <C-v><M-z>");
+  execute_silent("inoremap <M-x> <C-v><M-x>");
+  execute_silent("inoremap <M-c> <C-v><M-c>");
+  execute_silent("inoremap <M-v> <C-v><M-v>");
 }
 else {
 }
 EOM
-
-" toggle autopagerize
-noremap <silent> <Leader>a :autopagerize<CR>
 
 
 " End {{{1
