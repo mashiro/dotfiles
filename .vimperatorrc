@@ -44,7 +44,8 @@ set! browser.tabs.loadDivertedInBackground=true
 set! browser.urlbar.filter.javascript=false
 set! browser.urlbar.maxRichResults=20
 set! browser.sessionstore.max_tabs_undo=20
-set! dom.popup_maximum=500
+set! browser.download.manager.showWhenStarting=false
+set! dom.popup_maximum=100
 set! mousewheel.withnokey.numlines=6
 set! mousewheel.withnokey.sysnumlines=false
 
@@ -409,7 +410,6 @@ EOM
 " AutoCmds {{{1
 "autocmd! LocationChange .* source! ~/.vimperator/location/defaultmap.vimp
 "autocmd! LocationChange www\\.(nicovideo\\.jp|youtube\\.com)/watch source! ~/.vimperator/location/stellamap.vimp
-"lazy set! greasemonkey.scriptvals.http://white.s151.xrea.com//LDRize.smooth=false
 lazy minibuffer LDRize::toggle-smooth-scroll
 
 

@@ -10,12 +10,14 @@ hi Object               color: Khaki;
 hi String               color: Orchid;
 
 hi Normal               color: #d0d0d0; background: #1c1c1c; font-size: 12px;
-hi ErrorMsg             color: #ffffff; background: #ffffff; font-size: 12px;
+hi ErrorMsg             color: #ffffff; background: #440000; font-size: 12px;
 hi InfoMsg              color: #d0d0d0; background: #1c1c1c; font-size: 12px;
 hi ModeMsg              color: #d0d0d0; background: #1c1c1c; font-size: 12px;
 hi MoreMsg              color: #d0ffd0; background: #1c1c1c; font-size: 12px;
 hi WarningMsg           color: #ff0000; background: #1c1c1c; font-size: 12px;
-hi NonText              color: #a0a0d0; background: #1c1c1c; font-size: 12px;
+
+hi NonText              color: #a0a0d0; min-height: 16px; padding-left: 2px;
+hi Filter               color: #7090d0; font-weight: bold;
 
 hi CmdLine              font-family: monospace; padding: 1px; background: #0c0c0c; font-size: 14px;
 
