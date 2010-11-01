@@ -296,6 +296,10 @@ call s:set_package_runtimepath("l9")
 let g:load_templates="yes"
 
 
+" IndentAnything.vim {{{2
+call s:set_package_runtimepath("IndentAnything")
+
+
 " neocomplcache.vim {{{2
 call s:set_package_runtimepath("neocomplcache")
 let g:neocomplcache_enable_at_startup = 1
