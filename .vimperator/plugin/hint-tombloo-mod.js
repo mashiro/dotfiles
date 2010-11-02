@@ -46,54 +46,55 @@ hints.addMode(
 
         var extractors = tomblooService.check(context);
 
-		var specified;
-		for (var i = 0; i < hintSpecifiedList.length; ++i) {
-			var url = hintSpecifiedList[i][0];
-			if (buffer.URL.match(url)) {
-				specified = hintSpecifiedList[i];
-				break;
-			}
-		}
+        var specified;
+        for (var i = 0; i < hintSpecifiedList.length; ++i) {
+            var url = hintSpecifiedList[i][0];
+            if (buffer.URL.match(url)) {
+                specified = hintSpecifiedList[i];
+                break;
+            }
+        }
 
-		if (specified) {
-			var name = specified[1];
-			var show = specified.length >= 2 ? specified[2] : true;
-			var extractor;
-			for (var i = 0; i < extractors.length; ++i) {
-				if (extractors[i].name.match(name)) {
-					extractor = extractors[i];
-					break;
-				}
-			}
-			if (extractor) {
-				tomblooService.share(context, extractor, show);
-				return;
-			}
-		}
+        if (specified) {
+            var name = specified[1];
+            var show = specified.length >= 2 ? specified[2] : true;
+            var extractor;
+            for (var i = 0; i < extractors.length; ++i) {
+                if (extractors[i].name.match(name)) {
+                    extractor = extractors[i];
+                    break;
+                }
+            }
+            if (extractor) {
+                tomblooService.share(context, extractor, show);
+                return;
+            }
+        }
 
-		liberator.modules.commandline.input(
-			'Extractor: ',
-			function (string) {
-				var extractor;
-				for (let i = 0; i < extractors.length; i++) {
-					if (extractors[i].name == string) {
-						extractor = extractors[i];
-						break;
-					}
-				}
-				if (!extractor) return;
+        liberator.modules.commandline.input(
+            'Extractor: ',
+            function (string) {
+                var extractor;
+                for (let i = 0; i < extractors.length; i++) {
+                    if (extractors[i].name == string) {
+                        extractor = extractors[i];
+                        break;
+                    }
+                }
+                if (!extractor)
+                    return;
 
-				tomblooService.share(context, extractor, true);
-			},
-			{
-				completer: function (context) {
-					context.title = ['Tombloo Extractors'];
-					context.completions = extractors.map(
-						function (_) [ _.name, _.name ]
-					);
-				}
-			}
-		);
+                tomblooService.share(context, extractor, true);
+            },
+            {
+                completer: function (context) {
+                    context.title = ['Tombloo Extractors'];
+                    context.completions = extractors.map(
+                        function (_) [ _.name, _.name ]
+                    );
+                }
+            }
+        );
     },
     function () hintXPath
 );
