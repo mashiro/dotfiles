@@ -1,5 +1,2 @@
-au BufNewFile,BufRead * 
-\   if expand("%:p") =~ "tiarra\/log\/.*\.txt"
-\ |		set filetype=tiarralog
-\ |	endif
+au BufNewFile,BufRead */tiarra/log/*/*.txt set filetype=tiarralog
 
