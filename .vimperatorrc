@@ -44,8 +44,7 @@ set! browser.tabs.loadDivertedInBackground=true
 set! browser.urlbar.filter.javascript=false
 set! browser.urlbar.maxRichResults=20
 set! browser.sessionstore.max_tabs_undo=20
-set! browser.download.manager.showWhenStarting=false
-set! dom.popup_maximum=100
+set! dom.popup_maximum=200
 set! mousewheel.withnokey.numlines=6
 set! mousewheel.withnokey.sysnumlines=false
 
