@@ -202,6 +202,10 @@ LDRize.prototype = {
 	  var lst = [
 		  { name: 'LDRize::toggle-smooth-scroll',
 			command: function(){GM_setValue('smooth', (!eval(GM_getValue('smooth', 'true'))).toString())}},
+		  { name: 'LDRize::enable-smooth-scroll',
+			command: function(){GM_setValue('smooth', 'true')}},
+		  { name: 'LDRize::disable-smooth-scroll',
+			command: function(){GM_setValue('smooth', 'false')}},
 		  { name: 'LDRize::update-siteinfo',
 			command: function(){SiteinfoOperator.prototype.updateSiteinfo.call()}},
 		  { name: 'LDRize::paragraph-position-correct',

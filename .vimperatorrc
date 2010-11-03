@@ -38,6 +38,9 @@ let mapleader = ","
 " about:config
 set! general.autoScroll=false
 set! ui.key.generalAccessKey=0
+set! network.http.pipelining=true
+set! network.http.pipelining.ssl=true
+set! network.http.proxy.pipelining=true
 set! browser.tabs.closeButtons=2
 set! browser.tabs.closeWindowWithLastTab=false
 set! browser.tabs.loadDivertedInBackground=true
@@ -187,6 +190,12 @@ lazyfmapstumblr j k
 lazyfmapstumblr i,tj
 
 
+" Pixiv
+command! -nargs=+ lazyfmapspixiv lazy fmaps -urls='http://www\.pixiv\.net' <args>
+lazyfmapspixiv j k p o
+lazyfmapspixiv i,tj
+
+
 " hint-tombloo-mod.js {{{2
 javascript <<EOM
 liberator.globalVariables.hint_tombloo_specified_list = [
@@ -198,8 +207,8 @@ EOM
 
 
 " ime_controller.js {{{2
-let g :ex_ime_mode = "inactive"
-let g :textarea_ime_mode = "inactive"
+let g:ex_ime_mode = "inactive"
+let g:textarea_ime_mode = "inactive"
 
 
 " ldrize_cooperation.js {{{2
@@ -409,7 +418,7 @@ EOM
 " AutoCmds {{{1
 "autocmd! LocationChange .* source! ~/.vimperator/location/defaultmap.vimp
 "autocmd! LocationChange www\\.(nicovideo\\.jp|youtube\\.com)/watch source! ~/.vimperator/location/stellamap.vimp
-lazy minibuffer LDRize::toggle-smooth-scroll
+lazy minibuffer LDRize::disable-smooth-scroll
 
 
 " Mappings {{{1

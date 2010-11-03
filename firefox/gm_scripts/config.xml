@@ -30,4 +30,7 @@
 		<Include>https://www.google.co.jp/reader/*</Include>
 		<Unwrap/>
 	</Script>
+	<Script filename="pixiv__tombloo.user.js" name="Pixiv + Tombloo" namespace="http://gist.github.com/660432" description="" enabled="true" basedir="pixiv__tombloo">
+		<Include>http://www.pixiv.net/*</Include>
+	</Script>
 </UserScriptConfig>
