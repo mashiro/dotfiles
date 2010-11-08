@@ -2,72 +2,69 @@
 
 " Initialize {{{2
 augroup MyAutoCmd
-	autocmd!
+    autocmd!
 augroup END
-
 
 " Encoding {{{2
 set encoding&
 set fileencoding&
 if &encoding !=# 'utf-8'
-	set encoding=japan
-	set fileencoding=japan
+    set encoding=japan
+    set fileencoding=japan
 endif
 if has('iconv')
-	let s:enc_euc = 'euc-jp'
-	let s:enc_jis = 'iso-2022-jp'
-	if iconv("\x87\x64\x87\x6a", 'cp932', 'eucjp-ms') ==# "\xad\xc5\xad\xcb"
-		let s:enc_euc = 'eucjp-ms'
-		let s:enc_jis = 'iso-2022-jp-3'
-	elseif iconv("\x87\x64\x87\x6a", 'cp932', 'euc-jisx0213') ==# "\xad\xc5\xad\xcb"
-		let s:enc_euc = 'euc-jisx0213'
-		let s:enc_jis = 'iso-2022-jp-3'
-	endif
-	if &encoding ==# 'utf-8'
-		let s:fileencodings_default = &fileencodings
-		let &fileencodings = s:enc_jis .','. s:enc_euc .',cp932'
-		let &fileencodings = &fileencodings .','. s:fileencodings_default
-		unlet s:fileencodings_default
-	else
-		let &fileencodings = &fileencodings .','. s:enc_jis
-		set fileencodings+=utf-8,ucs-2le,ucs-2
-		if &encoding =~# '^\(euc-jp\|euc-jisx0213\|eucjp-ms\)$'
-			set fileencodings+=cp932
-			set fileencodings-=euc-jp
-			set fileencodings-=euc-jisx0213
-			set fileencodings-=eucjp-ms
-			let &encoding = s:enc_euc
-			let &fileencoding = s:enc_euc
-		else
-			let &fileencodings = &fileencodings .','. s:enc_euc
-		endif
-	endif
-	unlet s:enc_euc
-	unlet s:enc_jis
+    let s:enc_euc = 'euc-jp'
+    let s:enc_jis = 'iso-2022-jp'
+    if iconv("\x87\x64\x87\x6a", 'cp932', 'eucjp-ms') ==# "\xad\xc5\xad\xcb"
+        let s:enc_euc = 'eucjp-ms'
+        let s:enc_jis = 'iso-2022-jp-3'
+    elseif iconv("\x87\x64\x87\x6a", 'cp932', 'euc-jisx0213') ==# "\xad\xc5\xad\xcb"
+        let s:enc_euc = 'euc-jisx0213'
+        let s:enc_jis = 'iso-2022-jp-3'
+    endif
+    if &encoding ==# 'utf-8'
+        let s:fileencodings_default = &fileencodings
+        let &fileencodings = s:enc_jis .','. s:enc_euc .',cp932'
+        let &fileencodings = &fileencodings .','. s:fileencodings_default
+        unlet s:fileencodings_default
+    else
+        let &fileencodings = &fileencodings .','. s:enc_jis
+        set fileencodings+=utf-8,ucs-2le,ucs-2
+        if &encoding =~# '^\(euc-jp\|euc-jisx0213\|eucjp-ms\)$'
+            set fileencodings+=cp932
+            set fileencodings-=euc-jp
+            set fileencodings-=euc-jisx0213
+            set fileencodings-=eucjp-ms
+            let &encoding = s:enc_euc
+            let &fileencoding = s:enc_euc
+        else
+            let &fileencodings = &fileencodings .','. s:enc_euc
+        endif
+    endif
+    unlet s:enc_euc
+    unlet s:enc_jis
 endif
 if has('autocmd')
-	function! AU_ReCheck_FENC()
-		if &fileencoding =~# 'iso-2022-jp' && search("[^\x01-\x7e]", 'n') == 0
-			let &fileencoding=&encoding
-		endif
-	endfunction
-	autocmd MyAutoCmd BufReadPost * call AU_ReCheck_FENC()
+    function! AU_ReCheck_FENC()
+        if &fileencoding =~# 'iso-2022-jp' && search("[^\x01-\x7e]", 'n') == 0
+            let &fileencoding=&encoding
+        endif
+    endfunction
+    autocmd MyAutoCmd BufReadPost * call AU_ReCheck_FENC()
 endif
 set fileformats=unix,dos,mac
 if exists('&ambiwidth')
-	set ambiwidth=double
+    set ambiwidth=double
 endif
-
 
 " Color {{{2
 if (1 < &t_Co || has('gui')) && has('syntax')
-	syntax on
-	set background=dark
-	if (256 <= &t_Co)
-		colorscheme xoria256
-	endif
+    syntax on
+    set background=dark
+    if (256 <= &t_Co)
+        colorscheme xoria256
+    endif
 endif
-
 
 " Optioins {{{2
 filetype plugin indent on
@@ -120,13 +117,13 @@ set smarttab
 " mouse support
 "set mouse=a
 "if &term =~ '^screen'
-"	autocmd MyAutoCmd VimLeave * :set mouse=
-"	set ttymouse=xterm2
+"    autocmd MyAutoCmd VimLeave * :set mouse=
+"    set ttymouse=xterm2
 "endif
 "if has('gui_running')
-"	set mousemodel=popup
-"	set nomousefocus
-"	set mousehide
+"    set mousemodel=popup
+"    set nomousefocus
+"    set mousehide
 "endif
 
 
@@ -134,10 +131,8 @@ set smarttab
 " CD {{{2
 command! -nargs=? -complete=dir -bang CD  call s:change_current_dir('<args>', '<bang>')
 
-
 " CTagsR {{{2
 command! -nargs=? CtagsR !ctags -R --C++-kinds=+p --fields=+iaS --extra=+q . <args>
-
 
 " Enc {{{2
 command! -bang -bar -complete=file -nargs=? Utf8 edit<bang> ++enc=utf-8 <args>
@@ -145,30 +140,28 @@ command! -bang -bar -complete=file -nargs=? EucJp edit<bang> ++enc=euc-jp <args>
 command! -bang -bar -complete=file -nargs=? Cp932 edit<bang> ++enc=cp932 <args>
 command! -bang -bar -complete=file -nargs=? Iso2022jp edit<bang> ++enc=iso-2022-jp <args>
 
-
 function! s:change_current_dir(directory, bang) " {{{2
-	if a:directory == ''
-		lcd %:p:h
-	else
-		execute 'lcd' . a:directory
-	endif
-	if a:bang == ''
-		pwd
-	endif
+    if a:directory == ''
+        lcd %:p:h
+    else
+        execute 'lcd' . a:directory
+    endif
+    if a:bang == ''
+        pwd
+    endif
 endfunction
 
 function! s:set_package_runtimepath(name, ...) " {{{2
-	let name = a:name
-	let path = a:0 > 0 ? a:1 : '~/.vim/package'
-	execute 'set runtimepath^=' . path . '/' . name
-	execute 'set runtimepath+=' . path . '/' . name . '/after'
+    let name = a:name
+    let path = a:0 > 0 ? a:1 : '~/.vim/package'
+    execute 'set runtimepath^=' . path . '/' . name
+    execute 'set runtimepath+=' . path . '/' . name . '/after'
 endfunction
 
 function! s:toggle_option(option_name) " {{{2
-  execute 'setlocal' a:option_name.'!'
-  execute 'setlocal' a:option_name.'?'
+    execute 'setlocal' a:option_name.'!'
+    execute 'setlocal' a:option_name.'?'
 endfunction
-
 
 " Mappings {{{1
 " leader
@@ -191,12 +184,21 @@ noremap <C-@> <Esc>
 noremap! <C-@> <Esc>
 
 " emacs like
-"noremap <C-a> <Home>
-"noremap! <C-a> <Home>
-"noremap <C-e> <End>
-"noremap! <C-e> <End>
-nnoremap <C-k> D
+noremap <C-a> <Home>
+noremap! <C-a> <Home>
+noremap <C-e> <End>
+noremap! <C-e> <End>
+noremap! <C-f> <Right>
+noremap! <C-b> <Left>
+noremap! <C-p> <Up>
+noremap! <C-n> <Down>
+noremap <C-k> D
 inoremap <C-k> <C-o>D
+cnoremap <C-k> <C-\>e getcmdpos() == 1 ? '' : getcmdline()[:getcmdpos()-2]<CR> 
+
+" adding and subtracting
+nnoremap + <C-a>
+nnoremap - <C-x>
 
 " add new line
 "nnoremap <Space>O :<C-u>call append(expand('.'), '')<Cr>j
@@ -207,9 +209,6 @@ nnoremap <Space>ow :<C-u>call <SID>toggle_option('wrap')<CR>
 nnoremap <Space>on :<C-u>call <SID>toggle_option('number')<CR>
 nnoremap <Space>ol :<C-u>call <SID>toggle_option('list')<CR>
 nnoremap <Space>op :<C-u>call <SID>toggle_option('paste')<CR>
-
-" mark
-nnoremap <Space>m marks
 
 " fold
 "nnoremap <expr> h col('.') == 1 && foldlevel(line('.')) > 0 ? 'zc' : 'h'
@@ -233,12 +232,12 @@ nnoremap <Space>zC zM
 "nnoremap <C-w>J <C-w>J:call <SID>window_min_resize()<CR>
 "nnoremap <C-w>K <C-w>K:call <SID>window_min_resize()<CR>
 "function! s:window_min_resize()
-"	if winwidth(0) < 84
-"		vertical resize 84
-"	endif
-"	if winheight(0) < 30
-"		resize 30
-"	endif
+"    if winwidth(0) < 84
+"        vertical resize 84
+"    endif
+"    if winheight(0) < 30
+"        resize 30
+"    endif
 "endfunction
 
 " tab
@@ -253,8 +252,6 @@ nnoremap <C-t>k gT
 
 " change current directury
 nnoremap <silent> <Space>cd :<C-u>CD<CR>
-
-
 
 " Fix 'fileencoding' to use 'encoding'
 " if the buffer only contains 7-bit characters.
@@ -273,10 +270,10 @@ autocmd MyAutoCmd ColorScheme *
 
 " omni-completion
 if exists("+omnifunc")
-	autocmd MyAutoCmd Filetype *
-	\   if &omnifunc == ""
-	\ |     setlocal omnifunc=syntaxcomplete#Complete
-	\ | endif
+    autocmd MyAutoCmd Filetype *
+    \   if &omnifunc == ""
+    \ |     setlocal omnifunc=syntaxcomplete#Complete
+    \ | endif
 endif
 
 " auto ime off (gvim only)
@@ -287,18 +284,14 @@ autocmd MyAutoCmd InsertLeave * set iminsert=0 imsearch=0
 " webapi.vim {{{2
 call s:set_package_runtimepath("webapi")
 
-
 " l9.vim {{{2
 call s:set_package_runtimepath("l9")
-
 
 " templatefile.vim {{{2
 let g:load_templates="yes"
 
-
 " IndentAnything.vim {{{2
 call s:set_package_runtimepath("IndentAnything")
-
 
 " neocomplcache.vim {{{2
 call s:set_package_runtimepath("neocomplcache")
@@ -312,14 +305,15 @@ let g:neocomplcache_enable_auto_select = 0
 let g:neocomplcache_enable_camel_case_completion = 0
 let g:neocomplcache_enable_underbar_completion = 0
 let g:neocomplcache_enable_display_parameter = 1
-
+imap <silent> <C-e> <Plug>(neocomplcache_snippets_expand)
+smap <silent> <C-e> <Plug>(neocomplcache_snippets_expand)
 
 " fuf.vim {{{2
 call s:set_package_runtimepath("fuzzyfinder")
 let g:fuf_splitPathMatching = ' '
 let g:fuf_patternSeparator = ' '
 let g:fuf_modesDisable = ['mrucmd']
-let g:fuf_file_exclude = '\v\~$|\.(o|exe|bak|swp|gif|jpg|png)$|(^|[/\\])\.(hg|git|bzr)($|[/\\])'
+let g:fuf_file_exclude = '\v\~$|\.(o|exe|bak|swp|gif|jpg|png)$|(^|[/\\])\.(hg|git|bzr|svn)($|[/\\])'
 let g:fuf_mrufile_exclude = '\v\~$|\.bak$|\.swp|\.howm$|\.(gif|jpg|png)$'
 let g:fuf_mrufile_maxItem = 10000
 let g:fuf_enumeratingLimit = 20
@@ -331,47 +325,39 @@ nnoremap <silent> <Space>fq :FufQuickfix<CR>
 nnoremap <silent> <Space>fl :FufLine<CR>
 nnoremap <silent> <Leader>ff :FufFile **/<CR>
 
-
 " Align.vim {{{2
 call s:set_package_runtimepath("align")
 let g:Align_xstrlen = 3
-
 
 " yankring.vim {{{2
 call s:set_package_runtimepath("yankring")
 let g:yankring_history_dir = '$HOME'
 let g:yankring_history_file = '.yankring_history'
 
-
 " gist.vim {{{2
 call s:set_package_runtimepath("gist")
-
 
 " ideone.vim {{{2
 call s:set_package_runtimepath("ideone")
 
-
 " quickrun.vim {{{2
 call s:set_package_runtimepath("quickrun")
-
 
 " surround.vim {{{2
 call s:set_package_runtimepath("surround")
 
-
 " vimirc.vim {{{2
 call s:set_package_runtimepath("vimirc")
-
 
 " fakeclip.vim {{{2
 call s:set_package_runtimepath("fakeclip")
 
 " End {{{1
 if filereadable(expand('~/.vimrc.local'))
-	source ~/.vimrc.local
+    source ~/.vimrc.local
 endif
 
 set secure " must be written at the last. see :help 'secure'.
 
-" vim: expandtab softtabstop=2 shiftwidth=2
+" vim: expandtab softtabstop=4 shiftwidth=4
 " vim: foldmethod=marker
