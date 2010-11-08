@@ -212,9 +212,9 @@ let g:textarea_ime_mode = "inactive"
 
 
 " ldrize_cooperation.js {{{2
-noremap <Leader>q :toggleldrc<CR>
+noremap <Leader>, :toggleldrc<CR>
 let g:ldrc_enable = "true"
-let g:ldrc_captureMappings = "['j','k','p','o','?']" 
+let g:ldrc_captureMappings = "['j','k','p','o']" 
 let g:ldrc_intelligence_bind = "true"
 let g:ldrc_hints = "true"
 let g:ldrc_skip = "0.1"
