@@ -16,9 +16,14 @@ setopt correct
 setopt complete_in_word
 setopt extended_glob
 setopt list_packed
+setopt list_types
 setopt noautoremoveslash
 setopt nolistbeep
 setopt nocheckjobs
+setopt no_beep
+setopt always_last_prompt
+setopt cdable_vars
+setopt sh_word_split
 
 autoload zmv
 alias zmv='noglob zmv'
@@ -28,16 +33,14 @@ alias zmv='noglob zmv'
 autoload -U colors; colors
 case ${UID} in
 0)
-	PROMPT="%{${fg[cyan]}%}$(echo ${HOST%%.*} | tr '[a-z]' '[A-Z]') %{${fg[red]}%}%/#%{${reset_color}%}%b "
-	PROMPT2="%{${fg[red]}%}%_#%{${reset_color}%}%b "
+	PROMPT="%{${fg[cyan]}%}%n@%m%{${reset_color}%} %{${fg[red]}%}%/%%%{${reset_color}%}%b "
+	PROMPT2="%{${fg[red]}%}%_%%%{${reset_color}%}%b "
 	SPROMPT="%{${fg[red]}%}%r is correct? [n,y,a,e]:%{${reset_color}%}%b "
 	;;
 *)
-	PROMPT="%{${fg_bold[red]}%}%/%%%{${reset_color}%} "
+	PROMPT="%{${fg[cyan]}%}%n@%m%{${reset_color}%} %{${fg_bold[red]}%}%/%%%{${reset_color}%} "
 	PROMPT2="%{${fg_bold[red]}%}%_%%%{${reset_color}%} "
 	SPROMPT="%{${fg_bold[red]}%}%r is correct? [n,y,a,e]:%{${reset_color}%} "
-	[ -n "${REMOTEHOST}${SSH_CONNECTION}" ] && 
-		PROMPT="%{${fg[cyan]}%}$(echo ${HOST%%.*} | tr '[a-z]' '[A-Z]') ${PROMPT}"
 	;;
 esac
 
@@ -52,6 +55,11 @@ kterm*|xterm*)
 	}
 	;;
 esac
+
+
+# Completion {{{1
+autoload -U compinit; compinit
+zstyle ':completion:*:default' menu select=1
 
 
 # Keybind {{{1
@@ -82,12 +90,6 @@ setopt hist_reduce_blanks
 setopt hist_save_no_dups
 setopt hist_no_store
 setopt hist_expand
-
-
-# Completion {{{1
-fpath=(~/.zsh/functions/Completion ${fpath})
-autoload -U compinit; compinit
-zstyle ':completion:*:default' menu select=1
 
 
 # Alias {{{1
