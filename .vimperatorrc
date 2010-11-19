@@ -433,14 +433,14 @@ nnoremap <BS> gu
 nnoremap <C-BS> gU
 
 " scroll
-nnoremap j 6j
-nnoremap k 6k
+nnoremap j 3j
+nnoremap k 3k
 nnoremap J <C-d>
 nnoremap K <C-u>
-nnoremap <A-j> 6j
-nnoremap <A-k> 6k
-nnoremap <A-h> 6h
-nnoremap <A-l> 6l
+nnoremap <A-j> 3j
+nnoremap <A-k> 3k
+nnoremap <A-h> 3h
+nnoremap <A-l> 3l
 
 " tab
 nnoremap l gt
