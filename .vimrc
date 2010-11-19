@@ -352,6 +352,10 @@ call s:set_package_runtimepath("vimirc")
 " fakeclip.vim {{{2
 call s:set_package_runtimepath("fakeclip")
 
+" SQLUtilities.vim {{{2
+call s:set_package_runtimepath("SQLUtilities")
+
+
 " End {{{1
 if filereadable(expand('~/.vimrc.local'))
     source ~/.vimrc.local
