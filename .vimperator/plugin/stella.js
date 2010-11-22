@@ -39,12 +39,12 @@ let PLUGIN_INFO =
   <name lang="ja">すてら</name>
   <description>For Niconico/YouTube/Vimeo, Add control commands and information display(on status line).</description>
   <description lang="ja">ニコニコ動画/YouTube/Vimeo 用。操作コマンドと情報表示(ステータスライン上に)追加します。</description>
-  <version>0.32.1</version>
+  <version>0.32.3</version>
   <author mail="anekos@snca.net" homepage="http://d.hatena.ne.jp/nokturnalmortum/">anekos</author>
   <license>new BSD License (Please read the source code comments of this plugin)</license>
   <license lang="ja">修正BSDライセンス (ソースコードのコメントを参照してください)</license>
   <minVersion>2.0</minVersion>
-  <maxVersion>2.4</maxVersion>
+  <maxVersion>3.0</maxVersion>
   <updateURL>http://svn.coderepos.org/share/lang/javascript/vimperator-plugins/trunk/stella.js</updateURL>
   <detail><![CDATA[
     == Commands ==
@@ -1070,6 +1070,7 @@ Thanks:
 
   };
 
+  // }}}
 
   /*********************************************************************************
   * NicoPlayer                                                                   {{{
@@ -1170,7 +1171,7 @@ Thanks:
       ];
     },
 
-    get player () U.getElementByIdEx('flvplayer'),
+    get player () content.document.getElementById('flvplayer').wrappedJSObject.__proto__,
 
     get playerContainer () U.getElementByIdEx('flvplayer_container'),
 
@@ -1664,12 +1665,18 @@ Thanks:
         vimeo: new VimeoPlayer(this.stella)
       };
 
+      this.noGUI = true;
+      this.createGUI();
+      this.__onResize = window.addEventListener('resize', U.bindr(this, this.onResize), false);
+      this.progressListener = new WebProgressListener({onLocationChange: U.bindr(this, this.onLocationChange)});
+    },
+
+    createGUI: function () {
+      if (this.noGUI)
+        return;
       this.createStatusPanel();
       this.onLocationChange();
       this.hidden = true;
-
-      this.__onResize = window.addEventListener('resize', U.bindr(this, this.onResize), false);
-      this.progressListener = new WebProgressListener({onLocationChange: U.bindr(this, this.onLocationChange)});
     },
 
     // もちろん、勝手に呼ばれたりはしない。
@@ -1917,6 +1924,8 @@ Thanks:
     },
 
     disable: function () {
+      if (this.noGUI)
+        return;
       this.hidden = true;
       if (this.__updateTimer) {
         clearInterval(this.__updateTimer);
@@ -1928,6 +1937,8 @@ Thanks:
     },
 
     enable: function () {
+      if (this.noGUI)
+        return;
       this.hidden = false;
       this.icon.setAttribute('src', this.player.icon);
       for (let name in this.toggles) {
