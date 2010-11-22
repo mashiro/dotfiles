@@ -32,7 +32,7 @@ set hintchars=HJKLASDFGYUIOPQWERTNMZXCVB
 set visualbell
 highlight Bell display: none; 
 
-colorscheme indigo2
+colorscheme indigo
 let mapleader = ","
 
 " about:config
@@ -41,12 +41,14 @@ set! ui.key.generalAccessKey=0
 set! network.http.pipelining=true
 set! network.http.pipelining.ssl=true
 set! network.http.proxy.pipelining=true
+set! network.dns.disableIPV6=true
 set! browser.tabs.closeButtons=2
 set! browser.tabs.closeWindowWithLastTab=false
 set! browser.tabs.loadDivertedInBackground=true
 set! browser.urlbar.filter.javascript=false
 set! browser.urlbar.maxRichResults=20
 set! browser.sessionstore.max_tabs_undo=20
+set! browser.startup.homepage=http://www.google.com
 set! dom.popup_maximum=200
 set! mousewheel.withnokey.numlines=6
 set! mousewheel.withnokey.sysnumlines=false
