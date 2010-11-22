@@ -1,9 +1,0 @@
-@namespace url(http://www.w3.org/1999/xhtml);
-#liberator-completions-content,
-#liberator-multiline-output-content,
-#liberator-multiline-input {
-	background: #1c1c1c url("./background.png") !important;
-	background-position: right bottom !important;
-	background-attachment: fixed !important;
-	background-repeat: no-repeat !important;
-}

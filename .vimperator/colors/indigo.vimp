@@ -1,50 +1,52 @@
 " ==VimperatorColorSchema==
-" name: indigo
+" name: indigo2
 " ==/VimperatorColorSchema==
 
-hi Boolean              color: Orchid; text-shadow: 1px 1px 2px #1c1c1c, 2px 2px 3px #1c1c1c;
-hi Function             color: SkyBlue; text-shadow: 1px 1px 2px #1c1c1c, 2px 2px 3px #1c1c1c;
-hi Null                 color: CornflowerBlue; text-shadow: 1px 1px 2px #1c1c1c, 2px 2px 3px #1c1c1c;
-hi Number               color: Orchid; text-shadow: 1px 1px 2px #1c1c1c, 2px 2px 3px #1c1c1c;
-hi Object               color: Khaki; text-shadow: 1px 1px 2px #1c1c1c, 2px 2px 3px #1c1c1c;
-hi String               color: Orchid; text-shadow: 1px 1px 2px #1c1c1c, 2px 2px 3px #1c1c1c;
+hi Boolean              color: Orchid;
+hi Function             color: SkyBlue;
+hi Null                 color: CornflowerBlue;
+hi Number               color: Orchid;
+hi Object               color: Khaki;
+hi String               color: Orchid;
 
-hi Normal               color: #d0d0d0; background: transparent; font-size: 12px; text-shadow: 1px 1px 2px #1c1c1c, 2px 2px 3px #1c1c1c;
-hi ErrorMsg             color: #ffffff; background: rgba(255,0,0,0.5); font-size: 12px; text-shadow: 1px 1px 2px #1c1c1c, 2px 2px 3px #1c1c1c;
-hi InfoMsg              color: #d0d0d0; background: transparent; font-size: 12px; text-shadow: 1px 1px 2px #1c1c1c, 2px 2px 3px #1c1c1c;
-hi ModeMsg              color: #d0d0d0; background: transparent; font-size: 12px; text-shadow: 1px 1px 2px #1c1c1c, 2px 2px 3px #1c1c1c;
-hi MoreMsg              color: #d0ffd0; background: transparent; font-size: 12px; text-shadow: 1px 1px 2px #1c1c1c, 2px 2px 3px #1c1c1c;
-hi WarningMsg           color: #ff0000; background: transparent; font-size: 12px; text-shadow: 1px 1px 2px #1c1c1c, 2px 2px 3px #1c1c1c;
-hi NonText              color: #a0a0d0; background: transparent; font-size: 12px; text-shadow: 1px 1px 2px #1c1c1c, 2px 2px 3px #1c1c1c;
+hi Normal               color: #d0d0d0; background: #1c1c1c; font-size: 12px;
+hi ErrorMsg             color: #ffffff; background: #440000; font-size: 12px;
+hi InfoMsg              color: #d0d0d0; background: #1c1c1c; font-size: 12px;
+hi ModeMsg              color: #d0d0d0; background: #1c1c1c; font-size: 12px;
+hi MoreMsg              color: #d0ffd0; background: #1c1c1c; font-size: 12px;
+hi WarningMsg           color: #ff0000; background: #1c1c1c; font-size: 12px;
+
+hi NonText              color: #a0a0d0; min-height: 16px; padding-left: 2px;
+hi Filter               color: #7090d0; font-weight: bold;
 
 hi CmdLine              font-family: monospace; padding: 1px; background: #0c0c0c; font-size: 14px;
 
 hi CompGroup            background: rgba(28,28,28,0.25);
 hi CompItem[selected]   color: #dddddd; background: rgba(88,88,96,0.5);
-hi CompResult           color: #dddddd; width: 45%; overflow: hidden; text-shadow: 1px 1px 2px #1c1c1c, 2px 2px 3px #1c1c1c;
-hi CompDesc             color: #a0a0d0; width: 50%; text-shadow: 1px 1px 2px #1c1c1c, 2px 2px 3px #1c1c1c;
-hi CompTitle            background: transparent; font-weight: bold; font-size: 12px; opacity: 0.7;
+hi CompResult           color: #dddddd; width: 45%; overflow: hidden;
+hi CompDesc             color: #a0a0d0; width: 50%;
+hi CompTitle            background: #1c1c1c; font-weight: bold; font-size: 12px; opacity: 0.7;
 hi CompTitle>*          color: #a0a0d0; padding: 0 .5ex;
 
 hi GradientLeft         background-color: #a0a0d0;
-hi GradientRight        background-color: rgba(28,28,28,0.0);
+hi GradientRight        background-color: #1c1c1c;
 
-hi Indicator            color: DodgerBlue; text-shadow: 1px 1px 2px #1c1c1c, 2px 2px 3px #1c1c1c;
+hi Indicator            color: DodgerBlue;
 
-hi Tag                  color: #a0a0d0; background: transparent; font-size: 12px; text-shadow: 1px 1px 2px #1c1c1c, 2px 2px 3px #1c1c1c;
+hi Tag                  color: #a0a0d0; background: #1c1c1c; font-size: 12px;
 
-hi LineNr               color: #ffd0d0; background: transparent; font-size: 12px; text-shadow: 1px 1px 2px #1c1c1c, 2px 2px 3px #1c1c1c;
-hi Question             color: #a0a0d0; background: transparent; font-size: 12px; text-shadow: 1px 1px 2px #1c1c1c, 2px 2px 3px #1c1c1c;
+hi LineNr               color: #ffd0d0; background: #1c1c1c; font-size: 12px;
+hi Question             color: #a0a0d0; background: #1c1c1c; font-size: 12px;
 
 hi StatusLine           color: #7090d0; background: #0c0c0c; font-weight: normal; font-size: 12px;
 hi StatusLineBroken     color: #000000; background: #ffa0a0; font-weight: normal; font-size: 12px;
 hi StatusLineExtended   color: #000000; background: #a0ffa0; font-weight: normal; font-size: 12px;
 hi StatusLineSecure     color: #000000; background: #a0a0ff; font-weight: normal; font-size: 12px;
 
-hi TabNumber            font-weight: bold; color: white; text-align: center; text-shadow: #002244 -2px 0 2px, #002244 0 2px 2px, #002244 2px 0 2px, #002244 0 -2px 2px;
-hi TabIconNumber        font-weight: bold; color: white; text-align: center; text-shadow: #002244 -2px 0 2px, #002244 0 2px 2px, #002244 2px 0 2px, #002244 0 -2px 2px;
+hi TabNumber            font-weight: bold; color: white; text-align: center;
+hi TabIconNumber        font-weight: bold; color: white; text-align: center;
 
-hi Title                color: #d0d0ff; text-shadow: 1px 1px 2px #1c1c1c, 2px 2px 3px #1c1c1c;
+hi Title                color: #d0d0ff;
 hi URL                  color: LightGreen;
 
 hi FrameIndicator       background-color: #5566bb; opacity: 0.5; z-index: 999; position: fixed; top: 0; bottom: 0; left: 0; right: 0; 
@@ -52,19 +54,5 @@ hi FrameIndicator       background-color: #5566bb; opacity: 0.5; z-index: 999; p
 hi Hint                 font-family: monospace; font-size: 14px; font-weight: normal; color: #dddddd; background-color: #1c1c1c; border-color: #1c1c1c; border-width: 0px; border-style: solid; padding: 0px 5px 0px 5px; 
 hi HintElem             background-color: #d0d0f0; color: #1c1c1c;
 hi HintActive           background-color: #5566bb; color: #dddded;
-
-" style だと相対パスが使えないぽい
-"style -name indigo chrome://* <<EOM
-"#liberator-completions-content,
-"#liberator-multiline-output-content,
-"#liberator-multiline-input {
-"	background: #1c1c1c url("./indigo/background.png") !important;
-"	background-position: right bottom !important;
-"	background-attachment: fixed !important;
-"	background-repeat: no-repeat !important;
-"}
-"EOM
-
-source ~/.vimperator/colors/indigo/completions.css
 
 " vim: ft=vimperator
