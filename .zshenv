@@ -2,35 +2,42 @@
 # Path {{{2
 export PATH MANPATH INFOPATH
 register_paths() {
-	dir="$1"
-	if [ -d "$dir" ]; then
-		if [ -d "$dir/bin" ]; then PATH="$dir/bin:$PATH"; fi
-		if [ -d "$dir/sbin" ]; then PATH="$dir/sbin:$PATH"; fi
-		if [ -d "$dir/man" ]; then MANPATH="$dir/man:$MANPATH"; fi
-		if [ -d "$dir/share/man" ]; then MANPATH="$dir/share/man:$MANPATH"; fi
-		if [ -d "$dir/info" ]; then INFOPATH="$dir/info:$INFOPATH"; fi
-		for i in $dir/*; do
-			if [ -d "$i/bin" ]; then PATH="$i/bin:$PATH"; fi
-			if [ -d "$i/sbin" ]; then PATH="$i/sbin:$PATH"; fi
-			if [ -d "$i/man" ]; then MANPATH="$i/man:$MANPATH"; fi
-			if [ -d "$i/share/man" ]; then MANPATH="$i/share/man:$MANPATH"; fi
-			if [ -d "$i/info" ]; then INFOPATH="$i/info:$INFOPATH"; fi
-		done
-	fi
+    dir="$1"
+    if [ -d "$dir" ]; then
+        if [ -d "$dir/bin" ]; then PATH="$dir/bin:$PATH"; fi
+        if [ -d "$dir/sbin" ]; then PATH="$dir/sbin:$PATH"; fi
+        if [ -d "$dir/man" ]; then MANPATH="$dir/man:$MANPATH"; fi
+        if [ -d "$dir/share/man" ]; then MANPATH="$dir/share/man:$MANPATH"; fi
+        if [ -d "$dir/info" ]; then INFOPATH="$dir/info:$INFOPATH"; fi
+        for i in $dir/*; do
+            if [ -d "$i/bin" ]; then PATH="$i/bin:$PATH"; fi
+            if [ -d "$i/sbin" ]; then PATH="$i/sbin:$PATH"; fi
+            if [ -d "$i/man" ]; then MANPATH="$i/man:$MANPATH"; fi
+            if [ -d "$i/share/man" ]; then MANPATH="$i/share/man:$MANPATH"; fi
+            if [ -d "$i/info" ]; then INFOPATH="$i/info:$INFOPATH"; fi
+        done
+    fi
 }
 
+case "${OSTYPE}" in
+darwin*)
+    export PATH="/usr/bin:/bin:/usr/sbin:/sbin"
+    export REGISTER_PATHS_COMPLETED=""
+	;;
+esac
+
 if ! [ "$REGISTER_PATHS_COMPLETED" ]; then
-	# for MacPorts
-	register_paths "/opt/local"
+    # for MacPorts
+    register_paths "/opt/local"
 
-	# for manually build applications
-	register_paths "/usr/local"
+    # for manually build applications
+    register_paths "/usr/local"
 
-	# for my own tools
-	register_paths "$HOME/local"
+    # for my own tools
+    register_paths "$HOME/local"
 
-	# completed
-	export REGISTER_PATHS_COMPLETED=1
+    # completed
+    export REGISTER_PATHS_COMPLETED=1
 fi
 
 
@@ -46,8 +53,10 @@ export GREP_OPTIONS='--color=auto'
 
 # Python {{{2
 export WORKON_HOME=$HOME/.virtualenvs
-export VIRTUALENVERAPPER_SH=$(which virtualenvwrapper.sh)
-[ -f $VIRTUALENVERAPPER_SH ] && source $VIRTUALENVERAPPER_SH
+if [ -d $WORKON_HOME ]; then
+    export VIRTUALENVERAPPER_SH=$(which virtualenvwrapper.sh)
+    [ -f $VIRTUALENVERAPPER_SH ] && source $VIRTUALENVERAPPER_SH
+fi
 
 
 # End {{{1
