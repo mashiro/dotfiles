@@ -119,6 +119,8 @@ alias -g G="| grep"
 alias -g XG="| xargs grep"
 alias -g V="| vim -R -"
 
+alias view="vim -R -N --noplugin"
+
 alias s="screen"
 alias sr="screen -D -R"
 alias srr="screen -D -RR"
