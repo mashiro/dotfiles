@@ -52,6 +52,7 @@ export GREP_OPTIONS='--color=auto'
 
 
 # Python {{{2
+export PYTHONSTARTUP=$HOME/.pythonstartup
 export WORKON_HOME=$HOME/.virtualenvs
 if [ -d $WORKON_HOME ]; then
     export VIRTUALENVERAPPER_SH=$(which virtualenvwrapper.sh)
