@@ -1,24 +1,35 @@
 #!/usr/bin/env python
 # -*- coding: utf-8 -*-
-import readline
-import rlcompleter
-import atexit
-import os
 
-# tab completion
-readline.parse_and_bind('tab: complete')
+def startup():
+    import os
 
-# history file
-histfile = os.path.join(os.environ['HOME'], '.pythonhistory')
-try:
-    readline.read_history_file(histfile)
-except IOError:
-    pass
+    HOME = os.environ['HOME']
+    HISTORY_FILE = os.path.join(HOME, '.pythonhistory')
+    
+    def completion():
+        try:
+            import readline
+        except ImportError:
+            pass
+        else:
+            import rlcompleter
+            import atexit
+    
+            # tab completion
+            readline.parse_and_bind('tab: complete')
+            
+            # history file
+            try:
+                readline.read_history_file(HISTORY_FILE)
+            except IOError:
+                pass
+            atexit.register(readline.write_history_file, HISTORY_FILE)
+    
+    completion()
 
-atexit.register(readline.write_history_file, histfile)
 
-# cleanup
-for v in globals().values():
-    del v
+startup()
+del startup
 
 # vim: ft=python

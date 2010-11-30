@@ -15,4 +15,5 @@ mksymlink .vimperatorrc
 mksymlink .vimrc
 mksymlink .zshenv
 mksymlink .zshrc
+mksymlink .pythonstartup
 
