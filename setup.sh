@@ -17,3 +17,5 @@ mksymlink .zshenv
 mksymlink .zshrc
 mksymlink .pythonstartup
 
+git submodule update --init
+
