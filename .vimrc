@@ -281,20 +281,33 @@ autocmd MyAutoCmd InsertLeave * set iminsert=0 imsearch=0
 
 
 " Plugins {{{1
-" webapi.vim {{{2
-call s:set_package_runtimepath("webapi")
-
-" l9.vim {{{2
-call s:set_package_runtimepath("l9")
+" pathogen.vim {{{2
+call pathogen#runtime_append_all_bundles()
+call pathogen#helptags()
 
 " templatefile.vim {{{2
-let g:load_templates="yes"
+autocmd User plugin-template-loaded call s:template_keywords()
+function! s:template_keywords()
+    " 置換キーワード
+	let date      = escape(strftime('%Y-%m-%d'), '/\\')
+	let file      = escape(expand('%:t:r'), '/\\')
+	let file_ext  = escape(expand('%'), '/\\')
+	let inc_guard = escape(toupper(substitute(file, '\\.', '_', 'g')), '/\\') . '_INCLUDED'
+	silent! execute '%s/<+DATE+>/'          . date      . '/g'
+	silent! execute '%s/<+FILE+>/'          . file      . '/g'
+	silent! execute '%s/<+FILE_EXT+>/'      . file_ext  . '/g'
+	silent! execute '%s/<+INCLUDE_GUARD+>/' . inc_guard . '/g'
 
-" IndentAnything.vim {{{2
-call s:set_package_runtimepath("IndentAnything")
+    " <%= %> の中身をvimで評価して展開
+    silent execute '%s/<%=\(.\{-}\)%>/\=eval(submatch(1))/ge'
+
+    " <+CURSOR+> にカーソルを移動
+    if search('<+CURSOR+>')
+        silent execute 'normal! "_da>'
+    endif
+endfunction
 
 " neocomplcache.vim {{{2
-call s:set_package_runtimepath("neocomplcache")
 let g:neocomplcache_enable_at_startup = 1
 let g:neocomplcache_enable_ignore_case = 1
 let g:neocomplcache_enable_esmart_case = 1
@@ -308,8 +321,7 @@ let g:neocomplcache_enable_display_parameter = 1
 imap <silent> <C-e> <Plug>(neocomplcache_snippets_expand)
 smap <silent> <C-e> <Plug>(neocomplcache_snippets_expand)
 
-" fuf.vim {{{2
-call s:set_package_runtimepath("fuzzyfinder")
+" FuzzyFinder.vim {{{2
 let g:fuf_splitPathMatching = ' '
 let g:fuf_patternSeparator = ' '
 let g:fuf_modesDisable = ['mrucmd']
@@ -325,36 +337,8 @@ nnoremap <silent> <Space>fq :FufQuickfix<CR>
 nnoremap <silent> <Space>fl :FufLine<CR>
 nnoremap <silent> <Leader>ff :FufFile **/<CR>
 
-" Align.vim {{{2
-call s:set_package_runtimepath("align")
-let g:Align_xstrlen = 3
-
 " yankring.vim {{{2
-call s:set_package_runtimepath("yankring")
-let g:yankring_history_dir = '$HOME'
 let g:yankring_history_file = '.yankring_history'
-
-" gist.vim {{{2
-call s:set_package_runtimepath("gist")
-
-" ideone.vim {{{2
-call s:set_package_runtimepath("ideone")
-
-" quickrun.vim {{{2
-call s:set_package_runtimepath("quickrun")
-
-" surround.vim {{{2
-call s:set_package_runtimepath("surround")
-
-" vimirc.vim {{{2
-call s:set_package_runtimepath("vimirc")
-
-" fakeclip.vim {{{2
-call s:set_package_runtimepath("fakeclip")
-
-" SQLUtilities.vim {{{2
-call s:set_package_runtimepath("SQLUtilities")
-
 
 " End {{{1
 if filereadable(expand('~/.vimrc.local'))

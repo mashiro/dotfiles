@@ -1,0 +1,36 @@
+[submodule ".vim/bundle/neocomplcache"]
+	path = .vim/bundle/neocomplcache
+	url = git://github.com/Shougo/neocomplcache.git
+[submodule ".vim/bundle/fakeclip"]
+	path = .vim/bundle/fakeclip
+	url = git://github.com/vim-scripts/fakeclip.git
+[submodule ".vim/bundle/L9"]
+	path = .vim/bundle/L9
+	url = git://github.com/vim-scripts/L9.git
+[submodule ".vim/bundle/FuzzyFinder"]
+	path = .vim/bundle/FuzzyFinder
+	url = git://github.com/vim-scripts/FuzzyFinder.git
+[submodule ".vim/bundle/gist"]
+	path = .vim/bundle/gist
+	url = git://github.com/mattn/gist-vim.git
+[submodule ".vim/bundle/quickrun"]
+	path = .vim/bundle/quickrun
+	url = git://github.com/thinca/vim-quickrun.git
+[submodule ".vim/bundle/webapi"]
+	path = .vim/bundle/webapi
+	url = git://github.com/mattn/webapi-vim.git
+[submodule ".vim/bundle/surround"]
+	path = .vim/bundle/surround
+	url = git://github.com/vim-scripts/surround.vim.git
+[submodule ".vim/bundle/IndentAnything"]
+	path = .vim/bundle/IndentAnything
+	url = git://github.com/vim-scripts/IndentAnything.git
+[submodule ".vim/bundle/ideone"]
+	path = .vim/bundle/ideone
+	url = git://github.com/mattn/ideone-vim.git
+[submodule ".vim/bundle/yankring"]
+	path = .vim/bundle/yankring
+	url = git://github.com/chrismetcalf/vim-yankring.git
+[submodule ".vim/bundle/template"]
+	path = .vim/bundle/template
+	url = git://github.com/thinca/vim-template.git
