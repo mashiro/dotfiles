@@ -60,7 +60,7 @@ kterm*|xterm*|screen*)
 	}
     preexec() {
         if [ -n "${SCREEN}" ]; then
-            echo -ne "\ek${1%%.*}\e\\"
+            echo -ne "\ek${1%% *}\e\\"
         fi
     }
     ;;
