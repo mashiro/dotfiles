@@ -3,28 +3,30 @@
 # Option {{{1
 escape ^Tt
 
-defbce on
-defscrollback 10000
 shell -$SHELL
+shelltitle "% |shell"
+
+defbce on
+defscrollback 1000
+nethack off
+startup_message off
+vbell off
+bell_msg "Bell in window %^G"
+autodetach on
+
+hardstatus alwayslastline "%= %l %{= dw}%Y/%m/%d %c:%s"
+caption always "%{= dw}%-w%{=b dr}%n %t%{-}%+w"
+#caption always "%{= dw}%-w%{=b dr}%n %t%{-}%+w %= %{= dw}%Y/%m/%d %c:%s"
+
+deflog on
+logfile "$HOME/.screen/log/screen-%Y%m%d-%n.log"
+hardcopydir "$HOME/.screen/"
 
 term xterm-256color
 termcapinfo xterm* 'Co#256:pa#32767:AB=\E[48;5;%dm:AF=\E[38;5;%dm:'
 termcapinfo kterm* 'Co#256:pa#32767:AB=\E[48;5;%dm:AF=\E[38;5;%dm:'
 termcapinfo xterm* 'is=\E[r\E[m\E[2J\E[H\E[?7h\E[?1;4;6l'
 termcapinfo kterm* 'is=\E[r\E[m\E[2J\E[H\E[?7h\E[?1;4;6l'
-
-hardcopydir "$HOME/.screen/"
-nethack off
-startup_message off
-vbell off
-bell_msg "Bell in window %^G"
-
-caption always "%{= dw}%-w%{=b dr}%n %t%{-}%+w %= %{= dw}%Y/%m/%d %c:%s"
-autodetach on
-
-logfile "$HOME/.screen/log/screen-%Y%m%d-%n.log"
-log on
-deflog on
 
 
 # Bind {{{1
