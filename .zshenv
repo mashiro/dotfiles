@@ -47,8 +47,9 @@ export EDITOR=$(which vim)
 export PAGER=$(which less)
 export SHELL=$(which zsh)
 export LESS="-i -M -R"
-export GREP_COLOR='01;33'
-export GREP_OPTIONS='--color=auto'
+export GREP_COLOR="01;33"
+export GREP_OPTIONS="--color=auto"
+export WORDCHARS="*?_-.[]~=&;!#$%^(){}<>"
 
 
 # Python {{{2

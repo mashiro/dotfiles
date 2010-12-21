@@ -17,13 +17,16 @@ setopt complete_in_word
 setopt extended_glob
 setopt list_packed
 setopt list_types
-setopt noautoremoveslash
-setopt nolistbeep
-setopt nocheckjobs
+setopt no_auto_remove_slash
+setopt no_list_beep
+setopt no_check_jobs
 setopt no_beep
 setopt always_last_prompt
 setopt cdable_vars
 setopt sh_word_split
+setopt magic_equal_subst
+setopt prompt_subst
+
 
 autoload zmv
 alias zmv='noglob zmv'
@@ -46,14 +49,13 @@ esac
 
 export LSCOLORS=ExFxCxdxBxegedabagacad
 export LS_COLORS='di=01;34:ln=01;35:so=01;32:ex=01;31:bd=46;34:cd=43;34:su=41;30:sg=46;30:tw=42;30:ow=43;30'
-zstyle ':completion:*:default' list-colors ${(s.:.)LS_COLORS}
 
 case "${TERM}" in
 kterm*|xterm*|screen*)
 	precmd() {
-		echo -ne "\033]0;${USER}@${HOST%%.*}:${PWD}\007"
+        echo -ne "\e]2;${USER}@${HOST%%.*}:${PWD}\a"
         if [ -n "${SCREEN}" ]; then
-            echo -ne "\ek$(basename $(pwd))/\e\\"
+            echo -ne "\ek${PWD:t}/\e\\"
         fi
 	}
     preexec() {
@@ -67,7 +69,9 @@ esac
 
 # Completion {{{1
 autoload -U compinit; compinit
-zstyle ':completion:*:default' menu select=1
+zstyle ':completion:*:default' menu select=2
+zstyle ':completion:*' matcher-list 'm:{a-z}={A-Z}' '+m:{A-Z}={a-z}'
+zstyle ':completion:*' list-colors ${(s.:.)LS_COLORS}
 
 
 # Keybind {{{1
@@ -105,13 +109,13 @@ setopt complete_aliases     # aliased ls needs if file/dir completions work
 
 case "${OSTYPE}" in
 darwin*)
-	alias ls="ls -G"
+	alias ls="ls -F -G"
 	;;
 freebsd*|linux*)
-	alias ls="ls --color=auto"
+	alias ls="ls -F --color=auto"
 	;;
 cygwin*)
-	alias ls="ls --color=auto --show-control-chars"
+	alias ls="ls -F --color=auto --show-control-chars"
 	;;
 esac
 
