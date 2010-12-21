@@ -31,15 +31,14 @@ alias zmv='noglob zmv'
 
 # Terminal {{{1
 autoload -U colors; colors
-local SETTITLE=$'\033k\033\134' 
 case ${UID} in
 0)
-	PROMPT=$SETTITLE"%{${fg[cyan]}%}%n@%m%{${reset_color}%} %{${fg[red]}%}%/%%%{${reset_color}%}%b "
+	PROMPT="%{${fg[cyan]}%}%n@%m%{${reset_color}%} %{${fg[red]}%}%/%%%{${reset_color}%}%b "
 	PROMPT2="%{${fg[red]}%}%_%%%{${reset_color}%}%b "
 	SPROMPT="%{${fg[red]}%}%r is correct? [n,y,a,e]:%{${reset_color}%}%b "
 	;;
 *)
-	PROMPT=$SETTITLE"%{${fg[cyan]}%}%n@%m%{${reset_color}%} %{${fg_bold[red]}%}%/%%%{${reset_color}%} "
+	PROMPT="%{${fg[cyan]}%}%n@%m%{${reset_color}%} %{${fg_bold[red]}%}%/%%%{${reset_color}%} "
 	PROMPT2="%{${fg_bold[red]}%}%_%%%{${reset_color}%} "
 	SPROMPT="%{${fg_bold[red]}%}%r is correct? [n,y,a,e]:%{${reset_color}%} "
 	;;
@@ -50,11 +49,19 @@ export LS_COLORS='di=01;34:ln=01;35:so=01;32:ex=01;31:bd=46;34:cd=43;34:su=41;30
 zstyle ':completion:*:default' list-colors ${(s.:.)LS_COLORS}
 
 case "${TERM}" in
-kterm*|xterm*)
+kterm*|xterm*|screen*)
 	precmd() {
 		echo -ne "\033]0;${USER}@${HOST%%.*}:${PWD}\007"
+        if [ -n "${SCREEN}" ]; then
+            echo -ne "\ek$(basename $(pwd))/\e\\"
+        fi
 	}
-	;;
+    preexec() {
+        if [ -n "${SCREEN}" ]; then
+            echo -ne "\ek${1%%.*}\e\\"
+        fi
+    }
+    ;;
 esac
 
 
@@ -150,8 +157,7 @@ freebsd*)
 	0)
 		updateports() 
 		{
-			if [ -f /usr/ports/.portsnap.INDEX ]
-			then
+			if [ -f /usr/ports/.portsnap.INDEX ]; then
 				portsnap fetch update
 			else
 				portsnap fetch extract update

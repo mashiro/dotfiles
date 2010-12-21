@@ -2,6 +2,7 @@
 
 # Option {{{1
 escape ^Tt
+setenv SCREEN 1
 
 shell -$SHELL
 shelltitle "% |shell"
