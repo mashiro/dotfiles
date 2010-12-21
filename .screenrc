@@ -13,6 +13,7 @@ startup_message off
 vbell off
 bell_msg "Bell in window %^G"
 autodetach on
+altscreen on
 
 hardstatus alwayslastline "%= %l %{= dw}%Y/%m/%d %c:%s"
 caption always "%{= dw}%-w%{=b dr}%n %t%{-}%+w"
@@ -23,10 +24,12 @@ logfile "$HOME/.screen/log/screen-%Y%m%d-%n.log"
 hardcopydir "$HOME/.screen/"
 
 term xterm-256color
-termcapinfo xterm* 'Co#256:pa#32767:AB=\E[48;5;%dm:AF=\E[38;5;%dm:'
-termcapinfo kterm* 'Co#256:pa#32767:AB=\E[48;5;%dm:AF=\E[38;5;%dm:'
-termcapinfo xterm* 'is=\E[r\E[m\E[2J\E[H\E[?7h\E[?1;4;6l'
-termcapinfo kterm* 'is=\E[r\E[m\E[2J\E[H\E[?7h\E[?1;4;6l'
+termcapinfo * XT
+termcapinfo xterm*|kterm*|screen* 'Z0=\E[?3h:Z1=\E[?3l'
+termcapinfo xterm*|kterm*|screen* 'hs:ts=\E]0;:fs=\007:ds=\E]0;\007'
+termcapinfo xterm*|kterm*|screen* 'Co#256:pa#32767:AB=\E[48;5;%dm:AF=\E[38;5;%dm'
+termcapinfo xterm*|kterm*|screen* 'is=\E[r\E[m\E[2J\E[H\E[?7h\E[?1;4;6l'
+
 
 
 # Bind {{{1
@@ -40,6 +43,10 @@ bind l next
 bind ^L next
 bind h prev
 bind ^H prev
+bind j next
+bind ^J next
+bind k prev
+bind ^K prev
 
 # Widnow {{{2
 bind ^W eval 'echo "window"' 'command -c window'
