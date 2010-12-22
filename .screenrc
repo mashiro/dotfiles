@@ -8,7 +8,7 @@ shell -$SHELL
 shelltitle "% |shell"
 
 defbce on
-defscrollback 1000
+defscrollback 10000
 nethack off
 startup_message off
 vbell off
