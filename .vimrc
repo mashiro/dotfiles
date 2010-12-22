@@ -106,6 +106,7 @@ set formatoptions& formatoptions+=mM
 set iminsert=0
 set imsearch=-1
 set tags& tags+=./tags;,./**/tags
+set clipboard=unnamed
 
 " tab
 set tabstop=4
@@ -115,16 +116,16 @@ set expandtab
 set smarttab
 
 " mouse support
-"set mouse=a
-"if &term =~ '^screen'
-"    autocmd MyAutoCmd VimLeave * :set mouse=
-"    set ttymouse=xterm2
-"endif
-"if has('gui_running')
-"    set mousemodel=popup
-"    set nomousefocus
-"    set mousehide
-"endif
+set mouse=a
+if &term =~ '^screen'
+    autocmd MyAutoCmd VimLeave * :set mouse=
+    set ttymouse=xterm2
+endif
+if has('gui_running')
+    set mousemodel=popup
+    set nomousefocus
+    set mousehide
+endif
 
 
 " Utilities {{{1
