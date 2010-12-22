@@ -3,11 +3,12 @@
 
 def startup():
     import os
+    import inspect
 
-    HOME = os.environ['HOME']
-    HISTORY_FILE = os.path.join(HOME, '.pythonhistory')
-    
     def completion():
+        HOME = os.environ['HOME']
+        HISTORY_FILE = os.path.join(HOME, '.pythonhistory')
+
         try:
             import readline
         except ImportError:
@@ -25,9 +26,9 @@ def startup():
             except IOError:
                 pass
             atexit.register(readline.write_history_file, HISTORY_FILE)
-    
-    completion()
 
+    for func in filter(lambda v: inspect.isfunction(v), locals().values()):
+        func()
 
 startup()
 del startup
