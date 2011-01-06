@@ -84,6 +84,7 @@ set ruler
 "set cursorline
 set foldmethod=marker
 set laststatus=2 
+set cmdheight=1
 set showcmd
 set showmode
 set statusline=%<%f\ %m%r%h%w%{'['.(&fenc!=''?&fenc:&enc).']['.&ff.']'}%=%l,%c%V%8P
