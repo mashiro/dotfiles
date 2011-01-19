@@ -25,12 +25,17 @@ TOUCH = touch
 MKDIR = mkdir -p
 
 
-all: install
+all: update
+
+update:
+	git pull origin master
+	git submodule foreach 'git checkout master; git pull origin master'
 
 install .PHONY: $(DOTFILES) $(DOTFILES_LOCAL)
 	$(MKDIR) $(DESTDIR)/.screen/log
 	$(MKDIR) $(DESTDIR)/.virtualenvs
 	git submodule update --init
+	git submodule foreach 'git checkout master'
 
 $(DOTFILES):
 	$(LN) $(SRCDIR)/$@ $(DESTDIR)/$@
