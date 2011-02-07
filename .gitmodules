@@ -43,3 +43,6 @@
 [submodule ".vim/bundle/ruby"]
 	path = .vim/bundle/ruby
 	url = git://github.com/vim-ruby/vim-ruby.git
+[submodule ".vim/bundle/unite"]
+	path = .vim/bundle/unite
+	url = git://github.com/Shougo/unite.vim.git
