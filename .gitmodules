@@ -37,9 +37,6 @@
 [submodule ".vim/bundle/pathogen"]
 	path = .vim/bundle/pathogen
 	url = git://github.com/tpope/vim-pathogen.git
-[submodule ".vim/bundle/unite"]
-	path = .vim/bundle/unite.vim
-	url = git://github.com/Shougo/unite.vim.git
 [submodule ".vim/bundle/rails"]
 	path = .vim/bundle/rails
 	url = git://github.com/vim-scripts/rails.vim.git
