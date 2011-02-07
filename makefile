@@ -29,6 +29,7 @@ all: update
 
 update:
 	git pull origin master
+	git submodule update --init
 	git submodule foreach 'git checkout master; git pull origin master'
 
 install .PHONY: $(DOTFILES) $(DOTFILES_LOCAL)
