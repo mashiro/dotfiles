@@ -339,6 +339,21 @@ nnoremap <silent> <Space>fq :FufQuickfix<CR>
 nnoremap <silent> <Space>fl :FufLine<CR>
 nnoremap <silent> <Leader>ff :FufFile **/<CR>
 
+" unite.vim {{{2
+"let g:unite_enable_start_insert = 1
+"
+"nnoremap [unite] <Nop>
+"nmap f [unite]
+"nnoremap <silent> [unite]r :<C-u>Unite register<CR>
+"nnoremap <silent> [unite]s :<C-u>Unite file_rec<CR>
+"nnoremap <silent> [unite]f :<C-u>Unite file<CR>
+"nnoremap <silent> [unite]b :<C-u>Unite buffer<CR>
+"
+"autocmd FileType unite call s:unite_my_settings()
+"function! s:unite_my_settings()
+"    nmap <buffer> <ESC> <Plug>(unite_exit)
+"endfunction
+
 " yankring.vim {{{2
 let g:yankring_history_file = '.yankring_history'
 
