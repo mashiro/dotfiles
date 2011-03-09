@@ -66,6 +66,10 @@ bind -c window j focus down
 bind -c window ^J eval 'focus down' 'command -c window'
 bind -c window k focus up
 bind -c window ^K eval 'focus up' 'command -c window'
+bind -c window h focus left
+bind -c window ^H eval 'focus left' 'command -c window'
+bind -c window l focus right
+bind -c window ^L eval 'focus right' 'command -c window'
 bind -c window t focus top
 bind -c window ^T eval 'focus top' 'command -c window'
 bind -c window b focus bottom
