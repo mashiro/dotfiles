@@ -67,7 +67,7 @@ hi URL:hover            text-decoration: underline; cursor: pointer;
 hi FrameIndicator       background-color: red; opacity: 0.5; z-index: 999; position: fixed; top: 0; bottom: 0; left: 0; right: 0;
 
 hi Bell                 border: none; background-color: #d0d0d0;
-hi Hint                 font-family: monospace; font-size: 14px; font-weight: normal; color: #dddddd; background-color: #1c1c1c; border-color: #1c1c1c; border-width: 0px; border-style: solid; padding: 0px 3px;
+hi Hint                 font-family: monospace; font-size: 14px; font-weight: normal; color: #dddddd; background-color: #1c1c1c; border: none; padding: 0px 3px;
 hi Hint::after          content: attr(number);
 hi HintElem             background-color: #d0d0f0; color: #1c1c1c;
 hi HintActive           background-color: #5566bb; color: #dddded;

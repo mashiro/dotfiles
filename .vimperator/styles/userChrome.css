@@ -6,3 +6,8 @@
 	display: none !important;
 }
 
+/* タブ一覧表示ボタンを非表示 */
+#alltabs-button {
+    display: none !important;
+}
+
