@@ -1,5 +1,5 @@
 " mashiro .vimperatorrc
-" firefox 3.6.8 + vimperator rev4339
+" firefox-4.0 + vimperator-20110312
 
 " Initialize {{{1
 "nmapc
@@ -14,13 +14,10 @@ set titlestring="Mozilla Firefox"
 set messages=100
 set verbose=1
 set defsearch=google
-set guioptions=rb
-set wildoptions=auto
+set toolbars=noaddons,nobookmarks,nomenu,nonavigation,tabs
 set complete=slS
 set history=1000
 set newtab=all
-set showtabline=2
-set laststatus=2
 set popups=tab
 set nohlsearch
 set ignorecase
@@ -36,6 +33,7 @@ colorscheme indigo
 let mapleader = ","
 
 " about:config
+set! extensions.checkCompatibility.4.0=false
 set! general.autoScroll=false
 set! ui.key.generalAccessKey=0
 set! network.http.pipelining=true
@@ -48,6 +46,7 @@ set! browser.tabs.loadDivertedInBackground=true
 set! browser.urlbar.filter.javascript=false
 set! browser.urlbar.maxRichResults=20
 set! browser.sessionstore.max_tabs_undo=20
+set! browser.sessionstore.max_concurrent_tabs=0
 set! browser.startup.homepage=http://www.google.com
 set! dom.popup_maximum=200
 set! mousewheel.withnokey.numlines=6
@@ -321,22 +320,11 @@ liberator.globalVariables.useragent_list = [{
 }];
 EOM
 
+" statusline-toolbar.js {{{2
+lazy set statuslinetoolbars=feed-button
+
 
 " Javascripts {{{1
-" ステータスバーにfeedボタンを表示 {{{2
-" http://d.hatena.ne.jp/teramako/20071205/p1
-javascript <<EOM
-(function(){
-	var feedPanel = document.createElement('statusbarpanel');
-	var feedButton = document.getElementById('feed-button');
-	feedPanel.setAttribute('id','feed-panel-clone');
-	feedPanel.appendChild(feedButton.cloneNode(true));
-	feedButton.parentNode.removeChild(feedButton);
-	document.getElementById('status-bar').insertBefore(feedPanel,document.getElementById('security-button'));
-	})();
-EOM
-
-
 " はてなブックマーク拡張 {{{2
 javascript <<EOF
 if (typeof hBookmark != 'undefined') liberator.loadScript('chrome://hatenabookmark/content/vimperator/plugin/hatenabookmark.js', {__proto__: this});
@@ -417,9 +405,29 @@ javascript <<EOM
 EOM
 
 
+" Greasemonkey 0.9.1 で window を共通にする {{{2
+js <<EOM
+autocommands.add('VimperatorEnter', '.*',
+  function() {
+    let gm = Components.classes['@greasemonkey.mozdev.org/greasemonkey-service;1'];
+    if (gm) {
+      gm = gm.getService().wrappedJSObject;
+      if (gm.injectScripts.toSource().search('sharedWindow') == -1) {
+          gm.injectScripts = liberator.eval(
+              gm.injectScripts.toSource()
+                  .replace(/(?=var firebugConsole)/,
+                          'var sharedWindow = {};' +
+                          'sharedWindow.window = sharedWindow;' +
+                          'sharedWindow.__proto__ = new XPCNativeWrapper(unsafeContentWin);')
+                  .replace(/(?=sandbox\.__proto__)/, ' sandbox.window = sharedWindow;'),
+              gm.injectScripts);
+      }
+    }
+  });
+EOM
+
+
 " AutoCmds {{{1
-"autocmd! LocationChange .* source! ~/.vimperator/location/defaultmap.vimp
-"autocmd! LocationChange www\\.(nicovideo\\.jp|youtube\\.com)/watch source! ~/.vimperator/location/stellamap.vimp
 lazy minibuffer LDRize::disable-smooth-scroll
 
 

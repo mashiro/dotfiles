@@ -5,7 +5,7 @@
 // @include        *
 // ==/UserScript==
 
-var VERSION = "2009.12.06";
+var VERSION = "2009.12.06"; // 2011.03.25 for firefox 4.0 via http://d.hatena.ne.jp/wlt/20110106/1294306315
 
 var Class = function(){return function(){this.initialize.apply(this,arguments)}};
 
@@ -833,7 +833,7 @@ var FlashMessage = new function(){
 			min-width : 1em;
 			text-align : center;
 		}
-	]]></>)
+	]]></>.toString())
 	var opacity = 0.9;
 	var flash = $N('div',{id:'FLASH_MESSAGE'});
 	hide(flash);
@@ -940,7 +940,7 @@ Status.prototype = {
 			  #gm_minibuffer_flash_status img {
 				  margin-right: 10px;
 			  }
-			  ]]></>);
+			  ]]></>.toString());
 		  var container = $N('div',{id:Status.id, style:'display:block;'});
 		  document.body.appendChild(container);
 	  }
@@ -1116,29 +1116,35 @@ function $N(name, attr, childs) {
 	return ret;
 }
 
-// via http://github.com/hatena/hatena-bookmark-xul/blob/master/chrome/content/common/05-HTMLDocumentCreator.js
+// via http://gist.github.com/283040
 function createDocumentFromString(source){
-    var doc = document.implementation.createHTMLDocument ?
-        document.implementation.createHTMLDocument('hogehoge') :
-        document.implementation.createDocument(null, 'html', null);
-    var range = document.createRange();
-    range.selectNodeContents(document.documentElement);
-    var fragment = range.createContextualFragment(source);
-    var headChildNames = {title: true, meta: true, link: true, script: true, style: true, /*object: true,*/ base: true/*, isindex: true,*/};
-    var child, head = doc.getElementsByTagName('head')[0] || doc.createElement('head'),
-        body = doc.getElementsByTagName('body')[0] || doc.createElement('body');
-    while ((child = fragment.firstChild)) {
-        if (
-            (child.nodeType === doc.ELEMENT_NODE && !(child.nodeName.toLowerCase() in headChildNames)) ||
-            (child.nodeType === doc.TEXT_NODE &&/\S/.test(child.nodeValue))
-        )
-            break;
-        head.appendChild(child);
-    }
-    body.appendChild(fragment);
-    doc.documentElement.appendChild(head);
-    doc.documentElement.appendChild(body);
-    return doc;
+	var doc;
+	try {
+		doc = document.cloneNode(false);
+		doc.appendChild(doc.importNode(document.documentElement, false));
+	} catch(e) {
+		doc = document.implementation.createHTMLDocument ?
+				document.implementation.createHTMLDocument('hogehoge') :
+				document.implementation.createDocument(null, 'html', null);
+	}
+	var range = document.createRange();
+	range.selectNodeContents(document.documentElement);
+	var fragment = range.createContextualFragment(source);
+	var headChildNames = {title: true, meta: true, link: true, script: true, style: true, /*object: true,*/ base: true/*, isindex: true,*/};
+	var child, head = doc.getElementsByTagName('head')[0] || doc.createElement('head'),
+	           body = doc.getElementsByTagName('body')[0] || doc.createElement('body');
+	while ((child = fragment.firstChild)) {
+		if (
+			(child.nodeType === doc.ELEMENT_NODE && !(child.nodeName.toLowerCase() in headChildNames)) ||
+			(child.nodeType === doc.TEXT_NODE &&/\S/.test(child.nodeValue))
+		   )
+			break;
+		head.appendChild(child);
+	}
+	body.appendChild(fragment);
+	doc.documentElement.appendChild(head);
+	doc.documentElement.appendChild(body);
+	return doc;
 }
 
 

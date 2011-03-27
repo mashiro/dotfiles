@@ -7,7 +7,7 @@ var PLUGIN_INFO =
 <license>MPL 1.1/GPL 2.0/LGPL 2.1</license>
 <minVersion>2.0pre</minVersion>
 <maxVersion>2.0</maxVersion>
-<updateURL>http://svn.coderepos.org/share/lang/javascript/vimperator-plugins/trunk/cookieManager.js</updateURL>
+<updateURL>https://github.com/vimpr/vimperator-plugins/raw/master/cookieManager.js</updateURL>
 <detail lang="ja"><![CDATA[
 Cookie の管理をするプラグイン
 
@@ -49,9 +49,9 @@ const PM = Cc["@mozilla.org/permissionmanager;1"].getService(Ci.nsIPermissionMan
 const I_CPM = Ci.nsICookiePermission;
 const PERM_TYPE = "cookie";
 
-function getIterator(enum, interface){
-    while (enum.hasMoreElements()){
-        let obj = enum.getNext().QueryInterface(interface);
+function getIterator(_enum, interface){
+    while (_enum.hasMoreElements()){
+        let obj = _enum.getNext().QueryInterface(interface);
         yield obj;
     }
 }

@@ -3,10 +3,10 @@ var PLUGIN_INFO =
     <name>SBM Comments Viewer</name>
     <description>List show Social Bookmark Comments</description>
     <description lang="ja">ソーシャル・ブックマーク・コメントを表示します</description>
-    <version>0.1.1</version>
+    <version>0.2.2</version>
     <minVersion>2.0pre</minVersion>
-    <maxVersion>2.3</maxVersion>
-    <updateURL>http://svn.coderepos.org/share/lang/javascript/vimperator-plugins/trunk/sbmcommentsviewer.js</updateURL>
+    <maxVersion>3.0</maxVersion>
+    <updateURL>https://github.com/vimpr/vimperator-plugins/raw/master/sbmcommentsviewer.js</updateURL>
     <detail><![CDATA[
 == Usage ==
 >||
@@ -32,6 +32,7 @@ viewSBMComments [url] [options]
 - d : Delicious
 - l : livedoor clip
 - z : Buzzurl
+- t : Topsy
 - XXX:今後増やしていきたい
 
 >||
@@ -125,6 +126,22 @@ function SBMEntry(id, timestamp, comment, tags, extra){ //{{{
 } //}}}
 SBMEntry.prototype = { //{{{
     toHTML: function(format){
+        function makeLink(str, withLink){
+            let s = str;
+            let result = XMLList();
+            while (s.length > 0) {
+                let m = s.match(/(?:https?:\/\/|mailto:)\S+/);
+                if (m) {
+                    result += <>{s.slice(0, m.index)}<a href={withLink ? m[0] : '#'} highlight="URL">{m[0]}</a></>;
+                    s = s.slice(m.index + m[0].length);
+                } else {
+                    result += <>{s}</>;
+                    break;
+                }
+            }
+            return result;
+        }
+
         var xml = <tr/>;
         var self = this;
         format.forEach(function(colum){
@@ -135,14 +152,15 @@ SBMEntry.prototype = { //{{{
                              </td>;
                     break;
                 case 'timestamp':
-                    xml.* += <td class="liberator-sbmcommentsviewer-timestamp">{self.formatDate()}</td>; break;
+     xml.* += <td class="liberator-sbmcommentsviewer-timestamp">{self.formatDate()}</td>; 
+     break;
                 case 'tags':
                     xml.* += <td class="liberator-sbmcommentsviewer-tags">{self.tags.join(',')}</td>; break;
                 case 'comment':
-                    xml.* += <td class="liberator-sbmcommentsviewer-comment" style="white-space:normal;">{self.comment}</td>; break;
+                    xml.* += <td class="liberator-sbmcommentsviewer-comment" style="white-space:normal;">{makeLink(self.comment)}</td>; break;
                 case 'tagsAndComment':
                     var tagString = self.tags.length ? '[' + self.tags.join('][') + ']':'';
-                    xml.* += <td class="liberator-sbmcommentsviewer-tagsAndComment" style="white-space:normal;">{tagString + ' '+self.comment}</td>;
+                    xml.* += <td class="liberator-sbmcommentsviewer-tagsAndComment" style="white-space:normal;">{tagString + ' '}{makeLink(self.comment)}</td>;
                     break;
                 default:
                     xml.* += <td>-</td>;
@@ -335,6 +353,33 @@ var SBM = { //{{{
                 liberator.log('Faild: Buzzurl');
             }
         }
+    }, //}}} 
+    topsy: { //{{{
+        getURL: function(url){
+            var urlPrefix = 'http://otter.topsy.com/trackbacks.json?perpage=50&infonly=0&tracktype=tweet&url=';
+            return urlPrefix + encodeURIComponent(url.replace(/%23/g,'#'));
+        },
+        parser: function(xhr){
+            var json = jsonDecode(xhr.responseText);
+            if (json && json.response){
+                let c = new SBMContainer('t', json.response.trackback_total, {
+                    faviconURL: 'http://topsy.com/favicon.ico',
+                    pageURL:    json.response.topsy_trackback_url
+                });
+                json.response.list.forEach(function(entry){
+                    c.add( entry.author.nick, new Date(entry.date*1000),
+                           entry.content, null,
+                           {
+                            userIcon: entry.author.photo_url,
+                            link: entry.author.topsy_author_url
+                           }
+                    );
+                });
+                return c;
+            } else {
+                liberator.echo('Faild: Topsy');
+            }
+        }
     } //}}}
 }; //}}}
 
@@ -420,7 +465,8 @@ var manager = {
         h: 'hatena',
         d: 'delicious',
         l: 'livedoorclip',
-        z: 'buzzurl'
+        z: 'buzzurl', 
+        t: 'topsy'
     },
     format: {
         id: 'ID',

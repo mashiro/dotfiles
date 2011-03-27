@@ -1,5 +1,5 @@
 /* {{{
-Copyright (c) 2008-2010, anekos.
+Copyright (c) 2008-2011, anekos.
 All rights reserved.
 
 Redistribution and use in source and binary forms, with or without modification,
@@ -39,13 +39,13 @@ let PLUGIN_INFO =
   <name lang="ja">すてら</name>
   <description>For Niconico/YouTube/Vimeo, Add control commands and information display(on status line).</description>
   <description lang="ja">ニコニコ動画/YouTube/Vimeo 用。操作コマンドと情報表示(ステータスライン上に)追加します。</description>
-  <version>0.32.3</version>
+  <version>0.32.6</version>
   <author mail="anekos@snca.net" homepage="http://d.hatena.ne.jp/nokturnalmortum/">anekos</author>
   <license>new BSD License (Please read the source code comments of this plugin)</license>
   <license lang="ja">修正BSDライセンス (ソースコードのコメントを参照してください)</license>
   <minVersion>2.0</minVersion>
   <maxVersion>3.0</maxVersion>
-  <updateURL>http://svn.coderepos.org/share/lang/javascript/vimperator-plugins/trunk/stella.js</updateURL>
+  <updateURL>https://github.com/vimpr/vimperator-plugins/raw/master/stella.js</updateURL>
   <detail><![CDATA[
     == Commands ==
       :stpl[ay]:
@@ -106,7 +106,7 @@ function addLocalMappings(buffer, maps) {
 }
 
 addLocalMappings(
-  /^(http:\/\/(es|www).nicovideo.jp\/watch|http:\/\/(jp|www)\.youtube\.com\/watch|http:\/\/(www\.)?vimeo\.com\/(channels\/(hd)?#)?\d+)/,
+  /^(http:\/\/(es|www).nicovideo.jp\/(watch|playlist\/mylist)|http:\/\/(jp|www)\.youtube\.com\/watch|http:\/\/(www\.)?vimeo\.com\/(channels\/(hd)?#)?\d+)/,
   [
     ['<C-g>', ':pageinfo S',      ],
     ['p',     ':stplay',          ],
@@ -214,7 +214,7 @@ function addLocalMappings(buffer, maps) {
 }
 
 addLocalMappings(
-  /^(http:\/\/(es|www).nicovideo.jp\/watch|http:\/\/(jp|www)\.youtube\.com\/watch|http:\/\/(www\.)?vimeo\.com\/(channels\/(hd)?#)?\d+)/,
+  /^(http:\/\/(es|www).nicovideo.jp\/(watch|playlist\/mylist)|http:\/\/(jp|www)\.youtube\.com\/watch|http:\/\/(www\.)?vimeo\.com\/(channels\/(hd)?#)?\d+)/,
   [
     ['<C-g>', ':pageinfo S',      ],
     ['p',     ':stplay',          ],
@@ -706,7 +706,7 @@ Thanks:
 
     get title () undefined,
 
-    get isValid () /^http:\/\/(tw|es|de|www)\.nicovideo\.jp\/watch\//.test(U.currentURL),
+    get isValid () /^http:\/\/(tw|es|de|www)\.nicovideo\.jp\/(watch|playlist\/mylist)\//.test(U.currentURL),
 
     get volume () undefined,
     set volume (value) value,
@@ -883,10 +883,7 @@ Thanks:
 
     get pageinfo () {
       let doc = content.document;
-      let wd = doc.querySelector('#watch-description > div > span > span.watch-video-date');
-      let desc = wd.nextSibling;
-      while (desc && desc.tagName != 'SPAN')
-        desc = desc.nextSibling;
+      let desc = doc.querySelector('#eow-description');
       return [
         [
           'comment',
@@ -894,7 +891,10 @@ Thanks:
         ],
         [
           'tags',
-          U.toXML(doc.querySelector('#watch-tags > div').innerHTML)
+          XMLList([
+            <span>[<a href={v.href}>{v.textContent}</a>]</span>
+            for ([, v] in Iterator(doc.querySelectorAll('#eow-tags > li > a')))
+          ].join(''))
         ],
         [
           'quality',
@@ -1115,7 +1115,7 @@ Thanks:
     icon: 'http://www.nicovideo.jp/favicon.ico',
 
     xpath: {
-      comment: 'id("des_2")/div/table/tbody/tr[1]/td[2]'
+      comment: 'id("itab_description")'
     },
 
     initialize: function () {
@@ -1150,7 +1150,7 @@ Thanks:
     set fullscreen (value) (this.large = value),
 
     get id ()
-      let (m = U.currentURL.match(/\/watch\/([a-z\d]+)/))
+      let (m = U.currentURL.match(/\/(?:watch|playlist\/mylist)\/([a-z\d]+)/))
         (m && m[1]),
 
     get muted () this.player.ext_isMute(),
@@ -1232,10 +1232,10 @@ Thanks:
           let xpath = self.xpath.comment;
           let comment = U.xpathGet(xpath).innerHTML;
           let links = U.xpathGets(xpath + '//a')
-                       .filter(function (it) /watch\//.test(it.href))
+                       .filter(function (it) /(watch|playlist\/mylist)\//.test(it.href))
                        .map(function(v) v.textContent);
           links.forEach(function (link) {
-            let re = RegExp('(?:^|[\u3000\\s\\>])([^\u3000\\s\\>]+)\\s*<a href="http:\\/\\/www\\.nicovideo\\.\\w+\\/watch\\/' + link + '" class="(watch|video)">');
+            let re = RegExp('(?:^|[\u3000\\s\\>])([^\u3000\\s\\>]+)\\s*<a href="http:\\/\\/www\\.nicovideo\\.\\w+\\/(?:watch|playlist\\/mylist)\\/' + link + '" class="(watch|video)">');
             let r = re.exec(comment);
             if (r)
               videos.push(new RelatedID(link, r[1].slice(-20)));
@@ -1556,7 +1556,7 @@ Thanks:
     'play',
     'pause',
     'comment',
-    'repeat',
+    'repeating',
     'fullscreen',
     'fetch',
     {
@@ -1665,7 +1665,7 @@ Thanks:
         vimeo: new VimeoPlayer(this.stella)
       };
 
-      this.noGUI = true;
+      // this.noGUI = true;
       this.createGUI();
       this.__onResize = window.addEventListener('resize', U.bindr(this, this.onResize), false);
       this.progressListener = new WebProgressListener({onLocationChange: U.bindr(this, this.onLocationChange)});
@@ -1858,13 +1858,17 @@ Thanks:
       let self = this;
 
       function setEvents (name, elem) {
-        ['click', 'popupshowing'].forEach(function (eventName) {
-          let onEvent = self['on' + U.capitalize(name) + U.capitalize(eventName)];
+        ['click', 'command', 'popupshowing'].forEach(function (eventName) {
+          let onEvent = self[
+            'on' +
+              U.capitalize(name) +
+              U.capitalize(eventName == 'command' ? 'click' : eventName)
+          ];
           onEvent && elem.addEventListener(eventName, function (event) {
-            if (eventName != 'click' || event.button == 0) {
-              onEvent.apply(self, arguments);
-              self.update();
-            }
+            if (eventName == 'click' && event.button != 0)
+              return;
+            onEvent.apply(self, arguments);
+            self.update();
           }, false);
         });
       }
@@ -1916,7 +1920,7 @@ Thanks:
       });
 
       let stbar = document.getElementById('status-bar');
-      stbar.insertBefore(panel, document.getElementById('liberator-statusline').nextSibling);
+      stbar.appendChild(panel);
 
       let relmenu = document.getElementById('anekos-stella-relations-menupopup');
 
@@ -2104,7 +2108,7 @@ Thanks:
                      rel instanceof RelatedTag ? 'Tag: ' :
                      '';
         elem.setAttribute('label', prefix + rel.description);
-        elem.addEventListener('click', clickEvent(rel.command), false);
+        elem.addEventListener('command', clickEvent(rel.command), false);
         relmenu.appendChild(elem);
       }, this);
     },
