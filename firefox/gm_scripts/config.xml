@@ -7,7 +7,7 @@
 		<Exclude>http://www.facebook.com/plugins/like.php*</Exclude>
 		<Exclude>http://api.tweetmeme.com/button.js*</Exclude>
 	</Script>
-	<Script filename="minibuffer.user.js" name="Minibuffer" namespace="http://white.s151.xrea.com/" description="Minibuffer" version="" enabled="true" basedir="minibuffer" modified="1301219103000" dependhash="da39a3ee5e6b4b0d3255bfef95601890afd80709">
+	<Script filename="minibuffer.user.js" name="Minibuffer" namespace="http://white.s151.xrea.com/" description="Minibuffer" version="" enabled="true" basedir="minibuffer" modified="1301323258000" dependhash="da39a3ee5e6b4b0d3255bfef95601890afd80709">
 		<Include>*</Include>
 	</Script>
 	<Script filename="ldrize.user.js" name="LDRize" namespace="http://white.s151.xrea.com/" description="j,k,v,p,o,:,f,? + l,s,i" version="" enabled="true" basedir="ldrize" modified="1288729784000" dependhash="da39a3ee5e6b4b0d3255bfef95601890afd80709">

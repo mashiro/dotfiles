@@ -1651,7 +1651,8 @@ if(document.body){
 				if(target){
 					window.open(url, target);
 				}else{
-					GM_openInTab(url);
+					window.open(url);
+					//GM_openInTab(url);
 				}
 			});
 			return stdin;
