@@ -278,7 +278,7 @@ EOM
 
 
 " sbmcommentsviewer.js {{{2
-let g:def_sbm_format = "timestamp,id,tagsAndComment"
+let g:def_sbm_format = "timestamp,id,tags,comment"
 let g:def_sbms = "h"
 noremap <Leader>bc :viewSBMComments<CR>
 
