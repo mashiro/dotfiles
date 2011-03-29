@@ -116,8 +116,8 @@ set softtabstop=4
 set expandtab
 set smarttab
 
-" mouse support
-"set mouse=a
+" mouse support (disable)
+set mouse=
 "if &term =~ '^screen'
 "    autocmd MyAutoCmd VimLeave * :set mouse=
 "    set ttymouse=xterm2
