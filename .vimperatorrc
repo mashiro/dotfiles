@@ -495,33 +495,37 @@ inoremap <C-n> <Down>
 " copy/paste
 javascript <<EOM
 execute_silent = function(str, modifiers) {
-  liberator.execute(str, modifiers, true);
+    liberator.execute(str, modifiers, true);
 }
+
+var meta = null
 if (liberator.has("Win32")) {
-  execute_silent("cnoremap <C-a> <C-v><C-a>");
-  execute_silent("cnoremap <C-z> <C-v><C-z>");
-  execute_silent("cnoremap <C-x> <C-v><C-x>");
-  execute_silent("cnoremap <C-c> <C-v><C-c>");
-  execute_silent("cnoremap <C-v> <C-v><C-v>");
-  execute_silent("inoremap <C-a> <C-v><C-a>");
-  execute_silent("inoremap <C-z> <C-v><C-z>");
-  execute_silent("inoremap <C-x> <C-v><C-x>");
-  execute_silent("inoremap <C-c> <C-v><C-c>");
-  execute_silent("inoremap <C-v> <C-v><C-v>");
+    meta = "C"; 
 }
 else if (liberator.has("MacUnix")) {
-  execute_silent("cnoremap <M-a> <C-v><M-a>");
-  execute_silent("cnoremap <M-z> <C-v><M-z>");
-  execute_silent("cnoremap <M-x> <C-v><M-x>");
-  execute_silent("cnoremap <M-c> <C-v><M-c>");
-  execute_silent("cnoremap <M-v> <C-v><M-v>");
-  execute_silent("inoremap <M-a> <C-v><M-a>");
-  execute_silent("inoremap <M-z> <C-v><M-z>");
-  execute_silent("inoremap <M-x> <C-v><M-x>");
-  execute_silent("inoremap <M-c> <C-v><M-c>");
-  execute_silent("inoremap <M-v> <C-v><M-v>");
+    meta = "M";
 }
-else {
+
+if (meta) {
+    ["nnoremap", "vnoremap", "cnoremap", "inoremap"].forEach(function(command) {
+        ["a", "z", "x", "c", "v"].forEach(function(key) {
+            execute_silent(command+" <"+meta+"-"+key+"> <C-v><"+meta+"-"+key+">");
+        });
+    });
+
+    if (meta == "C") {
+        mappings.addUserMap([modes.NORMAL,modes.VISUAL],["<"+meta+"-c>"], "Copy selected text or stop loading",
+            function() {
+                var sel = document.commandDispatcher.focusedWindow.getSelection().toString();
+                if (sel){
+                    util.copyToClipboard(sel,true);
+                } else {
+                    BrowserStop();
+                    liberator.echomsg("Stopped loading !", 5);
+                }
+            },{ rhs: "Copy selected text or stop loading" }
+        );
+    }
 }
 EOM
 
