@@ -83,7 +83,7 @@ var css = <css><![CDATA[
 
 #liberator-customize-toolbar toolbarbutton,
 #liberator-customize-toolbar statusbarpanel {
-    padding: 0 1px !important;
+    padding: 0 0 0 2px !important;
 }
 
 #feed-button {
