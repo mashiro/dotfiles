@@ -95,6 +95,7 @@ var css = <css><![CDATA[
 
 /* sbmcommentsviewer.js */
 .liberator-sbmcommentsviewer-content {
+    padding: 0 !important;
     border: none !important;
 }
 ]]></css>.toString();
