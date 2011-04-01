@@ -427,6 +427,10 @@ autocommands.add('VimperatorEnter', '.*',
 EOM
 
 
+" Styles {{{1
+style -name liberator-statusline-center chrome://* #liberator-statusline { -moz-box-align: center; }
+
+
 " AutoCmds {{{1
 lazy minibuffer LDRize::disable-smooth-scroll
 
