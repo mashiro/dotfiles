@@ -70,8 +70,9 @@ endif
 filetype plugin indent on
 set nocompatible
 set runtimepath& runtimepath+=~/.vim,~/.vim/after
-set backupdir=./,~/tmp
-set directory=./,~/tmp
+set backupdir=~/tmp,.
+set directory=~/tmp,.
+set viminfo& viminfo+=n~/.viminfo
 
 " view
 set modeline
