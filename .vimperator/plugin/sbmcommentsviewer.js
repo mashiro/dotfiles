@@ -3,7 +3,7 @@ var PLUGIN_INFO =
     <name>SBM Comments Viewer</name>
     <description>List show Social Bookmark Comments</description>
     <description lang="ja">ソーシャル・ブックマーク・コメントを表示します</description>
-    <version>0.2.3</version>
+    <version>0.2.4</version>
     <minVersion>2.0pre</minVersion>
     <maxVersion>3.0</maxVersion>
     <updateURL>https://github.com/vimpr/vimperator-plugins/raw/master/sbmcommentsviewer.js</updateURL>
@@ -504,7 +504,7 @@ commands.addUserCommand(['viewSBMComments'], 'SBM Comments Viewer', //{{{
         var types =  liberator.globalVariables.def_sbms || 'hdlz';
         var format = (liberator.globalVariables.def_sbm_format || 'id,timestamp,tags,comment').split(',');
         var countOnly = false, openToBrowser = false;
-        var url = buffer.URL;
+        var url = arg.literalArg || buffer.URL;
         [
             let (v = arg['-' + name]) (v && f(v))
             for ([name, f] in Iterator({
@@ -520,7 +520,7 @@ commands.addUserCommand(['viewSBMComments'], 'SBM Comments Viewer', //{{{
             let type = types.charAt(i);
             if ( manager.type[type] ){
                 if ( cacheManager.isAvailable(url, type) ){
-                    liberator.log('cache avairable');
+                    liberator.log('cache available');
                     if (openToBrowser)
                         // TODO
                         manager.open(cacheManager.get(url,type).toHTML(format,false), liberator.forceNewTab);
@@ -537,6 +537,7 @@ commands.addUserCommand(['viewSBMComments'], 'SBM Comments Viewer', //{{{
         }
     }, //}}}
     {
+        literal: 0,
         argCount:"*",
         options: options,
         completer: function(context) completion.url(context, 'l')
