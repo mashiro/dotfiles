@@ -57,10 +57,13 @@ export PYTHONSTARTUP=$HOME/.pythonstartup
 export WORKON_HOME=$HOME/.virtualenvs
 if [ -d $WORKON_HOME ]; then
     export VIRTUALENVERAPPER_SH=$(which virtualenvwrapper.sh)
-    [ -f $VIRTUALENVERAPPER_SH ] && source $VIRTUALENVERAPPER_SH
+    [[ -s "$VIRTUALENVERAPPER_SH" ]] && . "$VIRTUALENVERAPPER_SH"
 fi
+
+
+# Ruby {{{2
+[[ -s "$HOME/.rvm/scripts/rvm" ]] && . "$HOME/.rvm/scripts/rvm"  # This loads RVM into a shell session.
 
 
 # End {{{1
 [ -f ~/.zshenv.local ] && source ~/.zshenv.local
-

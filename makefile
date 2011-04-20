@@ -10,6 +10,7 @@ DOTFILES =\
 	.vimperator \
 	.vimperatorrc \
 	.pythonstartup \
+	.irbrc \
 
 DOTFILES_LOCAL =\
 	.vimrc.local \
