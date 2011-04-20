@@ -36,8 +36,6 @@ update:
 install .PHONY: $(DOTFILES) $(DOTFILES_LOCAL)
 	$(MKDIR) $(DESTDIR)/.screen/log
 	$(MKDIR) $(DESTDIR)/.virtualenvs
-	git submodule update --init
-	git submodule foreach 'git checkout master'
 
 $(DOTFILES):
 	$(LN) $(SRCDIR)/$@ $(DESTDIR)/$@
