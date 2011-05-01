@@ -3,6 +3,7 @@
 // @namespace      http://d.hatena.ne.jp/Constellation/
 // @description    register reblog command by Tombloo
 // @include        http://www.tumblr.com/dashboard*
+// @include        http://www.tumblr.com/tumblelog*
 // @include        http://www.tumblr.com/show*
 // @include        http://www.tumblr.com/iphone*
 // ==/UserScript==

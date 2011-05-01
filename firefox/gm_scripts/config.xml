@@ -1,5 +1,5 @@
 <UserScriptConfig>
-	<Script filename="autopagerize.user.js" name="AutoPagerize" namespace="http://swdyh.yu.to/" description="loading next page and inserting into current page." version="" enabled="true" basedir="autopagerize" modified="1288231189000" dependhash="da39a3ee5e6b4b0d3255bfef95601890afd80709">
+	<Script filename="autopagerize.user.js" name="AutoPagerize" namespace="http://swdyh.yu.to/" description="loading next page and inserting into current page." version="" enabled="true" basedir="autopagerize" modified="1304248449000" dependhash="da39a3ee5e6b4b0d3255bfef95601890afd80709">
 		<Include>http://*</Include>
 		<Include>https://*</Include>
 		<Exclude>https://mail.google.com/*</Exclude>
@@ -7,30 +7,31 @@
 		<Exclude>http://www.facebook.com/plugins/like.php*</Exclude>
 		<Exclude>http://api.tweetmeme.com/button.js*</Exclude>
 	</Script>
-	<Script filename="minibuffer.user.js" name="Minibuffer" namespace="http://white.s151.xrea.com/" description="Minibuffer" version="" enabled="true" basedir="minibuffer" modified="1301367814000" dependhash="da39a3ee5e6b4b0d3255bfef95601890afd80709">
+	<Script filename="minibuffer.user.js" name="Minibuffer" namespace="http://white.s151.xrea.com/" description="Minibuffer" version="" enabled="true" basedir="minibuffer" modified="1304248449000" dependhash="da39a3ee5e6b4b0d3255bfef95601890afd80709">
 		<Include>*</Include>
 	</Script>
-	<Script filename="ldrize.user.js" name="LDRize" namespace="http://white.s151.xrea.com/" description="j,k,v,p,o,:,f,? + l,s,i" version="" enabled="true" basedir="ldrize" modified="1301367808000" dependhash="da39a3ee5e6b4b0d3255bfef95601890afd80709">
+	<Script filename="ldrize.user.js" name="LDRize" namespace="http://white.s151.xrea.com/" description="j,k,v,p,o,:,f,? + l,s,i" version="" enabled="true" basedir="ldrize" modified="1304248449000" dependhash="da39a3ee5e6b4b0d3255bfef95601890afd80709">
 		<Include>http://*</Include>
 		<Include>https://*</Include>
 		<Include>file:///*</Include>
 	</Script>
-	<Script filename="ldr__tombloo.user.js" name="LDR + Tombloo" namespace="http://userscripts.org/users/7010" description="" version="" enabled="true" basedir="ldr__tombloo" modified="1287968712000" dependhash="da39a3ee5e6b4b0d3255bfef95601890afd80709">
+	<Script filename="ldr__tombloo.user.js" name="LDR + Tombloo" namespace="http://userscripts.org/users/7010" description="" version="" enabled="true" basedir="ldr__tombloo" modified="1304255282000" dependhash="da39a3ee5e6b4b0d3255bfef95601890afd80709" installurl="https://github.com/to/tombloo/raw/master/greasemonkey/ldrtombloo.user.js">
 		<Include>http://reader.livedoor.com/reader/*</Include>
 		<Include>http://fastladder.com/reader/* </Include>
 	</Script>
-	<Script filename="dashboard__tombloo.user.js" name="Dashboard + Tombloo" namespace="http://d.hatena.ne.jp/Constellation/" description="register reblog command by Tombloo" version="" enabled="true" basedir="dashboard__tombloo" modified="1287968712000" dependhash="da39a3ee5e6b4b0d3255bfef95601890afd80709">
+	<Script filename="dashboard__tombloo.user.js" name="Dashboard + Tombloo" namespace="http://d.hatena.ne.jp/Constellation/" description="register reblog command by Tombloo" version="" enabled="true" basedir="dashboard__tombloo" modified="1304255576000" dependhash="da39a3ee5e6b4b0d3255bfef95601890afd80709" installurl="http://gist.github.com/5004.txt?dashboard_plus_tombloo.user.js">
 		<Include>http://www.tumblr.com/dashboard*</Include>
+		<Include>http://www.tumblr.com/tumblelog*</Include>
 		<Include>http://www.tumblr.com/show*</Include>
 		<Include>http://www.tumblr.com/iphone*</Include>
 	</Script>
-	<Script filename="pixiv__tombloo.user.js" name="Pixiv + Tombloo" namespace="http://gist.github.com/660432" description="" version="" enabled="true" basedir="pixiv__tombloo" modified="1288837969000" dependhash="da39a3ee5e6b4b0d3255bfef95601890afd80709">
+	<Script filename="pixiv__tombloo.user.js" name="Pixiv + Tombloo" namespace="http://gist.github.com/660432" description="" version="" enabled="true" basedir="pixiv__tombloo" modified="1304248449000" dependhash="da39a3ee5e6b4b0d3255bfef95601890afd80709">
 		<Include>http://www.pixiv.net/*</Include>
 	</Script>
-	<Script filename="googlereader__tombloo.user.js" name="GoogleReader + Tombloo" namespace="http://d.hatena.ne.jp/Constellation/" description="instead of LDR + Tombloo for GoogleReader" version="0.0.1" enabled="true" basedir="googlereader__tombloo" modified="1287968712000" dependhash="da39a3ee5e6b4b0d3255bfef95601890afd80709">
+	<Script filename="googlereader__tombloo.user.js" name="GoogleReader + Tombloo" namespace="http://d.hatena.ne.jp/Constellation/" description="instead of LDR + Tombloo for GoogleReader" version="0.0.1" enabled="true" basedir="googlereader__tombloo" modified="1304248449000" dependhash="da39a3ee5e6b4b0d3255bfef95601890afd80709">
 		<Include>http://www.google.tld/reader/*</Include>
 	</Script>
-	<Script filename="google_reader_prefetch_m.user.js" name="Google Reader Prefetch More" namespace="http://userscripts.org/users/40991" description="" version="" enabled="true" basedir="google_reader_prefetch_m" modified="1287968712000" dependhash="da39a3ee5e6b4b0d3255bfef95601890afd80709">
+	<Script filename="google_reader_prefetch_m.user.js" name="Google Reader Prefetch More" namespace="http://userscripts.org/users/40991" description="" version="" enabled="true" basedir="google_reader_prefetch_m" modified="1304248449000" dependhash="da39a3ee5e6b4b0d3255bfef95601890afd80709">
 		<Include>http://www.google.tld/reader/*</Include>
 		<Include>https://www.google.tld/reader/*</Include>
 		<Unwrap/>
