@@ -53,6 +53,7 @@ export WORDCHARS="*?_-.[]~=&;!#$%^(){}<>"
 
 
 # Python {{{2
+[[ -d "/usr/local/share/python" ]] && export PATH=/usr/local/share/python:$PATH
 export PYTHONSTARTUP=$HOME/.pythonstartup
 export WORKON_HOME=$HOME/.virtualenvs
 if [ -d $WORKON_HOME ]; then
