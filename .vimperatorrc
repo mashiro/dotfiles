@@ -57,7 +57,7 @@ set! mousewheel.withnokey.sysnumlines=false
 silent qmark c http://www.google.com/calendar/render?hl=ja
 silent qmark e https://www.evernote.com/Home.action
 silent qmark f http://fastladder.com/reader/
-silent qmark F http://favotter.net/user.php?user=mashiroli
+silent qmark F http://favstar.fm/users/mashiroli/recent
 silent qmark g https://github.com/
 silent qmark G http://gist.github.com/
 silent qmark h http://honyaku.yahoo.co.jp/
