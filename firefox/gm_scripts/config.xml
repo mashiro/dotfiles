@@ -15,7 +15,7 @@
 		<Include>https://*</Include>
 		<Include>file:///*</Include>
 	</Script>
-	<Script filename="ldr__tombloo.user.js" name="LDR + Tombloo" namespace="http://userscripts.org/users/7010" description="" version="" enabled="true" basedir="ldr__tombloo" modified="1304255282000" dependhash="da39a3ee5e6b4b0d3255bfef95601890afd80709" installurl="https://github.com/to/tombloo/raw/master/greasemonkey/ldrtombloo.user.js">
+	<Script filename="ldr__tombloo.user.js" name="LDR + Tombloo" namespace="http://userscripts.org/users/7010" description="" version="" enabled="true" basedir="ldr__tombloo" modified="1304258576000" dependhash="da39a3ee5e6b4b0d3255bfef95601890afd80709" installurl="https://gist.github.com/raw/896029/7fe06e10c172df94f394b9be1fefe8581a855a61/ldrtombloo.user.js">
 		<Include>http://reader.livedoor.com/reader/*</Include>
 		<Include>http://fastladder.com/reader/* </Include>
 	</Script>
