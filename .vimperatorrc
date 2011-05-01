@@ -1,5 +1,5 @@
 " mashiro .vimperatorrc
-" firefox-4.0 + vimperator-20110312
+" firefox-4.0.1 + vimperator-3.1
 
 " Initialize {{{1
 "nmapc
@@ -26,11 +26,11 @@ set smartcase
 set focuscontent
 set hintchars=HJKLASDFGYUIOPQWERTNMZXCVB
 
-set novisualbell
-highlight Bell display: none; 
-
 colorscheme indigo
 let mapleader = ","
+
+set visualbell
+highlight Bell display: none; 
 
 " about:config
 set! extensions.checkCompatibility.4.0=false
