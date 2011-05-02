@@ -73,33 +73,21 @@ hi HintElem             background-color: #d0d0f0; color: #1c1c1c; /*text-decora
 hi HintActive           background-color: #5566bb; color: #dddded; /*text-decoration: none; -moz-border-radius: 4px; -moz-box-shadow: 0 0 2px #0c0c0c;*/
 hi HintImage            opacity: .5;
 
-js <<EOM
-var css = <css><![CDATA[
-#liberator-customize-toolbar {
-    -moz-box-align: center !important;
-    -moz-box-pack: center !important;
-    -moz-appearance: none !important;
-}
 
-#liberator-customize-toolbar toolbarbutton,
-#liberator-customize-toolbar statusbarpanel {
-    padding: 0 0 0 2px !important;
-}
+style -name indigo-feed-button chrome://* <<EOM
+    #feed-button {
+        list-style-image: url("chrome://browser/skin/feeds/feedIcon16.png") !important;
+        -moz-image-region: auto !important;
+        border: none !important;
+        min-width: 0 !important;
+    }
+EOM
 
-#feed-button {
-    list-style-image: url("chrome://browser/skin/feeds/feedIcon16.png") !important;
-    -moz-image-region: auto !important;
-    border: none !important;
-    min-width: 0 !important;
-}
-
-/* sbmcommentsviewer.js */
-.liberator-sbmcommentsviewer-content {
-    padding: 0 !important;
-    border: none !important;
-}
-]]></css>.toString();
-styles.addSheet(false, "indigo-customize-toolbar", "chrome://*", css, false);
+style -name indigo-sbmcommentsviewer chrome://* <<EOM
+    .liberator-sbmcommentsviewer-content {
+        padding: 0 !important;
+        border: none !important;
+    }
 EOM
 
 " vim: ft=vimperator

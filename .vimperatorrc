@@ -24,12 +24,12 @@ set ignorecase
 set incsearch
 set smartcase
 set focuscontent
+set visualbell
 set hintchars=HJKLASDFGYUIOPQWERTNMZXCVB
 
-colorscheme indigo
 let mapleader = ","
 
-set visualbell
+colorscheme indigo
 highlight Bell display: none; 
 
 " about:config
@@ -321,7 +321,7 @@ liberator.globalVariables.useragent_list = [{
 EOM
 
 " statusline-toolbar.js {{{2
-lazy set statuslinetoolbars=feed-button
+lazy set statuslinetoolbars=feed-button,lpt_lastpass-compact-btn,greasemonkey-tbb
 
 
 " Javascripts {{{1
@@ -428,8 +428,31 @@ EOM
 
 
 " Styles {{{1
-style -name liberator-statusline-center chrome://* #liberator-statusline { -moz-box-align: center; }
+style -name liberator-statusline-fix chrome://* <<EOM
+  #liberator-statusline {
+    -moz-box-align: center !important;
+    -moz-box-pack: center !important;
+    margin-right: 0.5em !important;
+  }
+EOM
 
+style -name liberator-customize-toolbar-fix chrome://* <<EOM
+  #liberator-customize-toolbar {
+      -moz-box-align: center !important;
+      -moz-box-pack: center !important;
+      -moz-appearance: none !important;
+      min-width: 0 !important;
+      min-height: 0 !important;
+  }
+  #liberator-customize-toolbar toolbarbutton,
+  #liberator-customize-toolbar statusbarpanel {
+      -moz-box-align: center !important;
+      -moz-box-pack: center !important;
+      -moz-appearance: none !important;
+      margin: 0 1px !important;
+      padding: 0 !important;
+  }
+EOM
 
 " AutoCmds {{{1
 lazy minibuffer LDRize::disable-smooth-scroll
@@ -497,41 +520,41 @@ inoremap <C-p> <Up>
 inoremap <C-n> <Down>
 
 " copy/paste
-javascript <<EOM
-execute_silent = function(str, modifiers) {
-    liberator.execute(str, modifiers, true);
-}
-
-var meta = null
-if (liberator.has("Win32")) {
-    meta = "C"; 
-}
-else if (liberator.has("MacUnix")) {
-    meta = "M";
-}
-
-if (meta) {
-    ["nnoremap", "vnoremap", "cnoremap", "inoremap"].forEach(function(command) {
-        ["a", "z", "x", "c", "v"].forEach(function(key) {
-            execute_silent(command+" <"+meta+"-"+key+"> <C-v><"+meta+"-"+key+">");
-        });
-    });
-
-    if (meta == "C") {
-        mappings.addUserMap([modes.NORMAL,modes.VISUAL],["<"+meta+"-c>"], "Copy selected text or stop loading",
-            function() {
-                var sel = document.commandDispatcher.focusedWindow.getSelection().toString();
-                if (sel){
-                    util.copyToClipboard(sel,true);
-                } else {
-                    BrowserStop();
-                    liberator.echomsg("Stopped loading !", 5);
-                }
-            },{ rhs: "Copy selected text or stop loading" }
-        );
-    }
-}
-EOM
+"javascript <<EOM
+"execute_silent = function(str, modifiers) {
+"    liberator.execute(str, modifiers, true);
+"}
+"
+"var meta = null
+"if (liberator.has("Win32")) {
+"    meta = "C"; 
+"}
+"else if (liberator.has("MacUnix")) {
+"    meta = "M";
+"}
+"
+"if (meta) {
+"    ["nnoremap", "vnoremap", "cnoremap", "inoremap"].forEach(function(command) {
+"        ["a", "z", "x", "c", "v"].forEach(function(key) {
+"            execute_silent(command+" <"+meta+"-"+key+"> <C-v><"+meta+"-"+key+">");
+"        });
+"    });
+"
+"    if (meta == "C") {
+"        mappings.addUserMap([modes.NORMAL,modes.VISUAL],["<"+meta+"-c>"], "Copy selected text or stop loading",
+"            function() {
+"                var sel = document.commandDispatcher.focusedWindow.getSelection().toString();
+"                if (sel){
+"                    util.copyToClipboard(sel,true);
+"                } else {
+"                    BrowserStop();
+"                    liberator.echomsg("Stopped loading !", 5);
+"                }
+"            },{ rhs: "Copy selected text or stop loading" }
+"        );
+"    }
+"}
+"EOM
 
 
 " End {{{1
