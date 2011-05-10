@@ -1,32 +1,36 @@
 # mashiro .zshrc
 
 # Default {{{1
-setopt auto_cd
-setopt auto_pushd
+setopt always_last_prompt
 setopt pushd_ignore_dups
 setopt pushd_to_home
 setopt pushd_silent
+setopt auto_cd
+setopt auto_pushd
 setopt auto_param_slash
 setopt auto_param_keys
 setopt auto_list
 setopt auto_menu
 setopt auto_resume
-setopt auto_name_dirs
+setopt no_auto_name_dirs
 setopt correct
 setopt complete_in_word
-setopt extended_glob
+setopt brace_ccl
+setopt no_cdable_vars
+setopt no_extended_glob
 setopt list_packed
 setopt list_types
 setopt no_auto_remove_slash
 setopt no_list_beep
 setopt no_check_jobs
+setopt no_flow_control
 setopt no_beep
-setopt always_last_prompt
-setopt cdable_vars
+setopt no_hup
+setopt notify
 setopt sh_word_split
 setopt magic_equal_subst
 setopt prompt_subst
-
+setopt print_eight_bit
 
 autoload zmv
 alias zmv='noglob zmv'
