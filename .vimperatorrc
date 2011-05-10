@@ -155,6 +155,7 @@ noremap <Leader>bi :bicon<CR>
 " LDR / fastladder
 command! -nargs=+ lazyfmapsldr lazy fmaps -urls='http://(reader\.livedoor\.com|fastladder\.com)/reader' <args>
 lazyfmapsldr j k s a p o v r w W J K <Space> <S-Space> c z > <
+lazyfmapsldr g u G
 lazyfmapsldr J,<Space> K,<S-Space>
 lazyfmapsldr p,pj
 lazyfmapsldr i,tj
