@@ -155,11 +155,11 @@ noremap <Leader>bi :bicon<CR>
 " LDR / fastladder
 command! -nargs=+ lazyfmapsldr lazy fmaps -urls='http://(reader\.livedoor\.com|fastladder\.com)/reader' <args>
 lazyfmapsldr j k s a p o v r w W J K <Space> <S-Space> c z > <
-lazyfmapsldr g u G
 lazyfmapsldr J,<Space> K,<S-Space>
 lazyfmapsldr p,pj
 lazyfmapsldr i,tj
 lazyfmapsldr /,f
+lazyfmapsldr G,g
 
 
 " Google Reader
@@ -501,8 +501,8 @@ nnoremap <A-h> 3h
 nnoremap <A-l> 3l
 
 " tab
-nnoremap l gt
-nnoremap h gT
+nnoremap l <C-n>
+nnoremap h <C-p>
 nnoremap <silent> <C-l> :tabmove! +1<CR>
 nnoremap <silent> <C-h> :tabmove! -1<CR>
 
