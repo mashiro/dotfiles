@@ -53,7 +53,13 @@ export WORDCHARS="*?_-.[]~=&;!#$%^(){}<>"
 
 
 # Python {{{2
+# pythonbrew
+[[ -s "$HOME/.pythonbrew/etc/bashrc" ]] && . "$HOME/.pythonbrew/etc/bashrc"
+
+# homebrew (OSX)
 [[ -d "/usr/local/share/python" ]] && export PATH=/usr/local/share/python:$PATH
+
+# virtualenv
 export PYTHONSTARTUP=$HOME/.pythonstartup
 export WORKON_HOME=$HOME/.virtualenvs
 if [ -d $WORKON_HOME ]; then

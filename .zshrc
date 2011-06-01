@@ -154,6 +154,7 @@ alias sudo="sudo "
 alias :q="exit"
 
 alias py="python"
+alias pyb="pythonbrew"
 
 case "${OSTYPE}" in
 darwin*)
