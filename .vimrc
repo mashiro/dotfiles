@@ -325,35 +325,53 @@ imap <silent> <C-e> <Plug>(neocomplcache_snippets_expand)
 smap <silent> <C-e> <Plug>(neocomplcache_snippets_expand)
 
 " FuzzyFinder.vim {{{2
-let g:fuf_splitPathMatching = ' '
-let g:fuf_patternSeparator = ' '
-let g:fuf_modesDisable = ['mrucmd']
-let g:fuf_file_exclude = '\v\~$|\.(o|exe|bak|swp|gif|jpg|png)$|(^|[/\\])\.(hg|git|bzr|svn)($|[/\\])'
-let g:fuf_mrufile_exclude = '\v\~$|\.bak$|\.swp|\.howm$|\.(gif|jpg|png)$'
-let g:fuf_mrufile_maxItem = 10000
-let g:fuf_enumeratingLimit = 20
-nnoremap <silent> <Space>fb :FufBuffer<CR>
-nnoremap <silent> <Space>b :FufBuffer<CR>
-nnoremap <silent> <Space>ff :FufFile <C-r>=expand('%:~:.')[:-1-len(expand('%:~:.:t'))]<CR><CR>
-nnoremap <silent> <Space>fr :FufMruFile<CR>
-nnoremap <silent> <Space>fq :FufQuickfix<CR>
-nnoremap <silent> <Space>fl :FufLine<CR>
-nnoremap <silent> <Leader>ff :FufFile **/<CR>
+"let g:fuf_splitPathMatching = ' '
+"let g:fuf_patternSeparator = ' '
+"let g:fuf_modesDisable = ['mrucmd']
+"let g:fuf_file_exclude = '\v\~$|\.(o|exe|bak|swp|gif|jpg|png)$|(^|[/\\])\.(hg|git|bzr|svn)($|[/\\])'
+"let g:fuf_mrufile_exclude = '\v\~$|\.bak$|\.swp|\.howm$|\.(gif|jpg|png)$'
+"let g:fuf_mrufile_maxItem = 10000
+"let g:fuf_enumeratingLimit = 20
+"nnoremap <silent> <Space>fb :FufBuffer<CR>
+"nnoremap <silent> <Space>b :FufBuffer<CR>
+"nnoremap <silent> <Space>ff :FufFile <C-r>=expand('%:~:.')[:-1-len(expand('%:~:.:t'))]<CR><CR>
+"nnoremap <silent> <Space>fr :FufMruFile<CR>
+"nnoremap <silent> <Space>fq :FufQuickfix<CR>
+"nnoremap <silent> <Space>fl :FufLine<CR>
+"nnoremap <silent> <Leader>ff :FufFile **/<CR>
 
 " unite.vim {{{2
-"let g:unite_enable_start_insert = 1
-"
-"nnoremap [unite] <Nop>
-"nmap f [unite]
-"nnoremap <silent> [unite]r :<C-u>Unite register<CR>
-"nnoremap <silent> [unite]s :<C-u>Unite file_rec<CR>
-"nnoremap <silent> [unite]f :<C-u>Unite file<CR>
-"nnoremap <silent> [unite]b :<C-u>Unite buffer<CR>
-"
-"autocmd FileType unite call s:unite_my_settings()
-"function! s:unite_my_settings()
-"    nmap <buffer> <ESC> <Plug>(unite_exit)
-"endfunction
+nnoremap [unite] <Nop>
+nmap <Space> [unite]
+
+nnoremap <silent> [unite]c :<C-u>UniteWithCurrentDir -buffer-name=files buffer file_mru bookmark file<CR>
+nnoremap <silent> [unite]g :<C-u>UniteWithBufferDir -buffer-name=files buffer file_mru bookmark file<CR>
+nnoremap <silent> [unite]r :<C-u>Unite -buffer-name=register register<CR>
+nnoremap <silent> [unite]s :<C-u>Unite file_rec<CR>
+nnoremap <silent> [unite]f :<C-u>Unite file<CR>
+nnoremap <silent> [unite]b :<C-u>Unite buffer<CR>
+nnoremap <silent> [unite]r :<C-u>Unite -buffer-name=register register<CR>
+
+autocmd FileType unite call s:unite_my_settings()
+function! s:unite_my_settings()"{{{
+  " Overwrite settings.
+  nmap <buffer> <ESC> <Plug>(unite_exit)
+  imap <buffer> jj <Plug>(unite_insert_leave)
+  imap <buffer> <C-w> <Plug>(unite_delete_backward_path)
+
+  " <C-l>: manual neocomplcache completion.
+  inoremap <buffer> <C-l> <C-x><C-u><C-p><Down>
+
+  " Start insert.
+  "let g:unite_enable_start_insert = 1
+endfunction"}}}
+
+let g:unite_source_file_mru_limit = 200
+let g:unite_cursor_line_highlight = 'TabLineSel'
+let g:unite_abbr_highlight = 'TabLine'
+
+" For optimize.
+let g:unite_source_file_mru_filename_format = ''
 
 " yankring.vim {{{2
 let g:yankring_history_file = '.yankring_history'
