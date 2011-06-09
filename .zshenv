@@ -26,7 +26,7 @@ darwin*)
 	;;
 esac
 
-if ! [ "$REGISTER_PATHS_COMPLETED" ]; then
+if [ ! "$REGISTER_PATHS_COMPLETED" ]; then
     # for MacPorts
     register_paths "/opt/local"
 
@@ -51,6 +51,17 @@ export GREP_COLOR="01;33"
 export GREP_OPTIONS="--color=auto"
 export WORDCHARS="*?_-.[]~=&;!#$%^(){}<>"
 
+# ssh-agent
+_SSH_AGENT_PID=`ps gxww|grep "ssh-agent]*$"|awk '{print $0}'`
+_SSH_AUTH_SOCK=`ls -t /tmp/ssh*/agent*|head -1`
+if [ "$_SSH_AGENT_PID" = "" -o "$_SSH_AUTH_SOCK" = "" ]; then
+    unset SSH_AUTH_SOCK SSH_AGENT_PID
+    eval `ssh-agent`
+    ssh-add < /dev/null
+else
+    export SSH_AGENT_PID=$_SSH_AGENT_PID
+    export SSH_AUTH_SOCK=$_SSH_AUTH_SOCK
+fi
 
 # Python {{{2
 # pythonbrew
