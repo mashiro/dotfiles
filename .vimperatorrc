@@ -476,7 +476,8 @@ EOM
 
 
 " AutoCmds {{{1
-lazy minibuffer LDRize::disable-smooth-scroll
+" Minibuffer オブジェクト取れなくなってしまったのでとりあえず無効に
+"lazy minibuffer LDRize::disable-smooth-scroll
 
 
 " Mappings {{{1
