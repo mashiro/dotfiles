@@ -33,7 +33,6 @@ colorscheme indigo
 highlight Bell display: none; 
 
 " about:config
-set! extensions.checkCompatibility.4.0=false
 set! general.autoScroll=false
 set! ui.key.generalAccessKey=0
 set! network.http.pipelining=true
