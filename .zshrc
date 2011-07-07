@@ -37,7 +37,7 @@ alias zmv='noglob zmv'
 
 
 # Terminal {{{1
-autoload -U colors; colors
+autoload -Uz colors; colors
 case ${UID} in
 0)
 	PROMPT="%{${fg[cyan]}%}%n@%m%{${reset_color}%} %{${fg[red]}%}%/%%%{${reset_color}%}%b "
@@ -53,6 +53,7 @@ esac
 
 export LSCOLORS=ExFxCxdxBxegedabagacad
 export LS_COLORS='di=01;34:ln=01;35:so=01;32:ex=01;31:bd=46;34:cd=43;34:su=41;30:sg=46;30:tw=42;30:ow=43;30'
+
 
 case "${TERM}" in
 kterm*|xterm*|screen*)
@@ -71,8 +72,35 @@ kterm*|xterm*|screen*)
 esac
 
 
+autoload -Uz add-zsh-hook
+autoload -Uz vcs_info
+
+zstyle ':vcs_info:*' enable git svn hg bzr
+zstyle ':vcs_info:*' formats '%s@%b'
+zstyle ':vcs_info:*' actionformats '%s@%b|%a'
+zstyle ':vcs_info:(svn|bzr):*' branchformat '%b:r%r'
+zstyle ':vcs_info:bzr:*' use-simple true
+
+autoload -Uz is-at-least
+if is-at-least 4.3.10; then
+  zstyle ':vcs_info:git:*' check-for-changes true
+  zstyle ':vcs_info:git:*' stagedstr "+"
+  zstyle ':vcs_info:git:*' unstagedstr "-"
+  zstyle ':vcs_info:git:*' formats '%s@%b %c%u'
+  zstyle ':vcs_info:git:*' actionformats '%s@%b|%a %c%u'
+fi
+
+function _update_vcs_info_msg() {
+    psvar=()
+    LANG=en_US.UTF-8 vcs_info
+    [[ -n "$vcs_info_msg_0_" ]] && psvar[1]="$vcs_info_msg_0_"
+}
+add-zsh-hook precmd _update_vcs_info_msg
+RPROMPT="%1(v|%F%{${fg[cyan]}%}%1v%f|)"
+
+
 # Completion {{{1
-autoload -U compinit; compinit
+autoload -Uz compinit; compinit
 zstyle ':completion:*:default' menu select=2
 zstyle ':completion:*' matcher-list 'm:{a-z}={A-Z}' '+m:{A-Z}={a-z}'
 zstyle ':completion:*' list-colors ${(s.:.)LS_COLORS}
@@ -80,7 +108,7 @@ zstyle ':completion:*' list-colors ${(s.:.)LS_COLORS}
 
 # Keybind {{{1
 bindkey -e
-autoload history-search-end
+autoload -Uz history-search-end
 zle -N history-beginning-search-backward-end history-search-end
 zle -N history-beginning-search-forward-end history-search-end
 bindkey "^p" history-beginning-search-backward-end
