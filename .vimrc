@@ -256,6 +256,7 @@ nnoremap <C-t>k gT
 " change current directury
 nnoremap <silent> <Space>cd :<C-u>CD<CR>
 
+" AutoCmd {{{1
 " Fix 'fileencoding' to use 'encoding'
 " if the buffer only contains 7-bit characters.
 " Note that if the buffer is not 'modifiable',
@@ -281,6 +282,34 @@ endif
 
 " auto ime off (gvim only)
 autocmd MyAutoCmd InsertLeave * set iminsert=0 imsearch=0
+
+" vim -b : edit binary using xxd-format!
+augroup Binary
+    autocmd!
+    autocmd BufReadPre *.bin let &binary = 1 
+    autocmd BufReadPost * call BinReadPost()
+    autocmd BufWritePre * call BinWritePre()
+    autocmd BufWritePost * call BinWritePost()
+    function! BinReadPost()
+        if &binary
+            silent %!xxd -g1 
+            set ft=xxd
+        endif
+    endfunction
+    function! BinWritePre()
+        if &binary
+            let s:saved_pos = getpos( '.' )
+            silent %!xxd -r
+        endif
+    endfunction
+    function! BinWritePost()
+        if &binary
+            silent %!xxd -g1 
+            call setpos( '.', s:saved_pos )
+            set nomod
+        endif
+    endfunction
+augroup END 
 
 
 " Plugins {{{1
