@@ -405,6 +405,33 @@ let g:unite_source_file_mru_filename_format = ''
 " yankring.vim {{{2
 let g:yankring_history_file = '.yankring_history'
 
+
+" zencoding.vim {{{2
+let g:user_zen_leader_key = '<c-y>'
+let g:user_zen_settings = {
+\  'lang': 'ja',
+\  'indentation': '  ',
+\  'html': {
+\    'extends': 'javascript'
+\  },
+\  'eruby': {
+\    'extends': 'html,javascript,ruby'
+\  },
+\  'haml': {
+\    'extends': 'html,javascript,ruby'
+\  },
+\  'javascript': {
+\    'snippets': {
+\      'jq':    "$(function() {\n  ${cursor}${child}\n});",
+\      'each':  "$.each(arr, function(index, item)\n  ${child}\n});",
+\      'ready': "$(document).ready(function() {\n  ${cursor}\n});",
+\      'fn':    "(function() {\n\t${cursor}\n})();",
+\      'tm':    "setTimeout(function() {\n\t${cursor}\n}, 100);",
+\    },
+\  },
+\}
+
+
 " End {{{1
 if filereadable(expand('~/.vimrc.local'))
     source ~/.vimrc.local
