@@ -165,10 +165,10 @@ alias -g V="| vim -R -"
 
 alias view="vim -R -N --noplugin"
 
-alias s="screen"
-alias sr="screen -D -R"
-alias srr="screen -D -RR"
-alias sls="screen -ls"
+alias s="screen -U"
+alias sr="screen -U -D -R"
+alias srr="screen -U -D -RR"
+alias sls="screen -U -ls"
 
 alias cpan-uninstall='perl -MConfig -MExtUtils::Install -e '"'"'($FULLEXT=shift)=~s{-}{/}g;uninstall "$Config{sitear    chexp}/auto/$FULLEXT/.packlist",1'"'"
 alias cpan-update="perl -MCPAN -e 'CPAN::Shell->install(CPAN::Shell->r)'"

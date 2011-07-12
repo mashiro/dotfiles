@@ -7,6 +7,7 @@ setenv SCREEN 1
 shell -$SHELL
 shelltitle "% |shell"
 
+cjkwidth on
 defbce on
 defscrollback 10000
 nethack off
