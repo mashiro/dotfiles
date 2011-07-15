@@ -32,9 +32,11 @@ if [ ! "$REGISTER_PATHS_COMPLETED" ]; then
 
     # for manually build applications
     register_paths "/usr/local"
+    register_paths "/usr/local/enabled"
 
     # for my own tools
     register_paths "$HOME/local"
+    register_paths "$HOME/local/enabled"
 
     # completed
     export REGISTER_PATHS_COMPLETED=1
