@@ -342,14 +342,13 @@ endfunction
 " neocomplcache.vim {{{2
 let g:neocomplcache_enable_at_startup = 1
 let g:neocomplcache_enable_ignore_case = 1
-let g:neocomplcache_enable_esmart_case = 1
+let g:neocomplcache_enable_smart_case = 1
 let g:neocomplcache_enable_wildcard = 1
 let g:neocomplcache_enable_quick_match = 0
 let g:neocomplcache_enable_cursor_hold_i = 0
 let g:neocomplcache_enable_auto_select = 0
 let g:neocomplcache_enable_camel_case_completion = 0
 let g:neocomplcache_enable_underbar_completion = 0
-let g:neocomplcache_enable_display_parameter = 1
 imap <silent> <C-e> <Plug>(neocomplcache_snippets_expand)
 smap <silent> <C-e> <Plug>(neocomplcache_snippets_expand)
 
