@@ -19,7 +19,7 @@ all: update
 
 
 .PHONY: ls
-ls .PHONY:
+ls:
 	@echo "DOT FILES:" $(DOT_FILES)
 	@echo "DEPEND DIRS:" $(DEPEND_DIRS)
 
