@@ -43,13 +43,11 @@ case ${UID} in
 	PROMPT="%{${fg[cyan]}%}%n@%m%{${reset_color}%} %{${fg[red]}%}%/%%%{${reset_color}%}%b "
 	PROMPT2="%{${fg[red]}%}%_%%%{${reset_color}%}%b "
 	SPROMPT="%{${fg[red]}%}%r is correct? [n,y,a,e]:%{${reset_color}%}%b "
-    RPROMPT="%1(v|%F%{${fg[cyan]}%}%1v%f|)"
 	;;
 *)
 	PROMPT="%{${fg[cyan]}%}%n@%m%{${reset_color}%} %{${fg_bold[red]}%}%/%%%{${reset_color}%} "
 	PROMPT2="%{${fg_bold[red]}%}%_%%%{${reset_color}%} "
 	SPROMPT="%{${fg_bold[red]}%}%r is correct? [n,y,a,e]:%{${reset_color}%} "
-    RPROMPT="%0(v|%F%{${fg[cyan]}%}%1v%f|)"
 	;;
 esac
 
@@ -98,6 +96,7 @@ if is-at-least 4.3.7; then
         [[ -n "$vcs_info_msg_0_" ]] && psvar[1]="$vcs_info_msg_0_"
     }
     add-zsh-hook precmd _update_vcs_info_msg
+    RPROMPT="%0(v|%F%{${fg[cyan]}%}%1v%f|)"
 fi
 
 
