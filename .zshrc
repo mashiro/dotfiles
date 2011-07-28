@@ -43,11 +43,13 @@ case ${UID} in
 	PROMPT="%{${fg[cyan]}%}%n@%m%{${reset_color}%} %{${fg[red]}%}%/%%%{${reset_color}%}%b "
 	PROMPT2="%{${fg[red]}%}%_%%%{${reset_color}%}%b "
 	SPROMPT="%{${fg[red]}%}%r is correct? [n,y,a,e]:%{${reset_color}%}%b "
+    RPROMPT="%1(v|%F%{${fg[cyan]}%}%1v%f|)"
 	;;
 *)
 	PROMPT="%{${fg[cyan]}%}%n@%m%{${reset_color}%} %{${fg_bold[red]}%}%/%%%{${reset_color}%} "
 	PROMPT2="%{${fg_bold[red]}%}%_%%%{${reset_color}%} "
 	SPROMPT="%{${fg_bold[red]}%}%r is correct? [n,y,a,e]:%{${reset_color}%} "
+    RPROMPT="%0(v|%F%{${fg[cyan]}%}%1v%f|)"
 	;;
 esac
 
@@ -58,10 +60,16 @@ export LS_COLORS='di=01;34:ln=01;35:so=01;32:ex=01;31:bd=46;34:cd=43;34:su=41;30
 case "${TERM}" in
 kterm*|xterm*|screen*)
 	precmd() {
+        # screen
         echo -ne "\e]2;${USER}@${HOST%%.*}:${PWD}\a"
         if [ -n "${SCREEN}" ]; then
             echo -ne "\ek${PWD:t}/\e\\"
         fi
+
+        # vcs_info
+        psvar=()
+        LANG=en_US.UTF-8 vcs_info
+        [[ -n "$vcs_info_msg_0_" ]] && psvar[1]="$vcs_info_msg_0_"
 	}
     preexec() {
         if [ -n "${SCREEN}" ]; then
@@ -72,9 +80,7 @@ kterm*|xterm*|screen*)
 esac
 
 
-autoload -Uz add-zsh-hook
 autoload -Uz vcs_info
-
 zstyle ':vcs_info:*' enable git svn hg bzr
 zstyle ':vcs_info:*' formats '%s@%b'
 zstyle ':vcs_info:*' actionformats '%s@%b|%a'
@@ -89,14 +95,6 @@ if is-at-least 4.3.10; then
   zstyle ':vcs_info:git:*' formats '%s@%b %c%u'
   zstyle ':vcs_info:git:*' actionformats '%s@%b|%a %c%u'
 fi
-
-function _update_vcs_info_msg() {
-    psvar=()
-    LANG=en_US.UTF-8 vcs_info
-    [[ -n "$vcs_info_msg_0_" ]] && psvar[1]="$vcs_info_msg_0_"
-}
-add-zsh-hook precmd _update_vcs_info_msg
-RPROMPT="%1(v|%F%{${fg[cyan]}%}%1v%f|)"
 
 
 # Completion {{{1
