@@ -408,26 +408,39 @@ let g:yankring_history_file = '.yankring_history'
 " zencoding.vim {{{2
 let g:user_zen_leader_key = '<c-y>'
 let g:user_zen_settings = {
-\  'lang': 'ja',
-\  'indentation': '  ',
-\  'html': {
-\    'extends': 'javascript'
-\  },
-\  'eruby': {
-\    'extends': 'html,javascript,ruby'
-\  },
-\  'haml': {
-\    'extends': 'html,javascript,ruby'
-\  },
-\  'javascript': {
-\    'snippets': {
-\      'jq':    "$(function() {\n  ${cursor}${child}\n});",
-\      'each':  "$.each(arr, function(index, item)\n  ${child}\n});",
-\      'ready': "$(document).ready(function() {\n  ${cursor}\n});",
-\      'fn':    "(function() {\n\t${cursor}\n})();",
-\      'tm':    "setTimeout(function() {\n\t${cursor}\n}, 100);",
-\    },
-\  },
+\ 'lang': 'ja',
+\ 'indentation': '  ',
+\ 'html': {
+\   'extends': 'javascript'
+\ },
+\ 'eruby': {
+\   'extends': 'html,javascript,ruby'
+\ },
+\ 'haml': {
+\   'extends': 'html,javascript,ruby'
+\ },
+\ 'javascript': {
+\   'snippets': {
+\     'jq':    "$(function() {\n  ${cursor}${child}\n});",
+\     'each':  "$.each(arr, function(index, item)\n  ${child}\n});",
+\     'ready': "$(document).ready(function() {\n  ${cursor}\n});",
+\     'fn':    "(function() {\n\t${cursor}\n})();",
+\     'tm':    "setTimeout(function() {\n\t${cursor}\n}, 100);",
+\   },
+\ },
+\}
+
+
+" quickrun.vim {{{2
+let b:quickrun_config = {
+\ 'outputter/buffer/split': ''
+\}
+let g:quickrun_config = {
+\ 'cs': {
+\   'command': 'dmcs',
+\   'exec': ['%c %o %s -out:%s:p:r.exe', 'mono %s:p:r.exe %a', 'rm -f %s:p:r.exe'],
+\   'tempfile': '%{tempname()}.cs',
+\ },
 \}
 
 
