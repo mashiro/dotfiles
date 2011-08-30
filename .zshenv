@@ -1,7 +1,6 @@
-# Export {{{1
-# Path {{{2
+# Utility {{{1
 export PATH MANPATH INFOPATH
-register_paths() {
+register_paths() { # {{{2
     dir="$1"
     if [ -d "$dir" ]; then
         if [ -d "$dir/bin" ]; then PATH="$dir/bin:$PATH"; fi
@@ -19,6 +18,12 @@ register_paths() {
     fi
 }
 
+source_if() { # {{{2
+    [[ -s "$1" ]] && source "$1"
+}
+
+# Export {{{1
+# Path {{{2
 case "${OSTYPE}" in
 darwin*)
     export PATH="/usr/bin:/bin:/usr/sbin:/sbin"
@@ -42,7 +47,6 @@ if [ ! "$REGISTER_PATHS_COMPLETED" ]; then
     export REGISTER_PATHS_COMPLETED=1
 fi
 
-
 # Misc {{{2
 export TZ=JST-9
 export EDITOR=$(which vim)
@@ -53,7 +57,7 @@ export GREP_COLOR="01;33"
 export GREP_OPTIONS="--color=auto"
 export WORDCHARS="*?_-.[]~=&;!#$%^(){}<>"
 
-# ssh-agent
+# SSH-Agent {{{2
 _SSH_AGENT_PID=`ps gxww|grep "ssh-agent]*$"|awk '{print $0}'`
 _SSH_AUTH_SOCK=`ls -t /tmp/ssh*/agent*|head -1`
 if [ "$_SSH_AGENT_PID" = "" -o "$_SSH_AUTH_SOCK" = "" ]; then
@@ -65,25 +69,28 @@ else
     export SSH_AUTH_SOCK=$_SSH_AUTH_SOCK
 fi
 
-# Python {{{2
-# pythonbrew
-[[ -s "$HOME/.pythonbrew/etc/bashrc" ]] && . "$HOME/.pythonbrew/etc/bashrc"
-
-# homebrew (OSX)
+# Manager {{{1
+# homebrew (OSX) {{{2
 [[ -d "/usr/local/share/python" ]] && export PATH=/usr/local/share/python:$PATH
 
-# virtualenv
+# pythonbrew {{{2
+source_if "$HOME/.pythonbrew/etc/bashrc"
+
+# virtualenv {{{2
 export PYTHONSTARTUP=$HOME/.pythonstartup
 export WORKON_HOME=$HOME/.virtualenvs
 if [ -d $WORKON_HOME ]; then
     export VIRTUALENVERAPPER_SH=$(which virtualenvwrapper.sh)
-    [[ -s "$VIRTUALENVERAPPER_SH" ]] && . "$VIRTUALENVERAPPER_SH"
+    source_if "$VIRTUALENVERAPPER_SH"
 fi
 
+# rvm {{{2
+source_if "$HOME/.rvm/scripts/rvm"
 
-# Ruby {{{2
-[[ -s "$HOME/.rvm/scripts/rvm" ]] && . "$HOME/.rvm/scripts/rvm"  # This loads RVM into a shell session.
+# nvm {{{2
+source_if "$HOME/.nvm/nvm.sh"
 
 
 # End {{{1
-[ -f ~/.zshenv.local ] && source ~/.zshenv.local
+source_if "$HOME/.zshenv.local"
+
