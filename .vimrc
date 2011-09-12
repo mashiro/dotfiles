@@ -427,6 +427,10 @@ let g:quickrun_config = {
 \}
 
 
+" simple-javascript-indenter.vim {{{2
+let g:SimpleJsIndenter_BriefMode = 1
+
+
 " End {{{1
 if filereadable(expand('~/.vimrc.local'))
     source ~/.vimrc.local

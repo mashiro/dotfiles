@@ -43,6 +43,6 @@
 [submodule ".vim/bundle/rails"]
 	path = .vim/bundle/rails
 	url = git://github.com/tpope/vim-rails.git
-[submodule ".vim/bundle/web-indent"]
-	path = .vim/bundle/web-indent
-	url = git://github.com/vim-scripts/JavaScript-Indent.git
+[submodule ".vim/bundle/simple-javascript-indenter"]
+	path = .vim/bundle/simple-javascript-indenter
+	url = git://github.com/jiangmiao/simple-javascript-indenter.git
