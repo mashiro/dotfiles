@@ -46,3 +46,6 @@
 [submodule ".vim/bundle/simple-javascript-indenter"]
 	path = .vim/bundle/simple-javascript-indenter
 	url = git://github.com/jiangmiao/simple-javascript-indenter.git
+[submodule ".vim/bundle/coffee-script"]
+	path = .vim/bundle/coffee-script
+	url = git://github.com/kchmck/vim-coffee-script.git
