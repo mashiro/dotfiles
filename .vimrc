@@ -351,22 +351,6 @@ let g:neocomplcache_enable_underbar_completion = 0
 imap <silent> <C-e> <Plug>(neocomplcache_snippets_expand)
 smap <silent> <C-e> <Plug>(neocomplcache_snippets_expand)
 
-" FuzzyFinder.vim {{{2
-"let g:fuf_splitPathMatching = ' '
-"let g:fuf_patternSeparator = ' '
-"let g:fuf_modesDisable = ['mrucmd']
-"let g:fuf_file_exclude = '\v\~$|\.(o|exe|bak|swp|gif|jpg|png)$|(^|[/\\])\.(hg|git|bzr|svn)($|[/\\])'
-"let g:fuf_mrufile_exclude = '\v\~$|\.bak$|\.swp|\.howm$|\.(gif|jpg|png)$'
-"let g:fuf_mrufile_maxItem = 10000
-"let g:fuf_enumeratingLimit = 20
-"nnoremap <silent> <Space>fb :FufBuffer<CR>
-"nnoremap <silent> <Space>b :FufBuffer<CR>
-"nnoremap <silent> <Space>ff :FufFile <C-r>=expand('%:~:.')[:-1-len(expand('%:~:.:t'))]<CR><CR>
-"nnoremap <silent> <Space>fr :FufMruFile<CR>
-"nnoremap <silent> <Space>fq :FufQuickfix<CR>
-"nnoremap <silent> <Space>fl :FufLine<CR>
-"nnoremap <silent> <Leader>ff :FufFile **/<CR>
-
 " unite.vim {{{2
 nnoremap [unite] <Nop>
 nmap <Space> [unite]
