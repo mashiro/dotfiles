@@ -314,8 +314,7 @@ augroup END
 
 " Plugins {{{1
 " pathogen.vim {{{2
-call pathogen#runtime_append_all_bundles()
-call pathogen#helptags()
+call pathogen#infect()
 
 " templatefile.vim {{{2
 autocmd User plugin-template-loaded call s:template_keywords()
@@ -387,7 +386,6 @@ let g:unite_source_file_mru_filename_format = ''
 " yankring.vim {{{2
 let g:yankring_history_file = '.yankring_history'
 
-
 " zencoding.vim {{{2
 let g:user_zen_leader_key = '<c-y>'
 let g:user_zen_settings = {
@@ -413,7 +411,6 @@ let g:user_zen_settings = {
 \ },
 \}
 
-
 " quickrun.vim {{{2
 let b:quickrun_config = {
 \ 'outputter/buffer/split': ''
@@ -426,10 +423,8 @@ let g:quickrun_config = {
 \ },
 \}
 
-
 " simple-javascript-indenter.vim {{{2
 let g:SimpleJsIndenter_BriefMode = 1
-
 
 " End {{{1
 if filereadable(expand('~/.vimrc.local'))
