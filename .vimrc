@@ -57,15 +57,6 @@ if exists('&ambiwidth')
     set ambiwidth=double
 endif
 
-" Color {{{2
-if (1 < &t_Co || has('gui')) && has('syntax')
-    syntax on
-    set background=dark
-    if (256 <= &t_Co)
-        colorscheme xoria256
-    endif
-endif
-
 " Optioins {{{2
 filetype plugin indent on
 set nocompatible
@@ -129,6 +120,14 @@ set mouse=
 "    set mousehide
 "endif
 
+" Color {{{2
+if (1 < &t_Co || has('gui')) && has('syntax')
+    syntax on
+    set background=dark
+    if (256 <= &t_Co)
+        colorscheme xoria256
+    endif
+endif
 
 " Utilities {{{1
 " CD {{{2
@@ -155,10 +154,10 @@ function! s:change_current_dir(directory, bang) " {{{2
 endfunction
 
 function! s:set_package_runtimepath(name, ...) " {{{2
-    let name = a:name
-    let path = a:0 > 0 ? a:1 : '~/.vim/package'
-    execute 'set runtimepath^=' . path . '/' . name
-    execute 'set runtimepath+=' . path . '/' . name . '/after'
+    let l:name = a:name
+    let l:path = a:0 > 0 ? a:1 : '~/.vim/package'
+    execute 'set runtimepath^=' . l:path . '/' . l:name
+    execute 'set runtimepath+=' . l:path . '/' . l:name . '/after'
 endfunction
 
 function! s:toggle_option(option_name) " {{{2
@@ -314,8 +313,8 @@ augroup END
 
 " Plugins {{{1
 " vundle.vim {{{2
-if filereadable(expand('~/.vim/.vimrc.vundle'))
-    source ~/.vim/.vimrc.vundle
+if filereadable(expand('~/.vim/.vundle'))
+    source ~/.vim/.vundle
 endif
 
 

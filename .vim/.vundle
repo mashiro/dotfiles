@@ -4,8 +4,14 @@ set nocompatible
 syntax on
 filetype off
 
-set runtimepath+=~/.vim/bundle/vundle/
-call vundle#rc()
+if $VUNDLE_MAKE
+    let s:prefix='./'
+else
+    let s:prefix='~/'
+endif
+
+execute 'set runtimepath+=' . s:prefix . '.vim/bundle/vundle'
+call vundle#rc(s:prefix . '.vim/bundle')
 
 Bundle 'gmarik/vundle'
 Bundle 'Shougo/neocomplcache'
@@ -20,9 +26,7 @@ Bundle 'vim-ruby/vim-ruby'
 Bundle 'tpope/vim-rails'
 Bundle 'jiangmiao/simple-javascript-indenter'
 Bundle 'kchmck/vim-coffee-script'
-
 Bundle 'fakeclip'
-"Bundle 'L9'
 Bundle 'surround.vim'
 Bundle 'YankRing.vim'
 
