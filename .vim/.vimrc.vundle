@@ -1,0 +1,29 @@
+" vim: ft=vim
+
+set nocompatible
+syntax on
+filetype off
+
+set runtimepath+=~/.vim/bundle/vundle/
+call vundle#rc()
+
+Bundle 'gmarik/vundle'
+Bundle 'Shougo/neocomplcache'
+Bundle 'Shougo/unite.vim'
+Bundle 'mattn/gist-vim'
+Bundle 'mattn/webapi-vim'
+Bundle 'mattn/ideone-vim'
+Bundle 'mattn/zencoding-vim'
+Bundle 'thinca/vim-quickrun'
+Bundle 'thinca/vim-template'
+Bundle 'vim-ruby/vim-ruby'
+Bundle 'tpope/vim-rails'
+Bundle 'jiangmiao/simple-javascript-indenter'
+Bundle 'kchmck/vim-coffee-script'
+
+Bundle 'fakeclip'
+"Bundle 'L9'
+Bundle 'surround.vim'
+Bundle 'YankRing.vim'
+
+filetype plugin indent on

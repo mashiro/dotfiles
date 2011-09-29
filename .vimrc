@@ -313,8 +313,11 @@ augroup END
 
 
 " Plugins {{{1
-" pathogen.vim {{{2
-call pathogen#infect()
+" vundle.vim {{{2
+if filereadable(expand('~/.vim/.vimrc.vundle'))
+    source ~/.vim/.vimrc.vundle
+endif
+
 
 " templatefile.vim {{{2
 autocmd User plugin-template-loaded call s:template_keywords()
