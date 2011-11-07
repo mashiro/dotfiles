@@ -1,3 +1,9 @@
+if RUBY_VERSION >= '1.9.2'
+  ['./', './lib'].each do |path|
+    $LOAD_PATH.unshift path
+  end
+end
+
 require 'irb/completion'
 require 'irb/ext/save-history'
 require 'rubygems'

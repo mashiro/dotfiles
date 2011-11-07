@@ -15,7 +15,7 @@ MKDIR = mkdir -p
 
 
 .PHONY: all
-all: update
+all: build
 
 
 .PHONY: ls
@@ -24,12 +24,12 @@ ls:
 	@echo "DEPEND DIRS:" $(DEPEND_DIRS)
 
 
-.PHONY: update
-update:
+.PHONY: build
+build:
 	@git pull origin master
 	@git submodule update --init
 	@git submodule foreach 'git checkout master; git pull origin master'
-	@export VUNDLE_MAKE=1;vim -u ./.vim/.vundle +BundleInstall! +q +q
+
 
 .PHONY: install install-dot-files install-depend-dirs
 install: install-dot-files install-depend-dirs

@@ -312,11 +312,34 @@ augroup END
 
 
 " Plugins {{{1
-" vundle.vim {{{2
-if filereadable(expand('~/.vim/.vundle'))
-    source ~/.vim/.vundle
+" neobundle.vim {{{2
+set nocompatible
+filetype off
+
+if has('vim_starting')
+    set runtimepath+=~/.vim/bundle/neobundle
+    call neobundle#rc(expand('~/.vim/bundle'))
 endif
 
+NeoBundle 'git://github.com/Shougo/neobundle.vim.git'
+NeoBundle 'git://github.com/Shougo/neocomplcache.git'
+NeoBundle 'git://github.com/Shougo/vimfiler.git'
+NeoBundle 'git://github.com/Shougo/unite.vim.git'
+NeoBundle 'git://github.com/mattn/gist-vim.git'
+NeoBundle 'git://github.com/mattn/webapi-vim.git'
+NeoBundle 'git://github.com/mattn/ideone-vim.git'
+NeoBundle 'git://github.com/mattn/zencoding-vim.git'
+NeoBundle 'git://github.com/thinca/vim-quickrun.git'
+NeoBundle 'git://github.com/thinca/vim-template.git'
+NeoBundle 'git://github.com/kana/vim-fakeclip.git'
+NeoBundle 'git://github.com/vim-ruby/vim-ruby.git'
+NeoBundle 'git://github.com/tpope/vim-rails.git'
+NeoBundle 'git://github.com/tpope/vim-surround.git'
+NeoBundle 'git://github.com/jiangmiao/simple-javascript-indenter.git'
+NeoBundle 'git://github.com/kchmck/vim-coffee-script.git'
+NeoBundle 'git://github.com/vim-scripts/YankRing.vim.git'
+
+filetype plugin indent on
 
 " templatefile.vim {{{2
 autocmd User plugin-template-loaded call s:template_keywords()
