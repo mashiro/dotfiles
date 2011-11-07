@@ -1,0 +1,37 @@
+" vim: ft=vim
+
+set nocompatible
+filetype off
+
+if has('vim_starting')
+    if !empty($DOT_FILES_MAKE)
+        set runtimepath+=./neobundle
+	call neobundle#rc(expand('./bundle'))
+    else
+        set runtimepath+=~/.vim/neobundle
+	call neobundle#rc(expand('~/.vim/bundle'))
+    endif
+endif
+
+NeoBundle 'git://github.com/Shougo/neobundle.vim.git'
+NeoBundle 'git://github.com/Shougo/vimproc.git'
+NeoBundle 'git://github.com/Shougo/vimshell.git'
+NeoBundle 'git://github.com/Shougo/neocomplcache.git'
+NeoBundle 'git://github.com/Shougo/vimfiler.git'
+NeoBundle 'git://github.com/Shougo/unite.vim.git'
+NeoBundle 'git://github.com/mattn/gist-vim.git'
+NeoBundle 'git://github.com/mattn/webapi-vim.git'
+NeoBundle 'git://github.com/mattn/ideone-vim.git'
+NeoBundle 'git://github.com/mattn/zencoding-vim.git'
+NeoBundle 'git://github.com/thinca/vim-quickrun.git'
+NeoBundle 'git://github.com/thinca/vim-template.git'
+NeoBundle 'git://github.com/kana/vim-fakeclip.git'
+NeoBundle 'git://github.com/vim-ruby/vim-ruby.git'
+NeoBundle 'git://github.com/tpope/vim-rails.git'
+NeoBundle 'git://github.com/tpope/vim-surround.git'
+NeoBundle 'git://github.com/jiangmiao/simple-javascript-indenter.git'
+NeoBundle 'git://github.com/kchmck/vim-coffee-script.git'
+NeoBundle 'git://github.com/vim-scripts/YankRing.vim.git'
+
+filetype plugin indent on
+

@@ -1,4 +1,3 @@
-# makefile
 
 EXCLUDES = . .. .git .gitignore .gitmodules
 DOT_FILES = $(filter-out $(EXCLUDES),$(wildcard .*))
@@ -29,7 +28,7 @@ build:
 	@git pull origin master
 	@git submodule update --init
 	@git submodule foreach 'git checkout master; git pull origin master'
-
+	@cd .vim; DOT_FILES_MAKE=build make
 
 .PHONY: install install-dot-files install-depend-dirs
 install: install-dot-files install-depend-dirs

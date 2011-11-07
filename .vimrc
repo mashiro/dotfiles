@@ -313,55 +313,15 @@ augroup END
 
 " Plugins {{{1
 " neobundle.vim {{{2
-set nocompatible
-filetype off
-
-if has('vim_starting')
-    set runtimepath+=~/.vim/bundle/neobundle
-    call neobundle#rc(expand('~/.vim/bundle'))
+if filereadable(expand('~/.vim/.neobundle'))
+    source ~/.vim/.neobundle
 endif
 
-NeoBundle 'git://github.com/Shougo/neobundle.vim.git'
-NeoBundle 'git://github.com/Shougo/neocomplcache.git'
-NeoBundle 'git://github.com/Shougo/vimfiler.git'
-NeoBundle 'git://github.com/Shougo/unite.vim.git'
-NeoBundle 'git://github.com/mattn/gist-vim.git'
-NeoBundle 'git://github.com/mattn/webapi-vim.git'
-NeoBundle 'git://github.com/mattn/ideone-vim.git'
-NeoBundle 'git://github.com/mattn/zencoding-vim.git'
-NeoBundle 'git://github.com/thinca/vim-quickrun.git'
-NeoBundle 'git://github.com/thinca/vim-template.git'
-NeoBundle 'git://github.com/kana/vim-fakeclip.git'
-NeoBundle 'git://github.com/vim-ruby/vim-ruby.git'
-NeoBundle 'git://github.com/tpope/vim-rails.git'
-NeoBundle 'git://github.com/tpope/vim-surround.git'
-NeoBundle 'git://github.com/jiangmiao/simple-javascript-indenter.git'
-NeoBundle 'git://github.com/kchmck/vim-coffee-script.git'
-NeoBundle 'git://github.com/vim-scripts/YankRing.vim.git'
+" vimfiler.vim {{{2
+let g:vimfiler_as_default_explorer = 1
 
-filetype plugin indent on
+" vimshell.vim {{{2
 
-" templatefile.vim {{{2
-autocmd User plugin-template-loaded call s:template_keywords()
-function! s:template_keywords()
-    " 置換キーワード
-	let date      = escape(strftime('%Y-%m-%d'), '/\\')
-	let file      = escape(expand('%:t:r'), '/\\')
-	let file_ext  = escape(expand('%'), '/\\')
-	let inc_guard = escape(toupper(substitute(file, '\\.', '_', 'g')), '/\\') . '_INCLUDED'
-	silent! execute '%s/<+DATE+>/'          . date      . '/g'
-	silent! execute '%s/<+FILE+>/'          . file      . '/g'
-	silent! execute '%s/<+FILE_EXT+>/'      . file_ext  . '/g'
-	silent! execute '%s/<+INCLUDE_GUARD+>/' . inc_guard . '/g'
-
-    " <%= %> の中身をvimで評価して展開
-    silent execute '%s/<%=\(.\{-}\)%>/\=eval(submatch(1))/ge'
-
-    " <+CURSOR+> にカーソルを移動
-    if search('<+CURSOR+>')
-        silent execute 'normal! "_da>'
-    endif
-endfunction
 
 " neocomplcache.vim {{{2
 let g:neocomplcache_enable_at_startup = 1
@@ -407,6 +367,28 @@ let g:unite_abbr_highlight = 'TabLine'
 
 " For optimize.
 let g:unite_source_file_mru_filename_format = ''
+
+" templatefile.vim {{{2
+autocmd User plugin-template-loaded call s:template_keywords()
+function! s:template_keywords()
+    " 置換キーワード
+	let date      = escape(strftime('%Y-%m-%d'), '/\\')
+	let file      = escape(expand('%:t:r'), '/\\')
+	let file_ext  = escape(expand('%'), '/\\')
+	let inc_guard = escape(toupper(substitute(file, '\\.', '_', 'g')), '/\\') . '_INCLUDED'
+	silent! execute '%s/<+DATE+>/'          . date      . '/g'
+	silent! execute '%s/<+FILE+>/'          . file      . '/g'
+	silent! execute '%s/<+FILE_EXT+>/'      . file_ext  . '/g'
+	silent! execute '%s/<+INCLUDE_GUARD+>/' . inc_guard . '/g'
+
+    " <%= %> の中身をvimで評価して展開
+    silent execute '%s/<%=\(.\{-}\)%>/\=eval(submatch(1))/ge'
+
+    " <+CURSOR+> にカーソルを移動
+    if search('<+CURSOR+>')
+        silent execute 'normal! "_da>'
+    endif
+endfunction
 
 " yankring.vim {{{2
 let g:yankring_history_file = '.yankring_history'
