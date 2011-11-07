@@ -17,6 +17,6 @@ endif
 
 .PHONY: build
 build:
-	@vim -u .neobundle +NeoBundleInstall +q +q
+	@vim -u .neobundle +NeoBundleInstall! +q +q
 	@cd bundle/vimproc; make -f $(MAKEFILE)
 
