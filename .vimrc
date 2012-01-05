@@ -317,12 +317,6 @@ if filereadable(expand('~/.vim/.neobundle'))
     source ~/.vim/.neobundle
 endif
 
-" vimfiler.vim {{{2
-let g:vimfiler_as_default_explorer = 1
-
-" vimshell.vim {{{2
-
-
 " neocomplcache.vim {{{2
 let g:neocomplcache_enable_at_startup = 1
 let g:neocomplcache_enable_ignore_case = 1
@@ -335,38 +329,57 @@ let g:neocomplcache_enable_underbar_completion = 0
 imap <silent> <C-e> <Plug>(neocomplcache_snippets_expand)
 smap <silent> <C-e> <Plug>(neocomplcache_snippets_expand)
 
+" ctrlp.vim {{{2
+let g:ctrlp_map = '[ctrlp]f'
+let g:ctrlp_cmd = 'CtrlP'
+let g:ctrlp_prompt_mappings = {
+    \ 'PrtBS()':              ['<c-h>', '<bs>'],
+    \ 'PrtSelectMove("j")':   ['<c-j>', '<c-n>'],
+    \ 'PrtSelectMove("k")':   ['<c-k>', '<c-p>'],
+    \ 'PrtHistory(-1)':       ['<down>'],
+    \ 'PrtHistory(1)':        ['<up>'],
+    \ 'PrtCurLeft()':         ['<left>'],
+    \ 'PrtCurRight()':        ['<right>']
+    \ }
+
+nnoremap [ctrlp] <Nop>
+nmap <Space> [ctrlp]
+
+nnoremap <silent> [ctrlp]f :<C-u>CtrlP<CR>
+nnoremap <silent> [ctrlp]b :<C-u>CtrlPBuffer<CR>
+
 " unite.vim {{{2
-nnoremap [unite] <Nop>
-nmap <Space> [unite]
-
-nnoremap <silent> [unite]c :<C-u>UniteWithCurrentDir -buffer-name=files buffer file_mru bookmark file<CR>
-nnoremap <silent> [unite]g :<C-u>UniteWithBufferDir -buffer-name=files buffer file_mru bookmark file<CR>
-nnoremap <silent> [unite]r :<C-u>Unite -buffer-name=register register<CR>
-nnoremap <silent> [unite]s :<C-u>Unite file_rec<CR>
-nnoremap <silent> [unite]f :<C-u>Unite file<CR>
-nnoremap <silent> [unite]b :<C-u>Unite buffer<CR>
-nnoremap <silent> [unite]r :<C-u>Unite -buffer-name=register register<CR>
-
-autocmd FileType unite call s:unite_my_settings()
-function! s:unite_my_settings()"{{{
-  " Overwrite settings.
-  nmap <buffer> <ESC> <Plug>(unite_exit)
-  imap <buffer> jj <Plug>(unite_insert_leave)
-  imap <buffer> <C-w> <Plug>(unite_delete_backward_path)
-
-  " <C-l>: manual neocomplcache completion.
-  inoremap <buffer> <C-l> <C-x><C-u><C-p><Down>
-
-  " Start insert.
-  "let g:unite_enable_start_insert = 1
-endfunction"}}}
-
-let g:unite_source_file_mru_limit = 200
-let g:unite_cursor_line_highlight = 'TabLineSel'
-let g:unite_abbr_highlight = 'TabLine'
-
-" For optimize.
-let g:unite_source_file_mru_filename_format = ''
+"nnoremap [unite] <Nop>
+"nmap <Space> [unite]
+"
+"nnoremap <silent> [unite]c :<C-u>UniteWithCurrentDir -buffer-name=files buffer file_mru bookmark file<CR>
+"nnoremap <silent> [unite]g :<C-u>UniteWithBufferDir -buffer-name=files buffer file_mru bookmark file<CR>
+"nnoremap <silent> [unite]r :<C-u>Unite -buffer-name=register register<CR>
+"nnoremap <silent> [unite]s :<C-u>Unite file_rec<CR>
+"nnoremap <silent> [unite]f :<C-u>Unite file<CR>
+"nnoremap <silent> [unite]b :<C-u>Unite buffer<CR>
+"nnoremap <silent> [unite]r :<C-u>Unite -buffer-name=register register<CR>
+"
+"autocmd FileType unite call s:unite_my_settings()
+"function! s:unite_my_settings()"{{{
+"  " Overwrite settings.
+"  nmap <buffer> <ESC> <Plug>(unite_exit)
+"  imap <buffer> jj <Plug>(unite_insert_leave)
+"  imap <buffer> <C-w> <Plug>(unite_delete_backward_path)
+"
+"  " <C-l>: manual neocomplcache completion.
+"  inoremap <buffer> <C-l> <C-x><C-u><C-p><Down>
+"
+"  " Start insert.
+"  "let g:unite_enable_start_insert = 1
+"endfunction"}}}
+"
+"let g:unite_source_file_mru_limit = 200
+"let g:unite_cursor_line_highlight = 'TabLineSel'
+"let g:unite_abbr_highlight = 'TabLine'
+"
+"" For optimize.
+"let g:unite_source_file_mru_filename_format = ''
 
 " templatefile.vim {{{2
 autocmd User plugin-template-loaded call s:template_keywords()
