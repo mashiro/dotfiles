@@ -8,10 +8,13 @@
 // @exclude        http://b.hatena.ne.jp/*
 // @exclude        http://www.facebook.com/plugins/like.php*
 // @exclude        http://api.tweetmeme.com/button.js*
+// @version        0.0.63
+// @updateURL      https://userscripts.org/scripts/source/8551.user.js
+// @icon           http://autopagerize.net/img/icons/icon_032.png
 // ==/UserScript==
 //
 // auther:  swdyh http://d.hatena.ne.jp/swdyh/
-// version: 0.0.58 2010-10-25T15:20:34+09:00
+// version: 0.0.63 2011-12-29T04:54:56+09:00
 //
 // this script based on
 // GoogleAutoPager(http://la.ma.la/blog/diary_200506231749.htm) and
@@ -34,7 +37,7 @@ else {
 }
 
 var URL = 'http://autopagerize.net/'
-var VERSION = '0.0.57'
+var VERSION = '0.0.63'
 var DEBUG = false
 var AUTO_START = true
 var CACHE_EXPIRE = 24 * 60 * 60 * 1000
@@ -161,12 +164,7 @@ var AutoPager = function(info) {
     var bottom = getElementPosition(this.insertPoint).top ||
         this.getPageElementsBottom() ||
         (Math.round(scrollHeight * 0.8))
-
-    var baseRemainHeight = BASE_REMAIN_HEIGHT
-    if (url.match('tumblr\\.com'))
-        baseRemainHeight *= 10
-
-    this.remainHeight = scrollHeight - bottom + baseRemainHeight
+    this.remainHeight = scrollHeight - bottom + BASE_REMAIN_HEIGHT
     this.onScroll()
 
     var that = this
@@ -410,7 +408,7 @@ AutoPager.prototype.addPage = function(htmlDoc, page) {
     p.setAttribute('class', 'autopagerize_page_info')
     var self = this
 
-    if (page[0] && page[0].tagName == 'TR') {
+    if (page[0] && /tr/i.test(page[0].tagName)) {
         var insertParent = this.insertPoint.parentNode
         var colNodes = getElementsByXPath('child::tr[1]/child::*[self::td or self::th]', insertParent)
 
@@ -772,7 +770,7 @@ else {
     var cacheInfo = getCache()
     var xhrStates = {}
     SITEINFO_IMPORT_URLS.forEach(function(i) {
-        if (!cacheInfo[i] || cacheInfo[i].expire < new Date()) {
+        if (!cacheInfo[i] || new Date(cacheInfo[i].expire) < new Date()) {
             var opt = {
                 method: 'get',
                 url: i,
@@ -860,7 +858,20 @@ function getXPathResult(xpath, node, resultType) {
     var doc = node.ownerDocument || node
     var resolver = doc.createNSResolver(node.documentElement || node)
     // Use |node.lookupNamespaceURI('')| for Opera 9.5
-    var defaultNS = node.lookupNamespaceURI(null)
+    // A workaround for bugs of Node.lookupNamespaceURI(null)
+    // https://bugzilla.mozilla.org/show_bug.cgi?id=693615
+    // https://bugzilla.mozilla.org/show_bug.cgi?id=694754
+    var defaultNS = null
+    try {
+        // This follows the spec: http://www.w3.org/TR/DOM-Level-3-Core/namespaces-algorithms.html#lookupNamespaceURIAlgo
+        if (node.nodeType == node.DOCUMENT_NODE) {
+            defaultNS = node.documentElement.lookupNamespaceURI(null)
+        }
+        else {
+            defaultNS = node.lookupNamespaceURI(null)
+        }
+    }
+    catch(e) {}
 
     if (defaultNS) {
         const defaultPrefix = '__default__'
@@ -917,7 +928,12 @@ function log(message) {
 
 function debug() {
     if ( typeof DEBUG != 'undefined' && DEBUG ) {
-        console.log.apply(console, arguments)
+        if (console.log.apply) {
+            console.log.apply(console, arguments)
+        }
+        else {
+            Function.prototype.apply.apply(console.log, [console, arguments])
+        }
     }
 }
 
@@ -958,7 +974,8 @@ function getScrollHeight() {
 
 function isSameDomain(url) {
     if (url.match(/^\w+:/)) {
-        return location.host == url.split('/')[2]
+        var url_s = url.split(/[\/\?]/)
+        return url_s[0] == location.protocol && location.host == url_s[2]
     }
     else {
         return true
@@ -972,6 +989,9 @@ function isSameBaseUrl(urlA, urlB) {
 function resolvePath(path, base) {
     if (path.match(/^https?:\/\//)) {
         return path
+    }
+    if (path.match(/^\?/)) {
+        return base.replace(/\?.+$/, '') + path;
     }
     if (path.match(/^[^\/]/)) {
         return base.replace(/[^/]+$/, '') + path
