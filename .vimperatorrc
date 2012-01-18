@@ -1,5 +1,5 @@
 " mashiro .vimperatorrc
-" firefox-4.0.1 + vimperator-3.1
+" firefox-9.0.1 + vimperator-3.3
 
 " Initialize {{{1
 "nmapc
@@ -35,10 +35,6 @@ highlight Bell display: none;
 " about:config
 set! general.autoScroll=false
 set! ui.key.generalAccessKey=0
-set! network.http.pipelining=true
-set! network.http.pipelining.ssl=true
-set! network.http.proxy.pipelining=true
-set! network.dns.disableIPV6=true
 set! browser.tabs.closeButtons=2
 set! browser.tabs.closeWindowWithLastTab=false
 set! browser.tabs.loadDivertedInBackground=true
@@ -321,7 +317,7 @@ liberator.globalVariables.useragent_list = [{
 EOM
 
 " statusline-toolbar.js {{{2
-lazy set statuslinetoolbars=feed-button,lpt_lastpass-compact-btn,greasemonkey-tbb
+"lazy set statuslinetoolbars=feed-button,lpt_lastpass-compact-btn,greasemonkey-tbb
 
 
 " Javascripts {{{1
