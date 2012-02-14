@@ -335,7 +335,9 @@ let g:ctrlp_cmd = 'CtrlP'
 let g:ctrlp_max_height = 20
 let g:ctrlp_match_window_bottom = 1
 let g:ctrlp_match_window_reversed = 0
+let g:ctrlp_working_path_mode = 2
 let g:ctrlp_highlight_match = [1, 'Type']
+let g:ctrlp_custom_ignore = '\.\(git\|hg\|svn\)$\|vendor$'
 let g:ctrlp_prompt_mappings = {
     \ 'PrtBS()':              ['<c-h>', '<bs>'],
     \ 'PrtSelectMove("j")':   ['<c-j>', '<c-n>'],
@@ -351,7 +353,7 @@ nnoremap [ctrlp] <Nop>
 nmap <Space> [ctrlp]
 
 nnoremap <silent> [ctrlp]t :<C-u>CtrlP<CR>
-nnoremap <silent> [ctrlp]f :<C-u>CtrlPCurFile<CR>
+nnoremap <silent> [ctrlp]f :<C-u>CtrlPCurWD<CR>
 nnoremap <silent> [ctrlp]b :<C-u>CtrlPBuffer<CR>
 
 " unite.vim {{{2
