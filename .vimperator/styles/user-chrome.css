@@ -1,10 +1,10 @@
 @charset "utf-8";
 @namespace url("http://www.mozilla.org/keymaster/gatekeeper/there.is.only.xul");
- 
+
 /* 新しいタブを開くボタンを非表示 */
 #new-tab-button,
 .tabs-newtab-button {
-	display: none !important;
+    display: none !important;
 }
 
 /* タブ一覧表示ボタンを非表示 */
