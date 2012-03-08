@@ -171,6 +171,8 @@ alias sr="screen -U -D -R"
 alias srr="screen -U -D -RR"
 alias sls="screen -U -ls"
 
+alias t="tmux"
+
 alias cpan-uninstall='perl -MConfig -MExtUtils::Install -e '"'"'($FULLEXT=shift)=~s{-}{/}g;uninstall "$Config{sitear    chexp}/auto/$FULLEXT/.packlist",1'"'"
 alias cpan-update="perl -MCPAN -e 'CPAN::Shell->install(CPAN::Shell->r)'"
 
