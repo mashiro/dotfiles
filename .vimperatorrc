@@ -401,26 +401,6 @@ javascript <<EOM
 EOM
 
 
-" Greasemonkey 0.9.1 で window を共通にする {{{2
-js <<EOM
-autocommands.add('VimperatorEnter', '.*',
-  function() {
-    let gm = Components.classes['@greasemonkey.mozdev.org/greasemonkey-service;1'];
-    if (gm) {
-      gm = gm.getService().wrappedJSObject;
-      if (gm.injectScripts.toSource().search('sharedWindow') == -1) {
-          gm.injectScripts = liberator.eval(
-              gm.injectScripts.toSource()
-                  .replace(/(?=var firebugConsole)/,
-                          'var sharedWindow = {};' +
-                          'sharedWindow.window = sharedWindow;' +
-                          'sharedWindow.__proto__ = new XPCNativeWrapper(unsafeContentWin);')
-                  .replace(/(?=sandbox\.__proto__)/, ' sandbox.window = sharedWindow;'),
-              gm.injectScripts);
-      }
-    }
-  });
-EOM
 
 
 " Styles {{{1
