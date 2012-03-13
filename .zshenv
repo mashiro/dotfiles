@@ -2,7 +2,7 @@
 export PATH MANPATH INFOPATH
 register_paths() { # {{{2
     dir="$1"
-    if [ -d "$dir" ]; then
+    if [ -d "$dir" ] || [ -z "$dir" ]; then
         if [ -d "$dir/bin" ]; then PATH="$dir/bin:$PATH"; fi
         if [ -d "$dir/sbin" ]; then PATH="$dir/sbin:$PATH"; fi
         if [ -d "$dir/man" ]; then MANPATH="$dir/man:$MANPATH"; fi
@@ -24,14 +24,11 @@ source_if() { # {{{2
 
 # Export {{{1
 # Path {{{2
-case "${OSTYPE}" in
-darwin*)
-    export PATH="/usr/bin:/bin:/usr/sbin:/sbin"
-    export REGISTER_PATHS_COMPLETED=""
-	;;
-esac
-
 if [ ! "$REGISTER_PATHS_COMPLETED" ]; then
+    # for Defaults
+    register_paths ""
+    register_paths "/usr"
+    
     # for MacPorts
     register_paths "/opt/local"
 
@@ -85,7 +82,10 @@ if [ -d $WORKON_HOME ]; then
 fi
 
 # rvm {{{2
-source_if "$HOME/.rvm/scripts/rvm"
+if [[ -d "$HOME/.rvm" ]]; then
+    source_if "$HOME/.rvm/scripts/rvm"
+    export PATH="$HOME/.rvm/bin":$PATH
+fi
 
 # nvm {{{2
 source_if "$HOME/.nvm/nvm.sh"
