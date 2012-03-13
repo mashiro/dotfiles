@@ -82,10 +82,10 @@ if [ -d $WORKON_HOME ]; then
 fi
 
 # rvm {{{2
-if [[ -d "$HOME/.rvm" ]]; then
-    source_if "$HOME/.rvm/scripts/rvm"
-    export PATH="$HOME/.rvm/bin":$PATH
-fi
+source_if "$HOME/.rvm/scripts/rvm"
+
+# perlbrew
+source_if "$HOME/perl5/perlbrew/etc/bashrc"
 
 # nvm {{{2
 source_if "$HOME/.nvm/nvm.sh"
