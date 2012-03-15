@@ -1,13 +1,11 @@
-// Last Change: 27-May-2011. Jan 2008
 var PLUGIN_INFO =
 <VimperatorPlugin>
     <name>{NAME}</name>
     <description>Direct Post to Social Bookmarks</description>
     <author mail="trapezoid.g@gmail.com" homepage="http://unsigned.g.hatena.ne.jp/Trapezoid">Trapezoid</author>
-    <version>0.15</version>
+    <version>0.16.1</version>
     <license>GPL</license>
     <minVersion>2.0pre</minVersion>
-    <maxVersion>2.2</maxVersion>
     <updateURL>https://github.com/vimpr/vimperator-plugins/raw/master/direct_bookmark.js</updateURL>
     <detail><![CDATA[
 Social Bookmark direct add script for Vimperator 2.2
@@ -389,6 +387,28 @@ for Migemo search: require XUL/Migemo Extension
                 });
                 return hatena_tags;
             },
+            userTags:function(url, results){
+                var url = 'http://b.hatena.ne.jp/entry/jsonlite/?url=' + encodeURIComponent(url)
+
+                return Deferred.http({
+                    method: "get",
+                    url: url,
+                }).next(function(xhr){
+                    if(xhr.status != 200)
+                        return;
+                    let json = JSON.parse(xhr.responseText);
+                    if (!json)
+                        return;
+                    let tags = json.bookmarks.map(function(it) it.tags);
+                    tags = tags.filter(function(it) it.length);
+                    if (!tags.length)
+                        return;
+                    tags = Array.concat.apply([], tags);
+                    tags = tags.map(String.trim);
+                    tags = util.Array.uniq(tags);
+                    results.push(tags);
+                });
+            },
             icon:function(url){
                 return '<img src="http://b.hatena.ne.jp/entry/image/' + url + '" style="vertical-align: middle;" />';
             },
@@ -400,7 +420,7 @@ for Migemo search: require XUL/Migemo Extension
             entryPage:'http://del.icio.us/url/%URL::MD5%',
             poster:function(user,password,url,title,comment,tags){
                 var request_url = 'https://api.del.icio.us/v1/posts/add?' + [
-                    ['url', url], ['description', title], ['extended', comment], ['tags', tags.join(' ')]
+                    ['url', url], ['description', title], ['extended', comment], ['tags', tags.join(',')]
                 ].map(function(p) p[0] + '=' + encodeURIComponent(p[1])).join('&');
                 return Deferred.http({
                     method: "get",
@@ -412,16 +432,15 @@ for Migemo search: require XUL/Migemo Extension
                 });
             },
             tags:function(user,password){
-                const feed_url = 'http://feeds.delicious.com/feeds/json/tags/';
-                var returnValue = [];
+                const url = 'https://api.del.icio.us/v1/tags/get?';
                 var xhr = new XMLHttpRequest();
-                xhr.open("GET", feed_url + user + "?raw", false, user, password);
+                xhr.open("GET", url, false, user, password);
                 xhr.send(null);
 
-                var tags = evalFunc("(" + xhr.responseText + ")");
-                for(var tag in tags)
-                    returnValue.push(tag);
-                return returnValue;
+                return [
+                    e.getAttribute("tag")
+                    for ([, e] in Iterator(Array.slice(xhr.responseXML.querySelectorAll('tag'))))
+                ];
             },
             icon:function(url){
                 var url = liberator.modules.buffer.URL;
@@ -461,7 +480,9 @@ for Migemo search: require XUL/Migemo Extension
                     user: user,
                     password: password,
                 }).next(function(xhr){
-                    if(xhr.status != 200) throw "livedoor clip: failed";
+                    if(xhr.status != 200) {
+                        throw "livedoor clip: failed";
+                    }
                 });
             },
             tags:function(user,password){
@@ -473,6 +494,8 @@ for Migemo search: require XUL/Migemo Extension
 
                 var mypage_html = parseHTML(xhr.responseText);
                 var tags = getElementsByXPath("id(\"tag_list\")/div/span",mypage_html);
+                if (!tags)
+                    return [];
 
                 tags.forEach(function(tag){
                     ldc_tags.push(tag.textContent);
@@ -505,21 +528,22 @@ for Migemo search: require XUL/Migemo Extension
                 });
             },
             tags:function(user,password){
-                var returnValue = [];
-                var xhr = new XMLHttpRequest();
-                xhr.open("GET", "https://www.google.com/bookmarks", false, user, password);
-                xhr.send(null);
+                return [];
 
-                var html = parseHTML(xhr.responseText);
-                var tags = getElementsByXPath('//a[contains(@id,"lbl_m_")]/text()',html);
+                // FIXME: NOT WORKS
+                //
+                // var returnValue = [];
+                // var xhr = new XMLHttpRequest();
+                // xhr.open("GET", "https://www.google.com/bookmarks", false, user, password);
+                // xhr.send(null);
 
-                tags.forEach(function(tag){
-                    var text = tag.textContent;
-                    if(text.match(/\S/)) {
-                        returnValue.push(text);
-                    }
-                });
-                return returnValue;
+                // var html = parseHTML(xhr.responseText);
+                // var tags = getElementsByXPath('id("sidenav")/div/ul/li/a[count(*)=1]/text()',html);
+
+                // tags.forEach(function(tag){
+                //     returnValue.push(tag.textContent.match(/\S+/));
+                // });
+                // return returnValue;
             },
         },
         'f': {
@@ -573,9 +597,10 @@ for Migemo search: require XUL/Migemo Extension
                 Application.bookmarks.tags.children.map(function(x) x.title),
         },
     };
-    liberator.plugins.direct_bookmark = { services: services, tags: [] };
+    __context__.services = services;
+    __context__.tags = [];
 
-    function getTagsAsync(arg){
+    function getTagsAsync(onComplete){
         var d,first;
         d = first = Deferred();
 
@@ -588,22 +613,34 @@ for Migemo search: require XUL/Migemo Extension
                 return t.concat(tags);
             });
         });
-        d.next(function(tags){liberator.plugins.direct_bookmark.tags = tags.filter(function(e,i,a) a.indexOf(e) == i).sort()})
-         .error(function(e){liberator.echoerr("direct_bookmark.js: Exception throwed! " + e)});
+        d.next(function(tags){
+            tags = tags.filter(function(e,i,a) a.indexOf(e) == i);
+            tags.sort();
+            __context__.tags = tags;
+            onComplete(tags);
+        }).error(function(e){liberator.echoerr(e, null, "direct_bookmark.js: ")});
         return first;
     }
-    function getTags(arg){
-        var user,password;
-        var tags = [];
+    function getUserTags(url, onComplete){
+        var d = new Deferred();
+        var first = d;
+        var results = [];
+
         useServicesByTag.split(/\s*/).forEach(function(service){
-            var currentService = services[service] || null;
-            [user,password] = currentService.account ? getUserAccount.apply(currentService,currentService.account) : [null, null];
-            tags = tags.concat(currentService.tags(user,password));
+            var user, password, currentService = services[service] || null;
+            if (!(currentService && currentService.userTags))
+                return;
+            d = d.next(currentService.userTags(url, results));
         });
-        liberator.plugins.direct_bookmark.tags = tags.filter(function(e,i,a) a.indexOf(e) == i).sort();
+        d.next(function(){
+            let tags = results.length ? Array.concat.apply([], results) : [];
+            onComplete(tags);
+        });
+
+        first.call([]);
     }
     liberator.modules.commands.addUserCommand(['btags'],"Update Social Bookmark Tags",
-        function(arg){setTimeout(function(){getTagsAsync().call([])},0)}, {});
+        function(arg){setTimeout(function(){getTagsAsync().call([])},0)}, {}, true);
     liberator.modules.commands.addUserCommand(['bentry'],"Goto Bookmark Entry Page",
         function(args){
             var service = args.string || useServicesByPost.split(/\s*/)[0];
@@ -636,7 +673,8 @@ for Migemo search: require XUL/Migemo Extension
         },{
             completer: function(filter)
                 [0, useServicesByPost.split(/\s*/).map(function(p) [p, services[p].description])]
-        }
+        },
+        true
     );
     liberator.modules.commands.addUserCommand(['bicon'],"Show Bookmark Count as Icon",
         function(arg){
@@ -647,14 +685,13 @@ for Migemo search: require XUL/Migemo Extension
                         (currentService.description + ': ' + currentService.icon(url)) : null;
             }).join('<br />');
             liberator.echo(html, true);
-        }, {});
+        }, {}, true);
     liberator.modules.commands.addUserCommand(['sbm'],"Post to Social Bookmark",
         function(arg){
-            var comment = "";
             var targetServices = useServicesByPost;
 
             if (arg["-s"]) targetServices = arg["-s"];
-            if (arg.length > 0) comment = arg.join(" ");
+            comment = arg.literalArg;
 
             var tags = [];
             var re = /\[([^\]]+)\]([^\[].*)?/g;
@@ -697,23 +734,73 @@ for Migemo search: require XUL/Migemo Extension
             d.error(function(e){liberator.echoerr("direct_bookmark.js: Exception throwed! " + e);liberator.log(e);});
             setTimeout(function(){first.call();},0);
         },{
-            completer: function(context, arg){
-                let filter = context.filter;
-                var match_result = filter.match(/((?:\[[^\]]*\])*)\[?(.*)/); //[all, commited, now inputting]
-                var m = new RegExp(XMigemoCore && isUseMigemo ? "^(" + XMigemoCore.getRegExp(match_result[2]) + ")" : "^" + match_result[2],'i');
-                var completionList = [];
-                // XXX: completer works asynchronous. thus we shouldn't call getTagsAsync().
-                if(liberator.plugins.direct_bookmark.tags.length == 0)
-                    getTags().call([]);
-                context.title = ['Tag','Description'];
-                context.advance( match_result[1].length );
-                context.completions = [["[" + tag + "]","Tag"]
-                            for each (tag in liberator.plugins.direct_bookmark.tags) if (m.test(tag) && match_result[1].indexOf('[' + tag + ']') < 0)];
+            literal: 0,
+            completer: let (lastURL, lastUserTags, onComplete, done = true) function(context, arg){
+                function matchPosition (e){
+                    let m = liberator.globalVariables.direct_sbm_tag_match || 'prefix';
+                    switch (m) {
+                    case 'infix': return e;
+                    case 'suffix': return e + "$";
+                    }
+                    return "^" + e;
+                }
+
+                function set (context, tags) {
+                    let filter = context.filter;
+                    var match_result = filter.match(/((?:\[[^\]]*\])*)\[?(.*)/); //[all, commited, now inputting]
+                    var expr = XMigemoCore && isUseMigemo ? "(" + XMigemoCore.getRegExp(match_result[2]) + ")"
+                                                          : match_result[2];
+                    var m = new RegExp(matchPosition(expr),'i');
+
+                    context.advance( match_result[1].length );
+
+                    context.incomplete = false;
+                    context.completions =
+                        [ ["[" + tag + "]","Tag"]
+                          for each (tag in tags)
+                          if (m.test(tag) && match_result[1].indexOf('[' + tag + ']') < 0) ];
+                }
+
+                context.fork('UserTags', 0, context, function(context){
+                    context.title = ['User Tags', 'User Tags'];
+
+                    onComplete = function(tags){
+                        done = true;
+                        lastUserTags = tags;
+                        context.incomplete = false;
+                        set(context, tags);
+                    };
+
+                    if (buffer.URL == lastURL){
+                        if (done) {
+                            onComplete(lastUserTags);
+                        } else {
+                            context.incomplete = true;
+                        }
+                    } else {
+                        lastURL = buffer.URL;
+                        context.incomplete = true;
+                        done = false;
+                        getUserTags(buffer.URL, function (tags) onComplete(tags));
+                    }
+                });
+
+                context.fork('MyTags', 0, context, function(context, arg){
+                    context.title = ['My Tag','Description'];
+
+                    if(__context__.tags.length == 0){
+                        context.incomplete = true;
+                        getTagsAsync(set.bind(null, context)).call([]);
+                    } else {
+                        set(context, __context__.tags);
+                    }
+                });
             },
             options: [
                 [['-s','-service'], liberator.modules.commands.OPTION_STRING],
             ]
-        }
+        },
+        true
     );
 })();
 // vim:sw=4 ts=4 et:
