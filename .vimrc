@@ -413,6 +413,7 @@ endfunction
 
 " yankring.vim {{{2
 let g:yankring_history_file = '.yankring_history'
+let g:yankring_manual_clipboard_check = 0
 
 " zencoding.vim {{{2
 let g:user_zen_leader_key = '<c-y>'
