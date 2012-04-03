@@ -90,6 +90,9 @@ source_if "$HOME/perl5/perlbrew/etc/bashrc"
 # nvm {{{2
 source_if "$HOME/.nvm/nvm.sh"
 
+# nodebrew {{{2
+[[ -d "$HOME/.nodebrew" ]] && export PATH=$PATH:$HOME/.nodebrew/current/bin
+
 
 # End {{{1
 source_if "$HOME/.zshenv.local"
