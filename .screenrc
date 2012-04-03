@@ -21,8 +21,8 @@ hardstatus alwayslastline "%= %l %{= dw}%Y/%m/%d %c:%s"
 caption always "%{= dw}%-w%{=b dr}%n %t%{-}%+w"
 #caption always "%{= dw}%-w%{=b dr}%n %t%{-}%+w %= %{= dw}%Y/%m/%d %c:%s"
 
-log off
-deflog off
+#log off
+#deflog off
 #deflog on
 #logfile "$HOME/.screen/log/screen-%Y%m%d-%n.log"
 hardcopydir "$HOME/.screen/"
