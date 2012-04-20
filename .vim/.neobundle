@@ -16,7 +16,7 @@ endif
 NeoBundle 'git://github.com/Shougo/neobundle.vim.git'
 NeoBundle 'git://github.com/Shougo/neocomplcache.git'
 NeoBundle 'git://github.com/kien/ctrlp.vim.git'
-NeoBundle 'git://github.com/mattn/gist-vim.git', 'use_api'
+NeoBundle 'git://github.com/mattn/gist-vim.git'
 NeoBundle 'git://github.com/mattn/webapi-vim.git'
 NeoBundle 'git://github.com/mattn/ideone-vim.git'
 NeoBundle 'git://github.com/mattn/zencoding-vim.git'
