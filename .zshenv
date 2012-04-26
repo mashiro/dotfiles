@@ -93,6 +93,9 @@ source_if "$HOME/.nvm/nvm.sh"
 # nodebrew {{{2
 [[ -d "$HOME/.nodebrew" ]] && export PATH=$PATH:$HOME/.nodebrew/current/bin
 
+# cabal {{{2
+[[ -d "$HOME/.cabal" ]] && export PATH=$HOME/.cabal/bin:$PATH
+
 
 # End {{{1
 source_if "$HOME/.zshenv.local"
