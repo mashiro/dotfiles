@@ -55,17 +55,26 @@ export GREP_OPTIONS="--color=auto"
 export WORDCHARS="*?_-.[]~=&;!#$%^(){}<>"
 
 # SSH-Agent {{{2
-_SSH_AGENT_PID=`ps gxww|grep "ssh-agent]*$"|awk '{print $0}'`
-_SSH_AUTH_SOCK=`ls -t /tmp/ssh*/agent*|head -1`
-if [ "$_SSH_AGENT_PID" = "" -o "$_SSH_AUTH_SOCK" = "" ]; then
-    unset SSH_AUTH_SOCK SSH_AGENT_PID
-    eval `ssh-agent`
-    ssh-add < /dev/null
-else
-    export SSH_AGENT_PID=$_SSH_AGENT_PID
-    export SSH_AUTH_SOCK=$_SSH_AUTH_SOCK
-fi
+SSH_AGENT=`which ssh-agent`
+SSH_ADD=`which ssh-add`
+SSH_ENV="$HOME/.ssh/environment"
 
+function start_ssh_agent {
+    echo "Initialising new SSH agent..."
+    $SSH_AGENT | head -n 2 > $SSH_ENV
+    chmod 600 $SSH_ENV
+    . $SSH_ENV > /dev/null
+    $SSH_ADD < /dev/null
+}
+
+if [ -f $SSH_ENV ]; then
+    . $SSH_ENV > /dev/null
+    ps -ef | grep $SSH_AGENT_PID | grep ssh-agent$ > /dev/null || {
+        start_ssh_agent
+    }   
+else
+    start_ssh_agent
+fi
 # Manager {{{1
 # homebrew (OSX) {{{2
 [[ -d "/usr/local/share/python" ]] && export PATH=/usr/local/share/python:$PATH
