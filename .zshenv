@@ -100,7 +100,7 @@ source_if "$HOME/perl5/perlbrew/etc/bashrc"
 source_if "$HOME/.nvm/nvm.sh"
 
 # nodebrew {{{2
-[[ -d "$HOME/.nodebrew" ]] && export PATH=$PATH:$HOME/.nodebrew/current/bin
+[[ -d "$HOME/.nodebrew" ]] && export PATH=$HOME/.nodebrew/current/bin:$PATH
 
 # cabal {{{2
 [[ -d "$HOME/.cabal" ]] && export PATH=$HOME/.cabal/bin:$PATH
