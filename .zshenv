@@ -46,9 +46,9 @@ fi
 
 # Misc {{{2
 export TZ=JST-9
-export EDITOR=$(which vim)
-export PAGER=$(which less)
-export SHELL=$(which zsh)
+export EDITOR=`which vim`
+export PAGER=`which less`
+export SHELL=`which zsh`
 export LESS="-i -M -R"
 export GREP_COLOR="01;33"
 export GREP_OPTIONS="--color=auto"
@@ -86,7 +86,7 @@ source_if "$HOME/.pythonbrew/etc/bashrc"
 export PYTHONSTARTUP=$HOME/.pythonstartup
 export WORKON_HOME=$HOME/.virtualenvs
 if [ -d $WORKON_HOME ]; then
-    export VIRTUALENVERAPPER_SH=$(which virtualenvwrapper.sh)
+    export VIRTUALENVERAPPER_SH=`which virtualenvwrapper.sh`
     source_if "$VIRTUALENVERAPPER_SH"
 fi
 
