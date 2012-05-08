@@ -393,14 +393,14 @@ nnoremap <silent> [ctrlp]b :<C-u>CtrlPBuffer<CR>
 autocmd User plugin-template-loaded call s:template_keywords()
 function! s:template_keywords()
     " 置換キーワード
-	let date      = escape(strftime('%Y-%m-%d'), '/\\')
-	let file      = escape(expand('%:t:r'), '/\\')
-	let file_ext  = escape(expand('%'), '/\\')
-	let inc_guard = escape(toupper(substitute(file, '\\.', '_', 'g')), '/\\') . '_INCLUDED'
-	silent! execute '%s/<+DATE+>/'          . date      . '/g'
-	silent! execute '%s/<+FILE+>/'          . file      . '/g'
-	silent! execute '%s/<+FILE_EXT+>/'      . file_ext  . '/g'
-	silent! execute '%s/<+INCLUDE_GUARD+>/' . inc_guard . '/g'
+    let date      = escape(strftime('%Y-%m-%d'), '/\\')
+    let file      = escape(expand('%:t:r'), '/\\')
+    let file_ext  = escape(expand('%'), '/\\')
+    let inc_guard = escape(toupper(substitute(file, '\\.', '_', 'g')), '/\\') . '_INCLUDED'
+    silent! execute '%s/<+DATE+>/'          . date      . '/g'
+    silent! execute '%s/<+FILE+>/'          . file      . '/g'
+    silent! execute '%s/<+FILE_EXT+>/'      . file_ext  . '/g'
+    silent! execute '%s/<+INCLUDE_GUARD+>/' . inc_guard . '/g'
 
     " <%= %> の中身をvimで評価して展開
     silent execute '%s/<%=\(.\{-}\)%>/\=eval(submatch(1))/ge'
