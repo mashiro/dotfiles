@@ -242,10 +242,6 @@ EOM
 let g:maine_coon_style = "height: 1em; margin: 0; padding: 3px; border: none; text-align: left; color: #7090d0; font: 11px/1 sans-serif; background: #0c0c0c;"
 
 
-" migemo_hint.js {{{2
-set hintmatching=custom
-
-
 " multi_requester.js {{{2
 noremap <Leader>me :mr<Space>alc<Space>
 noremap <Leader>mt :mr<Space>twitter-search-pcod-no-jp<Space>
