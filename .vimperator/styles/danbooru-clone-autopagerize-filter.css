@@ -1,7 +1,9 @@
 @namespace url(http://www.w3.org/1999/xhtml);
 
 @-moz-document domain("danbooru.donmai.us"),
-               domain("oreno.imouto.org"),
+               domain("sankakucomplex.com"),
+               domain("imouto.org"),
+               domain("yande.re"),
                domain("safebooru.org"),
                domain("gelbooru.com"),
                domain("nekobooru.net"),
@@ -9,11 +11,11 @@
 
 span.blacklisted,
 li.javascript-hide {
-	display: inline-block !important;
+    display: inline-block !important;
 }
 
 hr.autopagerize_page_separator {
-	clear: both !important;
+    clear: both !important;
 }
 
 }
