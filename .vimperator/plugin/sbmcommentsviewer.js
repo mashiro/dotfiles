@@ -251,8 +251,8 @@ var SBM = { //{{{
             }
             var pageURL, items;
             try {
-                pageURL = evaluateXPath(rss, '//rss:channel/rss:link')[0].textContent;
-                items = evaluateXPath(rss, '//rss:item');
+                pageURL = evaluateXPath(rss, '//channel/link')[0].textContent;
+                items = evaluateXPath(rss, '//item');
             } catch(e){
                 liberator.log(e);
             }
@@ -313,7 +313,7 @@ var SBM = { //{{{
                 });
                 return c;
             } else {
-                liberator.log('Faild: LivedoorClip');
+                liberator.log('Failed: LivedoorClip');
             }
         }
     }, //}}}
@@ -341,7 +341,7 @@ var SBM = { //{{{
                 });
                 return c;
             } else {
-                liberator.log('Faild: Buzzurl');
+                liberator.log('Failed: Buzzurl');
             }
         }
     }, //}}} 
@@ -368,7 +368,7 @@ var SBM = { //{{{
                 });
                 return c;
             } else {
-                liberator.echo('Faild: Topsy');
+                liberator.echo('Failed: Topsy');
             }
         }
     } //}}}

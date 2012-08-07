@@ -39,7 +39,7 @@ let PLUGIN_INFO =
   <name lang="ja">すてら</name>
   <description>For Niconico/YouTube/Vimeo, Add control commands and information display(on status line).</description>
   <description lang="ja">ニコニコ動画/YouTube/Vimeo 用。操作コマンドと情報表示(ステータスライン上に)追加します。</description>
-  <version>0.33.0</version>
+  <version>0.33.1</version>
   <author mail="anekos@snca.net" homepage="http://d.hatena.ne.jp/nokturnalmortum/">anekos</author>
   <license>new BSD License (Please read the source code comments of this plugin)</license>
   <license lang="ja">修正BSDライセンス (ソースコードのコメントを参照してください)</license>
@@ -1031,7 +1031,7 @@ Thanks:
     fetch: function (filepath) {
       // all(1080p,720p,480p,360p) -> 37, 22, 35, 34, 5
       // FIXME 一番初めが最高画質だと期待
-      let cargs = content.wrappedJSObject.yt.config_.PLAYER_CONFIG.args;
+      let cargs = content.wrappedJSObject.yt.playerConfig.args;
       cargs.url_encoded_fmt_stream_map.split(',')[0].split('&').forEach(function(x) {
         let [key, val] = x.split('=');
         if (key == 'url') {
@@ -1160,7 +1160,7 @@ Thanks:
     fetch: function (filepath) {
       // all(1080p,720p,480p,360p) -> 37, 22, 35, 34, 5
       // FIXME 一番初めが最高画質だと期待
-      let cargs = content.wrappedJSObject.yt.config_.PLAYER_CONFIG.args;
+      let cargs = content.wrappedJSObject.yt.playerConfig.args;
       cargs.url_encoded_fmt_stream_map.split(',')[0].split('&').forEach(function(x) {
         let [key, val] = x.split('=');
         if (key == 'url') {
@@ -1351,9 +1351,15 @@ Thanks:
       ];
     },
 
-    get player () content.document.getElementById('flvplayer').wrappedJSObject.__proto__,
+    get player () {
+      return (
+        U.getElementById('flvplayer')
+        ||
+        U.getElementById('external_nicoplayer')
+      ).wrappedJSObject.__proto__;
+    },
 
-    get playerContainer () U.getElementByIdEx('flvplayer_container'),
+    // get playerContainer () U.getElementByIdEx('flvplayer_container'),
 
     get ready () {
       try {
