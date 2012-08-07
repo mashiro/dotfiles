@@ -3,7 +3,7 @@
 // @description   Extends Tumblr Dashboard
 // @namespace     http://codefairy.org/ns/userscripts
 // @include       http://www.tumblr.com/*
-// @version       1.0 Pre 8
+// @version       1.0 Pre 10
 // @license       MIT License
 // @work          Greasemonkey
 // @work          Google Chrome
@@ -22,13 +22,14 @@ var GM_addStyle = w.GM_addStyle || function(css) {
 
 GM_addStyle([
 	// 基本ブログメニューの吹き出しと同じ。影を 2/3 程度にしてちょっと控えめに
-	'.tumblrlife-menu { display:inline; position:relative; margin-left:10px; padding-bottom:5px; }',
-	'.tumblrlife-menu > a { margin-left:0 !important; }',
-	'.tumblrlife-menu:hover:after { display:block; position:absolute; bottom:0; left:50%; width:0; height:0; margin-left:-8px; border-width:8px; border-top-width:0; border-color:#dbe5ee transparent; border-style:solid; content:""; }',
+	'.tumblrlife-menu { display:inline; position:relative; padding-bottom:10px; }',
+	// '.tumblrlife-menu > a { margin-left:0 !important; }',
+	'.tumblrlife-menu:hover:after { display:block; position:absolute; bottom:0; left:27px; width:0; height:0; margin-left:-8px; border-width:8px; border-top-width:0; border-color:#dbe5ee transparent; border-style:solid; content:""; }',
 
-	'.tumblrlife-menu > div { display:none; position:absolute; z-index:100; top:21px; margin:0 0 0 -10px !important; font-size:12px; color:#334556; border-radius:3px; box-shadow: 0 6px 6px rgba(0,0,0,0.33); }',
+	'.tumblrlife-menu > div { display:none; position:absolute; z-index:100; top:26px; left:15px; margin:0 0 0 -10px !important; font-size:12px; color:#334556; border-radius:3px; box-shadow: 0 6px 6px rgba(0,0,0,0.33); }',
 	'.tumblrlife-menu:hover > div { display: block; }',
 
+	'li.post.tumblrlife-reblogging .reblog_button { text-align:center; background-image:none !important; }',
 	'li.post.tumblrlife-reblogging .tumblrlife-menu:hover:after, li.post.tumblrlife-reblogged .tumblrlife-menu:hover:after { display:none; }',
 	'li.post.tumblrlife-reblogging .tumblrlife-menu > div, li.post.tumblrlife-reblogged .tumblrlife-menu > div { display:none; }',
 	'li.post.tumblrlife-reblogging .tumblrlife-menu a { cursor:text; }',
@@ -37,9 +38,9 @@ GM_addStyle([
 	'.tumblrlife-menu ul { margin:0 !important; padding:0; }',
 	'.tumblrlife-menu li { background-color:#dbe5ee; }',
 	'.tumblrlife-menu li:first-child { border-radius:3px 3px 0 0; }',
-	'.tumblrlife-menu li, .tumblrlife-menu li a { color:#334556 !important; }',
+	'.tumblrlife-menu li, .tumblrlife-menu li a { color:#334556 !important; opacity:1 !important; }',
 	'.tumblrlife-menu li:hover { background-color:#d3dee8; }',
-	// '.tumblrlife-menu li:hover, .tumblrlife-menu li a:hover { color:#7b8994 !important; }',
+ 	'.tumblrlife-menu li a:hover { opacity:1 !important; }',
 	'.tumblrlife-menu li { display:block; padding:10px; line-height:1; text-shadow:0 1px 0 #fff; border-bottom:1px solid #becbd8; }',
 	'.tumblrlife-menu li + li { box-shadow:inset 0 1px 0 rgba(255,255,255,.75); }',
 	'.tumblrlife-menu li + li:hover { box-shadow:inset 0 1px 0 rgba(255,255,255,.5); }',
@@ -52,18 +53,18 @@ GM_addStyle([
 	// 17px : 右カラムのリストとアクションの比率に近いように
 	// 色は投稿ページのタグに合わせる
 	'.tumblrlife-menu div div input { width:120px; height:17px; padding:0; font-size:11px; color:#444; border:none; }',
-	'.tumblrlife-menu input::-webkit-input-placeholder, .tumblrlife-menu input::-moz-placeholder { color:#a6a6a6 !important; }',	
+	'.tumblrlife-menu input::-webkit-input-placeholder { color:#a6a6a6 !important; }',
+	// セレクターを列挙すると効かないので分ける
+	'.tumblrlife-menu input:-moz-placeholder { color:#a6a6a6 !important; }',
 
 	'.tumblrlife-fail { color:#c00; }',
 
-	// z-index:0 にすれば新着通知との順序が狂わない
-	'#tumblrlife-filter { display:none; position:absolute; z-index:0; top:0; margin:0 -10px; padding:4px 0; line-height:28px; text-align:left; background:rgba(0,0,0,.33); border:1px solid rgba(0, 0, 0, .09); border-radius:6px; box-shadow:inset 0 1px 0 rgba(255,255,255,.09)}',
-	'#default_tabs > li > a:hover span[class!="tab_notice"] { visibility:hidden; }',
+	'#header .tab .tab_notice { z-index:2; }',
+	'#tumblrlife-filter { display:none; position:absolute; z-index:1; top:0; margin:0 -10px; padding:4px 0; line-height:28px; text-align:left; background:rgba(0,0,0,.33); border:1px solid rgba(0, 0, 0, .09); border-radius:6px; box-shadow:inset 0 1px 0 rgba(255,255,255,.09)}',
 	'#default_tabs > li:hover #tumblrlife-filter { display:block; }',
 	'#tumblrlife-filter li { list-style:none; font-size:16px; text-align:left; font-weight:bold; }',
 	'#tumblrlife-filter li a { display:block; padding:0 9px; color:#fff; text-decoration:none; text-transform:capitalize !important; }',
 
-	'html:lang(ja) #tumblrlife-filter li a { font-size:14px; }', // いる？
 	// フランス語などで頭文字が小文字のことがあるので表記を揃える
 	'#tumblrlife-filter li a:first-child { text-transform:none !important; }',
 	'#tumblrlife-filter li a.current, #tumblrlife-filter li a:hover { color:rgba(255,255,255,.75); }',
@@ -71,8 +72,7 @@ GM_addStyle([
 	'#tumblrlife-shortcut-key-help { margin-top:15px; padding-left:0 !important; background-position:top !important; }',
 	'#tumblrlife-shortcut-key-help kbd { margin-right:7px; padding:0 3px; font-family:Courier,monospace; background-color:rgba(255,255,255,0.1); border-radius:2px; }',
 	'#tumblrlife-shortcut-key-help .dashboard_subpages { margin-top:4px !important; }',
-	'.tumblrlife-shortcut-key-help-default kbd { background-color:rgba(0,0,0,0.1) !important; }',
-	'.tumblrlife-shortcut-key-help-default:last-child { margin-bottom:8px !important; }'
+	'.tumblrlife-shortcut-key-help-default kbd { background-color:rgba(0,0,0,0.1) !important; }'
 ].join(''));
 
 
@@ -672,7 +672,7 @@ var menu_template_menu = [
 ].join('');
 
 function menuAppend() {
-	var original = this.reblogContainer = this.container.querySelector('div.post_controls > a[href*="/reblog/"]'),
+	var original = this.reblogContainer = this.container.querySelector('.reblog_button'),
 		container, div;
 	if (original == null) return;
 	this.postURL = original.href;
@@ -688,7 +688,7 @@ function menuAppend() {
 	container.appendChild(div);
 	original.parentNode.insertBefore(container, original);
 	container.insertBefore(original, div);
-	original.className = 'tumblrlife-reblog';
+	original.className += ' tumblrlife-reblog';
 
 	// 開いた時に実行しないとダメ
 	// setTimeout(function() {
@@ -709,7 +709,7 @@ function menuReblog(state) {
 
 	this.reblogging = true;
 	container.className += ' tumblrlife-reblogging';
-	this.reblogContainer.innerHTML = 'reblogging...';
+	this.reblogContainer.innerHTML = '...';
 
 	get(this.postURL,
 		function() {
@@ -719,10 +719,10 @@ function menuReblog(state) {
 					self.reblogging = false;
 					container.className = container.className.replace('tumblrlife-reblogging', 'tumblrlife-reblogged');
 					menu_container.removeEventListener('click', self, false);
-					menu_container.innerHTML = 'reblogged' + (state ? {
+					menu_container.innerHTML = '<span>reblogged' + (state ? {
 						'add-to-queue': ' (queue)',
 						'private'     : ' (private)'
-					}[state] : '');
+					}[state] : '') + '</span>';
 
 					execute('window.increment_note_count(' + id + ')');
 
