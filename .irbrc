@@ -1,6 +1,4 @@
-if RUBY_VERSION >= '1.9.2'
-  ['./', './lib'].each { |path| $LOAD_PATH.unshift path }
-end
+$:.unshift './', './lib' if RUBY_VERSION >= '1.9.2'
 
 require 'irb/completion'
 require 'irb/ext/save-history'
