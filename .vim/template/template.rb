@@ -1,3 +1,3 @@
 #!/usr/bin/env ruby
-# -*- coding: utf-8 -*-
+# -*- encoding: utf-8 -*-
 <+CURSOR+>

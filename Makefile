@@ -25,10 +25,10 @@ ls:
 
 .PHONY: build
 build:
-	@git pull origin master
-	@git submodule update --init
-	@git submodule foreach 'git checkout master; git pull origin master'
-	@cd .vim; DOT_FILES_MAKE=build make
+	git pull origin master
+	git submodule update --init
+	git submodule foreach 'git checkout master; git pull origin master'
+	cd .vim; DOT_FILES_MAKE=build $(MAKE)
 
 .PHONY: install install-dot-files install-depend-dirs
 install: install-dot-files install-depend-dirs

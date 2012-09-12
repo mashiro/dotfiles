@@ -212,6 +212,8 @@ freebsd*)
 	;;
 esac
 
+alias g++03="g++ -Wall -Wextra"
+alias g++11="g++ -std=gnu++11 -Wall -Wextra"
 
 # End {{{1
 [ -f ~/.zshrc.local ] && source ~/.zshrc.local
