@@ -329,65 +329,57 @@ let g:neocomplcache_enable_underbar_completion = 0
 imap <silent> <C-e> <Plug>(neocomplcache_snippets_expand)
 smap <silent> <C-e> <Plug>(neocomplcache_snippets_expand)
 
-" ctrlp.vim {{{2
-let g:ctrlp_map = '[ctrlp]t'
-let g:ctrlp_cmd = 'CtrlP'
-let g:ctrlp_max_height = 20
-let g:ctrlp_match_window_bottom = 1
-let g:ctrlp_match_window_reversed = 0
-let g:ctrlp_working_path_mode = 2
-let g:ctrlp_highlight_match = [1, 'Type']
-let g:ctrlp_custom_ignore = '\.\(git\|hg\|svn\)$\|vendor$'
-let g:ctrlp_prompt_mappings = {
-    \ 'PrtBS()':              ['<c-h>', '<bs>'],
-    \ 'PrtSelectMove("j")':   ['<c-j>', '<c-n>'],
-    \ 'PrtSelectMove("k")':   ['<c-k>', '<c-p>'],
-    \ 'PrtHistory(-1)':       ['<down>'],
-    \ 'PrtHistory(1)':        ['<up>'],
-    \ 'PrtCurLeft()':         ['<left>'],
-    \ 'PrtCurRight()':        ['<right>'],
-    \ 'PrtExit()':            ['<esc>', '<c-c>', '<c-g>', '<c-@>'],
-    \ }
-
-nnoremap [ctrlp] <Nop>
-nmap <Space> [ctrlp]
-
-nnoremap <silent> [ctrlp]t :<C-u>CtrlP<CR>
-nnoremap <silent> [ctrlp]f :<C-u>CtrlPCurWD<CR>
-nnoremap <silent> [ctrlp]b :<C-u>CtrlPBuffer<CR>
-
 " unite.vim {{{2
-"nnoremap [unite] <Nop>
-"nmap <Space> [unite]
+nnoremap [unite] <Nop>
+nmap <Space> [unite]
+
+nnoremap <silent> [unite]c :<C-u>UniteWithCurrentDir -buffer-name=files buffer file_mru bookmark file<CR>
+nnoremap <silent> [unite]g :<C-u>UniteWithBufferDir -buffer-name=files buffer file_mru bookmark file<CR>
+nnoremap <silent> [unite]r :<C-u>Unite -buffer-name=register register<CR>
+nnoremap <silent> [unite]s :<C-u>Unite file_rec file/new<CR>
+nnoremap <silent> [unite]f :<C-u>Unite file file/new<CR>
+nnoremap <silent> [unite]b :<C-u>Unite buffer<CR>
+nnoremap <silent> [unite]u :<C-u>Unite source<CR>
+
+autocmd FileType unite call s:unite_my_settings()
+function! s:unite_my_settings()"{{{
+  nmap <buffer> <ESC> <Plug>(unite_exit)
+  imap <buffer> jj <Plug>(unite_insert_leave)
+  imap <buffer> <C-j> <Plug>(unite_select_next_line)
+  imap <buffer> <C-k> <Plug>(unite_select_previous_line)
+endfunction"}}}
+
+let g:unite_enable_start_insert = 1
+let g:unite_source_file_mru_limit = 200
+let g:unite_cursor_line_highlight = 'TabLineSel'
+let g:unite_abbr_highlight = 'Normal'
+
+" ctrlp.vim {{{2
+"let g:ctrlp_map = '[ctrlp]t'
+"let g:ctrlp_cmd = 'CtrlP'
+"let g:ctrlp_max_height = 20
+"let g:ctrlp_match_window_bottom = 1
+"let g:ctrlp_match_window_reversed = 0
+"let g:ctrlp_working_path_mode = 2
+"let g:ctrlp_highlight_match = [1, 'Type']
+"let g:ctrlp_custom_ignore = '\.\(git\|hg\|svn\)$\|vendor$'
+"let g:ctrlp_prompt_mappings = {
+"    \ 'PrtBS()':              ['<c-h>', '<bs>'],
+"    \ 'PrtSelectMove("j")':   ['<c-j>', '<c-n>'],
+"    \ 'PrtSelectMove("k")':   ['<c-k>', '<c-p>'],
+"    \ 'PrtHistory(-1)':       ['<down>'],
+"    \ 'PrtHistory(1)':        ['<up>'],
+"    \ 'PrtCurLeft()':         ['<left>'],
+"    \ 'PrtCurRight()':        ['<right>'],
+"    \ 'PrtExit()':            ['<esc>', '<c-c>', '<c-g>', '<c-@>'],
+"    \ }
 "
-"nnoremap <silent> [unite]c :<C-u>UniteWithCurrentDir -buffer-name=files buffer file_mru bookmark file<CR>
-"nnoremap <silent> [unite]g :<C-u>UniteWithBufferDir -buffer-name=files buffer file_mru bookmark file<CR>
-"nnoremap <silent> [unite]r :<C-u>Unite -buffer-name=register register<CR>
-"nnoremap <silent> [unite]s :<C-u>Unite file_rec<CR>
-"nnoremap <silent> [unite]f :<C-u>Unite file<CR>
-"nnoremap <silent> [unite]b :<C-u>Unite buffer<CR>
-"nnoremap <silent> [unite]r :<C-u>Unite -buffer-name=register register<CR>
+"nnoremap [ctrlp] <Nop>
+"nmap <Space> [ctrlp]
 "
-"autocmd FileType unite call s:unite_my_settings()
-"function! s:unite_my_settings()"{{{
-"  " Overwrite settings.
-"  nmap <buffer> <ESC> <Plug>(unite_exit)
-"  imap <buffer> jj <Plug>(unite_insert_leave)
-"  imap <buffer> <C-w> <Plug>(unite_delete_backward_path)
-"
-"  " <C-l>: manual neocomplcache completion.
-"  inoremap <buffer> <C-l> <C-x><C-u><C-p><Down>
-"
-"  " Start insert.
-"  "let g:unite_enable_start_insert = 1
-"endfunction"}}}
-"
-"let g:unite_source_file_mru_limit = 200
-"let g:unite_cursor_line_highlight = 'TabLineSel'
-"let g:unite_abbr_highlight = 'TabLine'
-"
-"" For optimize.
-"let g:unite_source_file_mru_filename_format = ''
+"nnoremap <silent> [ctrlp]t :<C-u>CtrlP<CR>
+"nnoremap <silent> [ctrlp]f :<C-u>CtrlPCurWD<CR>
+"nnoremap <silent> [ctrlp]b :<C-u>CtrlPBuffer<CR>
 
 " templatefile.vim {{{2
 autocmd User plugin-template-loaded call s:template_keywords()
@@ -442,15 +434,22 @@ let g:user_zen_settings = {
 
 " quickrun.vim {{{2
 let b:quickrun_config = {
-\ 'outputter/buffer/split': ''
+\ 'outputter/buffer/split': 'rightbelow',
 \}
 let g:quickrun_config = {
+\ '_': {
+\   'runner': 'vimproc',
+\ },
 \ 'cs': {
 \   'command': 'dmcs',
 \   'exec': ['%c %o %s -out:%s:p:r.exe', 'mono %s:p:r.exe %a', 'rm -f %s:p:r.exe'],
 \   'tempfile': '%{tempname()}.cs',
 \ },
 \}
+
+" watchdogs.vim {{{2
+call watchdogs#setup(g:quickrun_config)
+nnoremap <silent> <Leader>c :<C-u>WatchdogsRun<CR>
 
 " End {{{1
 if filereadable(expand('~/.vimrc.local'))

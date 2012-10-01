@@ -23,16 +23,18 @@ NeoBundle 'Shougo/vimproc', {
             \     'unix' : 'make -f make_unix.mak',
             \   },
             \ }
-NeoBundle 'Shougo/neobundle.vim'
-NeoBundle 'Shougo/neocomplcache'
 NeoBundle 'Shougo/vimshell'
-NeoBundle 'kien/ctrlp.vim'
+NeoBundle 'Shougo/neobundle.vim'
+NeoBundle 'Shougo/unite.vim'
+NeoBundle 'Shougo/neocomplcache'
 NeoBundle 'mattn/gist-vim'
 NeoBundle 'mattn/webapi-vim'
 NeoBundle 'mattn/ideone-vim'
 NeoBundle 'mattn/zencoding-vim'
 NeoBundle 'thinca/vim-quickrun'
 NeoBundle 'thinca/vim-template'
+NeoBundle 'osyo-manga/shabadou.vim'
+NeoBundle 'osyo-manga/vim-watchdogs'
 NeoBundle 'kana/vim-fakeclip'
 NeoBundle 'vim-ruby/vim-ruby'
 NeoBundle 'tpope/vim-rails'
