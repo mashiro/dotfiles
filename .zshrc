@@ -38,31 +38,54 @@ alias zmv='noglob zmv'
 
 # Terminal {{{1
 autoload -Uz colors; colors
-case ${UID} in
-0)
-	PROMPT="%{${fg[cyan]}%}%n@%m%{${reset_color}%} %{${fg[red]}%}%/%%%{${reset_color}%}%b "
-	PROMPT2="%{${fg[red]}%}%_%%%{${reset_color}%}%b "
-	SPROMPT="%{${fg[red]}%}%r is correct? [n,y,a,e]:%{${reset_color}%}%b "
-	;;
-*)
-	PROMPT="%{${fg[cyan]}%}%n@%m%{${reset_color}%} %{${fg_bold[red]}%}%/%%%{${reset_color}%} "
-	PROMPT2="%{${fg_bold[red]}%}%_%%%{${reset_color}%} "
-	SPROMPT="%{${fg_bold[red]}%}%r is correct? [n,y,a,e]:%{${reset_color}%} "
-	;;
-esac
+typeset -Ag FX FG BG
+
+FX=(
+    reset     "%{[00m%}"
+    bold      "%{[01m%}" no-bold      "%{[22m%}"
+    italic    "%{[03m%}" no-italic    "%{[23m%}"
+    underline "%{[04m%}" no-underline "%{[24m%}"
+    blink     "%{[05m%}" no-blink     "%{[25m%}"
+    reverse   "%{[07m%}" no-reverse   "%{[27m%}"
+)
+
+for color in {000..255}; do
+    FG[$color]="%{[38;5;${color}m%}"
+    BG[$color]="%{[48;5;${color}m%}"
+done
+
+# Show all 256 colors with color number
+function spectrum_ls() {
+  for code in {000..255}; do
+    print -P -- "$code: %F{$code}Test%f"
+  done
+}
+
+prompt_user_color="%{${fg[cyan]}%}"
+prompt_dir_color="%{${fg_bold[red]}%}"
+prompt_vcs_color=$FG[068]
+
+PROMPT="$prompt_user_color%n@%m%{$reset_color%} $prompt_dir_color%~%%%{$reset_color%} "
+PROMPT2="$prompt_dir_color%_%%%{$reset_color%} "
+SPROMPT="$prompt_dir_color%r is correct? [n,y,a,e]:%{$reset_color%} "
+
+if [ -z "$debian_chroot" ] && [ -r /etc/debian_chroot ]; then
+    debian_chroot=$(cat /etc/debian_chroot)
+    debian_chroot_color=$FG[105]
+    PROMPT="$debian_chroot_color($debian_chroot)%{$reset_color%} $PROMPT"
+fi
 
 export LSCOLORS=ExFxCxdxBxegedabagacad
 export LS_COLORS='di=01;34:ln=01;35:so=01;32:ex=01;31:bd=46;34:cd=43;34:su=41;30:sg=46;30:tw=42;30:ow=43;30'
 
-
 case "${TERM}" in
 kterm*|xterm*|screen*)
-	precmd() {
+    precmd() {
         echo -ne "\e]2;${USER}@${HOST%%.*}:${PWD}\a"
         if [ -n "${SCREEN}" ]; then
             echo -ne "\ek${PWD:t}/\e\\"
         fi
-	}
+    }
     preexec() {
         if [ -n "${SCREEN}" ]; then
             echo -ne "\ek${1%% *}\e\\"
@@ -70,7 +93,6 @@ kterm*|xterm*|screen*)
     }
     ;;
 esac
-
 
 autoload -Uz is-at-least
 if is-at-least 4.3.7; then
@@ -96,7 +118,7 @@ if is-at-least 4.3.7; then
         [[ -n "$vcs_info_msg_0_" ]] && psvar[1]="$vcs_info_msg_0_"
     }
     add-zsh-hook precmd _update_vcs_info_msg
-    RPROMPT="%0(v|%F%{${fg[cyan]}%}%1v%f|)"
+    RPROMPT="%0(v|%F$prompt_vcs_color%1v%f|)%{$reset_color%}"
 fi
 
 
