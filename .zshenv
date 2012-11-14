@@ -1,5 +1,4 @@
 # Utility {{{1
-export PATH MANPATH INFOPATH
 register_paths() { # {{{2
     dir="$1"
     if [ -d "$dir" ] || [ -z "$dir" ]; then
@@ -22,9 +21,46 @@ source_if() { # {{{2
     [[ -s "$1" ]] && source "$1"
 }
 
+# Manager {{{1
+before_register_paths() {
+    # perlbrew
+    source_if "$HOME/perl5/perlbrew/etc/bashrc"
+}
+
+after_register_paths() {
+    # homebrew (OSX)
+    [[ -d "/usr/local/share/python" ]] && export PATH=/usr/local/share/python:$PATH
+
+    # pythonbrew
+    source_if "$HOME/.pythonbrew/etc/bashrc"
+
+    # virtualenv
+    export PYTHONSTARTUP=$HOME/.pythonstartup
+    export WORKON_HOME=$HOME/.virtualenvs
+    if [ -d $WORKON_HOME ]; then
+        export VIRTUALENVERAPPER_SH=`which virtualenvwrapper.sh`
+        source_if "$VIRTUALENVERAPPER_SH"
+    fi
+
+    # rvm
+    source_if "$HOME/.rvm/scripts/rvm"
+
+    # nvm
+    source_if "$HOME/.nvm/nvm.sh"
+
+    # nodebrew
+    [[ -d "$HOME/.nodebrew" ]] && export PATH=$HOME/.nodebrew/current/bin:$PATH
+
+    # cabal
+    [[ -d "$HOME/.cabal" ]] && export PATH=$HOME/.cabal/bin:$PATH
+}
+
 # Export {{{1
 # Path {{{2
+before_register_paths
 if [ ! "$REGISTER_PATHS_COMPLETED" ]; then
+    export PATH MANPATH INFOPATH
+
     # for Defaults
     register_paths ""
     register_paths "/usr"
@@ -34,7 +70,6 @@ if [ ! "$REGISTER_PATHS_COMPLETED" ]; then
 
     # for manually build applications
     register_paths "/usr/local"
-    register_paths "/usr/local/enabled"
 
     # for my own tools
     register_paths "$HOME/local"
@@ -43,6 +78,7 @@ if [ ! "$REGISTER_PATHS_COMPLETED" ]; then
     # completed
     export REGISTER_PATHS_COMPLETED=1
 fi
+after_register_paths
 
 # Misc {{{2
 export TZ=JST-9
@@ -75,36 +111,6 @@ if [ -f $SSH_ENV ]; then
 else
     start_ssh_agent
 fi
-# Manager {{{1
-# homebrew (OSX) {{{2
-[[ -d "/usr/local/share/python" ]] && export PATH=/usr/local/share/python:$PATH
-
-# pythonbrew {{{2
-source_if "$HOME/.pythonbrew/etc/bashrc"
-
-# virtualenv {{{2
-export PYTHONSTARTUP=$HOME/.pythonstartup
-export WORKON_HOME=$HOME/.virtualenvs
-if [ -d $WORKON_HOME ]; then
-    export VIRTUALENVERAPPER_SH=`which virtualenvwrapper.sh`
-    source_if "$VIRTUALENVERAPPER_SH"
-fi
-
-# rvm {{{2
-source_if "$HOME/.rvm/scripts/rvm"
-
-# perlbrew
-source_if "$HOME/perl5/perlbrew/etc/bashrc"
-
-# nvm {{{2
-source_if "$HOME/.nvm/nvm.sh"
-
-# nodebrew {{{2
-[[ -d "$HOME/.nodebrew" ]] && export PATH=$HOME/.nodebrew/current/bin:$PATH
-
-# cabal {{{2
-[[ -d "$HOME/.cabal" ]] && export PATH=$HOME/.cabal/bin:$PATH
-
 
 # End {{{1
 source_if "$HOME/.zshenv.local"
