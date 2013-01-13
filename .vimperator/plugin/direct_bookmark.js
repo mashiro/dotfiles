@@ -3,7 +3,7 @@ var PLUGIN_INFO =
     <name>{NAME}</name>
     <description>Direct Post to Social Bookmarks</description>
     <author mail="trapezoid.g@gmail.com" homepage="http://unsigned.g.hatena.ne.jp/Trapezoid">Trapezoid</author>
-    <version>0.17.0</version>
+    <version>0.19.0</version>
     <license>GPL</license>
     <minVersion>2.0pre</minVersion>
     <updateURL>https://github.com/vimpr/vimperator-plugins/raw/master/direct_bookmark.js</updateURL>
@@ -28,6 +28,7 @@ for Migemo search: require XUL/Migemo Extension
           'l': livedoor clip
           'g': Google Bookmarks
           'p': Places (Firefox bookmarks)
+          'P': pinboard.in
       Usage: let g:direct_sbm_use_services_by_tag = "hdl"
 ||<
 === g:direct_sbm_use_services_by_post ===
@@ -37,7 +38,7 @@ for Migemo search: require XUL/Migemo Extension
           'd': del.icio.us
           'l': livedoor clip
           'g': Google Bookmarks
-          'p': Places (Firefox bookmarks)
+          'P': pinboard.in
       Usage: let g:direct_sbm_use_services_by_post = "hdl"
 ||<
 === g:direct_sbm_echo_type ===
@@ -55,6 +56,11 @@ for Migemo search: require XUL/Migemo Extension
 >||
       Use Migemo completion
 ||<
+=== g:direct_sbm_private ===
+>||
+      Private bookmark
+||<
+
 
 == Commands ==
 === :btags ===
@@ -97,6 +103,8 @@ for Migemo search: require XUL/Migemo Extension
                       true : evalFunc(liberator.globalVariables.direct_sbm_is_normalize); 
     var isUseMigemo = typeof liberator.globalVariables.direct_sbm_is_use_migemo == 'undefined' ? 
                       true : evalFunc(liberator.globalVariables.direct_sbm_is_use_migemo);
+    var isPrivate = typeof liberator.globalVariables.direct_sbm_private == 'undefined' ? 
+                    false : evalFunc(liberator.globalVariables.direct_sbm_private);
 
     var XMigemoCore;
     try{
@@ -583,6 +591,48 @@ for Migemo search: require XUL/Migemo Extension
             },
             tags:function(user,password)
                 Application.bookmarks.tags.children.map(function(x) x.title),
+        },
+        'P': {
+            description:'pinboard',
+            account:['https://pinboard.in', 'https://pinboard.in', null],
+            loginPrompt:{ user:'', password:'', description:'Enter username and password.' },
+            entryPage:'%URL%',
+            poster:function(user,password,url,title,comment,tags){
+                var rate=0;
+                var starFullRate=5;
+                if(comment.match(/\*+$/)){
+                    comment = RegExp.leftContext;
+                    rate = (RegExp.lastMatch.length > starFullRate)? starFullRate : RegExp.lastMatch.length;
+                }
+                var request_url = 'https://api.pinboard.in/v1/posts/add?' + [
+                    ['url', url], ['description', title], ['extended', comment], ['tags', tags.join(' ')],
+                    ['shared', isPrivate ? 'no' : 'yes'], ['toread', 'no'],
+                ].map(function(p) p[0] + '=' + encodeURIComponent(p[1])).join('&');
+                return Deferred.http({
+                    method: "get",
+                    url: request_url,
+                    user: user,
+                    password: password,
+                }).next(function(xhr){
+                    if(xhr.status != 200) {
+                        throw "pinboard.in: failed";
+                    }
+                });
+            },
+            tags:function(user,password){
+                const url = 'https://api.pinboard.in/v1/tags/get?';
+                var xhr = new XMLHttpRequest();
+                xhr.open("GET", url, false, user, password);
+                xhr.send(null);
+
+                return [
+                    e.getAttribute("tag")
+                    for ([, e] in Iterator(Array.slice(xhr.responseXML.querySelectorAll('tag'))))
+                ];
+            },
+            //icon:function(url){
+            //    return '<img src="http://image.clip.livedoor.com/counter/' + url + '" style="vertical-align: middle;" />';
+            //},
         },
     };
     __context__.services = services;
