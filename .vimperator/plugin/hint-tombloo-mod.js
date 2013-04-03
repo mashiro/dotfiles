@@ -1,24 +1,24 @@
-var PLUGIN_INFO =
-<VimperatorPlugin>
-<name>{NAME}</name>
-<description>Hint mode for Tombloo</description>
-<author>motemen</author>
-<version>0.1</version>
-<minVersion>2.0pre</minVersion>
-<maxVersion>2.0pre</maxVersion>
-<updateURL>http://svn.coderepos.org/share/lang/javascript/vimperator-plugins/trunk/hint-tombloo.js</updateURL>
-<detail><![CDATA[
-== SETTINGS ==
-
-let g:hint_tombloo_key   = 'R'
-let g:hint_tombloo_xpath = '//img'
-
-== MAPPINGS ==
-;R :
-    Share target element by Tombloo
-
-]]></detail>
-</VimperatorPlugin>;
+// var PLUGIN_INFO =
+// <VimperatorPlugin>
+// <name>{NAME}</name>
+// <description>Hint mode for Tombloo</description>
+// <author>motemen</author>
+// <version>0.1</version>
+// <minVersion>2.0pre</minVersion>
+// <maxVersion>2.0pre</maxVersion>
+// <updateURL>http://svn.coderepos.org/share/lang/javascript/vimperator-plugins/trunk/hint-tombloo.js</updateURL>
+// <detail><![CDATA[
+// == SETTINGS ==
+// 
+// let g:hint_tombloo_key   = 'R'
+// let g:hint_tombloo_xpath = '//img'
+// 
+// == MAPPINGS ==
+// ;R :
+//     Share target element by Tombloo
+// 
+// ]]></detail>
+// </VimperatorPlugin>;
 
 (function () {
 

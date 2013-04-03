@@ -32,129 +32,129 @@ THE POSSIBILITY OF SUCH DAMAGE.
 
 }}} */
 
-// PLUGIN_INFO {{{
-let PLUGIN_INFO =
-<VimperatorPlugin>
-  <name>Link Opener</name>
-  <name lang="ja">Link Opener</name>
-  <description>Link Opener</description>
-  <description lang="ja">リンクを開く</description>
-  <version>2.4.0</version>
-  <author mail="anekos@snca.net" homepage="http://d.hatena.ne.jp/nokturnalmortum/">anekos</author>
-  <license>new BSD License (Please read the source code comments of this plugin)</license>
-  <license lang="ja">修正BSDライセンス (ソースコードのコメントを参照してください)</license>
-  <updateURL>https://github.com/vimpr/vimperator-plugins/raw/master/lo.js</updateURL>
-  <minVersion>2.3</minVersion>
-  <maxVersion>2.3</maxVersion>
-  <detail><![CDATA[
-    :help link-opener-plugin
-  ]]></detail>
-</VimperatorPlugin>;
-// }}}
-// INFO {{{
-let INFO =
-<>
-  <plugin name="link-opener" version="2.4.0"
-          href="http://github.com/vimpr/vimperator-plugins/blob/master/lo.js"
-          summary="Link Opener"
-          lang="en-US"
-          xmlns="http://vimperator.org/namespaces/liberator">
-    <author email="anekos@snca.net">anekos</author>
-    <license>New BSD License</license>
-    <project name="Vimperator" minVersion="2.3" maxVersion="3.0"/>
-    <p>
-    </p>
-    <item>
-      <tags>:fo</tags>
-      <tags>:fopen</tags>
-      <tags>:filteropen</tags>
-      <spec>:fo<oa>pen</oa><oa>!</oa> <oa>-w<oa>here</oa>=<a>where</a></oa> <oa>-i<oa>nterval</oa>=<a>interval</a></oa> <oa>-include-current</oa> <a>filter</a></spec>
-      <description>
-        <p>
-          Open the links selected with <a>filter</a>.
-          <a>interval</a> is the interval of link opening.
-        </p>
-        <p>The values of <a>where</a> option</p>
-        <dl>
-          <dt>f, n, t</dt><dd>Open the link in new tab.</dd>
-          <dt>b</dt><dd>Open the link in new background tab.</dd>
-          <dt>c</dt><dd>Open the link in current tab.</dd>
-          <dt>w</dt><dd>Open the link in window.</dd>
-        </dl>
-      </description>
-    </item>
-    <item>
-      <tags>:lopen</tags>
-      <tags>:lo</tags>
-      <tags>:linkopen</tags>
-      <spec>:lo<oa>pen</oa><oa>!</oa> <oa>-w<oa>here</oa>=<a>where</a></oa> <oa>-include-current</oa> <a>link</a></spec>
-      <description>
-        <p>
-          Open selected <a>link</a>.
-          When used "!", open links in foreground.
-        </p>
-        <p>The values of <a>where</a> option</p>
-        <dl>
-          <dt>f, n, t</dt><dd>Open the link in new tab.</dd>
-          <dt>b</dt><dd>Open the link in new background tab.</dd>
-          <dt>c</dt><dd>Open the link in current tab.</dd>
-          <dt>w</dt><dd>Open the link in window.</dd>
-        </dl>
-      </description>
-    </item>
-  </plugin>
-  <plugin name="link-opener" version="2.4.0"
-          href="http://github.com/vimpr/vimperator-plugins/blob/master/lo.js"
-          summary="Link Opener"
-          lang="ja"
-          xmlns="http://vimperator.org/namespaces/liberator">
-    <author email="anekos@snca.net">anekos</author>
-    <license>New BSD License</license>
-    <project name="Vimperator" minVersion="2.3" maxVersion="3.0"/>
-    <p>
-    </p>
-    <item>
-      <tags>:fo</tags>
-      <tags>:fopen</tags>
-      <tags>:filteropen</tags>
-      <spec>:fo<oa>pen</oa><oa>!</oa> <oa>-w<oa>here</oa>=<a>where</a></oa> <oa>-i<oa>nterval</oa>=<a>interval</a></oa> <oa>-include-current</oa> <a>filter</a></spec>
-      <description>
-        <p>
-          <a>filter</a> で選択されたリンクを開きます。
-          <a>interval</a> はリンクを開く間隔です。
-          <a>-include-current</a>が指定されると、現在のURLを指すリンクが含まれるようになります。
-        </p>
-        <p><a>where</a> オプションの値</p>
-        <dl>
-          <dt>f, n, t</dt><dd>新しいタブに開く</dd>
-          <dt>b</dt><dd>バックグラウンドの新しいタブに開く</dd>
-          <dt>c</dt><dd>現在のタブに開く</dd>
-          <dt>w</dt><dd>新しいウインドウに開く</dd>
-        </dl>
-      </description>
-    </item>
-    <item>
-      <tags>:lopen</tags>
-      <tags>:lo</tags>
-      <tags>:linkopen</tags>
-      <spec>:lo<oa>pen</oa><oa>!</oa> <oa>-w<oa>here</oa>=<a>where</a></oa> <oa>-include-current</oa> <a>link</a></spec>
-      <description>
-        <p>
-          選択されたリンク(<a>link</a>)を開きます。
-          <a>-include-current</a>が指定されると、現在のURLを指すリンクが含まれるようになります。
-        </p>
-        <p><a>where</a> オプションの値</p>
-        <dl>
-          <dt>f, n, t</dt><dd>新しいタブに開く</dd>
-          <dt>b</dt><dd>バックグラウンドの新しいタブに開く</dd>
-          <dt>c</dt><dd>現在のタブに開く</dd>
-          <dt>w</dt><dd>新しいウインドウに開く</dd>
-        </dl>
-      </description>
-    </item>
-  </plugin>
-</>;
-// }}}
+// // PLUGIN_INFO {{{
+// let PLUGIN_INFO =
+// <VimperatorPlugin>
+//   <name>Link Opener</name>
+//   <name lang="ja">Link Opener</name>
+//   <description>Link Opener</description>
+//   <description lang="ja">リンクを開く</description>
+//   <version>2.3.2</version>
+//   <author mail="anekos@snca.net" homepage="http://d.hatena.ne.jp/nokturnalmortum/">anekos</author>
+//   <license>new BSD License (Please read the source code comments of this plugin)</license>
+//   <license lang="ja">修正BSDライセンス (ソースコードのコメントを参照してください)</license>
+//   <updateURL>https://github.com/vimpr/vimperator-plugins/raw/master/lo.js</updateURL>
+//   <minVersion>2.3</minVersion>
+//   <maxVersion>2.3</maxVersion>
+//   <detail><![CDATA[
+//     :help link-opener-plugin
+//   ]]></detail>
+// </VimperatorPlugin>;
+// // }}}
+// // INFO {{{
+// let INFO =
+// <>
+//   <plugin name="link-opener" version="2.3.2"
+//           href="http://github.com/vimpr/vimperator-plugins/blob/master/lo.js"
+//           summary="Link Opener"
+//           lang="en-US"
+//           xmlns="http://vimperator.org/namespaces/liberator">
+//     <author email="anekos@snca.net">anekos</author>
+//     <license>New BSD License</license>
+//     <project name="Vimperator" minVersion="2.3" maxVersion="3.0"/>
+//     <p>
+//     </p>
+//     <item>
+//       <tags>:fo</tags>
+//       <tags>:fopen</tags>
+//       <tags>:filteropen</tags>
+//       <spec>:fo<oa>pen</oa><oa>!</oa> <oa>-w<oa>here</oa>=<a>where</a></oa> <oa>-i<oa>nterval</oa>=<a>interval</a></oa> <oa>-include-current</oa> <a>filter</a></spec>
+//       <description>
+//         <p>
+//           Open the links selected with <a>filter</a>.
+//           <a>interval</a> is the interval of link opening.
+//         </p>
+//         <p>The values of <a>where</a> option</p>
+//         <dl>
+//           <dt>f, n, t</dt><dd>Open the link in new tab.</dd>
+//           <dt>b</dt><dd>Open the link in new background tab.</dd>
+//           <dt>c</dt><dd>Open the link in current tab.</dd>
+//           <dt>w</dt><dd>Open the link in window.</dd>
+//         </dl>
+//       </description>
+//     </item>
+//     <item>
+//       <tags>:lopen</tags>
+//       <tags>:lo</tags>
+//       <tags>:linkopen</tags>
+//       <spec>:lo<oa>pen</oa><oa>!</oa> <oa>-w<oa>here</oa>=<a>where</a></oa> <oa>-include-current</oa> <a>link</a></spec>
+//       <description>
+//         <p>
+//           Open selected <a>link</a>.
+//           When used "!", open links in foreground.
+//         </p>
+//         <p>The values of <a>where</a> option</p>
+//         <dl>
+//           <dt>f, n, t</dt><dd>Open the link in new tab.</dd>
+//           <dt>b</dt><dd>Open the link in new background tab.</dd>
+//           <dt>c</dt><dd>Open the link in current tab.</dd>
+//           <dt>w</dt><dd>Open the link in window.</dd>
+//         </dl>
+//       </description>
+//     </item>
+//   </plugin>
+//   <plugin name="link-opener" version="2.3.2"
+//           href="http://github.com/vimpr/vimperator-plugins/blob/master/lo.js"
+//           summary="Link Opener"
+//           lang="ja"
+//           xmlns="http://vimperator.org/namespaces/liberator">
+//     <author email="anekos@snca.net">anekos</author>
+//     <license>New BSD License</license>
+//     <project name="Vimperator" minVersion="2.3" maxVersion="3.0"/>
+//     <p>
+//     </p>
+//     <item>
+//       <tags>:fo</tags>
+//       <tags>:fopen</tags>
+//       <tags>:filteropen</tags>
+//       <spec>:fo<oa>pen</oa><oa>!</oa> <oa>-w<oa>here</oa>=<a>where</a></oa> <oa>-i<oa>nterval</oa>=<a>interval</a></oa> <oa>-include-current</oa> <a>filter</a></spec>
+//       <description>
+//         <p>
+//           <a>filter</a> で選択されたリンクを開きます。
+//           <a>interval</a> はリンクを開く間隔です。
+//           <a>-include-current</a>が指定されると、現在のURLを指すリンクが含まれるようになります。
+//         </p>
+//         <p><a>where</a> オプションの値</p>
+//         <dl>
+//           <dt>f, n, t</dt><dd>新しいタブに開く</dd>
+//           <dt>b</dt><dd>バックグラウンドの新しいタブに開く</dd>
+//           <dt>c</dt><dd>現在のタブに開く</dd>
+//           <dt>w</dt><dd>新しいウインドウに開く</dd>
+//         </dl>
+//       </description>
+//     </item>
+//     <item>
+//       <tags>:lopen</tags>
+//       <tags>:lo</tags>
+//       <tags>:linkopen</tags>
+//       <spec>:lo<oa>pen</oa><oa>!</oa> <oa>-w<oa>here</oa>=<a>where</a></oa> <oa>-include-current</oa> <a>link</a></spec>
+//       <description>
+//         <p>
+//           選択されたリンク(<a>link</a>)を開きます。
+//           <a>-include-current</a>が指定されると、現在のURLを指すリンクが含まれるようになります。
+//         </p>
+//         <p><a>where</a> オプションの値</p>
+//         <dl>
+//           <dt>f, n, t</dt><dd>新しいタブに開く</dd>
+//           <dt>b</dt><dd>バックグラウンドの新しいタブに開く</dd>
+//           <dt>c</dt><dd>現在のタブに開く</dd>
+//           <dt>w</dt><dd>新しいウインドウに開く</dd>
+//         </dl>
+//       </description>
+//     </item>
+//   </plugin>
+// </>;
+// // }}}
 
 // Usage:
 //    :fo[pen][!] <REGEXP> [-i <INTERVAL_SEC>] [-w <WHERE>]
@@ -248,11 +248,6 @@ let INFO =
         if (!links.length)
           return;
 
-        if (args['-copy']) {
-          util.copyToClipboard(links.map(function (it) it.href).join("\n"));
-          return;
-        }
-
         liberator.open(links[0].href, where);
 
         if (links.length <= 1)
@@ -276,8 +271,7 @@ let INFO =
         options: [
           [['-interval', '-i'], commands.OPTION_INT],
           [['-where', '-w'], commands.OPTION_STRING, null, WHERE_COMPLETIONS],
-          [['-include-current', '-I'], commands.OPTION_NOARG],
-          [['-copy', '-c'], commands.OPTION_NOARG]
+          [['-include-current', '-I'], commands.OPTION_NOARG]
         ],
         completer: function (context, args) {
           context.title = ['URL', 'Text Content'];
@@ -342,7 +336,7 @@ let INFO =
           context.process = [
             process[0],
             function (item, text)
-              (item.thumbnail ? <><img src={item.thumbnail} style={CompItemStyle}/>{text}</>
+              (item.thumbnail ? xml`<><img src={item.thumbnail} style={CompItemStyle}/>{text}</>`
                               : process[1].apply(this, arguments))
           ];
           context.completions = lolinks.map(function (it, i) ({elem: it, index: i}));

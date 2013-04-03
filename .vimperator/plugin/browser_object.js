@@ -1,59 +1,59 @@
-// PLUGIN_INFO {{{
-let PLUGIN_INFO =
-<VimperatorPlugin>
-  <name>{NAME}</name>
-  <description>Map behave like text-object</description>
-  <version>0.6.1</version>
-  <author mail="trapezoid.g@gmail.com" homepage="http://unsigned.g.hatena.ne.jp/Trapezoid">Trapezoid</author>
-  <license>New BSD License</license>
-  <updateURL>https://github.com/vimpr/vimperator-plugins/raw/master/browser_object.js</updateURL>
-  <minVersion>2.2pre</minVersion>
-  <maxVersion>2.2pre</maxVersion>
-  <detail><![CDATA[
-    == Variables ==
-      g:browser_object_prefix:
-        default: ''
-        usage: let g:browser_object_prefix = ','
-    == Mappings ==
-      dd:
-        Delete current tab (when prefix is '' only)
-      {motion}/:
-        {motion} pattern matched tabs
-      {motion}{scope}{target}:
-        Motions:
-          d:
-           Delete
-          r:
-           Reload
-          m{register}:
-           Quick Mark
-          y:
-           Yank
-          e:
-           Set Pin
-          E:
-           Unset Pin
-        Scopes:
-          l:
-           Left
-          r:
-           Right
-          a:
-           All
-          c:
-           Current
-          o:
-           Other
-          s:
-           Same host
-          p:
-            Pinned
-        Target:
-          t:
-            Tabs
-  ]]></detail>
-</VimperatorPlugin>;
-// }}}
+// // PLUGIN_INFO {{{
+// let PLUGIN_INFO =
+// <VimperatorPlugin>
+//   <name>{NAME}</name>
+//   <description>Map behave like text-object</description>
+//   <version>0.6.1</version>
+//   <author mail="trapezoid.g@gmail.com" homepage="http://unsigned.g.hatena.ne.jp/Trapezoid">Trapezoid</author>
+//   <license>New BSD License</license>
+//   <updateURL>https://github.com/vimpr/vimperator-plugins/raw/master/browser_object.js</updateURL>
+//   <minVersion>2.2pre</minVersion>
+//   <maxVersion>2.2pre</maxVersion>
+//   <detail><![CDATA[
+//     == Variables ==
+//       g:browser_object_prefix:
+//         default: ''
+//         usage: let g:browser_object_prefix = ','
+//     == Mappings ==
+//       dd:
+//         Delete current tab (when prefix is '' only)
+//       {motion}/:
+//         {motion} pattern matched tabs
+//       {motion}{scope}{target}:
+//         Motions:
+//           d:
+//            Delete
+//           r:
+//            Reload
+//           m{register}:
+//            Quick Mark
+//           y:
+//            Yank
+//           e:
+//            Set Pin
+//           E:
+//            Unset Pin
+//         Scopes:
+//           l:
+//            Left
+//           r:
+//            Right
+//           a:
+//            All
+//           c:
+//            Current
+//           o:
+//            Other
+//           s:
+//            Same host
+//           p:
+//             Pinned
+//         Target:
+//           t:
+//             Tabs
+//   ]]></detail>
+// </VimperatorPlugin>;
+// // }}}
 
 // Vimperator plugin: 'Map behave like text-object'
 // Version: 0.5

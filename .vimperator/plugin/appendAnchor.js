@@ -1,33 +1,33 @@
-let PLUGIN_INFO =
-<VimperatorPlugin>
-  <name>appendAnchor</name>
-  <description>append anchors to texts look like url.</description>
-  <description lang="ja">リンク中の URL っぽいテキストにアンカーをつける。</description>
-  <version>0.4.7</version>
-  <author>SAKAI, Kazuaki</author>
-  <minVersion>2.0pre</minVersion>
-  <maxVersion>2.4</maxVersion>
-  <detail><![CDATA[
-    == Commands ==
-      :anc:
-        Append anchors.
-    == GlobalVariables ==
-      g:auto_append_anchor:
-        Execute ":anc" automatically when Vimperator shows the hints.
-      g:auto_append_anchor_once:
-        Just first once.
-  ]]></detail>
-  <detail lang="ja"><![CDATA[
-    == Commands ==
-      :anc:
-        アンカーを付加する。
-    == GlobalVariables ==
-      g:auto_append_anchor:
-        Vimperator がヒントを表示するときに自動的に ":anc" する。
-      g:auto_append_anchor_once:
-        最初の一回だけ。
-  ]]></detail>
-</VimperatorPlugin>;
+// let PLUGIN_INFO =
+// <VimperatorPlugin>
+//   <name>appendAnchor</name>
+//   <description>append anchors to texts look like url.</description>
+//   <description lang="ja">リンク中の URL っぽいテキストにアンカーをつける。</description>
+//   <version>0.4.7</version>
+//   <author>SAKAI, Kazuaki</author>
+//   <minVersion>2.0pre</minVersion>
+//   <maxVersion>2.4</maxVersion>
+//   <detail><![CDATA[
+//     == Commands ==
+//       :anc:
+//         Append anchors.
+//     == GlobalVariables ==
+//       g:auto_append_anchor:
+//         Execute ":anc" automatically when Vimperator shows the hints.
+//       g:auto_append_anchor_once:
+//         Just first once.
+//   ]]></detail>
+//   <detail lang="ja"><![CDATA[
+//     == Commands ==
+//       :anc:
+//         アンカーを付加する。
+//     == GlobalVariables ==
+//       g:auto_append_anchor:
+//         Vimperator がヒントを表示するときに自動的に ":anc" する。
+//       g:auto_append_anchor_once:
+//         最初の一回だけ。
+//   ]]></detail>
+// </VimperatorPlugin>;
 
 (function(){
 

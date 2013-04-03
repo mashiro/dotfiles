@@ -1,41 +1,41 @@
-let PLUGIN_INFO =
-<VimperatorPlugin>
-<name>{NAME}</name>
-<description>Tombloo integrate plugin</description>
-<description lang="ja">Tombloo 統合プラグイン</description>
-<author>Trapezoid</author>
-<version>0.1.1</version>
-<minVersion>2.0pre</minVersion>
-<maxVersion>2.3</maxVersion>
-<updateURL>https://github.com/vimpr/vimperator-plugins/raw/master/tombloo.js</updateURL>
-<detail><![CDATA[
-
-== EX-COMMANDS ==
-
-:tombloo arg:
-    post by Tombloo (don't use prompt)
-
-:tombloo! arg:
-    post by Tombloo (use prompt)
-
-:tomblooAction arg:
-    execute Tombloo's action in tool menu
-
-]]></detail>
-<detail lang="ja"><![CDATA[
-== EX-COMMANDS ==
-
-:tombloo arg:
-    Tombloo を使って投稿します ( ダイアログは出てきません )
-
-:tombloo! arg:
-    Tombloo を使って投稿します ( ダイアログが出てきます )
-
-:tomblooAction arg:
-    ツールバーから選択できる Tombloo のメニューを実行します
-
-]]></detail>
-</VimperatorPlugin>;
+// let PLUGIN_INFO =
+// <VimperatorPlugin>
+// <name>{NAME}</name>
+// <description>Tombloo integrate plugin</description>
+// <description lang="ja">Tombloo 統合プラグイン</description>
+// <author>Trapezoid</author>
+// <version>0.1.1</version>
+// <minVersion>2.0pre</minVersion>
+// <maxVersion>2.3</maxVersion>
+// <updateURL>https://github.com/vimpr/vimperator-plugins/raw/master/tombloo.js</updateURL>
+// <detail><![CDATA[
+// 
+// == EX-COMMANDS ==
+// 
+// :tombloo arg:
+//     post by Tombloo (don't use prompt)
+// 
+// :tombloo! arg:
+//     post by Tombloo (use prompt)
+// 
+// :tomblooAction arg:
+//     execute Tombloo's action in tool menu
+// 
+// ]]></detail>
+// <detail lang="ja"><![CDATA[
+// == EX-COMMANDS ==
+// 
+// :tombloo arg:
+//     Tombloo を使って投稿します ( ダイアログは出てきません )
+// 
+// :tombloo! arg:
+//     Tombloo を使って投稿します ( ダイアログが出てきます )
+// 
+// :tomblooAction arg:
+//     ツールバーから選択できる Tombloo のメニューを実行します
+// 
+// ]]></detail>
+// </VimperatorPlugin>;
 
 (function () {
 

@@ -4,105 +4,105 @@
   distributable under the terms of an MIT-style license.
   http://www.opensource.jp/licenses/mit-license.html
 }}}  END LICENSE BLOCK ***/
-// PLUGIN_INFO//{{{
-var PLUGIN_INFO =
-<VimperatorPlugin>
-  <name>{NAME}</name>
-  <description>request, and the result is displayed to the buffer.</description>
-  <description lang="ja">リクエストの結果をバッファに出力する。</description>
-  <author mail="suvene@zeromemory.info" homepage="http://zeromemory.sblo.jp/">suVene</author>
-  <version>0.4.16</version>
-  <license>MIT</license>
-  <minVersion>2.0pre</minVersion>
-  <maxVersion>2.3</maxVersion>
-  <updateURL>https://github.com/vimpr/vimperator-plugins/raw/master/multi_requester.js</updateURL>
-  <detail><![CDATA[
-== Needs Library ==
-- _libly.js(ver.0.1.19)
-  @see http://coderepos.org/share/browser/lang/javascript/vimperator-plugins/trunk/_libly.js
-
-== Usage ==
->||
-command[!] subcommand [ANY_TEXT]
-||<
-- !        create new tab.
-- ANY_TEXT     your input text
-
-e.g.)
->||
-:mr  alc[,goo,any1,any2…] ANY_TEXT       -> request by the input text, and display to the buffer.
-:mr! goo[,any1,any2,…]  {window.selection} -> request by the selected text, and display to the new tab.
-||<
-
-== Custumize .vimperatorrc ==
-=== Command(default [ mr ]) ===
->||
-let g:multi_requester_command = "ANY1, ANY2, ……"
-or
-liberator.globalVariables.multi_requester_command = [ ANY1, ANY2, …… ];
-||<
-
-=== Default Sites (default undefined) ===
->||
-liberator.globalVariables.multi_requester_default_sites = "alc,goo"
-||<
-These sites(subcommands) will be used, if this variable has been defined and you do not specify subcommands.
-
-=== SITEINFO ===
-e.g.)
->||
-javascript <<EOM
-liberator.globalVariables.multi_requester_siteinfo = [
-  {
-    map:            ",me",              // optional: keymap for this siteinfo call
-    bang:           true,               // optional:
-    args:           "any"               // optional:
-    name:           "ex",               // required: subcommand name
-    description:    "example",          // required: commandline short help
-    url:            "http://example.com/?%s",     // required: %s <-- replace string
-    xpath:          "//*",              // optional: default all
-    srcEncode:      "SHIFT_JIS",        // optional: default UTF-8
-    urlEncode:      "SHIFT_JIS",        // optional: default srcEncode
-    ignoreTags:     "img",              // optional: default script, syntax "tag1,tag2,……"
-    extractLink:    "//xpath"           // optional: extract permalink
-  },
-];
-EOM
-||<
-
-=== other siteinfo by wedata. ===
-  @see http://wedata.net/databases/Multi%20Requester/items
-
-=== Mappings ===
-e.g.)
->||
-javascript <<EOM
-liberator.globalVariables.multi_requester_mappings = [
-  [ ",ml", "ex" ],              // == :mr  ex
-  [ ",mg", "goo", "!" ],        // == :mr! goo
-  [ ",ma", "alc",  , "args" ],  // == :mr  alc args
-];
-EOM
-||<
-
-=== Other Options ===
->||
-let g:multi_requester_use_wedata = "false"       // true by default
-||<
-wedata を利用しない場合は false を設定してください。
->||
-let g:multi_requester_default_sites = 'alc';
-||<
-subcommand を省略した場合に利用されるサイトを設定します。
->||
-let g:multi_requester_order = 'count'; // date by default
-||<
-補完の順番を設定します。(大きい順に並びます)
-"count" または "date" を設定してください。
-
-   ]]></detail>
-</VimperatorPlugin>;
-//}}}
+// // PLUGIN_INFO//{{{
+// var PLUGIN_INFO =
+// <VimperatorPlugin>
+//   <name>{NAME}</name>
+//   <description>request, and the result is displayed to the buffer.</description>
+//   <description lang="ja">リクエストの結果をバッファに出力する。</description>
+//   <author mail="suvene@zeromemory.info" homepage="http://zeromemory.sblo.jp/">suVene</author>
+//   <version>0.4.16</version>
+//   <license>MIT</license>
+//   <minVersion>2.0pre</minVersion>
+//   <maxVersion>2.3</maxVersion>
+//   <updateURL>https://github.com/vimpr/vimperator-plugins/raw/master/multi_requester.js</updateURL>
+//   <detail><![CDATA[
+// == Needs Library ==
+// - _libly.js(ver.0.1.19)
+//   @see http://coderepos.org/share/browser/lang/javascript/vimperator-plugins/trunk/_libly.js
+// 
+// == Usage ==
+// >||
+// command[!] subcommand [ANY_TEXT]
+// ||<
+// - !        create new tab.
+// - ANY_TEXT     your input text
+// 
+// e.g.)
+// >||
+// :mr  alc[,goo,any1,any2…] ANY_TEXT       -> request by the input text, and display to the buffer.
+// :mr! goo[,any1,any2,…]  {window.selection} -> request by the selected text, and display to the new tab.
+// ||<
+// 
+// == Custumize .vimperatorrc ==
+// === Command(default [ mr ]) ===
+// >||
+// let g:multi_requester_command = "ANY1, ANY2, ……"
+// or
+// liberator.globalVariables.multi_requester_command = [ ANY1, ANY2, …… ];
+// ||<
+// 
+// === Default Sites (default undefined) ===
+// >||
+// liberator.globalVariables.multi_requester_default_sites = "alc,goo"
+// ||<
+// These sites(subcommands) will be used, if this variable has been defined and you do not specify subcommands.
+// 
+// === SITEINFO ===
+// e.g.)
+// >||
+// javascript <<EOM
+// liberator.globalVariables.multi_requester_siteinfo = [
+//   {
+//     map:            ",me",              // optional: keymap for this siteinfo call
+//     bang:           true,               // optional:
+//     args:           "any"               // optional:
+//     name:           "ex",               // required: subcommand name
+//     description:    "example",          // required: commandline short help
+//     url:            "http://example.com/?%s",     // required: %s <-- replace string
+//     xpath:          "//*",              // optional: default all
+//     srcEncode:      "SHIFT_JIS",        // optional: default UTF-8
+//     urlEncode:      "SHIFT_JIS",        // optional: default srcEncode
+//     ignoreTags:     "img",              // optional: default script, syntax "tag1,tag2,……"
+//     extractLink:    "//xpath"           // optional: extract permalink
+//   },
+// ];
+// EOM
+// ||<
+// 
+// === other siteinfo by wedata. ===
+//   @see http://wedata.net/databases/Multi%20Requester/items
+// 
+// === Mappings ===
+// e.g.)
+// >||
+// javascript <<EOM
+// liberator.globalVariables.multi_requester_mappings = [
+//   [ ",ml", "ex" ],              // == :mr  ex
+//   [ ",mg", "goo", "!" ],        // == :mr! goo
+//   [ ",ma", "alc",  , "args" ],  // == :mr  alc args
+// ];
+// EOM
+// ||<
+// 
+// === Other Options ===
+// >||
+// let g:multi_requester_use_wedata = "false"       // true by default
+// ||<
+// wedata を利用しない場合は false を設定してください。
+// >||
+// let g:multi_requester_default_sites = 'alc';
+// ||<
+// subcommand を省略した場合に利用されるサイトを設定します。
+// >||
+// let g:multi_requester_order = 'count'; // date by default
+// ||<
+// 補完の順番を設定します。(大きい順に並びます)
+// "count" または "date" を設定してください。
+// 
+//    ]]></detail>
+// </VimperatorPlugin>;
+// //}}}
 (function() {
 if (!liberator.plugins.libly) {
   liberator.log("multi_requester: needs _libly.js");
