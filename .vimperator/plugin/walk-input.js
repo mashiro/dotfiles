@@ -18,49 +18,49 @@
 //     <textarea name="comment"></textarea>
 // </html>
 
-// // PLUGIN_INFO {{{
-// let INFO =
-// <plugin name="Walk-Input" version="1.3.0"
-//         href="http://github.com/vimpr/vimperator-plugins/blob/master/walk-input.js"
-//         summary="The focus walks 'input' and 'textarea' element."
-//         xmlns="http://vimperator.org/namespaces/liberator">
-//     <author email="tekezo@pqrs.org">Takayama Fumihiko</author>
-//     <author email="anekos@snca.net">anekos</author>
-//     <license>BSD</license>
-//     <project name="Vimperator" minVersion="2.2"/>
-//     <p>
-// 		The focus walks &lt;input&gt; &amp; &lt;textarea&gt; element.
-// 		If you type <k name="M-i"/> first, the focus moves to "&lt;input name='search' /&gt;".
-// 		Then if you type <k name="M-i"/> once more, the focus moves to "&lt;input name='name' /&gt;".
-//     </p>
-// 	<code><![CDATA[
-// <html>
-//   <input name="search" />
-//   <a href="xxx">xxx</a>
-//   <a href="yyy">yyy</a>
-//   <a href="zzz">zzz</a>
-//   <input name="name" />
-//   <textarea name="comment"></textarea>
-// </html>
-// 	]]></code>
-//     <item>
-// 	<tags><![CDATA[i_<M-i> i_<A-i> <M-i> <A-i>]]></tags>
-// 	<spec>&lt;M-i&gt;</spec>
-// 	<spec>&lt;A-i&gt;</spec>
-// 	<description>
-//             <p>Move focus forward</p>
-// 	</description>
-//     </item>
-//     <item>
-// 	<tags><![CDATA[i_<M-S-i> i_<A-S-i> <M-S-i> <A-S-i>]]></tags>
-// 	<spec>&lt;M-S-i&gt;</spec>
-// 	<spec>&lt;A-S-i&gt;</spec>
-// 	<description>
-//             <p>Move focus backward</p>
-// 	</description>
-//     </item>
-// </plugin>;
-// // }}}
+// PLUGIN_INFO {{{
+let INFO = xml`
+<plugin name="Walk-Input" version="1.3.0"
+        href="http://github.com/vimpr/vimperator-plugins/blob/master/walk-input.js"
+        summary="The focus walks 'input' and 'textarea' element."
+        xmlns="http://vimperator.org/namespaces/liberator">
+    <author email="tekezo@pqrs.org">Takayama Fumihiko</author>
+    <author email="anekos@snca.net">anekos</author>
+    <license>BSD</license>
+    <project name="Vimperator" minVersion="2.2"/>
+    <p>
+		The focus walks &lt;input&gt; &amp; &lt;textarea&gt; element.
+		If you type <k name="M-i"/> first, the focus moves to "&lt;input name='search' /&gt;".
+		Then if you type <k name="M-i"/> once more, the focus moves to "&lt;input name='name' /&gt;".
+    </p>
+	<code><![CDATA[
+<html>
+  <input name="search" />
+  <a href="xxx">xxx</a>
+  <a href="yyy">yyy</a>
+  <a href="zzz">zzz</a>
+  <input name="name" />
+  <textarea name="comment"></textarea>
+</html>
+	]]></code>
+    <item>
+	<tags><![CDATA[i_<M-i> i_<A-i> <M-i> <A-i>]]></tags>
+	<spec>&lt;M-i&gt;</spec>
+	<spec>&lt;A-i&gt;</spec>
+	<description>
+            <p>Move focus forward</p>
+	</description>
+    </item>
+    <item>
+	<tags><![CDATA[i_<M-S-i> i_<A-S-i> <M-S-i> <A-S-i>]]></tags>
+	<spec>&lt;M-S-i&gt;</spec>
+	<spec>&lt;A-S-i&gt;</spec>
+	<description>
+            <p>Move focus backward</p>
+	</description>
+    </item>
+</plugin>`;
+// }}}
 
 (function () {
 
