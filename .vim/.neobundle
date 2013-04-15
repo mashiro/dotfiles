@@ -1,18 +1,18 @@
 " vim: ft=vim
 
 set nocompatible
+filetype on
 filetype off
 
 if has('vim_starting')
-    if !empty($DOT_FILES_MAKE)
-        set runtimepath^=./bundle/vimproc
-        set runtimepath^=./neobundle
-        call neobundle#rc(expand('./bundle'))
-    else
-        set runtimepath^=~/.vim/bundle/vimproc
-        set runtimepath^=~/.vim/neobundle
-        call neobundle#rc(expand('~/.vim/bundle'))
+    let s:prefix = expand('~/.vim')
+    if !isdirectory(s:prefix)
+        let s:prefix = expand('%:p:h')
     endif
+
+    execute 'set runtimepath^=' . s:prefix . '/bundle/vimproc'
+    execute 'set runtimepath^=' . s:prefix . '/neobundle'
+    call neobundle#rc(s:prefix . '/bundle')
 endif
 
 NeoBundle 'Shougo/vimproc', {
