@@ -7,12 +7,16 @@ register_paths() { # {{{2
         if [ -d "$dir/man" ]; then MANPATH="$dir/man:$MANPATH"; fi
         if [ -d "$dir/share/man" ]; then MANPATH="$dir/share/man:$MANPATH"; fi
         if [ -d "$dir/info" ]; then INFOPATH="$dir/info:$INFOPATH"; fi
+        if [ -d "$dir/include" ]; then INCLUDE_PATH="$dir/include:$INCLUDE_PATH"; fi
+        if [ -d "$dir/lib" ]; then LIBRARY_PATH="$dir/lib:$LIBRARY_PATH"; fi
         for i in $dir/*; do
             if [ -d "$i/bin" ]; then PATH="$i/bin:$PATH"; fi
             if [ -d "$i/sbin" ]; then PATH="$i/sbin:$PATH"; fi
             if [ -d "$i/man" ]; then MANPATH="$i/man:$MANPATH"; fi
             if [ -d "$i/share/man" ]; then MANPATH="$i/share/man:$MANPATH"; fi
             if [ -d "$i/info" ]; then INFOPATH="$i/info:$INFOPATH"; fi
+            if [ -d "$i/include" ]; then INCLUDE_PATH="$i/include:$INCLUDE_PATH"; fi
+            if [ -d "$i/lib" ]; then LIBRARY_PATH="$i/lib:$LIBRARY_PATH"; fi
         done
     fi
 }
@@ -58,9 +62,7 @@ after_register_paths() {
 # Export {{{1
 # Path {{{2
 before_register_paths
-if [ ! "$REGISTER_PATHS_COMPLETED" ]; then
-    export PATH MANPATH INFOPATH
-
+if [ -n "$SCREEN" -o -z "$REGISTER_PATHS_COMPLETED" ]; then
     # for Defaults
     register_paths ""
     register_paths "/usr"
@@ -74,6 +76,14 @@ if [ ! "$REGISTER_PATHS_COMPLETED" ]; then
     # for my own tools
     register_paths "$HOME/local"
     register_paths "$HOME/local/enabled"
+
+    # export
+    export PATH MANPATH INFOPATH
+    export INCLUDE_PATH
+    export C_INCLUDE_PATH=$INCLUDE_PATH
+    export CPP_INCLUDE_PATH=$INCLUDE_PATH
+    export LIBRARY_PATH
+    export LD_LIBRARY_PATH=$LIBRARY_PATH
 
     # completed
     export REGISTER_PATHS_COMPLETED=1
