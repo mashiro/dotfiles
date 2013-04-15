@@ -46,6 +46,7 @@ NeoBundle 'hail2u/vim-css3-syntax'
 NeoBundle 'pangloss/vim-javascript'
 NeoBundle 'kchmck/vim-coffee-script'
 NeoBundle 'vim-scripts/YankRing.vim'
+NeoBundle 'mileszs/ack.vim'
 
 filetype plugin indent on
 
