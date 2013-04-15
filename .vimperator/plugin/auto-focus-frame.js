@@ -32,30 +32,30 @@ THE POSSIBILITY OF SUCH DAMAGE.
 
 }}} */
 
-// // PLUGIN_INFO {{{
-// let PLUGIN_INFO =
-// <VimperatorPlugin>
-//   <name>Auto focus frame</name>
-//   <description>Automatically focus to largest frame.</description>
-//   <description lang="ja">最も大きなフレームに自動的にフォーカスする。</description>
-//   <version>1.0.10</version>
-//   <author mail="anekos@snca.net" homepage="http://d.hatena.ne.jp/nokturnalmortum/">anekos</author>
-//   <license>new BSD License (Please read the source code comments of this plugin)</license>
-//   <license lang="ja">修正BSDライセンス (ソースコードのコメントを参照してください)</license>
-//   <updateURL>https://github.com/vimpr/vimperator-plugins/raw/master/auto-focus-frame.js</updateURL>
-//   <minVersion>2.3pre</minVersion>
-//   <maxVersion>2.3pre</maxVersion>
-//   <detail><![CDATA[
-//     == Usage ==
-//       Only install.
-//   ]]></detail>
-//   <detail lang="ja"><![CDATA[
-//     == Usage ==
-//       インストールするだけ
-//       一番面積の大きいフレームをフォーカスします
-//   ]]></detail>
-// </VimperatorPlugin>;
-// // }}}
+// PLUGIN_INFO {{{
+let PLUGIN_INFO = xml`
+<VimperatorPlugin>
+  <name>Auto focus frame</name>
+  <description>Automatically focus to largest frame.</description>
+  <description lang="ja">最も大きなフレームに自動的にフォーカスする。</description>
+  <version>1.0.10</version>
+  <author mail="anekos@snca.net" homepage="http://d.hatena.ne.jp/nokturnalmortum/">anekos</author>
+  <license>new BSD License (Please read the source code comments of this plugin)</license>
+  <license lang="ja">修正BSDライセンス (ソースコードのコメントを参照してください)</license>
+  <updateURL>https://github.com/vimpr/vimperator-plugins/raw/master/auto-focus-frame.js</updateURL>
+  <minVersion>2.3pre</minVersion>
+  <maxVersion>2.3pre</maxVersion>
+  <detail><![CDATA[
+    == Usage ==
+      Only install.
+  ]]></detail>
+  <detail lang="ja"><![CDATA[
+    == Usage ==
+      インストールするだけ
+      一番面積の大きいフレームをフォーカスします
+  ]]></detail>
+</VimperatorPlugin>`;
+// }}}
 
 (function () {
 

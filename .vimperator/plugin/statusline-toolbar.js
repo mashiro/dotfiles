@@ -1,35 +1,35 @@
-// var INFO =
-// <plugin name="Statusline Toolbar" version="0.1"
-//         href="http://github.com/vimpr/vimperator-plugins/raw/master/statusline-toolbar.js"
-//         summary="Append Toolbar to Statusline"
-//         xmlns="http://vimperator.org/namespaces/liberator">
-//     <author email="teramako@gmail.com">teramako</author>
-//     <license>MPL 1.1/GPL 2.0/LGPL 2.1</license>
-//     <project name="Vimperator" minVersion="3.0"/>
-//     <description>
-//       <ul>
-//         <li>Add toolbar to status-line</li>
-//         <li>Move the status-bar to the toolbar.</li>
-//         <li>Make the toolbarbuttons in the toolbar palette configurable
-//           <ul>
-//             <li>Can customize by command (ex. <ex>:set statuslinetoolbars=feed-button</ex>)</li>
-//             <li>Also, can drop the toolbarbutton from Customize Toolbar window</li>
-//           </ul>
-//         </li>
-//       </ul>
-//     </description>
-//     <item>
-//       <tags>'slt' 'statuslinetoolbars'</tags>
-//       <spec>'statuslinetoolbars' 'slt'</spec>
-//       <type>stringlist</type>
-//       <default></default>
-//       <description>
-//         <p>
-//           Add/Remove toolbarbutton of the toolbar palette.
-//         </p>
-//       </description>
-//     </item>
-// </plugin>
+var INFO = xml`
+<plugin name="Statusline Toolbar" version="0.1"
+        href="http://github.com/vimpr/vimperator-plugins/raw/master/statusline-toolbar.js"
+        summary="Append Toolbar to Statusline"
+        xmlns="http://vimperator.org/namespaces/liberator">
+    <author email="teramako@gmail.com">teramako</author>
+    <license>MPL 1.1/GPL 2.0/LGPL 2.1</license>
+    <project name="Vimperator" minVersion="3.0"/>
+    <description>
+      <ul>
+        <li>Add toolbar to status-line</li>
+        <li>Move the status-bar to the toolbar.</li>
+        <li>Make the toolbarbuttons in the toolbar palette configurable
+          <ul>
+            <li>Can customize by command (ex. <ex>:set statuslinetoolbars=feed-button</ex>)</li>
+            <li>Also, can drop the toolbarbutton from Customize Toolbar window</li>
+          </ul>
+        </li>
+      </ul>
+    </description>
+    <item>
+      <tags>'slt' 'statuslinetoolbars'</tags>
+      <spec>'statuslinetoolbars' 'slt'</spec>
+      <type>stringlist</type>
+      <default></default>
+      <description>
+        <p>
+          Add/Remove toolbarbutton of the toolbar palette.
+        </p>
+      </description>
+    </item>
+</plugin>`;
 
 var updater = {
   "star-button": [
@@ -39,7 +39,8 @@ var updater = {
     }
   ],
 };
-var css = xml`<css><![CDATA[
+var css = xml`
+<css><![CDATA[
   #liberator-customize-toolbar {
     border: none !important;
     min-width: 5px !important;
