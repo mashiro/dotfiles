@@ -205,9 +205,7 @@ alias sudo="sudo "
 alias :q="exit"
 alias t="tmux"
 
-if [ -f $(which ack-grep) ]; then
-  alias ack="ack-grep"
-fi
+$(which ack-grep > /dev/null 2>&1) && alias ack="ack-grep"
 
 alias py="python"
 alias pyb="pythonbrew"
