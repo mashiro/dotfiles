@@ -80,6 +80,8 @@ set cmdheight=1
 set showcmd
 set showmode
 set statusline=%<%f\ %m%r%h%w%{'['.(&fenc!=''?&fenc:&enc).']['.&ff.']'}%=%l,%c%V%8P
+set splitbelow
+set splitright
 
 " search
 set nohlsearch
@@ -426,23 +428,14 @@ let g:user_zen_settings = {
 \}
 
 " quickrun.vim {{{2
-let b:quickrun_config = {
-\ 'outputter/buffer/split': 'rightbelow',
-\}
 let g:quickrun_config = {
-\ '_': {
-\   'runner': 'vimproc',
-\ },
-\ 'cs': {
-\   'command': 'dmcs',
-\   'exec': ['%c %o %s -out:%s:p:r.exe', 'mono %s:p:r.exe %a', 'rm -f %s:p:r.exe'],
-\   'tempfile': '%{tempname()}.cs',
-\ },
+\   "_": {
+\       "runner": "vimproc",
+\       "runner/vimproc/updatetime": 50,
+\       "outputter": "multi",
+\       "outputter/multi/targets": ["buffer", "quickfix"],
+\   }
 \}
-
-" watchdogs.vim {{{2
-call watchdogs#setup(g:quickrun_config)
-nnoremap <silent> <Leader>c :<C-u>WatchdogsRun<CR>
 
 " End {{{1
 if filereadable(expand('~/.vimrc.local'))
