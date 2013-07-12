@@ -49,9 +49,6 @@ after_register_paths() {
     # rvm
     source_if "$HOME/.rvm/scripts/rvm"
 
-    # nvm
-    source_if "$HOME/.nvm/nvm.sh"
-
     # nodebrew
     [[ -d "$HOME/.nodebrew" ]] && export PATH=$HOME/.nodebrew/current/bin:$PATH
 
