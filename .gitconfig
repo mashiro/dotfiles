@@ -22,3 +22,5 @@
     fix = commit --amend
     sm = submodule
     edit-conflicted-files = !$EDITOR $(git ls-conflicted-files)
+[push]
+	default = simple
