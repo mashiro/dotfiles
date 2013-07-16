@@ -13,7 +13,7 @@ setopt auto_list
 setopt auto_menu
 setopt auto_resume
 setopt no_auto_name_dirs
-setopt correct
+setopt no_correct
 setopt complete_in_word
 setopt brace_ccl
 setopt no_cdable_vars
@@ -144,8 +144,8 @@ bindkey "^[f" emacs-forward-ward
 
 # History {{{1
 HISTFILE=~/.zsh_history
-HISTSIZE=100000
-SAVEHIST=100000
+HISTSIZE=10000
+SAVEHIST=10000
 setopt extended_history
 setopt append_history
 setopt inc_append_history
@@ -193,9 +193,6 @@ alias sr="screen -U -D -R"
 alias srr="screen -U -D -RR"
 alias sls="screen -U -ls"
 
-alias cpan-uninstall='perl -MConfig -MExtUtils::Install -e '"'"'($FULLEXT=shift)=~s{-}{/}g;uninstall "$Config{sitear    chexp}/auto/$FULLEXT/.packlist",1'"'"
-alias cpan-update="perl -MCPAN -e 'CPAN::Shell->install(CPAN::Shell->r)'"
-
 alias where="command -v"
 alias j="jobs -l"
 alias du="du -h"
@@ -210,33 +207,8 @@ $(which ack-grep > /dev/null 2>&1) && alias ack="ack-grep"
 alias py="python"
 alias pyb="pythonbrew"
 
-case "${OSTYPE}" in
-darwin*)
-	alias port-update="sudo port selfupdate; sudo port outdated"
-	alias port-upgrade="sudo port upgrade --enforce-variants installed"
-	;;
-freebsd*)
-	case ${UID} in
-	0)
-		updateports() 
-		{
-			if [ -f /usr/ports/.portsnap.INDEX ]; then
-				portsnap fetch update
-			else
-				portsnap fetch extract update
-			fi
-			(cd /usr/ports/; make index)
-
-			portversion -v -l \<
-		}
-		alias appsupgrade='pkgdb -F && BATCH=YES NO_CHECKSUM=YES portupgrade -a'
-		;;
-	esac
-	;;
-esac
-
 alias g++03="g++ -Wall -Wextra"
-alias g++11="g++ -std=gnu++11 -Wall -Wextra"
+alias g++11="g++ -Wall -Wextra -std=gnu++11"
 
 # End {{{1
 [ -f ~/.zshrc.local ] && source ~/.zshrc.local
