@@ -49,6 +49,12 @@ after_register_paths() {
     # rvm
     source_if "$HOME/.rvm/scripts/rvm"
 
+    # rbenv
+    if [ -d "$HOME/.rbenv" ]; then
+        export PATH=$HOME/.rbenv/bin:$PATH
+        eval "$(rbenv init -)"
+    fi
+
     # nvm
     source_if "$HOME/.nvm/nvm.sh"
 
@@ -61,8 +67,10 @@ after_register_paths() {
 
 # Export {{{1
 # Path {{{2
-before_register_paths
-if [ -n "$SCREEN" -o -z "$REGISTER_PATHS_COMPLETED" ]; then
+#if [ -n "$SCREEN" -o -z "$REGISTER_PATHS_COMPLETED" ]; then
+if [ -z "$REGISTER_PATHS_COMPLETED" ]; then
+    before_register_paths
+
     # for Defaults
     register_paths ""
     register_paths "/usr"
@@ -78,17 +86,18 @@ if [ -n "$SCREEN" -o -z "$REGISTER_PATHS_COMPLETED" ]; then
     register_paths "$HOME/local/enabled"
 
     # export
-    export PATH MANPATH INFOPATH
-    export INCLUDE_PATH
-    export C_INCLUDE_PATH=$INCLUDE_PATH
-    export CPP_INCLUDE_PATH=$INCLUDE_PATH
-    export LIBRARY_PATH
-    export LD_LIBRARY_PATH=$LIBRARY_PATH
+    # export PATH MANPATH INFOPATH
+    # export INCLUDE_PATH
+    # export C_INCLUDE_PATH=$INCLUDE_PATH
+    # export CPP_INCLUDE_PATH=$INCLUDE_PATH
+    # export LIBRARY_PATH
+    # export LD_LIBRARY_PATH=$LIBRARY_PATH
 
     # completed
     export REGISTER_PATHS_COMPLETED=1
+
+    after_register_paths
 fi
-after_register_paths
 
 # Misc {{{2
 export TZ=JST-9
