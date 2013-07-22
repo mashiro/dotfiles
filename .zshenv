@@ -85,13 +85,13 @@ if [ -z "$REGISTER_PATHS_COMPLETED" ]; then
     register_paths "$HOME/local"
     register_paths "$HOME/local/enabled"
 
-    # export
-    # export PATH MANPATH INFOPATH
-    # export INCLUDE_PATH
-    # export C_INCLUDE_PATH=$INCLUDE_PATH
-    # export CPP_INCLUDE_PATH=$INCLUDE_PATH
-    # export LIBRARY_PATH
-    # export LD_LIBRARY_PATH=$LIBRARY_PATH
+    # exports
+    export PATH MANPATH INFOPATH
+    export INCLUDE_PATH
+    export C_INCLUDE_PATH=$INCLUDE_PATH
+    export CPP_INCLUDE_PATH=$INCLUDE_PATH
+    export LIBRARY_PATH
+    export LD_LIBRARY_PATH=$LIBRARY_PATH
 
     # completed
     export REGISTER_PATHS_COMPLETED=1
