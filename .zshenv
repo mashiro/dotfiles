@@ -97,6 +97,10 @@ if [ -z "$REGISTER_PATHS_COMPLETED" ]; then
     export REGISTER_PATHS_COMPLETED=1
 
     after_register_paths
+
+    export _PATH=$PATH
+else
+    [ -n $_PATH ] && export PATH=$_PATH
 fi
 
 # Misc {{{2
