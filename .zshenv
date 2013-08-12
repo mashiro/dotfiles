@@ -27,8 +27,6 @@ source_if() { # {{{2
 
 # Manager {{{1
 before_register_paths() {
-    # perlbrew
-    source_if "$HOME/perl5/perlbrew/etc/bashrc"
 }
 
 after_register_paths() {
@@ -63,6 +61,9 @@ after_register_paths() {
 
     # cabal
     [[ -d "$HOME/.cabal" ]] && export PATH=$HOME/.cabal/bin:$PATH
+
+    # perlbrew
+    source_if "$HOME/perl5/perlbrew/etc/bashrc"
 }
 
 # Export {{{1
