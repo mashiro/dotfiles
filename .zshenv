@@ -1,14 +1,15 @@
 # Utility {{{1
 register_path() { # {{{2
     dir="$1"
-    if [ -d "$dir/bin" ]; then export PATH="$dir/bin:$PATH"; fi
-    if [ -d "$dir/sbin" ]; then export PATH="$dir/sbin:$PATH"; fi
-    if [ -d "$dir/man" ]; then export MANPATH="$dir/man:$MANPATH"; fi
-    if [ -d "$dir/share/man" ]; then export MANPATH="$dir/share/man:$MANPATH"; fi
-    if [ -d "$dir/info" ]; then export INFOPATH="$dir/info:$INFOPATH"; fi
-    if [ -d "$dir/include" ]; then export INCLUDE_PATH="$dir/include:$INCLUDE_PATH"; fi
-    if [ -d "$dir/lib" ]; then export LIBRARY_PATH="$dir/lib:$LIBRARY_PATH"; fi
+    if [ -d "$dir/bin" ]; then PATH="$dir/bin:$PATH"; fi
+    if [ -d "$dir/sbin" ]; then PATH="$dir/sbin:$PATH"; fi
+    if [ -d "$dir/man" ]; then MANPATH="$dir/man:$MANPATH"; fi
+    if [ -d "$dir/share/man" ]; then MANPATH="$dir/share/man:$MANPATH"; fi
+    if [ -d "$dir/info" ]; then INFOPATH="$dir/info:$INFOPATH"; fi
+    if [ -d "$dir/include" ]; then INCLUDE_PATH="$dir/include:$INCLUDE_PATH"; fi
+    if [ -d "$dir/lib" ]; then LIBRARY_PATH="$dir/lib:$LIBRARY_PATH"; fi
 }
+
 register_paths() { # {{{2
     dir="$1"
     if [ -d "$dir" ] || [ -z "$dir" ]; then
@@ -17,6 +18,15 @@ register_paths() { # {{{2
             register_path "$i"
         done
     fi
+}
+
+export_paths() {
+    export PATH MANPATH INFOPATH
+    export INCLUDE_PATH
+    export C_INCLUDE_PATH=$INCLUDE_PATH
+    export CPP_INCLUDE_PATH=$INCLUDE_PATH
+    export LIBRARY_PATH
+    export LD_LIBRARY_PATH=$LIBRARY_PATH
 }
 
 source_if() { # {{{2
@@ -84,13 +94,7 @@ if [ -z "$REGISTER_PATHS_COMPLETED" ]; then
     register_paths "$HOME/local"
     register_paths "$HOME/local/enabled"
 
-    # exports
-    export PATH MANPATH INFOPATH
-    export INCLUDE_PATH
-    export C_INCLUDE_PATH=$INCLUDE_PATH
-    export CPP_INCLUDE_PATH=$INCLUDE_PATH
-    export LIBRARY_PATH
-    export LD_LIBRARY_PATH=$LIBRARY_PATH
+    export_paths
 
     # completed
     export REGISTER_PATHS_COMPLETED=1
