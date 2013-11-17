@@ -128,6 +128,11 @@ if (1 < &t_Co || has('gui')) && has('syntax')
     set background=dark
     if (256 <= &t_Co)
         colorscheme xoria256
+        if !has('gui_running')
+            hi Normal ctermbg=none
+            hi NonText ctermbg=none
+            hi LineNr ctermbg=none
+        endif
     endif
 endif
 
