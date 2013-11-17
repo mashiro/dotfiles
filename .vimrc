@@ -442,6 +442,9 @@ let g:quickrun_config = {
 \   }
 \}
 
+" gist.vim {{{2
+let g:github_user = "mashiro"
+
 " End {{{1
 if filereadable(expand('~/.vimrc.local'))
     source ~/.vimrc.local

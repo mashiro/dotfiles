@@ -1,24 +1,32 @@
 # Utility {{{1
+register_path() { # {{{2
+    dir="$1"
+    if [ -d "$dir/bin" ]; then PATH="$dir/bin:$PATH"; fi
+    if [ -d "$dir/sbin" ]; then PATH="$dir/sbin:$PATH"; fi
+    if [ -d "$dir/man" ]; then MANPATH="$dir/man:$MANPATH"; fi
+    if [ -d "$dir/share/man" ]; then MANPATH="$dir/share/man:$MANPATH"; fi
+    if [ -d "$dir/info" ]; then INFOPATH="$dir/info:$INFOPATH"; fi
+    if [ -d "$dir/include" ]; then INCLUDE_PATH="$dir/include:$INCLUDE_PATH"; fi
+    if [ -d "$dir/lib" ]; then LIBRARY_PATH="$dir/lib:$LIBRARY_PATH"; fi
+}
+
 register_paths() { # {{{2
     dir="$1"
     if [ -d "$dir" ] || [ -z "$dir" ]; then
-        if [ -d "$dir/bin" ]; then PATH="$dir/bin:$PATH"; fi
-        if [ -d "$dir/sbin" ]; then PATH="$dir/sbin:$PATH"; fi
-        if [ -d "$dir/man" ]; then MANPATH="$dir/man:$MANPATH"; fi
-        if [ -d "$dir/share/man" ]; then MANPATH="$dir/share/man:$MANPATH"; fi
-        if [ -d "$dir/info" ]; then INFOPATH="$dir/info:$INFOPATH"; fi
-        if [ -d "$dir/include" ]; then INCLUDE_PATH="$dir/include:$INCLUDE_PATH"; fi
-        if [ -d "$dir/lib" ]; then LIBRARY_PATH="$dir/lib:$LIBRARY_PATH"; fi
+        register_path "$dir"
         for i in $dir/*; do
-            if [ -d "$i/bin" ]; then PATH="$i/bin:$PATH"; fi
-            if [ -d "$i/sbin" ]; then PATH="$i/sbin:$PATH"; fi
-            if [ -d "$i/man" ]; then MANPATH="$i/man:$MANPATH"; fi
-            if [ -d "$i/share/man" ]; then MANPATH="$i/share/man:$MANPATH"; fi
-            if [ -d "$i/info" ]; then INFOPATH="$i/info:$INFOPATH"; fi
-            if [ -d "$i/include" ]; then INCLUDE_PATH="$i/include:$INCLUDE_PATH"; fi
-            if [ -d "$i/lib" ]; then LIBRARY_PATH="$i/lib:$LIBRARY_PATH"; fi
+            register_path "$i"
         done
     fi
+}
+
+export_paths() {
+    export PATH MANPATH INFOPATH
+    export INCLUDE_PATH
+    export C_INCLUDE_PATH=$INCLUDE_PATH
+    export CPP_INCLUDE_PATH=$INCLUDE_PATH
+    export LIBRARY_PATH
+    export LD_LIBRARY_PATH=$LIBRARY_PATH
 }
 
 source_if() { # {{{2
@@ -86,13 +94,7 @@ if [ -z "$REGISTER_PATHS_COMPLETED" ]; then
     register_paths "$HOME/local"
     register_paths "$HOME/local/enabled"
 
-    # exports
-    export PATH MANPATH INFOPATH
-    export INCLUDE_PATH
-    export C_INCLUDE_PATH=$INCLUDE_PATH
-    export CPP_INCLUDE_PATH=$INCLUDE_PATH
-    export LIBRARY_PATH
-    export LD_LIBRARY_PATH=$LIBRARY_PATH
+    export_paths
 
     # completed
     export REGISTER_PATHS_COMPLETED=1
