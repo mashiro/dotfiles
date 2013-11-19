@@ -46,7 +46,7 @@ after_register_paths() {
 
     # rbenv
     if [ -d "$HOME/.rbenv" ]; then
-        export PATH=$HOME/.rbenv/bin:$PATH
+        export PATH="$HOME/.rbenv/bin:$PATH"
         eval "$(rbenv init -)"
     fi
 
