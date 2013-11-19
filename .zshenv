@@ -41,17 +41,6 @@ after_register_paths() {
     # homebrew (OSX)
     [[ -d "/usr/local/share/python" ]] && export PATH=/usr/local/share/python:$PATH
 
-    # pythonbrew
-    source_if "$HOME/.pythonbrew/etc/bashrc"
-
-    # virtualenv
-    export PYTHONSTARTUP=$HOME/.pythonstartup
-    export WORKON_HOME=$HOME/.virtualenvs
-    if [ -d $WORKON_HOME ]; then
-        export VIRTUALENVERAPPER_SH=`which virtualenvwrapper.sh`
-        source_if "$VIRTUALENVERAPPER_SH"
-    fi
-
     # rvm
     source_if "$HOME/.rvm/scripts/rvm"
 
@@ -59,6 +48,13 @@ after_register_paths() {
     if [ -d "$HOME/.rbenv" ]; then
         export PATH=$HOME/.rbenv/bin:$PATH
         eval "$(rbenv init -)"
+    fi
+
+    # pyenv
+    if [ -d "$HOME/.pyenv" ]; then
+        export PYENV_ROOT="$HOME/.pyenv"
+        export PATH="$PYENV_ROOT/bin:$PATH"
+        eval "$(pyenv init -)"
     fi
 
     # nvm
