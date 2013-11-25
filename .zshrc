@@ -200,7 +200,6 @@ alias df="df -h"
 alias su="su -l"
 alias sudo="sudo "
 alias :q="exit"
-alias t="tmux"
 
 $(which ack-grep > /dev/null 2>&1) && alias ack="ack-grep"
 
@@ -209,6 +208,23 @@ alias pyb="pythonbrew"
 
 alias g++03="g++ -Wall -Wextra"
 alias g++11="g++ -Wall -Wextra -std=gnu++11"
+
+if $(which tmux > /dev/null 2>&1); then
+    function t() {
+        if [[ -z $1 ]]; then
+            tmux
+        else
+            tmux has -t $1 && tmux attach -t $1 || tmux new -s $1
+        fi
+    }
+    function _t() {
+        local -a sessions
+        sessions=(${${(f)"$(command tmux list-sessions)"}/:[ $'\t']##/:})
+        _describe -t sessions 'sessions' sessions "$@"
+    }
+    compdef _t t
+    alias tls="tmux ls"
+fi
 
 # End {{{1
 [ -f ~/.zshrc.local ] && source ~/.zshrc.local
