@@ -218,8 +218,9 @@ if $(which tmux > /dev/null 2>&1); then
         fi
     }
     function _t() {
+        local expl
         local -a sessions
-        sessions=(${${(f)"$(command tmux list-sessions)"}/:[ $'\t']##/:})
+        sessions=( ${${(f)"$(command tmux 2> /dev/null list-sessions)"}/:[ $'\t']##/:} )
         _describe -t sessions 'sessions' sessions "$@"
     }
     compdef _t t
