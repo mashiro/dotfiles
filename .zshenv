@@ -112,6 +112,8 @@ export GREP_COLOR="01;33"
 export GREP_OPTIONS="--color=auto"
 export WORDCHARS="*?_-.[]~=&;!#$%^(){}<>"
 
+[ -n $TERM ] && export TERM=xterm-256color
+
 # SSH-Agent {{{2
 SSH_AGENT=`which ssh-agent`
 SSH_ADD=`which ssh-add`
