@@ -195,8 +195,6 @@ alias sls="screen -U -ls"
 
 alias where="command -v"
 alias j="jobs -l"
-alias du="du -h"
-alias df="df -h"
 alias su="su -l"
 alias sudo="sudo "
 alias :q="exit"
