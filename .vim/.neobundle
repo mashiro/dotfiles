@@ -45,7 +45,7 @@ NeoBundle 'pangloss/vim-javascript'
 NeoBundle 'kchmck/vim-coffee-script'
 NeoBundle 'slim-template/vim-slim'
 NeoBundle 'vim-scripts/YankRing.vim'
-NeoBundle 'mileszs/ack.vim'
+NeoBundle 'rking/ag.vim'
 NeoBundle 'derekwyatt/vim-scala'
 NeoBundle 'rhysd/wandbox-vim'
 
