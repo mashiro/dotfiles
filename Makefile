@@ -25,7 +25,7 @@ ls:
 
 .PHONY: build
 build:
-	git pull origin master
+	git pull --rebase origin master
 	git submodule update --init
 	git submodule foreach 'git checkout master; git pull origin master'
 	cd .vim; $(MAKE)
