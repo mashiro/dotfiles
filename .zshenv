@@ -14,7 +14,7 @@ register_paths() { # {{{2
     dir="$1"
     if [ -d "$dir" ] || [ -z "$dir" ]; then
         register_path "$dir"
-        for i in "$dir/*"; do
+        for i in $dir/*(N); do
             register_path "$i"
         done
     fi
