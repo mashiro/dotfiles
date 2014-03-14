@@ -35,6 +35,7 @@ setopt print_eight_bit
 autoload zmv
 alias zmv='noglob zmv'
 
+typeset -U path PATH
 
 # Terminal {{{1
 autoload -Uz colors; colors
