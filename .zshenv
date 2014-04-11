@@ -1,16 +1,16 @@
 # Utility {{{1
-register_path() { # {{{2
+function register_path() { # {{{2
     dir="$1"
-    if [ -d "$dir/bin" ]; then PATH="$dir/bin:$PATH"; fi
-    if [ -d "$dir/sbin" ]; then PATH="$dir/sbin:$PATH"; fi
-    if [ -d "$dir/man" ]; then MANPATH="$dir/man:$MANPATH"; fi
-    if [ -d "$dir/share/man" ]; then MANPATH="$dir/share/man:$MANPATH"; fi
-    if [ -d "$dir/info" ]; then INFOPATH="$dir/info:$INFOPATH"; fi
-    if [ -d "$dir/include" ]; then INCLUDE_PATH="$dir/include:$INCLUDE_PATH"; fi
-    if [ -d "$dir/lib" ]; then LIBRARY_PATH="$dir/lib:$LIBRARY_PATH"; fi
+    if [ -d "$dir/bin" ]; then _path="$dir/bin:$_path"; fi
+    if [ -d "$dir/sbin" ]; then _path="$dir/sbin:$_path"; fi
+    if [ -d "$dir/man" ]; then _manpath="$dir/man:$_manpath"; fi
+    if [ -d "$dir/share/man" ]; then _manpath="$dir/share/man:$_manpath"; fi
+    if [ -d "$dir/info" ]; then _infopath="$dir/info:$_infopath"; fi
+    if [ -d "$dir/include" ]; then _include_path="$dir/include:$_include_path"; fi
+    if [ -d "$dir/lib" ]; then _library_path="$dir/lib:$_library_path"; fi
 }
 
-register_paths() { # {{{2
+function register_paths() { # {{{2
     dir="$1"
     if [ -d "$dir" ] || [ -z "$dir" ]; then
         register_path "$dir"
@@ -20,16 +20,21 @@ register_paths() { # {{{2
     fi
 }
 
-export_paths() {
-    export PATH MANPATH INFOPATH
-    export INCLUDE_PATH
-    export C_INCLUDE_PATH=$INCLUDE_PATH
-    export CPP_INCLUDE_PATH=$INCLUDE_PATH
-    export LIBRARY_PATH
-    export LD_LIBRARY_PATH=$LIBRARY_PATH
+function export_paths() { # {{{2
+    export PATH=$_path
+    export MANPATH=$_manpath
+    export INFOPATH=$_infopath
 }
 
-source_if() { # {{{2
+function restore_paths() { # {{{2
+    export PATH=$_default_path
+    export MANPATH=$_default_manpath
+    export INFOPATH=$_default_infopath
+    export INCLUDE_PATH=$_default_include_path
+    export LIBRARY_PATH=$_default_library_path
+}
+
+function source_if() { # {{{2
     [[ -s "$1" ]] && source "$1"
 }
 
@@ -72,35 +77,23 @@ after_register_paths() {
 
 # Export {{{1
 # Path {{{2
-#if [ -n "$SCREEN" -o -z "$REGISTER_PATHS_COMPLETED" ]; then
-if [ -z "$REGISTER_PATHS_COMPLETED" ]; then
-    before_register_paths
+_default_path=$PATH
+_default_manpath=$MANPATH
+_default_infopath=$INFOPATH
+_default_include_path=$INCLUDE_PATH
+_default_library_path=$LIBRARY_PATH
 
-    # for Defaults
-    register_paths ""
-    register_paths "/usr"
-    
-    # for MacPorts
-    register_paths "/opt/local"
+before_register_paths
 
-    # for manually build applications
-    register_paths "/usr/local"
+register_paths ""
+register_paths "/usr"
+register_paths "/opt/local"
+register_paths "/usr/local"
+register_paths "$HOME/local"
+export_paths
 
-    # for my own tools
-    register_paths "$HOME/local"
-    register_paths "$HOME/local/enabled"
+after_register_paths
 
-    export_paths
-
-    # completed
-    export REGISTER_PATHS_COMPLETED=1
-
-    after_register_paths
-
-    export _PATH=$PATH
-else
-    [ -n $_PATH ] && export PATH=$_PATH
-fi
 
 # Misc {{{2
 export TZ=JST-9
