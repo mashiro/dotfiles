@@ -39,9 +39,7 @@ function source_if() { # {{{2
 }
 
 # Manager {{{1
-init_version_managers() {
-    _old_path=$PATH
-
+function init_envs() {
     # homebrew (OSX)
     [[ -d "/usr/local/share/python" ]] && export PATH=/usr/local/share/python:$PATH
 
@@ -72,9 +70,6 @@ init_version_managers() {
 
     # perlbrew
     source_if "$HOME/perl5/perlbrew/etc/bashrc"
-
-    _path="$PATH:_path"
-    PATH=_old_path
 }
 
 # Export {{{1
@@ -90,8 +85,8 @@ register_paths "/usr"
 register_paths "/opt/local"
 register_paths "/usr/local"
 register_paths "$HOME/local"
-init_version_managers
 export_paths
+init_envs
 
 # Misc {{{2
 export TZ=JST-9
