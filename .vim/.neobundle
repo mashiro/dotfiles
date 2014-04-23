@@ -48,6 +48,7 @@ NeoBundle 'vim-scripts/YankRing.vim'
 NeoBundle 'rking/ag.vim'
 NeoBundle 'derekwyatt/vim-scala'
 NeoBundle 'rhysd/wandbox-vim'
+NeoBundle 'bling/vim-airline'
 
 filetype plugin indent on
 
