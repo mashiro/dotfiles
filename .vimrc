@@ -307,33 +307,6 @@ let g:unite_source_file_mru_limit = 200
 let g:unite_cursor_line_highlight = 'TabLineSel'
 let g:unite_abbr_highlight = 'Normal'
 
-" ctrlp.vim {{{2
-"let g:ctrlp_map = '[ctrlp]t'
-"let g:ctrlp_cmd = 'CtrlP'
-"let g:ctrlp_max_height = 20
-"let g:ctrlp_match_window_bottom = 1
-"let g:ctrlp_match_window_reversed = 0
-"let g:ctrlp_working_path_mode = 2
-"let g:ctrlp_highlight_match = [1, 'Type']
-"let g:ctrlp_custom_ignore = '\.\(git\|hg\|svn\)$\|vendor$'
-"let g:ctrlp_prompt_mappings = {
-"    \ 'PrtBS()':              ['<c-h>', '<bs>'],
-"    \ 'PrtSelectMove("j")':   ['<c-j>', '<c-n>'],
-"    \ 'PrtSelectMove("k")':   ['<c-k>', '<c-p>'],
-"    \ 'PrtHistory(-1)':       ['<down>'],
-"    \ 'PrtHistory(1)':        ['<up>'],
-"    \ 'PrtCurLeft()':         ['<left>'],
-"    \ 'PrtCurRight()':        ['<right>'],
-"    \ 'PrtExit()':            ['<esc>', '<c-c>', '<c-g>', '<c-@>'],
-"    \ }
-"
-"nnoremap [ctrlp] <Nop>
-"nmap <Space> [ctrlp]
-"
-"nnoremap <silent> [ctrlp]t :<C-u>CtrlP<CR>
-"nnoremap <silent> [ctrlp]f :<C-u>CtrlPCurWD<CR>
-"nnoremap <silent> [ctrlp]b :<C-u>CtrlPBuffer<CR>
-
 " templatefile.vim {{{2
 autocmd User plugin-template-loaded call s:template_keywords()
 function! s:template_keywords()
@@ -359,31 +332,6 @@ endfunction
 " yankring.vim {{{2
 let g:yankring_history_file = '.yankring_history'
 let g:yankring_manual_clipboard_check = 0
-
-" zencoding.vim {{{2
-let g:user_zen_leader_key = '<c-y>'
-let g:user_zen_settings = {
-\ 'lang': 'ja',
-\ 'indentation': '  ',
-\ 'html': {
-\   'extends': 'javascript'
-\ },
-\ 'eruby': {
-\   'extends': 'html,javascript,ruby'
-\ },
-\ 'haml': {
-\   'extends': 'html,javascript,ruby'
-\ },
-\ 'javascript': {
-\   'snippets': {
-\     'jq':    "$(function() {\n  ${cursor}${child}\n});",
-\     'each':  "$.each(arr, function(index, item)\n  ${child}\n});",
-\     'ready': "$(document).ready(function() {\n  ${cursor}\n});",
-\     'fn':    "(function() {\n\t${cursor}\n})();",
-\     'tm':    "setTimeout(function() {\n\t${cursor}\n}, 100);",
-\   },
-\ },
-\}
 
 " quickrun.vim {{{2
 let g:quickrun_config = {
