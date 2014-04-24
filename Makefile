@@ -14,7 +14,7 @@ MKDIR = mkdir -p
 
 
 .PHONY: all
-all: pull vim-install
+all: pull vim
 
 
 .PHONY: ls
@@ -29,8 +29,8 @@ pull:
 	git submodule update --init
 	git submodule foreach 'git checkout master; git pull origin master'
 
-.PHONY: vim-install
-vim-install:
+.PHONY: vim
+vim:
 	cd .vim; $(MAKE)
 
 .PHONY: install install-dot-files install-depend-dirs
