@@ -14,7 +14,7 @@ MKDIR = mkdir -p
 
 
 .PHONY: all
-all: build
+all: pull vim-install
 
 
 .PHONY: ls
@@ -23,11 +23,14 @@ ls:
 	@echo "DEPEND DIRS:" $(DEPEND_DIRS)
 
 
-.PHONY: build
-build:
+.PHONY: pull
+pull:
 	git pull --rebase origin master
 	git submodule update --init
 	git submodule foreach 'git checkout master; git pull origin master'
+
+.PHONY: vim-install
+vim-install:
 	cd .vim; $(MAKE)
 
 .PHONY: install install-dot-files install-depend-dirs
