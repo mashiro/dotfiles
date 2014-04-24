@@ -27,6 +27,7 @@ NeoBundle 'Shougo/vimshell'
 NeoBundle 'Shougo/neobundle.vim'
 NeoBundle 'Shougo/unite.vim'
 NeoBundle 'Shougo/neocomplcache'
+NeoBundle 'Shougo/vimfiler'
 NeoBundle 'mattn/gist-vim'
 NeoBundle 'mattn/webapi-vim'
 NeoBundle 'mattn/ideone-vim'
@@ -48,7 +49,8 @@ NeoBundle 'vim-scripts/YankRing.vim'
 NeoBundle 'rking/ag.vim'
 NeoBundle 'derekwyatt/vim-scala'
 NeoBundle 'rhysd/wandbox-vim'
-NeoBundle 'bling/vim-airline'
+NeoBundle 'itchyny/lightline.vim'
+NeoBundle 'tpope/vim-fugitive'
 
 filetype plugin indent on
 
