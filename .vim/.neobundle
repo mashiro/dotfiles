@@ -51,6 +51,7 @@ NeoBundle 'derekwyatt/vim-scala'
 NeoBundle 'rhysd/wandbox-vim'
 NeoBundle 'itchyny/lightline.vim'
 NeoBundle 'tpope/vim-fugitive'
+NeoBundle 'editorconfig/editorconfig-vim'
 
 filetype plugin indent on
 
