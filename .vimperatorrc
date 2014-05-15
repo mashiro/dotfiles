@@ -23,7 +23,7 @@ set nohlsearch
 set ignorecase
 set incsearch
 set smartcase
-set focuscontent
+set nofocuscontent
 set visualbell
 set hintchars=HJKLASDFGYUIOPQWERTNMZXCVB
 
