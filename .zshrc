@@ -131,16 +131,20 @@ zstyle ':completion:*' list-colors ${(s.:.)LS_COLORS}
 
 
 # Keybind {{{1
-bindkey -e
+bindkey -v
 autoload -Uz history-search-end
 zle -N history-beginning-search-backward-end history-search-end
 zle -N history-beginning-search-forward-end history-search-end
-bindkey "^p" history-beginning-search-backward-end
-bindkey "^n" history-beginning-search-forward-end
-bindkey "\\ep" history-beginning-search-backward-end
-bindkey "\\en" history-beginning-search-forward-end
-bindkey "^[b" emacs-backward-ward
-bindkey "^[f" emacs-forward-ward
+bindkey "^P" history-beginning-search-backward-end
+bindkey "^N" history-beginning-search-forward-end
+bindkey "^R" history-incremental-search-backward
+bindkey "^S" history-incremental-search-forward
+bindkey "^A" beginning-of-line
+bindkey "^E" end-of-line
+bindkey "^K" kill-line
+
+function vi-quit() { exit }
+zle -N q vi-quit
 
 
 # History {{{1
