@@ -333,10 +333,6 @@ function! s:template_keywords()
     endif
 endfunction
 
-" yankring.vim {{{2
-let g:yankring_history_file = '.yankring_history'
-let g:yankring_manual_clipboard_check = 0
-
 " quickrun.vim {{{2
 let g:quickrun_config = {
 \   "_": {
@@ -414,6 +410,18 @@ endfunction
 function! MyMode()
   return winwidth(0) > 60 ? lightline#mode() : ''
 endfunction
+
+
+" yankaround.vim {{{2
+nmap p <Plug>(yankround-p)
+xmap p <Plug>(yankround-p)
+nmap P <Plug>(yankround-P)
+nmap gp <Plug>(yankround-gp)
+xmap gp <Plug>(yankround-gp)
+nmap gP <Plug>(yankround-gP)
+nmap <C-p> <Plug>(yankround-prev)
+nmap <C-n> <Plug>(yankround-next)
+
 
 " End {{{1
 if filereadable(expand('~/.vimrc.local'))
