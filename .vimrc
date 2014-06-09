@@ -423,6 +423,10 @@ nmap <C-p> <Plug>(yankround-prev)
 nmap <C-n> <Plug>(yankround-next)
 
 
+" vim-json {{{2
+let g:vim_json_syntax_conceal = 0
+
+
 " End {{{1
 if filereadable(expand('~/.vimrc.local'))
     source ~/.vimrc.local
