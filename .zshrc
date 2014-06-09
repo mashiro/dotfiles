@@ -37,6 +37,11 @@ alias zmv='noglob zmv'
 
 typeset -U path PATH
 
+# Helpers {{{1
+function has_command() {
+    $(which $1 > /dev/null 2>&1)
+}
+
 # Terminal {{{1
 autoload -Uz colors; colors
 typeset -Ag FX FG BG
@@ -204,7 +209,7 @@ alias su="su -l"
 alias sudo="sudo "
 alias :q="exit"
 
-$(which ack-grep > /dev/null 2>&1) && alias ack="ack-grep"
+has_commmand "ack-grep" && alias ack="ack-grep"
 
 alias py="python"
 alias pyb="pythonbrew"
@@ -212,7 +217,7 @@ alias pyb="pythonbrew"
 alias g++03="g++ -Wall -Wextra"
 alias g++11="g++ -Wall -Wextra -std=gnu++11"
 
-if $(which tmux > /dev/null 2>&1); then
+if has_command "tmux"; then
     function t() {
         if [[ -z $1 ]]; then
             tmux
@@ -228,6 +233,14 @@ if $(which tmux > /dev/null 2>&1); then
     }
     compdef _t t
     alias tls="tmux ls"
+
+    if has_command "reattach-to-user-namespace"; then
+        case "${OSTYPE}" in
+        darwin*)
+            alias vim="reattach-to-user-namespace vim"
+            ;;
+        esac
+    fi
 fi
 
 # End {{{1
