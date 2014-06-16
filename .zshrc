@@ -209,7 +209,7 @@ alias su="su -l"
 alias sudo="sudo "
 alias :q="exit"
 
-has_commmand "ack-grep" && alias ack="ack-grep"
+has_command "ack-grep" && alias ack="ack-grep"
 
 alias py="python"
 alias pyb="pythonbrew"
