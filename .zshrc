@@ -205,6 +205,7 @@ alias sudo="sudo "
 alias :q="exit"
 
 has_command "ack-grep" && alias ack="ack-grep"
+has_command "jq" && alias jq="jq -C"
 
 alias py="python"
 alias pyb="pythonbrew"
