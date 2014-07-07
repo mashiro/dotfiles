@@ -74,6 +74,12 @@ function init_envs() {
 
     # perlbrew
     source_if "$HOME/perl5/perlbrew/etc/bashrc"
+
+    # golang
+    if has_command "go"; then
+        export GOPATH="$HOME/.go"
+        export PATH="$GOPATH/bin:$PATH"
+    fi
 }
 
 # Export {{{1
