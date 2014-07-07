@@ -38,6 +38,10 @@ function source_if() { # {{{2
     [[ -s "$1" ]] && source "$1"
 }
 
+function has_command() { # {{{2
+    $(which $1 > /dev/null 2>&1)
+}
+
 # Manager {{{1
 function init_envs() {
     # homebrew (OSX)

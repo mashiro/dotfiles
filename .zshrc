@@ -37,11 +37,6 @@ alias zmv='noglob zmv'
 
 typeset -U path PATH
 
-# Helpers {{{1
-function has_command() {
-    $(which $1 > /dev/null 2>&1)
-}
-
 # Terminal {{{1
 autoload -Uz colors; colors
 typeset -Ag FX FG BG
