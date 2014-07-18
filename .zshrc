@@ -62,9 +62,9 @@ function spectrum_ls() {
   done
 }
 
-prompt_user_color="%{${fg[cyan]}%}"
-prompt_dir_color="%{${fg_bold[red]}%}"
-prompt_vcs_color=$FG[068]
+prompt_user_color=$FG[110]
+prompt_dir_color=$FG[174]
+prompt_vcs_color=$FG[150]
 
 PROMPT="$prompt_user_color%n@%m%{$reset_color%} $prompt_dir_color%~%%%{$reset_color%} "
 PROMPT2="$prompt_dir_color%_%%%{$reset_color%} "
