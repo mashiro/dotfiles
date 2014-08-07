@@ -130,11 +130,12 @@ nnoremap <silent> <Space>rg :<C-u>source ~/.gvimrc<CR>
 nnoremap <silent> <Space>w :<C-u>update<CR>
 nnoremap <silent> <Space>q :<C-u>quit<CR>
 
-" escape (jis)
+" escape
 noremap <Nul> <C-@>
 noremap! <Nul> <C-@>
 noremap <C-@> <Esc>
 noremap! <C-@> <Esc>
+inoremap <silent> <C-j> <Esc>
 
 " emacs like
 noremap <C-a> <Home>
