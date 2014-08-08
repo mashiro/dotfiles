@@ -102,10 +102,10 @@ _default_infopath=$INFOPATH
 _default_include_path=$INCLUDE_PATH
 _default_library_path=$LIBRARY_PATH
 
-register_paths ""
-register_paths "/usr"
-register_paths "/opt/local"
+register_path ""
+register_path "/usr"
 register_paths "/usr/local"
+register_paths "/opt/local"
 register_paths "$HOME/local"
 export_paths
 init_envs
