@@ -526,6 +526,12 @@ NeoBundle 'derekwyatt/vim-scala', {
 \   'autoload': {'filetypes': ['scala']}
 \ }
 
+" vim-go {{{2
+NeoBundle 'fatih/vim-go', {
+\   'autoload': {'filetypes': ['go']}
+\ }
+let g:go_disable_autoinstall = 1
+
 " End {{{1
 call neobundle#end()
 filetype plugin indent on
