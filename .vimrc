@@ -443,8 +443,6 @@ endfunction
 " yankround.vim {{{2
 NeoBundle 'LeafCage/yankround.vim'
 
-let g:yankround_use_region_hl = 1
-
 nmap p <Plug>(yankround-p)
 xmap p <Plug>(yankround-p)
 nmap P <Plug>(yankround-P)
