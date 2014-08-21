@@ -227,14 +227,6 @@ if has "tmux"; then
   }
   compdef _t t
   alias tls="tmux ls"
-
-  if has "reattach-to-user-namespace"; then
-    case "${OSTYPE}" in
-      darwin*)
-        alias vim="reattach-to-user-namespace vim"
-        ;;
-    esac
-  fi
 fi
 
 # End {{{1
