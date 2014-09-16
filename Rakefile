@@ -1,5 +1,6 @@
 require 'pathname'
 require 'fileutils'
+require 'logger'
 
 module Dotfiles
   module DSL
@@ -23,7 +24,7 @@ module Dotfiles
 
     def within(dir)
       old_dir = FileUtils.pwd
-      FileUtils.cd dir
+      FileUtils.cd dir.to_s
       yield
     ensure
       FileUtils.cd old_dir
@@ -31,6 +32,31 @@ module Dotfiles
 
     def symlink(src, dest)
       FileUtils.symlink src, dest
+      puts "symlink #{src} -> #{dest}"
+    rescue
+      false
+    end
+
+    def silent
+      verbose false do
+        nowrite true do
+          yield
+        end
+      end
+    end
+
+    def has?(command)
+      command = command.to_s
+
+      silent do
+        if windows?
+          sh 'where', command
+        else
+          sh 'which', command
+        end
+      end
+    rescue
+      false
     end
 
     def windows?
@@ -54,6 +80,7 @@ end
 
 extend Dotfiles::DSL
 import!
+verbose true
 
 namespace :git do
   desc 'pull repository'
