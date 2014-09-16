@@ -69,25 +69,6 @@ silent qmark W https://wave.google.com/wave/
 silent qmark y http://search.yahoo.com/
 
 
-" BMarks {{{1
-javascript <<EOM
-function bmark(title, url, keyword) {
-	if (!bookmarks.isBookmarked(url)) {
-		bookmarks.add(false, title, url, keyword, ['keyword'], false);
-	}
-}
-bmark('Google US Search'  , 'http://www.google.com/search?q=%s'        , 'g');
-bmark('Yahoo! Search'     , 'http://search.yahoo.com/search;_ylt=?p=%s', 'y');
-bmark('Twitter'           , 'http://twitter.com/%s'                    , 'tw');
-bmark('Twitter Search'    , 'http://search.twitter.com/search?q=%s'    , 'ts');
-bmark('ふぁぼったー'      , 'http://favotter.net/user.php?user=%s'     , 'fav');
-bmark('Ustream'           , 'http://www.ustream.tv/channel/%s'         , 'ust');
-bmark('はてなダイアリー'  , 'http://d.hatena.ne.jp/%s'                 , 'hd');
-bmark('はてなブックマーク', 'http://b.hatena.ne.jp/%s'                 , 'hb');
-bmark('ニコニコ動画'      , 'http://www.nicovideo.jp/watch/%s'         , 'nico');
-EOM
-
-
 " Commands {{{1
 command! -nargs=* feedkeys js events.feedkeys("<args>")
 command! -nargs=+ lazy autocmd VimperatorEnter .* <args>
