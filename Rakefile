@@ -29,6 +29,14 @@ module Dotfiles
       FileUtils.cd old_dir
     end
 
+    def symlink(src, dest)
+      FileUtils.symlink src, dest
+    end
+
+    def windows?
+      Gem.win_platform?
+    end
+
     def import!
       Dir['*/**/Rakefile'].each { |f| import f }
     end
