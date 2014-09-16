@@ -1,0 +1,10 @@
+namespace :homebrew do
+  desc 'install homebrew formula'
+  task :install do
+    within File.expand_path('../', __FILE__) do
+      sh 'install.sh'
+    end
+  end
+end
+
+after 'update', 'homebrew:install'
