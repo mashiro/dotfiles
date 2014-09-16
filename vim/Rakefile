@@ -1,11 +1,4 @@
 namespace :vim do
-  namespace :submodule do
-    desc 'add vim submodules'
-    task :add do
-      sh 'git', 'submodule', 'add', 'git@github.com:Shougo/neobundle.vim.git', 'vim/.vim/bundle/neobundle.vim' rescue nil
-    end
-  end
-
   desc 'symlink vim files' 
   task :symlink do
     within File.expand_path('../', __FILE__) do
@@ -21,7 +14,6 @@ namespace :vim do
   end
 end
 
-before 'git:submodule:update', 'vim:submodule:add'
 after 'update', 'vim:symlink'
 after 'update', 'vim:update'
 
