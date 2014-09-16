@@ -46,16 +46,7 @@ module Dotfiles
         desc 'update'
         task :update
 
-        desc 'build'
-        task :build
-
-        desc 'install'
-        task :install
-
-        desc 'update, build and install'
-        task :setup => [:update, :build, :install]
-
-        task :default => :setup
+        task :default => :update
       end
     end
   end
