@@ -82,6 +82,13 @@ init_envs() {
     export PATH="$GOPATH/bin:$PATH"
   fi
 
+  # google cloud sdk
+  if [ -d "$HOME/google-cloud-sdk" ]; then
+    source "$HOME/google-cloud-sdk/path.zsh.inc"
+    #source "$HOME/google-cloud-sdk/completion.zsh.inc"
+  fi
+
+  # direnv
   if has "direnv"; then
     #eval "$(direnv hook zsh)"
     _direnv_hook() {
