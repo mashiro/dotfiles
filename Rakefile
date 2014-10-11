@@ -39,9 +39,7 @@ module Dotfiles
 
     def silent
       verbose false do
-        nowrite true do
-          yield
-        end
+        yield
       end
     end
 
