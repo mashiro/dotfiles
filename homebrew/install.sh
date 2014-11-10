@@ -27,9 +27,9 @@ brew cask install seil
 brew cask install iterm2
 brew cask install atom
 brew cask install google-japanese-ime
-brew cask install firefox-ja
-brew cask install google-chrome
-brew cask install google-chrome-canary
+brew cask install firefox-ja --appdir=/Applications
+brew cask install google-chrome --appdir=/Applications
+brew cask install google-chrome-canary --appdir=/Applications
 brew cask install istat-menus
 brew cask install gyazo
 brew cask install dropbox
