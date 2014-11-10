@@ -62,6 +62,10 @@ init_envs() {
     export PYENV_ROOT="$HOME/.pyenv"
     export PATH="$PYENV_ROOT/bin:$PATH"
     eval "$(pyenv init -)"
+
+    if [ -d "$HOME/.pyenv/plugins/pyenv-virtualenv" ]; then
+      eval "$(pyenv virtualenv-init -)"
+    fi
   fi
 
   # nvm
