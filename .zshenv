@@ -44,8 +44,10 @@ has() { # {{{2
 
 # Manager {{{1
 init_envs() {
-  # homebrew (OSX)
-  [[ -d "/usr/local/share/python" ]] && export PATH=/usr/local/share/python:$PATH
+  # homebrew
+  if [ -d "$HOME/homebrew" ]; then
+    export PATH="$HOME/homebrew/bin:$PATH"
+  fi
 
   # rvm
   source_if "$HOME/.rvm/scripts/rvm"
