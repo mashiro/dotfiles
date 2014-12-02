@@ -8,6 +8,7 @@ brew tap caskroom/homebrew-versions
 brew install brew-cask
 
 brew install zsh
+brew install tmux
 brew install emacs
 brew install wget
 brew install tree
