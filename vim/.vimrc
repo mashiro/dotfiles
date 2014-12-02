@@ -461,7 +461,7 @@ NeoBundle 'tyru/caw.vim'
 nmap <Leader>c <Plug>(caw:I:toggle)
 vmap <Leader>c <Plug>(caw:I:toggle)
 
-" editorconfig-vim {{{"
+" editorconfig-vim {{{2"
 NeoBundle 'editorconfig/editorconfig-vim'
 
 " ag.vim {{{2
