@@ -532,6 +532,12 @@ NeoBundle 'fatih/vim-go', {
 \ }
 let g:go_disable_autoinstall = 1
 
+" vim-slim {{{2
+NeoBundle 'slim-template/vim-slim', {
+\   'autoload': {'filetypes': ['slim']}
+\ }
+
+
 " End {{{1
 call neobundle#end()
 filetype plugin indent on
