@@ -128,4 +128,3 @@ namespace :git do
 
   after 'update', 'git:pull'
 end
-
