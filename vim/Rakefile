@@ -1,14 +1,15 @@
 namespace :vim do
-  desc 'symlink vim files' 
+  desc 'symlink vim dotfiles'
   task :symlink do
     within File.expand_path('../', __FILE__) do
-      %w(.vim .vimrc .gvimrc).each do |filename|
+      dotfiles = Dir['.*'] - %w(. ..)
+      dotfiles.each do |filename|
         symlink File.expand_path(filename), home_path
       end
     end
   end
 
-  desc 'update vim bundles' 
+  desc 'update vim bundles'
   task :update do
     sh 'vim', '-e', '+NeoBundleUpdate', '+qall'
   end
