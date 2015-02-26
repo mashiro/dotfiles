@@ -37,6 +37,15 @@ module Dotfiles
       false
     end
 
+    def symlink_dotfiles(from, to = home_path)
+      within from do
+        dotfiles = Dir['.*'] - %w(. ..)
+        dotfiles.each do |filename|
+          symlink File.expand_path(filename), to
+        end
+      end
+    end
+
     def silent
       verbose false do
         yield

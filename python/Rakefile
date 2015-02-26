@@ -1,0 +1,8 @@
+namespace :python do
+  desc 'symlink python dotfiles' 
+  task :symlink do
+    symlink_dotfiles File.expand_path('../', __FILE__)
+  end
+end
+
+after 'update', 'python:symlink'

@@ -17,4 +17,3 @@ end
 
 after 'update', 'vim:symlink'
 after 'update', 'vim:update'
-
