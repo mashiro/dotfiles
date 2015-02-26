@@ -103,7 +103,6 @@ end
 
 extend Dotfiles::DSL
 import!
-verbose true
 
 namespace :git do
   desc 'pull repository'
