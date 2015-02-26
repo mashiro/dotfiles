@@ -46,16 +46,28 @@ module Dotfiles
       end
     end
 
-    def silent
-      verbose false do
-        yield
+    def silence_stream(stream)
+      old_stream = stream.dup
+      stream.reopen windows? ? 'NUL:' : '/dev/null'
+      stream.sync = true
+      yield
+    ensure
+      stream.reopen old_stream
+      old_stream.close
+    end
+
+    def quietly
+      silence_stream STDOUT do
+        silence_stream STDERR do
+          yield
+        end
       end
     end
 
     def has?(command)
       command = command.to_s
 
-      silent do
+      quietly do
         if windows?
           sh 'where', command
         else
