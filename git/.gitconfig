@@ -1,0 +1,26 @@
+[user]
+  name = mashiro
+  email = mail@mashiro.org
+[color]
+  ui = auto
+[core]
+  excludesfile = ~/.gitignore.global
+[alias]
+  b = branch
+  ba = branch -a
+  br = branch -r
+  co = checkout
+  cob = checkout -b
+  ls = ls-files
+  ls-conflicted-files = ls-files --unmerged
+  l = log
+  l1 = log --pretty=oneline --abbrev-commit
+  l1f = log --pretty=oneline
+  lg = log --graph --pretty=oneline --abbrev-commit
+  lgd = !git lg --decorate
+  st = status
+  fix = commit --amend
+  sm = submodule
+  edit-conflicted-files = !$EDITOR $(git ls-conflicted-files)
+[push]
+  default = simple
