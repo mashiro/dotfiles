@@ -91,6 +91,10 @@ module Dotfiles
         desc 'update'
         task :update
 
+        desc 'symlink'
+        task :symlink
+
+        after :update, :symlink
         task :default => :update
       end
     end

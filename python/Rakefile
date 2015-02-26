@@ -5,4 +5,4 @@ namespace :python do
   end
 end
 
-after 'update', 'python:symlink'
+after 'symlink', 'python:symlink'

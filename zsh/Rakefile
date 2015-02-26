@@ -5,4 +5,4 @@ namespace :zsh do
   end
 end
 
-after 'update', 'zsh:symlink'
+after 'symlink', 'zsh:symlink'

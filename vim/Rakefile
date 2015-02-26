@@ -15,5 +15,5 @@ namespace :vim do
   end
 end
 
-after 'update', 'vim:symlink'
+after 'symlink', 'vim:symlink'
 after 'update', 'vim:update'

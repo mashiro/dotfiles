@@ -5,4 +5,4 @@ namespace :screen do
   end
 end
 
-after 'update', 'screen:symlink'
+after 'symlink', 'screen:symlink'

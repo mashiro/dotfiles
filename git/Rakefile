@@ -5,4 +5,4 @@ namespace :git do
   end
 end
 
-after 'update', 'git:symlink'
+after 'symlink', 'git:symlink'

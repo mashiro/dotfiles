@@ -5,4 +5,4 @@ namespace :ruby do
   end
 end
 
-after 'update', 'ruby:symlink'
+after 'symlink', 'ruby:symlink'
