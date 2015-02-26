@@ -10,4 +10,4 @@ namespace :ruby do
   end
 end
 
-after 'update', 'vim:symlink'
+after 'update', 'ruby:symlink'
