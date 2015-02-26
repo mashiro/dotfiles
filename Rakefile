@@ -31,7 +31,7 @@ module Dotfiles
     end
 
     def symlink(src, dest)
-      FileUtils.symlink src, dest
+      FileUtils.symlink src, dest, force: ENV['FORCE']
       puts "symlink #{src} -> #{dest}"
     rescue
       false
