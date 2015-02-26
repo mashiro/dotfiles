@@ -1,0 +1,13 @@
+namespace :ruby do
+  desc 'symlink ruby dotfiles' 
+  task :symlink do
+    within File.expand_path('../', __FILE__) do
+      dotfiles = Dir['.*'] - %w(. ..)
+      dotfiles.each do |filename|
+        symlink File.expand_path(filename), home_path
+      end
+    end
+  end
+end
+
+after 'update', 'vim:symlink'
