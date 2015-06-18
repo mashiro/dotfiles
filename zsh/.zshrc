@@ -229,6 +229,11 @@ if has "tmux"; then
   alias tls="tmux ls"
 fi
 
+if has "docker"; then
+  alias dockerclean='docker rm $(docker ps -a -q)'
+  alias dockercleani='docker rmi $(docker images -q -f dangling=true)'
+fi
+
 # End {{{1
 [ -f ~/.zshrc.local ] && source ~/.zshrc.local
 
