@@ -3,7 +3,7 @@ if has? :brew
     desc 'install homebrew formula'
     task :install do
       within File.expand_path('../', __FILE__) do
-        sh 'install.sh'
+        sh './install.sh'
       end
     end
   end
