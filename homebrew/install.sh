@@ -23,6 +23,11 @@ brew install lua luajit
 brew install python3
 brew install macvim --HEAD --override-system-vim --with-lua --with-luajit --with-python3
 
+brew install rbenv
+brew install ruby-build
+brew install pyenv
+brew install pyenv-virtualenv
+
 brew cask install karabiner
 brew cask install seil
 brew cask install iterm2
