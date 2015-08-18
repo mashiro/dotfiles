@@ -3,6 +3,7 @@
 brew update
 brew upgrade
 
+brew tap homebrew/services
 brew tap caskroom/homebrew-cask
 brew tap caskroom/homebrew-versions
 brew install brew-cask
