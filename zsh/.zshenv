@@ -13,7 +13,6 @@ register_path() { # {{{2
 register_paths() { # {{{2
   local dir="$1"
   if [ -d "$dir" ] || [ -z "$dir" ]; then
-    register_path "$dir"
     for i in $dir/*(N); do
       register_path "$i"
     done
@@ -110,9 +109,12 @@ _default_library_path=$LIBRARY_PATH
 
 register_path ""
 register_path "/usr"
-register_paths "/usr/local"
-register_paths "/opt/local"
-register_paths "$HOME/local"
+register_path "/usr/local"
+register_paths "/opt"
+register_path "/opt/local"
+register_path "$HOME"
+register_path "$HOME/local"
+register_paths "$HOME/opt"
 export_paths
 init_envs
 
