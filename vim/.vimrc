@@ -367,12 +367,16 @@ let g:quickrun_config = {
 \}
 
 " gist.vim {{{2
-NeoBundle 'mattn/gist-vim'
+NeoBundleLazy 'mattn/gist-vim', {
+\   'autoload': {'commands': ['Gist']}
+\ }
 
 let g:github_user = "mashiro"
 
 " vimfiler.vim {{{2
-NeoBundle 'Shougo/vimfiler.vim'
+NeoBundleLazy 'Shougo/vimfiler.vim', {
+\   'autoload': {'commands': ['VimFiler']}
+\ }
 
 let g:vimfiler_as_default_explorer = 1
 
@@ -465,7 +469,9 @@ vmap <Leader>c <Plug>(caw:I:toggle)
 NeoBundle 'editorconfig/editorconfig-vim'
 
 " ag.vim {{{2
-NeoBundle 'rking/ag.vim'
+NeoBundleLazy 'rking/ag.vim', {
+\ 'autoload': {'commands': ['Ag']}
+\ }
 
 " vim-fakeclip {{{2
 NeoBundle 'kana/vim-fakeclip'
@@ -473,11 +479,15 @@ NeoBundle 'kana/vim-fakeclip'
 " surround-vim {{{2
 NeoBundle 'tpope/vim-surround'
 
-" vim-fugitive {{{2
-NeoBundle 'tpope/vim-fugitive'
+" agit.vim {{{2
+NeoBundleLazy 'cohama/agit.vim', {
+\   'autoload': {'commands': ['Agit']}
+\ }
 
 " vim-ref {{{2
-NeoBundle 'thinca/vim-ref'
+NeoBundleLazy 'thinca/vim-ref', {
+\   'autoload': {'commands': ['Ref']}
+\ }
 
 let g:ref_source_webdict_sites = {
 \   'alc': {
