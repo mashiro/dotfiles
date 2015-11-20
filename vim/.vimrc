@@ -537,6 +537,9 @@ NeoBundleLazy 'slim-template/vim-slim', {
 \   'autoload': {'filetypes': ['slim']}
 \ }
 
+NeoBundleLazy 'elixir-lang/vim-elixir', {
+\   'autoload': {'filename_patterns': '.*\.\(ex\|exs\|eex\)'}
+\ }
 
 " End {{{1
 call neobundle#end()
