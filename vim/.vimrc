@@ -25,7 +25,7 @@ set number
 set ruler
 "set cursorline
 set foldmethod=marker
-set laststatus=2 
+set laststatus=2
 set cmdheight=1
 set showcmd
 set showmode
@@ -148,7 +148,7 @@ noremap! <C-p> <Up>
 noremap! <C-n> <Down>
 noremap <C-k> D
 inoremap <C-k> <C-o>D
-cnoremap <C-k> <C-\>e getcmdpos() == 1 ? '' : getcmdline()[:getcmdpos()-2]<CR> 
+cnoremap <C-k> <C-\>e getcmdpos() == 1 ? '' : getcmdline()[:getcmdpos()-2]<CR>
 
 " adding and subtracting
 nnoremap + <C-a>
@@ -237,13 +237,13 @@ autocmd MyAutoCmd InsertLeave * set iminsert=0 imsearch=0
 " vim -b : edit binary using xxd-format!
 augroup Binary
     autocmd!
-    autocmd BufReadPre *.bin let &binary = 1 
+    autocmd BufReadPre *.bin let &binary = 1
     autocmd BufReadPost * call BinReadPost()
     autocmd BufWritePre * call BinWritePre()
     autocmd BufWritePost * call BinWritePost()
     function! BinReadPost()
         if &binary
-            silent %!xxd -g1 
+            silent %!xxd -g1
             set ft=xxd
         endif
     endfunction
@@ -255,12 +255,12 @@ augroup Binary
     endfunction
     function! BinWritePost()
         if &binary
-            silent %!xxd -g1 
+            silent %!xxd -g1
             call setpos( '.', s:saved_pos )
             set nomod
         endif
     endfunction
-augroup END 
+augroup END
 
 
 " Plugins {{{1
@@ -332,16 +332,16 @@ nnoremap <silent> [unite]u :<C-u>Unite source<CR>
 nnoremap <silent> [unite]g :<C-u>Unite grep:.<CR>
 
 autocmd FileType unite call s:unite_my_settings()
-function! s:unite_my_settings()"{{{
+function! s:unite_my_settings() "{{{
   nmap <buffer> <ESC> <Plug>(unite_exit)
   imap <buffer> jj <Plug>(unite_insert_leave)
   imap <buffer> <C-j> <Plug>(unite_select_next_line)
   imap <buffer> <C-k> <Plug>(unite_select_previous_line)
-  nmap <silent> <buffer> <expr> <C-s> unite#do_action('split')
-  imap <silent> <buffer> <expr> <C-s> unite#do_action('split')
-  nmap <silent> <buffer> <expr> <C-l> unite#do_action('vsplit')
-  imap <silent> <buffer> <expr> <C-l> unite#do_action('vsplit')
-endfunction"}}}
+  nnoremap <silent> <buffer> <expr> <C-s> unite#do_action('split')
+  inoremap <silent> <buffer> <expr> <C-s> unite#do_action('split')
+  nnoremap <silent> <buffer> <expr> <C-v> unite#do_action('vsplit')
+  inoremap <silent> <buffer> <expr> <C-v> unite#do_action('vsplit')
+endfunction "}}}
 
 let g:unite_enable_start_insert = 1
 let g:unite_source_file_mru_limit = 200
