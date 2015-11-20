@@ -522,18 +522,18 @@ NeoBundleLazy 'elzr/vim-json', {
 let g:vim_json_syntax_conceal = 0
 
 " vim-scala {{{2
-NeoBundle 'derekwyatt/vim-scala', {
+NeoBundleLazy 'derekwyatt/vim-scala', {
 \   'autoload': {'filetypes': ['scala']}
 \ }
 
 " vim-go {{{2
-NeoBundle 'fatih/vim-go', {
+NeoBundleLazy 'fatih/vim-go', {
 \   'autoload': {'filetypes': ['go']}
 \ }
 let g:go_disable_autoinstall = 1
 
 " vim-slim {{{2
-NeoBundle 'slim-template/vim-slim', {
+NeoBundleLazy 'slim-template/vim-slim', {
 \   'autoload': {'filetypes': ['slim']}
 \ }
 
