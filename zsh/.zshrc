@@ -190,6 +190,7 @@ alias -g T="| tail"
 alias -g G="| grep"
 alias -g XG="| xargs grep"
 alias -g V="| vim -R -"
+has "peco" && alias -g P="| peco"
 
 alias s="screen -U"
 alias sr="screen -U -D -R"

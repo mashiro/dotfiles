@@ -1,0 +1,12 @@
+if has? :peco
+  namespace :peco do
+    desc 'symlink peco config file'
+    task :symlink do
+      conf_dir = home_path.join('.config/peco')
+      FileUtils.mkdir_p conf_dir
+      symlink File.expand_path('../config.json', __FILE__), conf_dir
+    end
+  end
+
+  after 'symlink', 'peco:symlink'
+end
