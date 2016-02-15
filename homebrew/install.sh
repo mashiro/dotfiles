@@ -42,5 +42,5 @@ brew cask install gyazo
 brew cask install dropbox
 brew cask install vagrant
 brew cask install virtualbox
-brew cask install boot2docker
+brew cask install dockertoolbox
 
