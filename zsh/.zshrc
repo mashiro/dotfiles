@@ -183,6 +183,7 @@ alias l="ls -al"
 alias la="ls -a"
 alias ll="ls -l"
 alias lr="ls -alrt"
+alias grep="grep --color=auto"
 
 alias -g L="| less"
 alias -g H="| head"
