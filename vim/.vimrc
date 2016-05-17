@@ -509,7 +509,7 @@ NeoBundleLazy 'mattn/emmet-vim', {
 
 " html5.vim {{{2
 NeoBundleLazy 'othree/html5.vim', {
-\  'autoload': {'filetypes': ['html', 'javascript']}
+\  'autoload': {'filetypes': ['html', 'javascript', 'php']}
 \ }
 
 " vim-javascript {{{2
