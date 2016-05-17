@@ -512,8 +512,8 @@ NeoBundleLazy 'othree/html5.vim', {
 \  'autoload': {'filetypes': ['html', 'javascript', 'php']}
 \ }
 
-" vim-javascript {{{2
-NeoBundleLazy 'pangloss/vim-javascript', {
+" yajs.vim {{{2
+NeoBundleLazy 'othree/yajs.vim', {
 \   'autoload': {'filetypes': ['javascript']}
 \ }
 
