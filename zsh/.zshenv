@@ -97,6 +97,11 @@ init_envs() {
   if has "direnv"; then
     eval "$(direnv hook zsh)"
   fi
+
+  if [ -d "$HOME/.sdkman" ]; then
+    export SDKMAN_DIR="$HOME/.sdkman"
+    source "$HOME/.sdkman/bin/sdkman-init.sh"
+  fi
 }
 
 # Export {{{1
