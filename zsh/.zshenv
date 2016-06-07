@@ -65,7 +65,7 @@ init_envs() {
     eval "$(pyenv init -)"
 
     if [ -d "$HOME/.pyenv/plugins/pyenv-virtualenv" ]; then
-      #eval "$(pyenv virtualenv-init -)"
+      eval "$(pyenv virtualenv-init -)"
     fi
   fi
 
