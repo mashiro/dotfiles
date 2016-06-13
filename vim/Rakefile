@@ -8,12 +8,6 @@ namespace :vim do
       end
     end
   end
-
-  desc 'update vim bundles'
-  task :update do
-    sh 'vim', '-e', '+NeoBundleUpdate', '+qall'
-  end
 end
 
 after 'symlink', 'vim:symlink'
-after 'update', 'vim:update'
