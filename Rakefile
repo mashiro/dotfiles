@@ -31,9 +31,14 @@ module Dotfiles
     end
 
     def symlink(src, dest)
-      FileUtils.symlink src, dest, force: ENV['FORCE']
+      begin
+        FileUtils.symlink src, dest, force: ENV['FORCE']
+      rescue Errno::EEXIST
+      end
       puts "symlink #{src} -> #{dest}"
-    rescue
+      true
+    rescue => e
+      puts e.message
       false
     end
 
