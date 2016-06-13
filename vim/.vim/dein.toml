@@ -13,7 +13,12 @@ repo = 'osyo-manga/vim-precious'
 depends = ['context_filetype.vim']
 
 [[plugins]]
+repo = 'Shougo/neoinclude.vim'
+on_i = 1
+
+[[plugins]]
 repo = 'Shougo/neocomplete'
+depends = ['neoinclude.vim', 'context_filetype.vim']
 if = "has('lua')"
 on_i = 1
 hook_add = '''
@@ -94,6 +99,18 @@ hook_add = '''
     let g:unite_source_grep_recursive_opt = ''
   endif
 '''
+
+[[plugins]]
+repo = 'tsukkee/unite-tag'
+hook_add = '''
+  autocmd BufEnter *
+        \   if empty(&buftype)
+        \ |     nnoremap <buffer> <C-]> :<C-u>UniteWithCursorWord -immediately tag<CR>
+        \ | endif
+'''
+
+[[plugins]]
+repo = 'szw/vim-tags'
 
 [[plugins]]
 repo = 'tyru/caw.vim'
@@ -241,11 +258,34 @@ on_ft = ['html', 'css']
 repo = 'editorconfig/editorconfig-vim'
 
 
-# filetype plugins
 
 [[plugins]]
 repo = 'vim-jp/cpp-vim'
 on_ft = 'cpp'
+
+[[plugins]]
+repo = 'justmao945/vim-clang'
+if = "executable('clang') && executable('clang-format')"
+on_ft =  ['c', 'cpp']
+hook_add = '''
+  if !exists('g:neocomplete#force_omni_input_patterns')
+    let g:neocomplete#force_omni_input_patterns = {}
+  endif
+  let g:neocomplete#force_overwrite_completefunc = 1
+  let g:neocomplete#force_omni_input_patterns.c = '[^.[:digit:] *\t]\%(\.\|->\)'
+  let g:neocomplete#force_omni_input_patterns.cpp = '[^.[:digit:] *\t]\%(\.\|->\)\|\h\w*::'
+
+  let g:clang_auto = 0
+  let g:clang_complete_auto = 0
+  let g:clang_auto_select = 0
+  let g:clang_use_library = 1
+
+  let g:clang_c_completeopt   = 'menuone'
+  let g:clang_cpp_completeopt = 'menuone'
+
+  let g:clang_c_options = '-std=gnu11'
+  let g:clang_cpp_options = '-std=c++11 -stdlib=libc++'
+'''
 
 [[plugins]]
 repo = 'cespare/vim-toml'

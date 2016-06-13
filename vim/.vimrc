@@ -50,7 +50,7 @@ set wildmenu
 set formatoptions& formatoptions+=mM
 set iminsert=0
 set imsearch=-1
-"set tags& tags+=./tags;,./**/tags
+set tags& tags+=./tags;
 set clipboard=unnamed
 
 " tab
@@ -92,7 +92,7 @@ endif
 command! -nargs=? -complete=dir -bang CD  call s:change_current_dir('<args>', '<bang>')
 
 " CTagsR {{{2
-command! -nargs=? CtagsR !ctags -R --C++-kinds=+p --fields=+iaS --extra=+q . <args>
+command! -nargs=? CtagsR !ctags --tag-relative --recurse --sort=yes --append=no -f tags
 
 " Enc {{{2
 command! -bang -bar -complete=file -nargs=? Utf8 edit<bang> ++enc=utf-8 <args>
