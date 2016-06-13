@@ -98,9 +98,6 @@ module Dotfiles
 
         desc 'symlink'
         task :symlink
-
-        after :update, :symlink
-        task :default => :update
       end
     end
   end
@@ -133,3 +130,7 @@ namespace :git do
 
   after 'update', 'git:pull'
 end
+
+after :update, :symlink
+task :default => :update
+
