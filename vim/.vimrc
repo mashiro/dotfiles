@@ -20,7 +20,7 @@ set modeline
 set modelines=5
 set visualbell
 set t_vb=
-set antialias
+"set antialias
 set number
 set ruler
 "set cursorline
@@ -264,298 +264,38 @@ augroup END
 
 
 " Plugins {{{1
-" neobundle {{{2
-if has('vim_starting')
+
+" dein.vim
+let s:cache_dir = empty($XDG_CACHE_HOME) ? expand('~/.cache') : $XDG_CACHE_HOME
+let s:dein_dir = s:cache_dir . '/dein'
+let s:dein_install_dir = s:dein_dir . '/repos/github.com/Shougo/dein.vim'
+let s:dein_repo = 'https://github.com/Shougo/dein.vim'
+
+if !isdirectory(s:dein_install_dir)
+    execute printf('!git clone %s %s', s:dein_repo, s:dein_install_dir)
+endif
+
+if &compatible
     set nocompatible
-    set runtimepath+=~/.vim/bundle/neobundle.vim
+endif
+execute 'set runtimepath^=' . s:dein_install_dir
+
+if dein#load_state(s:dein_dir)
+    call dein#begin(s:dein_dir, [expand('<sfile>'), '~/.vim/dein.toml'])
+    call dein#load_toml(expand('~/.vim/dein.toml'))
+    call dein#end()
+    call dein#save_state()
 endif
 
-call neobundle#begin(expand('~/.vim/bundle'))
-NeoBundleFetch 'Shougo/neobundle.vim'
-
-" vimproc {{{2
-NeoBundle 'Shougo/vimproc.vim', {
-\ 'build' : {
-\     'windows' : 'tools\\update-dll-mingw',
-\     'cygwin' : 'make -f make_cygwin.mak',
-\     'mac' : 'make -f make_mac.mak',
-\     'unix' : 'make -f make_unix.mak',
-\    },
-\ }
-
-" webapi {{{2
-NeoBundle 'mattn/webapi-vim'
-
-" neocomplete {{{2
-NeoBundle has('lua') ? 'Shougo/neocomplete' : 'Shougo/neocomplcache'
-
-if neobundle#is_installed('neocomplete')
-    let g:neocomplete#enable_at_startup = 1
-else
-    let g:neocomplcache_enable_at_startup = 1
+if dein#check_install()
+    call dein#install()
 endif
-
-" neosnippet {{{2
-NeoBundle 'Shougo/neosnippet'
-NeoBundle 'Shougo/neosnippet-snippets'
-
-let g:neosnippet#snippets_directory='~/.vim/snippets'
-
-imap <C-l> <Plug>(neosnippet_expand_or_jump)
-smap <C-l> <Plug>(neosnippet_expand_or_jump)
-xmap <C-l> <Plug>(neosnippet_expand_target)
-
-imap <expr><TAB> neosnippet#expandable_or_jumpable() ?
-\ "\<Plug>(neosnippet_expand_or_jump)"
-\: pumvisible() ? "\<C-n>" : "\<TAB>"
-smap <expr><TAB> neosnippet#expandable_or_jumpable() ?
-\ "\<Plug>(neosnippet_expand_or_jump)"
-\: "\<TAB>"
-
-" For snippet_complete marker.
-if has('conceal')
-  set conceallevel=2 concealcursor=i
-endif
-
-" unite.vim {{{2
-NeoBundle 'Shougo/unite.vim'
-
-nnoremap [unite] <Nop>
-nmap <Space> [unite]
-
-nnoremap <silent> [unite]c :<C-u>UniteWithCurrentDir -buffer-name=files buffer bookmark file<CR>
-nnoremap <silent> [unite]r :<C-u>Unite -buffer-name=register register<CR>
-nnoremap <silent> [unite]s :<C-u>Unite file_rec file/new<CR>
-nnoremap <silent> [unite]f :<C-u>Unite file file/new<CR>
-nnoremap <silent> [unite]b :<C-u>Unite buffer<CR>
-nnoremap <silent> [unite]u :<C-u>Unite source<CR>
-nnoremap <silent> [unite]g :<C-u>Unite grep:.<CR>
-
-autocmd FileType unite call s:unite_my_settings()
-function! s:unite_my_settings() "{{{
-  nmap <buffer> <ESC> <Plug>(unite_exit)
-  imap <buffer> jj <Plug>(unite_insert_leave)
-  imap <buffer> <C-j> <Plug>(unite_select_next_line)
-  imap <buffer> <C-k> <Plug>(unite_select_previous_line)
-  nnoremap <silent> <buffer> <expr> <C-s> unite#do_action('split')
-  inoremap <silent> <buffer> <expr> <C-s> unite#do_action('split')
-  nnoremap <silent> <buffer> <expr> <C-v> unite#do_action('vsplit')
-  inoremap <silent> <buffer> <expr> <C-v> unite#do_action('vsplit')
-endfunction "}}}
-
-let g:unite_enable_start_insert = 1
-let g:unite_source_file_mru_limit = 200
-let g:unite_cursor_line_highlight = 'TabLineSel'
-let g:unite_abbr_highlight = 'Normal'
-
-if executable('ag')
-    let g:unite_source_grep_command = 'ag'
-    let g:unite_source_grep_default_opts = '--nogroup --nocolor --column'
-    let g:unite_source_grep_recursive_opt =''
-endif
-
-" quickrun.vim {{{2
-NeoBundle 'thinca/vim-quickrun'
-
-let g:quickrun_config = {
-\   "_": {
-\       "runner": "vimproc",
-\       "runner/vimproc/updatetime": 50,
-\       "outputter": "multi",
-\       "outputter/multi/targets": ["buffer", "quickfix"],
-\   }
-\}
-
-" gist.vim {{{2
-NeoBundleLazy 'mattn/gist-vim', {
-\   'autoload': {'commands': ['Gist']}
-\ }
-
-let g:github_user = "mashiro"
-
-" vimfiler.vim {{{2
-NeoBundleLazy 'Shougo/vimfiler.vim', {
-\   'autoload': {'commands': ['VimFiler']}
-\ }
-
-let g:vimfiler_as_default_explorer = 1
-
-" lightline.vim {{{2
-NeoBundle 'itchyny/lightline.vim'
-
-let g:lightline = {
-    \ 'colorscheme': 'jellybeans',
-    \ 'mode_map': {'c': 'NORMAL'},
-    \ 'active': {
-    \   'left': [ [ 'mode', 'paste' ], [ 'fugitive', 'filename' ] ]
-    \ },
-    \ 'component_function': {
-    \   'modified': 'MyModified',
-    \   'readonly': 'MyReadonly',
-    \   'fugitive': 'MyFugitive',
-    \   'filename': 'MyFilename',
-    \   'fileformat': 'MyFileformat',
-    \   'filetype': 'MyFiletype',
-    \   'fileencoding': 'MyFileencoding',
-    \   'mode': 'MyMode'
-    \ }
-    \ }
-
-function! MyModified()
-  return &ft =~ 'help\|vimfiler\|gundo' ? '' : &modified ? '+' : &modifiable ? '' : '-'
-endfunction
-
-function! MyReadonly()
-  return &ft !~? 'help\|vimfiler\|gundo' && &readonly ? 'x' : ''
-endfunction
-
-function! MyFilename()
-  return ('' != MyReadonly() ? MyReadonly() . ' ' : '') .
-        \ (&ft == 'vimfiler' ? vimfiler#get_status_string() :
-        \  &ft == 'unite' ? unite#get_status_string() :
-        \  &ft == 'vimshell' ? vimshell#get_status_string() :
-        \ '' != expand('%:t') ? expand('%:t') : '[No Name]') .
-        \ ('' != MyModified() ? ' ' . MyModified() : '')
-endfunction
-
-function! MyFugitive()
-  try
-    if &ft !~? 'vimfiler\|gundo' && exists('*fugitive#head')
-      return fugitive#head()
-    endif
-  catch
-  endtry
-  return ''
-endfunction
-
-function! MyFileformat()
-  return winwidth(0) > 70 ? &fileformat : ''
-endfunction
-
-function! MyFiletype()
-  return winwidth(0) > 70 ? (strlen(&filetype) ? &filetype : 'no ft') : ''
-endfunction
-
-function! MyFileencoding()
-  return winwidth(0) > 70 ? (strlen(&fenc) ? &fenc : &enc) : ''
-endfunction
-
-function! MyMode()
-  return winwidth(0) > 60 ? lightline#mode() : ''
-endfunction
-
-" yankround.vim {{{2
-NeoBundle 'LeafCage/yankround.vim'
-
-nmap p <Plug>(yankround-p)
-xmap p <Plug>(yankround-p)
-nmap P <Plug>(yankround-P)
-nmap gp <Plug>(yankround-gp)
-xmap gp <Plug>(yankround-gp)
-nmap gP <Plug>(yankround-gP)
-nmap <C-p> <Plug>(yankround-prev)
-nmap <C-n> <Plug>(yankround-next)
-
-" vim-over {{{2
-NeoBundle 'osyo-manga/vim-over'
-
-" caw.vim {{{2
-NeoBundle 'tyru/caw.vim'
-
-nmap <Leader>c <Plug>(caw:I:toggle)
-vmap <Leader>c <Plug>(caw:I:toggle)
-
-" editorconfig-vim {{{2"
-NeoBundle 'editorconfig/editorconfig-vim'
-
-" ag.vim {{{2
-NeoBundleLazy 'rking/ag.vim', {
-\ 'autoload': {'commands': ['Ag']}
-\ }
-
-" vim-fakeclip {{{2
-NeoBundle 'kana/vim-fakeclip'
-
-" surround-vim {{{2
-NeoBundle 'tpope/vim-surround'
-
-" agit.vim {{{2
-NeoBundleLazy 'cohama/agit.vim', {
-\   'autoload': {'commands': ['Agit']}
-\ }
-
-" vim-ref {{{2
-NeoBundleLazy 'thinca/vim-ref', {
-\   'autoload': {'commands': ['Ref']}
-\ }
-
-let g:ref_source_webdict_sites = {
-\   'alc': {
-\     'url': 'http://eow.alc.co.jp/%s/UTF-8/',
-\     'line': 37,
-\   }
-\ }
-let g:ref_source_webdict_sites.default = 'alc'
-
-" cpp-vim {{{2
-NeoBundleLazy 'vim-jp/cpp-vim', {
-\   'autoload': {'filetypes': ['cpp']}
-\ }
-
-" emmet-vim {{{2
-NeoBundleLazy 'mattn/emmet-vim', {
-\   'autoload': {'filetypes': ['html', 'css']}
-\ }
-
-" html5.vim {{{2
-NeoBundleLazy 'othree/html5.vim', {
-\  'autoload': {'filetypes': ['html', 'javascript', 'php']}
-\ }
-
-" yajs.vim {{{2
-NeoBundleLazy 'othree/yajs.vim', {
-\   'autoload': {'filetypes': ['javascript']}
-\ }
-
-" vim-coffee-script {{{2
-NeoBundleLazy 'kchmck/vim-coffee-script', {
-\   'autoload': {'filetypes': ['coffee']}
-\ }
-let g:coffee_compile_vert = 1
-let g:coffee_watch_vert = 1
-let g:coffee_run_vert = 1
-
-" vim-json {{{2
-NeoBundleLazy 'elzr/vim-json', {
-\   'autoload': {'filetypes': ['json']}
-\ }
-let g:vim_json_syntax_conceal = 0
-
-" vim-scala {{{2
-NeoBundleLazy 'derekwyatt/vim-scala', {
-\   'autoload': {'filetypes': ['scala']}
-\ }
-
-" vim-go {{{2
-NeoBundleLazy 'fatih/vim-go', {
-\   'autoload': {'filetypes': ['go']}
-\ }
-let g:go_disable_autoinstall = 1
-
-" vim-slim {{{2
-NeoBundleLazy 'slim-template/vim-slim', {
-\   'autoload': {'filetypes': ['slim']}
-\ }
-
-NeoBundleLazy 'elixir-lang/vim-elixir', {
-\   'autoload': {'filename_patterns': '.*\.\(ex\|exs\|eex\)'}
-\ }
 
 " End {{{1
-call neobundle#end()
+"call neobundle#end()
 filetype plugin indent on
 
-NeoBundleCheck
+"NeoBundleCheck
 
 if filereadable(expand('~/.vimrc.local'))
     source ~/.vimrc.local
