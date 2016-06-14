@@ -334,3 +334,7 @@ on_ft = 'slim'
 repo = 'elixir-lang/vim-elixir'
 on_path = '.*\.\(ex\|exs\|eex\)'
 
+[[plugins]]
+repo = 'tmux-plugins/vim-tmux'
+on_path = '.*\.tmux\.conf'
+
