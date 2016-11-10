@@ -308,7 +308,12 @@ on_ft = ['html', 'javascript', 'php']
 
 [[plugins]]
 repo = 'othree/yajs.vim'
-on_ft = ['html', 'javascript', 'php']
+on_ft = ['html', 'javascript', 'jsx', 'php']
+
+[[plugins]]
+repo = 'MaxMEllon/vim-jsx-pretty'
+on_ft = ['jsx']
+depends = ['yajs.vim']
 
 [[plugins]]
 repo = 'kchmck/vim-coffee-script'
