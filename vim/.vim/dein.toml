@@ -23,6 +23,12 @@ if = "has('lua')"
 on_i = 1
 hook_add = '''
   let g:neocomplete#enable_at_startup = 1
+
+  " Define keyword.
+  if !exists('g:neocomplete#keyword_patterns')
+    let g:neocomplete#keyword_patterns = {}
+  endif
+  let g:neocomplete#keyword_patterns['default'] = '\h\w*'
 '''
 
 [[plugins]]
@@ -75,6 +81,7 @@ hook_add = '''
   nnoremap <silent> [unite]b :<C-u>Unite buffer<CR>
   nnoremap <silent> [unite]u :<C-u>Unite source<CR>
   nnoremap <silent> [unite]g :<C-u>Unite grep:.<CR>
+  nnoremap <silent> [unite]x :<C-u>Unite outline<CR>
 
   autocmd FileType unite call s:unite_my_settings()
   function! s:unite_my_settings()
@@ -108,6 +115,9 @@ hook_add = '''
         \ |     nnoremap <buffer> <C-]> :<C-u>UniteWithCursorWord -immediately tag<CR>
         \ | endif
 '''
+
+[[plugins]]
+repo = 'Shougo/unite-outline'
 
 [[plugins]]
 repo = 'szw/vim-tags'
@@ -328,7 +338,16 @@ hook_add = '''
 repo = 'fatih/vim-go'
 on_ft = 'go'
 hook_add = '''
-  let g:go_disable_autoinstall = 1
+  " if !exists('g:neocomplete#sources#omni#input_patterns')
+  "   let g:neocomplete#sources#omni#input_patterns = {}
+  " endif
+  " let g:neocomplete#sources#omni#input_patterns.go = '\h\w\.\w*'
+
+  if !exists('g:neocomplete#force_omni_input_patterns')
+    let g:neocomplete#force_omni_input_patterns = {}
+  endif
+  let g:neocomplete#force_overwrite_completefunc = 1
+  let g:neocomplete#force_omni_input_patterns.go = '\h\w\.\w*'
 '''
 
 [[plugins]]
