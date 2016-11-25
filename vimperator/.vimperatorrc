@@ -1,5 +1,5 @@
 " mashiro .vimperatorrc
-" firefox-20.0 + vimperator-3.7
+" firefox-50.0 + vimperator-3.15
 
 " Initialize {{{1
 "nmapc
@@ -362,19 +362,18 @@ EOM
 
 " Toggle Autopagerize {{{2
 javascript <<EOM
-	let (evaluateXPath = util.evaluateXPath || buffer.evaluateXPath) {
-		commands.addUserCommand(
-			['autopagerize'],
-			'Toggle AutoPagerize',
-			function (args) {
-				buffer.followLink(
-					evaluateXPath('id("autopagerize_help")/div/a[@class="autopagerize_link"]').snapshotItem(0)
-				);
-			},
-			{},
-			true
-		);
-	}
+	let evaluateXPath = util.evaluateXPath || buffer.evaluateXPath;
+  commands.addUserCommand(
+    ['autopagerize'],
+    'Toggle AutoPagerize',
+    function (args) {
+      buffer.followLink(
+        evaluateXPath('id("autopagerize_help")/div/a[@class="autopagerize_link"]').snapshotItem(0)
+      );
+    },
+    {},
+    true
+  );
 EOM
 
 
