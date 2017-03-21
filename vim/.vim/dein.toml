@@ -9,10 +9,6 @@ build = 'make'
 repo = 'Shougo/context_filetype.vim'
 
 [[plugins]]
-repo = 'osyo-manga/vim-precious'
-depends = ['context_filetype.vim']
-
-[[plugins]]
 repo = 'Shougo/neoinclude.vim'
 on_i = 1
 
