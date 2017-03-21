@@ -75,6 +75,11 @@ init_envs() {
   # nodebrew
   [[ -d "$HOME/.nodebrew" ]] && export PATH=$HOME/.nodebrew/current/bin:$PATH
 
+  # yarn
+  if has "yarn"; then
+    export PATH="$PATH:`yarn global bin`"
+  fi
+
   # cabal
   [[ -d "$HOME/.cabal" ]] && export PATH=$HOME/.cabal/bin:$PATH
 
