@@ -1,3 +1,5 @@
-BUNDLE_JOBS: '4'
-BUNDLE_PATH: .direnv
-BUNDLE_BIN: .direnv/bin
+---
+BUNDLE_JOBS: "4"
+BUNDLE_PATH: ".direnv"
+BUNDLE_BIN: ".direnv/bin"
+BUNDLE_GITHUB__HTTPS: "true"
