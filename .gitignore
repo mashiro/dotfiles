@@ -10,3 +10,5 @@ vim/.vim/tags/
 vim/.vim/bundle/
 vimperator/.vimperator/info/
 
+ruby/.bundle/cache/
+
