@@ -1,5 +1,4 @@
 #!/bin/bash
-
 brew update
 brew upgrade
 
@@ -23,19 +22,4 @@ brew install rbenv
 brew install ruby-build
 brew install pyenv
 brew install pyenv-virtualenv
-
-brew cask install karabiner
-brew cask install seil
-brew cask install iterm2
-brew cask install atom
-brew cask install google-japanese-ime
-brew cask install firefox-ja
-brew cask install google-chrome
-brew cask install google-chrome-canary
-brew cask install istat-menus
-brew cask install gyazo
-brew cask install dropbox
-brew cask install vagrant
-brew cask install virtualbox
-brew cask install dockertoolbox
 
