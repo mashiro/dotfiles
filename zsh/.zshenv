@@ -88,7 +88,7 @@ init_envs() {
 
   # golang
   if has "go"; then
-    export GOPATH="$HOME/.go"
+    export GOPATH="$HOME/go"
     export PATH="$GOPATH/bin:$PATH"
   fi
 
