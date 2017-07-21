@@ -219,28 +219,6 @@ hook_add = '''
 '''
 
 [[plugins]]
-repo = 'cohama/agit.vim'
-on_cmd = 'Agit'
-hook_add = '''
-  let agit_dir = {'description': 'open a new Agit tab'}
-  function! agit_dir.func(dir)
-    if isdirectory(a:dir.word)
-      let dir = fnamemodify(a:dir.word, ':p')
-    else
-      let dir = fnamemodify(a:dir.word, ':p:h')
-    endif
-    execute 'Agit --dir=' . dir
-  endfunction
-  call unite#custom#action('file,cdable', 'agit', agit_dir)
-
-  let agit_file = {'description': 'open the file''s history in agit.vim'}
-  function! agit_file.func(candidate)
-    execute 'AgitFile' '--file='.a:candidate.action__path
-  endfunction
-  call unite#custom#action('file', 'agit-file', agit_file)
-'''
-
-[[plugins]]
 repo = 'LeafCage/yankround.vim'
 hook_add = '''
   nmap p <Plug>(yankround-p)
