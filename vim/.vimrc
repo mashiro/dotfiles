@@ -11,8 +11,8 @@ set fileformats=unix,dos,mac
 set ambiwidth=double
 
 " Optioins {{{2
-set backupdir=~/tmp,.
-set directory=~/tmp,.
+"set backupdir=~/tmp,.
+"set directory=~/tmp,.
 set viminfo& viminfo+=n~/.viminfo
 
 " view
