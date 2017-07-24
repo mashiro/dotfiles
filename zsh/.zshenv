@@ -69,11 +69,12 @@ init_envs() {
     fi
   fi
 
-  # nvm
-  source_if "$HOME/.nvm/nvm.sh"
-
   # nodebrew
-  [[ -d "$HOME/.nodebrew" ]] && export PATH=$HOME/.nodebrew/current/bin:$PATH
+  if [[ -d "$HOME/.nodebrew" ]]; then
+    export PATH=$HOME/.nodebrew/current/bin:$PATH
+    export NODE_VERSIONS=$HOME/.nodebrew/node
+    export NODE_VERSION_PREFIX=v
+  fi
 
   # yarn
   if has "yarn"; then
