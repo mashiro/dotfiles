@@ -319,6 +319,10 @@ hook_add = '''
   let g:go_highlight_fields = 1
   let g:go_highlight_build_constraints = 1
   let g:go_highlight_generate_tags = 1
+
+  au FileType go nmap ,t <Plug>(go-test)
+  au FileType go nmap ,b <Plug>(go-build)
+  au FileType go nmap ,i <Plug>(go-info)
 '''
 
 [[plugins]]
