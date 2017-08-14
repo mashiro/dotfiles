@@ -72,21 +72,6 @@ set mouse=
 "    set mousehide
 "endif
 
-" Color {{{2
-if (1 < &t_Co || has('gui')) && has('syntax')
-    syntax on
-    set background=dark
-    if (256 <= &t_Co)
-        autocmd MyAutoCmd ColorScheme *
-        \   if !has('gui_running')
-        \ |     highlight Normal ctermbg=none
-        \ |     highlight NonText ctermbg=none
-        \ |     highlight LineNr ctermbg=none
-        \ | endif
-        colorscheme xoria256
-    endif
-endif
-
 " Utilities {{{1
 " CD {{{2
 command! -nargs=? -complete=dir -bang CD  call s:change_current_dir('<args>', '<bang>')
@@ -289,6 +274,15 @@ endif
 
 if dein#check_install()
     call dein#install()
+endif
+
+" Color {{{1
+if (1 < &t_Co || has('gui')) && has('syntax')
+    syntax on
+    set background=dark
+    if (256 <= &t_Co)
+        colorscheme moira
+    endif
 endif
 
 " End {{{1

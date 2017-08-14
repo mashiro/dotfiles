@@ -312,16 +312,13 @@ hook_add = '''
 repo = 'fatih/vim-go'
 on_ft = 'go'
 hook_add = '''
-  " if !exists('g:neocomplete#sources#omni#input_patterns')
-  "   let g:neocomplete#sources#omni#input_patterns = {}
-  " endif
-  " let g:neocomplete#sources#omni#input_patterns.go = '\h\w\.\w*'
-
-  if !exists('g:neocomplete#force_omni_input_patterns')
-    let g:neocomplete#force_omni_input_patterns = {}
-  endif
-  let g:neocomplete#force_overwrite_completefunc = 1
-  let g:neocomplete#force_omni_input_patterns.go = '\h\w\.\w*'
+  let g:go_fmt_command = 'goimports'
+  let g:go_highlight_functions = 1
+  let g:go_highlight_methods = 1
+  let g:go_highlight_types = 1
+  let g:go_highlight_fields = 1
+  let g:go_highlight_build_constraints = 1
+  let g:go_highlight_generate_tags = 1
 '''
 
 [[plugins]]
