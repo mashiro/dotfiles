@@ -14,9 +14,9 @@ brew install the_silver_searcher
 brew install reattach-to-user-namespace
 brew install readline
 
-brew install lua luajit
+brew install luajit
 brew install python3
-brew install vim --with-override-system-vim --with-lua --with-luajit --with-python3
+brew install vim --with-override-system-vim --with-luajit --with-python3
 
 brew install rbenv
 brew install ruby-build
