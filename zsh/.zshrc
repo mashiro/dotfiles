@@ -237,6 +237,19 @@ if has "docker"; then
   alias dockercleani='docker rmi $(docker images -q -f dangling=true)'
 fi
 
+if has "ghq" && has "peco"; then
+  function peco-src () {
+    local selected_dir=$(ghq list -p | peco --query "$LBUFFER")
+    if [ -n "$selected_dir" ]; then
+      BUFFER="cd ${selected_dir}"
+      zle accept-line
+    fi
+    zle clear-screen
+  }
+  zle -N peco-src
+  bindkey '^f' peco-src
+fi
+
 # End {{{1
 [ -f ~/.zshrc.local ] && source ~/.zshrc.local
 
