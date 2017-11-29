@@ -244,7 +244,7 @@ repo = 'editorconfig/editorconfig-vim'
 
 
 [[plugins]]
-repo = 'vim-jp/cpp-vim'
+repo = 'octol/vim-cpp-enhanced-highlight'
 on_ft = 'cpp'
 
 [[plugins]]
