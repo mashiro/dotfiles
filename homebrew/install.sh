@@ -12,6 +12,7 @@ brew install pipenv
 brew install python3
 brew install go
 brew install nodebrew
+brew install yarn
 
 brew install wget
 brew install tree
