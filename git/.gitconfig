@@ -25,5 +25,8 @@
 [push]
   default = simple
 [pager]
-  branch = cat
+  branch = false
+[ghq]
+  root = ~/repos
+  root = ~/go/src
 
