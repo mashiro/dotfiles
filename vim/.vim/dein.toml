@@ -36,35 +36,6 @@ hook_add = '''
 '''
 
 [[plugins]]
-repo = 'Shougo/neosnippet'
-depends = ['neosnippet-snippets', 'context_filetype.vim']
-on_i = 1
-on_ft = 'snippet'
-hook_source = '''
-  let g:neosnippet#snippets_directory='~/.vim/snippets'
-
-  imap <C-l> <Plug>(neosnippet_expand_or_jump)
-  smap <C-l> <Plug>(neosnippet_expand_or_jump)
-  xmap <C-l> <Plug>(neosnippet_expand_target)
-
-  " SuperTab like snippets behavior.
-  imap <expr><TAB>
-        \ pumvisible() ? "\<C-n>" :
-        \ neosnippet#expandable_or_jumpable() ?
-        \    "\<Plug>(neosnippet_expand_or_jump)" : "\<TAB>"
-  smap <expr><TAB> neosnippet#expandable_or_jumpable() ?
-        \ "\<Plug>(neosnippet_expand_or_jump)" : "\<TAB>"
-
-  " For conceal markers.
-  if has('conceal')
-    set conceallevel=2 concealcursor=niv
-  endif
-'''
-
-[[plugins]]
-repo = 'Shougo/neosnippet-snippets'
-
-[[plugins]]
 repo = 'Shougo/unite.vim'
 hook_add = '''
   nnoremap [unite] <Nop>
@@ -239,13 +210,10 @@ repo = 'mattn/emmet-vim'
 on_ft = ['html', 'css']
 
 [[plugins]]
-repo = 'editorconfig/editorconfig-vim'
-
-
-
-[[plugins]]
-repo = 'octol/vim-cpp-enhanced-highlight'
-on_ft = 'cpp'
+repo = 'sheerun/vim-polyglot'
+hook_add = '''
+  let g:polyglot_disabled = ['vue']
+'''
 
 [[plugins]]
 repo = 'justmao945/vim-clang'
@@ -270,70 +238,4 @@ hook_add = '''
   let g:clang_c_options = '-std=gnu11'
   let g:clang_cpp_options = '-std=c++11 -stdlib=libc++'
 '''
-
-[[plugins]]
-repo = 'cespare/vim-toml'
-on_ft = 'toml'
-
-[[plugins]]
-repo = 'elzr/vim-json'
-on_ft = 'json'
-hook_add = '''
-  let g:vim_json_syntax_conceal = 0
-'''
-
-[[plugins]]
-repo = 'derekwyatt/vim-scala'
-on_ft = 'scala'
-
-[[plugins]]
-repo = 'othree/html5.vim'
-on_ft = ['html', 'javascript', 'php']
-
-[[plugins]]
-repo = 'othree/yajs.vim'
-on_ft = ['html', 'javascript', 'jsx', 'php']
-
-[[plugins]]
-repo = 'MaxMEllon/vim-jsx-pretty'
-on_ft = ['jsx']
-depends = ['yajs.vim']
-
-[[plugins]]
-repo = 'kchmck/vim-coffee-script'
-on_ft = 'coffee'
-hook_add = '''
-  let g:coffee_compile_vert = 1
-  let g:coffee_watch_vert = 1
-  let g:coffee_run_vert = 1
-'''
-
-[[plugins]]
-repo = 'fatih/vim-go'
-on_ft = 'go'
-hook_add = '''
-  let g:go_fmt_command = 'goimports'
-  let g:go_highlight_functions = 1
-  let g:go_highlight_methods = 1
-  let g:go_highlight_types = 1
-  let g:go_highlight_fields = 1
-  let g:go_highlight_build_constraints = 1
-  let g:go_highlight_generate_tags = 1
-
-  au FileType go nmap ,t <Plug>(go-test)
-  au FileType go nmap ,b <Plug>(go-build)
-  au FileType go nmap ,i <Plug>(go-info)
-'''
-
-[[plugins]]
-repo = 'slim-template/vim-slim'
-on_ft = 'slim'
-
-[[plugins]]
-repo = 'elixir-lang/vim-elixir'
-on_path = '.*\.\(ex\|exs\|eex\)'
-
-[[plugins]]
-repo = 'tmux-plugins/vim-tmux'
-on_path = '.*\.tmux\.conf'
 

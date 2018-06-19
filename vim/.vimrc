@@ -276,6 +276,19 @@ if dein#check_install()
     call dein#install()
 endif
 
+" vim-go
+let g:go_fmt_command = 'goimports'
+let g:go_highlight_functions = 1
+let g:go_highlight_methods = 1
+let g:go_highlight_types = 1
+let g:go_highlight_fields = 1
+let g:go_highlight_build_constraints = 1
+let g:go_highlight_generate_tags = 1
+
+au FileType go nmap ,t <Plug>(go-test)
+au FileType go nmap ,b <Plug>(go-build)
+au FileType go nmap ,i <Plug>(go-info)
+
 " Color {{{1
 if (1 < &t_Co || has('gui')) && has('syntax')
     syntax on
@@ -284,6 +297,8 @@ if (1 < &t_Co || has('gui')) && has('syntax')
         colorscheme moira
     endif
 endif
+
+let g:html_my_rendering = 1
 
 " End {{{1
 "call neobundle#end()

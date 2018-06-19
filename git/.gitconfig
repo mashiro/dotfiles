@@ -24,3 +24,6 @@
   edit-conflicted-files = !$EDITOR $(git ls-conflicted-files)
 [push]
   default = simple
+[pager]
+  branch = cat
+
