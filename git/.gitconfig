@@ -1,6 +1,11 @@
 [user]
-  name = mashiro
-  email = mail@mashiro.org
+  useConfigOnly = true
+[include]
+  path = ~/.gitconfig.local
+[includeIf "gitdir:~/repos/github.com/"]
+  path = ~/.gitconfig.mashiro
+[includeIf "gitdir:~/go/src/github.com/"]
+  path = ~/.gitconfig.mashiro
 [color]
   ui = auto
 [core]
