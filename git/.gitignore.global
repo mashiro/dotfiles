@@ -2,3 +2,5 @@
 Thumbs.db
 doc/tags
 doc/tags-ja
+*.swp
+.direnv
