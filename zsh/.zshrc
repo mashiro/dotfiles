@@ -192,6 +192,7 @@ alias -g G="| grep"
 alias -g XG="| xargs grep"
 alias -g V="| vim -R -"
 has "peco" && alias -g P="| peco"
+has "peco" && alias -g B='`git branch -a --format "%(refname:short)" | peco --prompt "GIT BRANCH>"`'
 
 alias s="screen -U"
 alias sr="screen -U -D -R"
