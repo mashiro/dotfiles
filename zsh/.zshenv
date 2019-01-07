@@ -104,9 +104,15 @@ init_envs() {
     eval "$(direnv hook zsh)"
   fi
 
+  # sdkman
   if [ -d "$HOME/.sdkman" ]; then
     export SDKMAN_DIR="$HOME/.sdkman"
     source "$HOME/.sdkman/bin/sdkman-init.sh"
+  fi
+
+  # kubectl
+  if [ -d "$HOME/.kube" ]; then
+    export KUBECONFIG="$KUBECONFIG:`ls $HOME/.kube/*.yml | tr '\n' ':'`"
   fi
 }
 

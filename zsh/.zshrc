@@ -215,6 +215,7 @@ alias pyb="pythonbrew"
 alias g++03="g++ -Wall -Wextra"
 alias g++11="g++ -Wall -Wextra -std=gnu++11"
 
+# tmux
 if has "tmux"; then
   t() {
     if [[ -z $1 ]]; then
@@ -233,11 +234,13 @@ if has "tmux"; then
   alias tls="tmux ls"
 fi
 
+# docker
 if has "docker"; then
   alias dockerclean='docker rm $(docker ps -a -q)'
   alias dockercleani='docker rmi $(docker images -q -f dangling=true)'
 fi
 
+# ghq
 if has "ghq" && has "peco"; then
   function peco-src () {
     local selected_dir=$(ghq list -p | peco --query "$LBUFFER")
@@ -249,6 +252,13 @@ if has "ghq" && has "peco"; then
   }
   zle -N peco-src
   bindkey '^f' peco-src
+fi
+
+# k8s
+if has "kubectl"; then
+  source <(kubectl completion zsh)
+  alias k="kubectl"
+  complete -o default -F __start_kubectl k
 fi
 
 # End {{{1
