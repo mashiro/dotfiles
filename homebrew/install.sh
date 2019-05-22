@@ -25,5 +25,5 @@ brew install the_silver_searcher
 brew install reattach-to-user-namespace
 brew install tmux
 brew install zsh
-brew install vim --with-override-system-vi --with-python3 --with-luajit
+brew install vim
 
