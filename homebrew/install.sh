@@ -18,11 +18,12 @@ brew install wget
 brew install tree
 brew install jq
 brew install jo
+brew install fzf
 brew install direnv
 brew install imagemagick
 brew install the_silver_searcher
 brew install reattach-to-user-namespace
 brew install tmux
 brew install zsh
-brew install vim --with-override-system-vim --with-luajit --with-python3
+brew install vim --with-override-system-vi --with-python3 --with-luajit
 
