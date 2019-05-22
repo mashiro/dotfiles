@@ -1,0 +1,9 @@
+use_java() {
+  local java_version=$1
+
+  SDKMAN_DIR="$HOME/.sdkman"
+  source "$SDKMAN_DIR/bin/sdkman-init.sh"
+
+  sdk use java $java_version
+}
+

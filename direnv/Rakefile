@@ -1,0 +1,8 @@
+namespace :direnv do
+  desc 'symlink direnv dotfiles' 
+  task :symlink do
+    symlink_dotfiles File.expand_path('../', __FILE__)
+  end
+end
+
+after 'symlink', 'direnv:symlink'
