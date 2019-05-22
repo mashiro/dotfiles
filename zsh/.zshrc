@@ -241,17 +241,17 @@ if has "docker"; then
 fi
 
 # ghq
-if has "ghq" && has "peco"; then
-  function peco-src () {
-    local selected_dir=$(ghq list -p | peco --query "$LBUFFER")
+if has "ghq" && has "fzf"; then
+  function fzf-src () {
+    local selected_dir=$(ghq list -p | fzf --query "$LBUFFER")
     if [ -n "$selected_dir" ]; then
       BUFFER="cd ${selected_dir}"
       zle accept-line
     fi
     zle clear-screen
   }
-  zle -N peco-src
-  bindkey '^f' peco-src
+  zle -N fzf-src
+  bindkey '^f' fzf-src
 fi
 
 # k8s
