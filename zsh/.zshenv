@@ -111,8 +111,8 @@ init_envs() {
   fi
 
   # kubectl
-  if [ -d "$HOME/.kube" ]; then
-    export KUBECONFIG="$KUBECONFIG:`ls $HOME/.kube/*.yml | tr '\n' ':'`"
+  if [ -d "$HOME/.kube/configs" ]; then
+    export KUBECONFIG="$KUBECONFIG:`ls -d $HOME/.kube/configs/* 2> /dev/null | paste -s -d ':' -`"
   fi
 }
 
