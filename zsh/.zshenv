@@ -93,6 +93,12 @@ init_envs() {
     export PATH="$GOPATH/bin:$PATH"
   fi
 
+  # rust
+  if has "rustc"; then
+    export CARGO_HOME="$HOME/.cargo"
+    export PATH="$CARGO_HOME/bin:$PATH"
+  fi
+
   # google cloud sdk
   if [ -d "$HOME/google-cloud-sdk" ]; then
     source "$HOME/google-cloud-sdk/path.zsh.inc"
