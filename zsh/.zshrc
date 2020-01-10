@@ -260,6 +260,9 @@ if has "kubectl"; then
   source <(kubectl completion zsh)
   alias k="kubectl"
   complete -o default -F __start_kubectl k
+
+  if has "kubectx"; then; alias kc="kubectx"; fi
+  if has "kubens"; then; alias kn="kubens"; fi
 fi
 
 # End {{{1
