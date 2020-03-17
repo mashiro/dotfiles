@@ -93,6 +93,12 @@ init_envs() {
     export PATH="$GOPATH/bin:$PATH"
   fi
 
+  # rust
+  if has "rustc"; then
+    export CARGO_HOME="$HOME/.cargo"
+    export PATH="$CARGO_HOME/bin:$PATH"
+  fi
+
   # google cloud sdk
   if [ -d "$HOME/google-cloud-sdk" ]; then
     source "$HOME/google-cloud-sdk/path.zsh.inc"
@@ -111,8 +117,11 @@ init_envs() {
   fi
 
   # kubectl
-  if [ -d "$HOME/.kube" ]; then
-    export KUBECONFIG="$KUBECONFIG:`ls $HOME/.kube/*.yml | tr '\n' ':'`"
+  if [ -f "$HOME/.kube/config" ]; then
+    export KUBECONFIG="$HOME/.kube/config"
+  fi
+  if [ -d "$HOME/.kube/configs" ]; then
+    export KUBECONFIG="$KUBECONFIG:`ls -d $HOME/.kube/configs/* 2> /dev/null | paste -s -d ':' -`"
   fi
 }
 

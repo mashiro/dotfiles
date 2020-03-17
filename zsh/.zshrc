@@ -14,6 +14,7 @@ setopt auto_menu
 setopt auto_resume
 setopt no_auto_name_dirs
 setopt no_correct
+setopt no_nomatch
 setopt complete_in_word
 setopt brace_ccl
 setopt no_cdable_vars
@@ -259,6 +260,9 @@ if has "kubectl"; then
   source <(kubectl completion zsh)
   alias k="kubectl"
   complete -o default -F __start_kubectl k
+
+  if has "kubectx"; then; alias kc="kubectx"; fi
+  if has "kubens"; then; alias kn="kubens"; fi
 fi
 
 # End {{{1
