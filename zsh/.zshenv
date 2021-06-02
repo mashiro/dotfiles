@@ -57,16 +57,9 @@ init_envs() {
     eval "$(rbenv init - --no-rehash)"
   fi
 
-  # python
-  export PYTHONSTARTUP=$HOME/.pythonstartup
-  if [ -d "$HOME/.pyenv" ]; then
-    export PYENV_ROOT="$HOME/.pyenv"
-    export PATH="$PYENV_ROOT/bin:$PATH"
-    eval "$(pyenv init -)"
-
-    if [ -d "$HOME/.pyenv/plugins/pyenv-virtualenv" ]; then
-      eval "$(pyenv virtualenv-init -)"
-    fi
+  # poetry
+  if [ -d "$HOME/.poetry" ]; then
+    export PATH="$HOME/.poetry/bin:$PATH"
   fi
 
   # nodebrew
@@ -92,6 +85,9 @@ init_envs() {
     export GOPATH="$HOME/go"
     export PATH="$GOPATH/bin:$PATH"
   fi
+
+  # gvm
+  source_if "$HOME/.gvm/scripts/gvm"
 
   # rust
   if has "rustc"; then
@@ -122,6 +118,21 @@ init_envs() {
   fi
   if [ -d "$HOME/.kube/configs" ]; then
     export KUBECONFIG="$KUBECONFIG:`ls -d $HOME/.kube/configs/* 2> /dev/null | paste -s -d ':' -`"
+  fi
+
+  # kustomize
+  if has "kustomize"; then
+    eval "$(kustomize completion zsh)"
+  fi
+
+  # krew
+  if [ -d "$HOME/.krew" ]; then
+    export PATH="$HOME/.krew/bin:$PATH"
+  fi
+
+  # asdf
+  if has "asdf"; then
+    . $(brew --prefix asdf)/asdf.sh
   fi
 }
 
