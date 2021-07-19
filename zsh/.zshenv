@@ -48,9 +48,6 @@ init_envs() {
     export PATH="$HOME/homebrew/bin:$PATH"
   fi
 
-  # rvm
-  source_if "$HOME/.rvm/scripts/rvm"
-
   # rbenv
   if [ -d "$HOME/.rbenv" ]; then
     export PATH="$HOME/.rbenv/bin:$PATH"
@@ -106,12 +103,6 @@ init_envs() {
     eval "$(direnv hook zsh)"
   fi
 
-  # sdkman
-  if [ -d "$HOME/.sdkman" ]; then
-    export SDKMAN_DIR="$HOME/.sdkman"
-    source "$HOME/.sdkman/bin/sdkman-init.sh"
-  fi
-
   # kubectl
   if [ -f "$HOME/.kube/config" ]; then
     export KUBECONFIG="$HOME/.kube/config"
@@ -120,19 +111,14 @@ init_envs() {
     export KUBECONFIG="$KUBECONFIG:`ls -d $HOME/.kube/configs/* 2> /dev/null | paste -s -d ':' -`"
   fi
 
-  # kustomize
-  if has "kustomize"; then
-    eval "$(kustomize completion zsh)"
-  fi
-
   # krew
   if [ -d "$HOME/.krew" ]; then
     export PATH="$HOME/.krew/bin:$PATH"
   fi
 
   # asdf
-  if has "asdf"; then
-    . $(brew --prefix asdf)/asdf.sh
+  if [ -d "$HOME/.asdf" ]; then
+    . $HOME/.asdf/asdf.sh
   fi
 }
 

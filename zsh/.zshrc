@@ -125,7 +125,7 @@ fi
 
 
 # Completion {{{1
-autoload -Uz compinit; compinit
+autoload -Uz compinit && compinit
 zstyle ':completion:*:default' menu select=2
 zstyle ':completion:*' matcher-list 'm:{a-z}={A-Z}' '+m:{A-Z}={a-z}'
 zstyle ':completion:*' list-colors ${(s.:.)LS_COLORS}
@@ -208,7 +208,6 @@ alias :q="exit"
 
 has "ack-grep" && alias ack="ack-grep"
 has "ag" && alias ag='ag --pager="less"'
-has "jq" && alias jq="jq -C"
 
 alias py="python"
 alias pyb="pythonbrew"
@@ -216,6 +215,7 @@ alias pyb="pythonbrew"
 alias g++03="g++ -Wall -Wextra"
 alias g++11="g++ -Wall -Wextra -std=gnu++11"
 
+# Tools {{{1
 # tmux
 if has "tmux"; then
   t() {
@@ -235,12 +235,6 @@ if has "tmux"; then
   alias tls="tmux ls"
 fi
 
-# docker
-if has "docker"; then
-  alias dockerclean='docker rm $(docker ps -a -q)'
-  alias dockercleani='docker rmi $(docker images -q -f dangling=true)'
-fi
-
 # ghq
 if has "ghq" && has "fzf"; then
   function fzf-src () {
@@ -255,6 +249,11 @@ if has "ghq" && has "fzf"; then
   bindkey '^f' fzf-src
 fi
 
+# sdkman
+if [ -d "$HOME/.sdkman" ]; then
+  source "$HOME/.sdkman/bin/sdkman-init.sh"
+fi
+
 # k8s
 if has "kubectl"; then
   source <(kubectl completion zsh)
@@ -263,6 +262,16 @@ if has "kubectl"; then
 
   if has "kubectx"; then; alias kc="kubectx"; fi
   if has "kubens"; then; alias kn="kubens"; fi
+
+  # kustomize
+  if has "kustomize"; then
+    eval "$(kustomize completion zsh)"
+  fi
+fi
+
+# asdf
+if has "asdf"; then
+  . $HOME/.asdf/completions/asdf.bash
 fi
 
 # End {{{1
