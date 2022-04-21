@@ -1,8 +1,0 @@
-namespace :ruby do
-  desc 'symlink ruby dotfiles' 
-  task :symlink do
-    symlink_dotfiles File.expand_path('../', __FILE__)
-  end
-end
-
-after 'symlink', 'ruby:symlink'
