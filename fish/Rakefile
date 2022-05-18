@@ -1,0 +1,10 @@
+namespace :fish do
+  desc 'symlink fish configs'
+  task :symlink do
+    ['config.fish', 'fish_plugins'].each do |filename|
+      symlink File.expand_path("../#{filename}", __FILE__), config_path.join('fish')
+    end
+  end
+end
+
+after 'symlink', 'fish:symlink'

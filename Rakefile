@@ -18,6 +18,16 @@ module Dotfiles
       Pathname.new ENV['HOME']
     end
 
+    def config_path
+      ENV['XDG_CONFIG_HOME'].then do |path|
+        if path.nil?
+          home_path.join('.config')
+        else
+          Pathname.new path
+        end
+      end
+    end
+
     def root_path
       Pathname.new File.expand_path('../', __FILE__)
     end

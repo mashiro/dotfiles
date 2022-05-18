@@ -1,8 +1,0 @@
-namespace :zsh do
-  desc 'symlink zsh dotfiles' 
-  task :symlink do
-    symlink_dotfiles File.expand_path('../', __FILE__)
-  end
-end
-
-after 'symlink', 'zsh:symlink'
