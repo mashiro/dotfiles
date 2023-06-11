@@ -138,7 +138,7 @@ namespace :git do
     after 'git:submodule:update', 'git:submodule:pull'
   end
 
-  after 'update', 'git:pull'
+  #after 'update', 'git:pull'
 end
 
 after :update, :symlink
