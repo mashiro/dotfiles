@@ -7,6 +7,13 @@ function source_if
     end
 end
 
+function add_path_if
+    set -l dir $argv[1]
+    if test -d $dir
+        fish_add_path $dir
+    end
+end
+
 function has
     type $argv[1] > /dev/null 2>&1
 end
@@ -14,7 +21,12 @@ end
 fish_add_path ~/bin
 fish_add_path ~/.krew/bin
 
-if status is-login
+if status is-interactive
+    # starship
+    if has 'starship'
+        starship init fish | source
+    end
+
     # homebrew
     if test -f '/opt/homebrew/bin/brew'
         eval "$(/opt/homebrew/bin/brew shellenv)"
@@ -23,14 +35,16 @@ if status is-login
         eval "$(/usr/local/bin/brew shellenv)"
     end
 
-    # asdf
-    source_if /opt/homebrew/opt/asdf/libexec/asdf.fish
-end
-
-if status is-interactive
-    if has 'starship'
-        starship init fish | source
+    # rtx
+    if has 'rtx'
+        rtx activate fish | source
     end
+
+    # Android Studio
+    add_path_if ~/Library/Android/sdk/platform-tools
+
+    # golang
+    add_path_if ~/go/bin
 end
 
 
