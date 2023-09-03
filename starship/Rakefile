@@ -1,0 +1,13 @@
+namespace :starship do
+  desc 'symlink starship configs'
+  task :symlink do
+    starship_config_dir = config_path
+    FileUtils.mkdir_p starship_config_dir
+
+    ['starship.toml'].each do |filename|
+      symlink File.expand_path("../#{filename}", __FILE__), starship_config_dir
+    end
+  end
+end
+
+after 'symlink', 'starship:symlink'
