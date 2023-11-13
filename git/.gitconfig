@@ -21,6 +21,7 @@
   sm = submodule
 [push]
   default = simple
+  autoSetupRemote = true
 [fetch]
   prune = true
 [pull]
@@ -33,3 +34,4 @@
 [ghq]
   root = ~/go/src
   root = ~/repos
+

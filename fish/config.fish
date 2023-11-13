@@ -73,4 +73,3 @@ if has 'kubectl-ctx'
 end
 
 alias :q='exit'
-
