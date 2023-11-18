@@ -63,6 +63,10 @@ if has 'tmux'
     abbr -a tls 'tmux list-sessions'
 end
 
+if has 'podman'
+    alias docker='podman'
+end
+
 if has 'kubectl'
     abbr -a k 'kubectl'
 end
