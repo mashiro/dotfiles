@@ -40,6 +40,11 @@ if status is-interactive
         rtx activate fish | source
     end
 
+    # gcloud
+    if test -f ~/.local/share/google-cloud-sdk/path.fish.inc
+      source ~/.local/share/google-cloud-sdk/path.fish.inc
+    end
+
     # Android Studio
     add_path_if ~/Library/Android/sdk/platform-tools
 
