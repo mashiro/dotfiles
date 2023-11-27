@@ -55,9 +55,9 @@ end
 
 ## Abbr & Alias
 
-if has 'exa'
-    alias ls='exa'
-    alias tree='exa --tree'
+if has 'eza'
+    alias ls='eza --time-style=relative'
+    alias tree='eza --tree'
 end
 
 abbr -a l 'ls -al'
