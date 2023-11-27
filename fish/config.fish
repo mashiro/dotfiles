@@ -63,8 +63,8 @@ end
 abbr -a l 'ls -al'
 
 if has 'tmux'
-    abbr -a t 'tmux new-session -s'
-    abbr -a ta 'tmux attach-session'
+    abbr -a t 'tmux new-session -A -s'
+    abbr -a ta 'tmux attach-session -t'
     abbr -a tls 'tmux list-sessions'
 end
 
