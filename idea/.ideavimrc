@@ -41,6 +41,7 @@ nnoremap <Space>r :<C-u>action Refactorings.QuickListPopupAction<CR>
 nnoremap <Space>= :<C-u>action ReformatCode<CR>
 nnoremap <Space>s :<C-u>action SearchEverywhere<CR>
 nnoremap <Space>a :<C-u>action GotoAction<CR>
+nnoremap <Space>c :<C-u>action GotoClass<CR>
 nnoremap <Space>f :<C-u>action GotoFile<CR>
 nnoremap <Space>b :<C-u>action RecentChangedFiles<CR>
 nnoremap <Space>w :<C-u>action SaveAll<CR>
