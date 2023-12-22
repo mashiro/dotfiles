@@ -1,4 +1,18 @@
-### Env
+## Initial
+
+if status is-login
+    set -gx LOGIN_PATH $PATH
+end
+
+
+## Utils
+
+function add_path_if
+    set -l dir $argv[1]
+    if test -d $dir
+        set -gx PATH $dir $PATH
+    end
+end
 
 function source_if
     set -l file $argv[1]
@@ -7,78 +21,91 @@ function source_if
     end
 end
 
-function add_path_if
-    set -l dir $argv[1]
-    if test -d $dir
-        fish_add_path $dir
-    end
-end
-
 function has
-    type $argv[1] > /dev/null 2>&1
+    type $argv[1] >/dev/null 2>&1
 end
 
-fish_add_path ~/bin
-fish_add_path ~/.krew/bin
+
+## Envs
+set -gx XDG_CONFIG_HOME $HOME/.config
 
 if status is-interactive
-    # starship
-    if has 'starship'
+    # Starship
+    if has starship
         starship init fish | source
     end
-
-    # homebrew
-    if test -f '/opt/homebrew/bin/brew'
-        eval "$(/opt/homebrew/bin/brew shellenv)"
-    end
-    if test -f '/usr/local/bin/brew'
-        eval "$(/usr/local/bin/brew shellenv)"
-    end
-
-    # rtx
-    if has 'rtx'
-        rtx activate fish | source
-    end
-
-    # gcloud
-    if test -f ~/.local/share/google-cloud-sdk/path.fish.inc
-      source ~/.local/share/google-cloud-sdk/path.fish.inc
-    end
-
-    # Android Studio
-    add_path_if ~/Library/Android/sdk/platform-tools
-
-    # golang
-    add_path_if ~/go/bin
 end
+
+
+## Paths
+
+set -gx PATH $LOGIN_PATH
+
+# Rancher Desktop
+add_path_if ~/.rd/bin
+
+# Android Studio
+add_path_if ~/Library/Android/sdk/platform-tools
+
+# Google Cloud
+source_if ~/.local/share/google-cloud-sdk/path.fish.inc
+
+# golang
+add_path_if ~/go/bin
+
+# Homebrew
+if test -f /opt/homebrew/bin/brew
+    eval "$(/opt/homebrew/bin/brew shellenv)"
+end
+if test -f /usr/local/bin/brew
+    eval "$(/usr/local/bin/brew shellenv)"
+end
+
+# rtx
+if test -f ~/.local/bin/rtx
+    set -l rtx ~/.local/bin/rtx
+    $rtx activate fish | source
+    $rtx hook-env -s fish | source
+    $rtx complete -s fish | source
+end
+
+# krew
+add_path_if ~/.krew/bin
+
+# local
+add_path_if ~/.local/bin
 
 
 ## Abbr & Alias
 
-if has 'eza'
+if has eza
     alias ls='eza --time-style=relative'
     alias tree='eza --tree'
 end
 
 abbr -a l 'ls -al'
 
-if has 'tmux'
+if has tmux
     abbr -a t 'tmux new-session -A -s'
     abbr -a ta 'tmux attach-session -t'
     abbr -a tls 'tmux list-sessions'
 end
 
-if has 'podman'
+if has podman
     alias docker='podman'
 end
 
-if has 'kubectl'
-    abbr -a k 'kubectl'
+if has kubectl
+    abbr -a k kubectl
 end
 
-if has 'kubectl-ctx'
+if has kubectl-ctx
     abbr -a kc 'kubectl ctx'
     abbr -a kn 'kubectl ns'
+end
+
+if has k9s
+    alias k9s='LANG=C.UTF-8 command k9s'
 end
 
 alias :q='exit'
