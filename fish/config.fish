@@ -62,8 +62,8 @@ if test -f /usr/local/bin/brew
 end
 
 # rtx
-if test -f ~/.local/bin/rtx
-    set -l rtx ~/.local/bin/rtx
+if test -f ~/.local/share/rtx/bin/rtx
+    set -l rtx ~/.local/share/rtx/bin/rtx
     $rtx activate fish | source
     $rtx hook-env -s fish | source
     $rtx complete -s fish | source
