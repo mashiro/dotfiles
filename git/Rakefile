@@ -1,8 +1,0 @@
-namespace :git do
-  desc 'symlink git dotfiles' 
-  task :symlink do
-    symlink_dotfiles File.expand_path('../', __FILE__)
-  end
-end
-
-after 'symlink', 'git:symlink'

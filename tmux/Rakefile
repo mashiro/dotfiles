@@ -1,8 +1,0 @@
-namespace :tmux do
-  desc 'symlink tmux dotfiles' 
-  task :symlink do
-    symlink_dotfiles File.expand_path('../', __FILE__)
-  end
-end
-
-after 'symlink', 'tmux:symlink'

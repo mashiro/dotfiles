@@ -1,8 +1,0 @@
-namespace :idea do
-  desc 'symlink idea dotfiles' 
-  task :symlink do
-    symlink_dotfiles File.expand_path('../', __FILE__)
-  end
-end
-
-after 'symlink', 'idea:symlink'
