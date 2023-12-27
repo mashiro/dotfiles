@@ -1,0 +1,32 @@
+[user]
+  useConfigOnly = true
+[color]
+  ui = auto
+[alias]
+  b = branch
+  co = checkout
+  ls = ls-files
+  lg = log --graph --pretty=oneline --abbrev-commit
+  lgd = !git lg --decorate
+  st = status
+  fix = commit --amend
+  sm = submodule
+[push]
+  default = simple
+  autoSetupRemote = true
+[fetch]
+  prune = true
+[pull]
+  ff = only
+[rebase]
+  autostash = true
+  autosquash = true
+[pager]
+  branch = false
+[ghq]
+  root = ~/repos
+[include]
+  path = ~/.gitconfig.default
+[includeIf "gitdir:~/repos/github.com/"]
+  path = ~/.gitconfig.github
+
