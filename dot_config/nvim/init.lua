@@ -1,0 +1,2 @@
+require("lazyvim")
+require("options")
