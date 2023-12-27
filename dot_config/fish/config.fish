@@ -85,6 +85,10 @@ end
 
 abbr -a l 'ls -al'
 
+if has nvim
+    alias vim="nvim"
+end
+
 if has tmux
     abbr -a t 'tmux new-session -A -s'
     abbr -a ta 'tmux attach-session -t'
