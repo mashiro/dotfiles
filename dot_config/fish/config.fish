@@ -61,12 +61,12 @@ if test -f /usr/local/bin/brew
     eval "$(/usr/local/bin/brew shellenv)"
 end
 
-# rtx
-if test -f ~/.local/share/rtx/bin/rtx
-    set -l rtx ~/.local/share/rtx/bin/rtx
-    $rtx activate fish | source
-    $rtx hook-env -s fish | source
-    $rtx complete -s fish | source
+# mise
+if test -f ~/.local/bin/mise
+    set -l mise ~/.local/bin/mise
+    $mise activate fish | source
+    $mise hook-env -s fish | source
+    $mise complete fish | source
 end
 
 # krew
