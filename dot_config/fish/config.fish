@@ -1,11 +1,14 @@
-## Initial
+# Settings
 
-if status is-login
-    set -gx LOGIN_PATH $PATH
+if test -z "$__DEFAULT_PATH"
+    set -gx __DEFAULT_PATH $PATH
 end
 
+set -gx PATH $__DEFAULT_PATH
+set -gx XDG_CONFIG_HOME $HOME/.config
 
-## Utils
+
+# Utils
 
 function add_path_if
     set -l dir $argv[1]
@@ -26,42 +29,28 @@ function has
 end
 
 
-## Envs
-set -gx XDG_CONFIG_HOME $HOME/.config
+# Paths
 
-if status is-interactive
-    # Starship
-    if has starship
-        starship init fish | source
-    end
-end
-
-
-## Paths
-
-set -gx PATH $LOGIN_PATH
-
-# Rancher Desktop
+## Rancher Desktop
 add_path_if ~/.rd/bin
 
-# Android Studio
+## Android Studio
 add_path_if ~/Library/Android/sdk/platform-tools
 
-# Google Cloud
+## Google Cloud
 source_if ~/.local/share/google-cloud-sdk/path.fish.inc
 
-# golang
+## golang
 add_path_if ~/go/bin
 
-# Homebrew
+## Homebrew
 if test -f /opt/homebrew/bin/brew
     eval "$(/opt/homebrew/bin/brew shellenv)"
-end
-if test -f /usr/local/bin/brew
+else if test -f /usr/local/bin/brew
     eval "$(/usr/local/bin/brew shellenv)"
 end
 
-# mise
+## mise
 if test -f ~/.local/bin/mise
     set -l mise ~/.local/bin/mise
     $mise activate fish | source
@@ -69,14 +58,22 @@ if test -f ~/.local/bin/mise
     $mise complete fish | source
 end
 
-# krew
+## krew
 add_path_if ~/.krew/bin
 
-# local
+## local
 add_path_if ~/.local/bin
 
 
-## Abbr & Alias
+# Prompt
+
+## Starship
+if has starship && status is-interactive
+    starship init fish | source
+end
+
+
+# Abbr & Alias
 
 if has eza
     alias ls='eza --time-style=relative'
@@ -87,6 +84,11 @@ abbr -a l 'ls -al'
 
 if has nvim
     alias vim="nvim"
+    set -gx EDITOR nvim
+end
+
+if has chezmoi
+    chezmoi completion fish | source
 end
 
 if has tmux
