@@ -82,6 +82,10 @@ end
 
 abbr -a l 'ls -al'
 
+if has delta
+    set -gx GIT_PAGER delta
+end
+
 if has nvim
     alias vim="nvim"
     set -gx EDITOR nvim
