@@ -58,6 +58,9 @@ if test -f ~/.local/bin/mise
     $mise complete fish | source
 end
 
+## rye
+add_path_if ~/.rye/shims
+
 ## krew
 add_path_if ~/.krew/bin
 
