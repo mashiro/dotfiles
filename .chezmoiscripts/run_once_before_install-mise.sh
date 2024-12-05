@@ -1,3 +1,3 @@
 #!/bin/bash
-curl https://mise.jdx.dev/install.sh | sh
+curl https://mise.run | sh
 
