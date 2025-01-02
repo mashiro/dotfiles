@@ -29,4 +29,6 @@
   path = ~/.gitconfig.default
 [includeIf "gitdir:~/repos/github.com/"]
   path = ~/.gitconfig.github
+[includeIf "gitdir:~/.local/share/chezmoi/"]
+  path = ~/.gitconfig.github
 
