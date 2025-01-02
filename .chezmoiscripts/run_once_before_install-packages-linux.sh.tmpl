@@ -1,0 +1,7 @@
+{{ if eq .chezmoi.os "linux" -}}
+#!/usr/bin/env bash
+
+{{ if eq .chezmoi.osRelease.id "ubuntu" -}}
+{{ end -}}
+
+{{ end -}}
