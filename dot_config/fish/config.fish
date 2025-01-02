@@ -70,6 +70,8 @@ add_path_if ~/.local/bin
 
 # Prompt
 
+set -gx SHELL "$(which fish)"
+
 ## Starship
 if has starship && status is-interactive
     starship init fish | source
