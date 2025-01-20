@@ -1,34 +1,35 @@
 [user]
-  useConfigOnly = true
+	useConfigOnly = true
 [color]
-  ui = auto
+	ui = auto
 [alias]
-  b = branch
-  co = checkout
-  ls = ls-files
-  lg = log --graph --pretty=oneline --abbrev-commit
-  lgd = !git lg --decorate
-  st = status
-  fix = commit --amend
-  sm = submodule
+	b = branch
+	co = checkout
+	ls = ls-files
+	lg = log --graph --pretty=oneline --abbrev-commit
+	lgd = !git lg --decorate
+	st = status
+	fix = commit --amend
+	sm = submodule
+[core]
+	ignorecase = false
 [push]
-  default = simple
-  autoSetupRemote = true
+	default = simple
+	autoSetupRemote = true
 [fetch]
-  prune = true
+	prune = true
 [pull]
-  ff = only
+	ff = only
 [rebase]
-  autostash = true
-  autosquash = true
+	autostash = true
+	autosquash = true
 [pager]
-  branch = false
+	branch = false
 [ghq]
-  root = ~/repos
+	root = ~/repos
 [include]
-  path = ~/.gitconfig.default
+	path = ~/.gitconfig.default
 [includeIf "gitdir:~/repos/github.com/"]
-  path = ~/.gitconfig.github
+	path = ~/.gitconfig.github
 [includeIf "gitdir:~/.local/share/chezmoi/"]
-  path = ~/.gitconfig.github
-
+	path = ~/.gitconfig.github
