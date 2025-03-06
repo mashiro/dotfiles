@@ -124,3 +124,9 @@ if has k9s
 end
 
 alias :q='exit'
+
+# Load local config
+if [ -f ~/.config/fish/config.local.fish ]
+    source ~/.config/fish/config.local.fish
+end
+
