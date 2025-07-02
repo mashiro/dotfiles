@@ -33,3 +33,7 @@
 	path = ~/.gitconfig.github
 [includeIf "gitdir:~/.local/share/chezmoi/"]
 	path = ~/.gitconfig.github
+[url "https://"]
+	insteadOf = git://
+[url "https://github.com/"]
+	insteadOf = git@github.com:
