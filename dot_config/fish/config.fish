@@ -112,11 +112,14 @@ end
 
 if has kubectl
     abbr -a k kubectl
-end
 
-if has kubectl-ctx
-    abbr -a kc 'kubectl ctx'
-    abbr -a kn 'kubectl ns'
+    if has kubectx
+        abbr -a kc kubectx
+    end
+
+    if has kubens
+        abbr -a kn kubens
+    end
 end
 
 if has k9s
