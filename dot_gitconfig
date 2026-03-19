@@ -27,8 +27,8 @@
 	branch = false
 [ghq]
 	root = ~/repos
-[gtr "worktrees"]
-	dir = .worktrees
+[wt]
+	basedir = .git/wt
 [include]
 	path = ~/.gitconfig.default
 [includeIf "gitdir:~/repos/github.com/"]

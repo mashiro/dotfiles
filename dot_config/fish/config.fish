@@ -96,6 +96,10 @@ if has nvim
     set -gx EDITOR nvim
 end
 
+if has git-wt
+    git-wt --init fish | source
+end
+
 if has chezmoi
     chezmoi completion fish | source
 end
