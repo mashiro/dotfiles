@@ -105,9 +105,15 @@ if has chezmoi
 end
 
 if has tmux
-    abbr -a t 'tmux new-session -A -s'
-    abbr -a ta 'tmux attach-session -t'
-    abbr -a tls 'tmux list-sessions'
+    set -l tmux_cmd "tmux"
+    # Append -CC only if running in iTerm2
+    if test "$TERM_PROGRAM" = "iTerm.app"
+        set tmux_cmd "tmux -CC"
+    end
+
+    abbr -a t "$tmux_cmd new-session -A -s"
+    abbr -a ta "$tmux_cmd attach-session -t"
+    abbr -a tls "tmux list-sessions"
 end
 
 if has podman
